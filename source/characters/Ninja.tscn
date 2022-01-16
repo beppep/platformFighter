@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/ninja/hair.png" type="Texture" id=1]
+[ext_resource path="res://source/characters/Ninja.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 4.10274, 6.04832 )
+
+[node name="Ninja" type="KinematicBody2D"]
+collision_layer = 2
+script = ExtResource( 2 )
+gravity = 50.0
+airspeed = 30.0
+groundspeed = 150.0
+jumpspeed = 1200.0
+groundfriction = 0.7
+airfriction = 0.96
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -50 )
+scale = Vector2( 6, 8 )
+shape = SubResource( 1 )
+
+[node name="sprite" type="Sprite" parent="."]
+position = Vector2( 0, -90 )
+scale = Vector2( 8, 8 )
+texture = ExtResource( 1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2( 0, -50 )
+scale = Vector2( 6, 8 )
+shape = SubResource( 1 )
+
+[node name="HitBoxes" type="Node2D" parent="."]
