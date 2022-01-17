@@ -15,10 +15,11 @@ var _velocity: = Vector2(0,-100) #pixels per second
 var direction: = Vector2.ZERO
 var released_jump = false
 var double_jump = true
-var state = 0
+var state = 0 #0: actionable, 1:attacking, 2:hitstun
 var currentAttack = "error"
 var stateTimer = 0
 var totalHitstun = 0
+var hitPause = 0 #descends
 var bannedHitboxes = []
 var HitActors = []
 var percentage = 0
@@ -37,6 +38,8 @@ func inputAction():
 	# input 
 	direction = get_direction()
 	# movement
+	if hitPause:
+		return
 	_velocity = calculate_move_velocity(_velocity, direction) # should be += and friction for nice movement (wut
 	# options
 	if state==0:
@@ -71,9 +74,22 @@ func hitEffect():
 		anim_player.stop(true) #resets animation
 		anim_player.play("shake")
 		var angle = data["angle"]*PI/180
-		_velocity = Vector2(cos(angle)*opponent.scale.y, -sin(angle))*(data["kb"]+data["kbscaling"]*percentage)*10
-		totalHitstun = (data["kb"]+data["kbscaling"]*percentage)*0.2
+		var kb = data["kb"] + data["kbscaling"]*percentage
+		_velocity = Vector2(cos(angle)*opponent.scale.y, -sin(angle))*kb*10
+		totalHitstun = kb*0.2
+		hitPause = kb*0.1 #+= for trades and stuff?
+		opponent.hitPause = hitPause
+		anim_player.stop()
 		percentage += data["damage"]
+		$Label.text = str(percentage)+"%"
+	#progress states
+	if hitPause>0:
+		hitPause-=1
+		position+=direction #asdi
+		_velocity+=direction #this is not di this is just weird
+		if hitPause<=0:
+			hitPause=0
+			anim_player.play()
 	else:
 		stateTimer+=1
 		if state == 2:

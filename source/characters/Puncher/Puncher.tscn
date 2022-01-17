@@ -203,3 +203,11 @@ shape = SubResource( 1 )
 [node name="HitBoxes" type="Node2D" parent="."]
 
 [node name="currentAttack" type="Node" parent="."]
+
+[node name="Label" type="Label" parent="."]
+margin_top = -100.0
+margin_right = 40.0
+margin_bottom = -86.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
