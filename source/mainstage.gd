@@ -1,10 +1,10 @@
-extends Camera2D
+extends Node2D
 
 
 # Declare member variables here. Examples:
 # var a: int = 2
 # var b: String = "text"
-onready var players = get_node("../Players").get_children()
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -12,9 +12,11 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	var pos: = Vector2.ZERO
+func _physics_process(delta: float) -> void:
+	var players = $Players.get_children()
 	for player in players:
-		pos += player.position
-	pos = pos / len(players) # just average pos
-	set_offset( pos*0.2 + get_offset()*0.8 )
+		player.inputAction() #never check anything here
+	for player in players:
+		player.hitCollision() #only check things here
+	for player in players:
+		player.hitEffect() #never check anything here
