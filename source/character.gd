@@ -20,6 +20,7 @@ var currentAttack = "error"
 var stateTimer = 0
 var totalHitstun = 0
 var hitPause = 0 #descends
+var nextFrameHitPause = 0
 var bannedHitboxes = []
 var HitActors = []
 var percentage = 0
@@ -38,6 +39,9 @@ func inputAction():
 	# input 
 	direction = get_direction()
 	# movement
+	if(nextFrameHitPause):
+		hitPause=nextFrameHitPause
+		nextFrameHitPause=0
 	if hitPause:
 		return
 	_velocity = calculate_move_velocity(_velocity, direction) # should be += and friction for nice movement (wut
@@ -55,14 +59,22 @@ func attack():
 func hitCollision():			
 	# hitting
 	HitActors = CheckHurtBoxes()
+	if HitActors:
+		var data = HitActors[0][0]
+		var opponent = HitActors[0][1]
+		var kb = data["kb"] + data["kbscaling"]*percentage
+		nextFrameHitPause += kb*0.1 #+= for trades and stuff?
+		opponent.nextFrameHitPause += kb*0.1
 func hitEffect():
+	
 	if HitActors:
 		var data = HitActors[0][0]
 		var opponent = HitActors[0][1]
 		
 		if state ==1:
 			for i in $HitBoxes.get_children():
-				i.queue_free()
+				if(not i.is_queued_for_deletion()):
+					i.queue_free()
 			for player in get_node("/root/Node2D/Players").get_children():
 				var replacementList = []
 				for i in player.bannedHitboxes:
@@ -77,12 +89,17 @@ func hitEffect():
 		var kb = data["kb"] + data["kbscaling"]*percentage
 		_velocity = Vector2(cos(angle)*opponent.scale.y, -sin(angle))*kb*10
 		totalHitstun = kb*0.2
-		hitPause = kb*0.1 #+= for trades and stuff?
-		opponent.hitPause = hitPause
 		anim_player.stop()
 		percentage += data["damage"]
 		$Label.text = str(percentage)+"%"
 	#progress states
+	if hitPause==0:
+		stateTimer+=1
+		if state == 2:
+			if stateTimer >= totalHitstun:
+				state = 0
+				anim_player.stop(true)
+				#useless to remove bans here
 	if hitPause>0:
 		hitPause-=1
 		position+=direction #asdi
@@ -90,13 +107,6 @@ func hitEffect():
 		if hitPause<=0:
 			hitPause=0
 			anim_player.play()
-	else:
-		stateTimer+=1
-		if state == 2:
-			if stateTimer >= totalHitstun:
-				state = 0
-				anim_player.stop(true)
-				#useless to remove bans here
 
 func get_direction():
 	if player_id==0:

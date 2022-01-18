@@ -14,12 +14,12 @@ func _ready():
 
 func attack():
 	state = 1
+	stateTimer = 0
 	if direction.y:
 		$currentAttack.set_script(upb)
 	else:
 		$currentAttack.set_script(jab)
 	$currentAttack._ready()
-	stateTimer = 0
 
 # Called every frame. 'delta' is the elapsed time since the previous frame. #FPS
 #func _process(delta):

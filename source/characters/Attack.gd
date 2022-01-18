@@ -17,7 +17,10 @@ func autoAttack(stateTimer):
 		if h["start"] == stateTimer:
 			createHitBox(h)
 		if h["end"] == stateTimer:
-			get_node("../HitBoxes/"+h["name"]).queue_free()
+			var i =get_node("../HitBoxes/"+h["name"])
+			print(i, stateTimer)
+			if(not i.is_queued_for_deletion()):
+				i.queue_free()
 	if stateTimer == endFrame:
 		get_parent().state = 0
 		for player in get_node("/root/Node2D/Players").get_children():
