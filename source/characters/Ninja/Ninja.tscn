@@ -8,7 +8,7 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 4.10274, 6.04832 )
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 resource_name = "hair"
 length = 0.3
 step = 0.0166667
@@ -25,7 +25,7 @@ tracks/0/keys = {
 "values": [ ExtResource( 4 ), ExtResource( 1 ), ExtResource( 4 ) ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=3]
 resource_name = "standing"
 step = 0.0166667
 tracks/0/type = "value"
@@ -41,8 +41,7 @@ tracks/0/keys = {
 "values": [ ExtResource( 4 ) ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "utilt"
+[sub_resource type="Animation" id=4]
 length = 0.583333
 step = 0.0166667
 tracks/0/type = "value"
@@ -77,9 +76,9 @@ scale = Vector2( 8, 8 )
 texture = ExtResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/hair = SubResource( 3 )
-anims/standing = SubResource( 4 )
-anims/utilt = SubResource( 2 )
+anims/hair = SubResource( 2 )
+anims/standing = SubResource( 3 )
+anims/utilt = SubResource( 4 )
 
 [node name="HurtBox" type="Area2D" parent="."]
 collision_layer = 0

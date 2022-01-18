@@ -1,6 +1,7 @@
 extends KinematicBody2D
 class_name Character
 
+var explosion = load("res://source/things/explosion.tscn")
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -68,6 +69,7 @@ func hitCollision():
 func hitEffect():
 	
 	if HitActors:
+		
 		var data = HitActors[0][0]
 		var opponent = HitActors[0][1]
 		
@@ -84,14 +86,22 @@ func hitEffect():
 		state = 2
 		stateTimer = 0
 		anim_player.stop(true) #resets animation
-		anim_player.play("shake")
+		anim_player.play("standing")
 		var angle = data["angle"]*PI/180
 		var kb = data["kb"] + data["kbscaling"]*percentage
 		_velocity = Vector2(cos(angle)*opponent.scale.y, -sin(angle))*kb*10
 		totalHitstun = kb*0.2
 		anim_player.stop()
+		anim_player.play("shake")
 		percentage += data["damage"]
 		$Label.text = str(percentage)+"%"
+		
+		#explosiin
+		var blast = explosion.instance()
+		blast.position = self.position
+		blast.scale = Vector2(kb*0.02, kb*0.02)
+		get_node("/root/Node2D/fx").add_child(blast)
+		
 	#progress states
 	if hitPause==0:
 		stateTimer+=1
@@ -158,7 +168,7 @@ func calculate_move_velocity(
 		if is_on_floor():
 			new_velocity.y = -jumpspeed
 			anim_player.stop() #resets animation
-			anim_player.play("double_jump")
+			anim_player.play("jump")
 			released_jump = false
 		elif released_jump == true and double_jump == true:
 			new_velocity.y = -jumpspeed
@@ -175,8 +185,11 @@ func calculate_move_velocity(
 
 func respawn():
 	percentage = 0
+	$Label.text = str(percentage)+"%"
 	position = Vector2(0,0)
-
+	_velocity = Vector2(0,0)
+	state = 0
+	stateTimer = 0
 
 func CheckHurtBoxes() -> Array:
 	var HitActors = []

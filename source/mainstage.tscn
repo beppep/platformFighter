@@ -1,12 +1,11 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://source/characters/Puncher/Puncher.tscn" type="PackedScene" id=2]
-[ext_resource path="res://source/characters/Ninja/Ninja.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/bg.png" type="Texture" id=4]
 [ext_resource path="res://source/Camera2D.gd" type="Script" id=5]
 [ext_resource path="res://source/mainstage.gd" type="Script" id=6]
-[ext_resource path="res://source/characters/froat/Froat.tscn" type="PackedScene" id=7]
+[ext_resource path="res://source/characters/Froat/Froat.tscn" type="PackedScene" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 19.1464, 3.32895 )
@@ -155,11 +154,11 @@ tile_data = PoolIntArray( 393212, 0, 0, 393213, 0, 0, 393214, 0, 0, 393215, 0, 0
 
 [node name="Players" type="Node2D" parent="."]
 
-[node name="Ninja" parent="Players" instance=ExtResource( 3 )]
-position = Vector2( 127.335, 194.423 )
+[node name="Froat" parent="Players" instance=ExtResource( 7 )]
+position = Vector2( 141.236, 58.7811 )
+jumpspeed = 1700.0
 
 [node name="Puncher" parent="Players" instance=ExtResource( 2 )]
 position = Vector2( 0, 98.206 )
 
-[node name="Ninja" parent="Players/Puncher" instance=ExtResource( 7 )]
-position = Vector2( -196.479, 116.751 )
+[node name="fx" type="Node2D" parent="."]
