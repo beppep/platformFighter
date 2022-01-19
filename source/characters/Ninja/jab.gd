@@ -26,7 +26,7 @@ func _ready() -> void:
 	]
 
 func update(player):
-	autoAttack(player.stateTimer)
+	autoAttack(player)
 	if player.stateTimer==0:
 		player.anim_player.stop(true) #resets animation
 		player.anim_player.play("hair")

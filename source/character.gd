@@ -45,7 +45,7 @@ func inputAction():
 		nextFrameHitPause=0
 	if hitPause:
 		return
-	_velocity = calculate_move_velocity(_velocity, direction) # should be += and friction for nice movement (wut
+	calculate_move_velocity()
 	# options
 	if state==0:
 		if Input.get_action_strength("p1_a") and player_id==0 or Input.get_action_strength("p2_a") and player_id==1:
@@ -54,7 +54,16 @@ func inputAction():
 		#print(currentAttack.get_script_method_list())
 		#print(ClassDB.class_exists("jab"))
 		$currentAttack.update(self)
-	_velocity = move_and_slide(_velocity, Vector2.UP)
+	if state==2:
+		var collision = move_and_collide(_velocity*1/60)
+		if collision:
+			_velocity = _velocity.bounce(collision.normal)
+			print("BOUNCE!")
+			if collision.collider.has_method("tech"):
+				collision.collider.tech()
+	else:
+		_velocity = move_and_slide(_velocity, Vector2.UP)
+				
 func attack():
 	pass
 func hitCollision():			
@@ -68,21 +77,15 @@ func hitCollision():
 		opponent.nextFrameHitPause += kb*0.1
 func hitEffect():
 	
+	var wasAttacking = (state==1)
+	
 	if HitActors:
 		
 		var data = HitActors[0][0]
 		var opponent = HitActors[0][1]
 		
-		if state ==1:
-			for i in $HitBoxes.get_children():
-				if(not i.is_queued_for_deletion()):
-					i.queue_free()
-			for player in get_node("/root/Node2D/Players").get_children():
-				var replacementList = []
-				for i in player.bannedHitboxes:
-					if i[0] != self:
-						replacementList.append(i)
-				player.bannedHitboxes = replacementList
+		if state == 1:
+			$currentAttack.interrupted = true
 		state = 2
 		stateTimer = 0
 		anim_player.stop(true) #resets animation
@@ -101,6 +104,9 @@ func hitEffect():
 		blast.position = self.position
 		blast.scale = Vector2(kb*0.02, kb*0.02)
 		get_node("/root/Node2D/fx").add_child(blast)
+	
+	if state==1 or wasAttacking:
+		$currentAttack.endAttack(self)
 		
 	#progress states
 	if hitPause==0:
@@ -112,8 +118,8 @@ func hitEffect():
 				#useless to remove bans here
 	if hitPause>0:
 		hitPause-=1
-		position+=direction #asdi
-		_velocity+=direction #this is not di this is just weird
+		#position+=direction #asdi
+		#_velocity+=direction #this is not di this is just weird
 		if hitPause<=0:
 			hitPause=0
 			anim_player.play()
@@ -130,11 +136,8 @@ func get_direction():
 			-Input.get_action_strength("p2_up") #is_on_floor updated by moveandslide
 		)
 	
-func calculate_move_velocity(
-	linear_velocity: Vector2,
-	direction: Vector2
-) -> Vector2:
-	var new_velocity = linear_velocity
+func calculate_move_velocity():
+	var new_velocity = _velocity
 	if is_on_floor():
 		double_jump = true
 		if state==0:
@@ -155,13 +158,15 @@ func calculate_move_velocity(
 	else:
 		if state !=2:
 			new_velocity.x += direction.x * airspeed
-	new_velocity.y += gravity #* get_physics_process_delta_time() #indent?
+
 	#friction
 	#velocity.y*=c
-	if is_on_floor():
-		new_velocity *= groundfriction
-	else:
+	if not is_on_floor() or state==2: #the game thinks you are grounded when sent flying
 		new_velocity *= airfriction
+	else:
+		new_velocity *= groundfriction
+	new_velocity.y += gravity
+	
 	
 	# MOVE Y
 	if direction.y == -1.0 and state == 0:
@@ -180,7 +185,7 @@ func calculate_move_velocity(
 		
 	if position.y>1000:
 		respawn()
-	return new_velocity
+	_velocity = new_velocity
 	
 
 func respawn():
@@ -195,14 +200,15 @@ func CheckHurtBoxes() -> Array:
 	var HitActors = []
 	#print($HurtBox.get_overlapping_areas())
 	for hitbox in $HurtBox.get_overlapping_areas():
-		if $HurtBox.get_child_count() > 0:
-			var opponent=hitbox.get_parent().get_parent()
-			
-			if opponent != self:
-				var data = get_node("../"+opponent.name+"/currentAttack").hitboxes[int(hitbox["name"])]
-				if not [opponent, data["group"]] in bannedHitboxes:
-					print(data)
-					HitActors.append([data,opponent])
-					bannedHitboxes.append([opponent,data["group"]]) 
+		var opponent=hitbox.get_parent().get_parent()
+		
+		if opponent != self:
+			var data = get_node("../"+opponent.name+"/currentAttack").hitboxes[int(hitbox["name"])] #invalid get index 169 on base array apparently
+			if not [opponent, data["group"]] in bannedHitboxes:
+				print(data, opponent.stateTimer)
+				HitActors.append([data,opponent])
+				bannedHitboxes.append([opponent,data["group"]])
+			else:
+				pass#print("banned")
 	#print(HitActors)
 	return HitActors

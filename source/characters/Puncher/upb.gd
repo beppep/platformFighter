@@ -17,7 +17,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func update(player):
-	autoAttack(player.stateTimer)
+	autoAttack(player)
 	if player.stateTimer==20:
 		player.position.y-=300
 		player._velocity.y = -1000

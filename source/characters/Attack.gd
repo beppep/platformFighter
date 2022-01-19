@@ -6,29 +6,38 @@ extends Node
 # var b: String = "text"
 var hitboxes = []
 var endFrame = 100
+var interrupted = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
 
 
-func autoAttack(stateTimer):
+func autoAttack(player):
 	for h in hitboxes:
-		if h["start"] == stateTimer:
+		if h["start"] == player.stateTimer:
 			createHitBox(h)
-		if h["end"] == stateTimer:
-			var i =get_node("../HitBoxes/"+h["name"])
-			print(i, stateTimer)
+		if h["end"] == player.stateTimer:
+			var i = get_node("../HitBoxes/"+h["name"])
+			print(i, player.stateTimer)
 			if(not i.is_queued_for_deletion()):
 				i.queue_free()
-	if stateTimer == endFrame:
-		get_parent().state = 0
-		for player in get_node("/root/Node2D/Players").get_children():
-			var replacementList = []
-			for i in player.bannedHitboxes:
-				if i[0] != get_parent():
-					replacementList.append(i)
-			player.bannedHitboxes = replacementList
+
+func endAttack(player):
+	if player.stateTimer == endFrame or interrupted:
+		interrupted = false
+		player.state = 0
+		player.anim_player.stop(true)
+		for box in get_node("../HitBoxes").get_children():
+			if(not box.is_queued_for_deletion()):
+				box.queue_free()
+		for other in get_node("/root/Node2D/Players").get_children():
+			if not other == player:
+				var replacementList = []
+				for i in other.bannedHitboxes:
+					if i[0] != player:
+						replacementList.append(i)
+				other.bannedHitboxes = replacementList
 
 func update(player):
 	#print("htr")
