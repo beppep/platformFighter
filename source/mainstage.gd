@@ -16,7 +16,10 @@ func _physics_process(delta: float) -> void:
 	var players = $Players.get_children()
 	for player in players:
 		player.inputAction() #never check anything here
+		print("ia",player.state)
 	for player in players:
 		player.hitCollision() #only check things here
+		print(player.state)
 	for player in players:
 		player.hitEffect() #never check anything here
+		print(player.state)

@@ -25,8 +25,8 @@ func autoAttack(player):
 
 func endAttack(player):
 	if player.stateTimer == endFrame or interrupted:
-		interrupted = false
 		player.state = 0
+		interrupted = false
 		player.anim_player.stop(true)
 		for box in get_node("../HitBoxes").get_children():
 			if(not box.is_queued_for_deletion()):

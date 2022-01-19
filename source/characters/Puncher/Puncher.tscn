@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://assets/punchersprites/idle.png" type="Texture" id=1]
 [ext_resource path="res://source/characters/Puncher/Puncher.gd" type="Script" id=2]
 [ext_resource path="res://assets/punchersprites/longpunch.png" type="Texture" id=3]
+[ext_resource path="res://assets/shield.png" type="Texture" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 4.10274, 4.83219 )
@@ -187,3 +188,7 @@ margin_bottom = -86.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Shield" type="Sprite" parent="."]
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 4 )

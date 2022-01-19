@@ -16,7 +16,7 @@ var _velocity: = Vector2(0,-100) #pixels per second
 var direction: = Vector2.ZERO
 var released_jump = false
 var double_jump = true
-var state = 0 #0: actionable, 1:attacking, 2:hitstun
+var state = 0 #0: actionable, 1:attacking, 2:hitstun 3:shield
 var currentAttack = "error"
 var stateTimer = 0
 var totalHitstun = 0
@@ -25,6 +25,9 @@ var nextFrameHitPause = 0
 var bannedHitboxes = []
 var HitActors = []
 var percentage = 0
+var shieldHealthMax = 150.0
+var shieldHealth = shieldHealthMax
+var shieldStun = 0
 
 onready var anim_player: AnimationPlayer = get_node("AnimationPlayer") #basically just declared in _ready func
 
@@ -45,15 +48,21 @@ func inputAction():
 		nextFrameHitPause=0
 	if hitPause:
 		return
-	calculate_move_velocity()
+	
 	# options
 	if state==0:
 		if Input.get_action_strength("p1_a") and player_id==0 or Input.get_action_strength("p2_a") and player_id==1:
 			attack()
+		elif Input.get_action_strength("p1_shield") and player_id==0 or Input.get_action_strength("p2_shield") and player_id==1:
+			shield()
 	if state==1:
 		#print(currentAttack.get_script_method_list())
 		#print(ClassDB.class_exists("jab"))
 		$currentAttack.update(self)
+	if state==3 and shieldStun < 1:
+		if not (Input.get_action_strength("p1_shield") and player_id==0 or Input.get_action_strength("p2_shield") and player_id==1):
+			shieldEnd()
+	calculate_move_velocity()
 	if state==2:
 		var collision = move_and_collide(_velocity*1/60)
 		if collision:
@@ -66,6 +75,14 @@ func inputAction():
 				
 func attack():
 	pass
+func shield():
+	state = 3
+	stateTimer = 0
+	$Shield.visible = true
+func shieldEnd():
+	state = 0
+	stateTimer = 0
+	$Shield.visible = false
 func hitCollision():			
 	# hitting
 	HitActors = CheckHurtBoxes()
@@ -77,8 +94,8 @@ func hitCollision():
 		opponent.nextFrameHitPause += kb*0.1
 func hitEffect():
 	
-	var wasAttacking = (state==1)
-	
+	if state==1:
+		$currentAttack.endAttack(self)
 	if HitActors:
 		
 		var data = HitActors[0][0]
@@ -86,28 +103,48 @@ func hitEffect():
 		
 		if state == 1:
 			$currentAttack.interrupted = true
-		state = 2
-		stateTimer = 0
-		anim_player.stop(true) #resets animation
-		anim_player.play("standing")
+			$currentAttack.endAttack(self)
 		var angle = data["angle"]*PI/180
 		var kb = data["kb"] + data["kbscaling"]*percentage
-		_velocity = Vector2(cos(angle)*opponent.scale.y, -sin(angle))*kb*10
-		totalHitstun = kb*0.2
-		anim_player.stop()
-		anim_player.play("shake")
-		percentage += data["damage"]
-		$Label.text = str(percentage)+"%"
-		
+		if(not state==3):
+			_velocity = Vector2(cos(angle)*opponent.scale.y, -sin(angle))*kb*10
+			totalHitstun = kb*0.2
+			state = 2
+			stateTimer = 0
+			anim_player.stop(true) #resets animation
+			anim_player.play("standing")
+			anim_player.stop()
+			anim_player.play("shake")
+			percentage += data["damage"]
+			$Label.text = str(percentage)+"%"
+		else:
+			shieldHealth -= data["damage"]*3
+			shieldStun = data["damage"]*2
 		#explosiin
 		var blast = explosion.instance()
 		blast.position = self.position
 		blast.scale = Vector2(kb*0.02, kb*0.02)
 		get_node("/root/Node2D/fx").add_child(blast)
 	
-	if state==1 or wasAttacking:
-		$currentAttack.endAttack(self)
 		
+	if state==3:
+		if(shieldStun > 0):
+			shieldStun-= 1
+		else:
+			shieldHealth-=1
+		if(shieldHealth<1):
+			shieldStun=0
+			shieldHealth=0
+			$Shield.visible = false
+			state=2
+			totalHitstun=60*3
+		print(shieldHealth/(2*shieldHealthMax))
+		$Shield.scale=Vector2(shieldHealth/(2*shieldHealthMax),shieldHealth/(2*shieldHealthMax))
+		print($Shield.scale)
+	else:
+		if(shieldHealth<shieldHealthMax):
+			shieldHealth+=0.5
+			
 	#progress states
 	if hitPause==0:
 		stateTimer+=1
