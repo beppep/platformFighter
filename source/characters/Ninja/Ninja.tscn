@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://assets/ninja/hair.png" type="Texture" id=1]
 [ext_resource path="res://source/characters/Ninja/Ninja.gd" type="Script" id=2]
 [ext_resource path="res://assets/ninja/rise4.png" type="Texture" id=3]
 [ext_resource path="res://assets/ninja/idle.png" type="Texture" id=4]
+[ext_resource path="res://assets/shield.png" type="Texture" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 4.10274, 6.04832 )
@@ -99,3 +100,8 @@ margin_bottom = -86.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Shield" type="Sprite" parent="."]
+visible = false
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 5 )

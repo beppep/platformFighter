@@ -8,20 +8,20 @@ extends "../Attack.gd"
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	endFrame = 38
-	fastEndFrame = 28
+	endFrame = 20
+	fastEndFrame = 14
 	hitboxes = [
 		{
 			"name":"0",
 			"group":1,
-			"damage":11,
-			"start":7,
-			"end":20,
-			"kb":200,
-			"kbscaling":0.5,
-			"angle":80,
+			"damage":3,
+			"start":3,
+			"end":5,
+			"kb":40,
+			"kbscaling":0.2,
+			"angle":60,
 			"shapes":[
-				[24,40,10,-74]
+				[28,14,48,0]
 			]
 		},
 	]
@@ -29,11 +29,10 @@ func _ready() -> void:
 func update(player):
 	autoAttack(player)
 	if player.stateTimer==0:
-		player.anim_player.stop(true) #resets animation
-		player.anim_player.play("uair")
-	if player.is_on_floor():
-		interrupted = true
+		player.anim_player.stop(true) #resets animation (noot
+		player.anim_player.play("jab")
+
 
 func onHit(name):
 	if name=="0":
-		endFrame = fastEndFrame #warning
+		endFrame = fastEndFrame

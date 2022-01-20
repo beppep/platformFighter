@@ -9,6 +9,7 @@ extends "../Attack.gd"
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	endFrame = 24
+	fastEndFrame = 16
 	hitboxes = [
 		{
 			"name":"0",
@@ -31,6 +32,6 @@ func update(player):
 		player.anim_player.stop(true) #resets animation
 		player.anim_player.play("utilt")
 
-
-func onHit():
-	pass
+func onHit(name):
+	if name=="0":
+		endFrame = fastEndFrame #warning

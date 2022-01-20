@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/shield.png-46d74908b0ac118b50397d7021ae31f8.stex"
+path="res://.import/jab.png-5318bc4f0ccba9a0402317281ef9a8ad.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/shield.png"
-dest_files=[ "res://.import/shield.png-46d74908b0ac118b50397d7021ae31f8.stex" ]
+source_file="res://assets/Froat/jab.png"
+dest_files=[ "res://.import/jab.png-5318bc4f0ccba9a0402317281ef9a8ad.stex" ]
 
 [params]
 

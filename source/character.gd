@@ -2,6 +2,7 @@ extends KinematicBody2D
 class_name Character
 
 var explosion = load("res://source/things/explosion.tscn")
+var explosion2 = load("res://source/things/explosion2.tscn")
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -33,7 +34,7 @@ onready var anim_player: AnimationPlayer = get_node("AnimationPlayer") #basicall
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	$Label.text = str(percentage)+"%"
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -76,6 +77,7 @@ func inputAction():
 func attack():
 	pass
 func shield():
+	_velocity.y=100
 	state = 3
 	stateTimer = 0
 	$Shield.visible = true
@@ -92,6 +94,7 @@ func hitCollision():
 		var kb = data["kb"] + data["kbscaling"]*percentage
 		nextFrameHitPause += kb*0.1 #+= for trades and stuff?
 		opponent.nextFrameHitPause += kb*0.1
+		get_node("../"+opponent.name+"/currentAttack").onHit(data["name"])
 func hitEffect():
 	
 	if state==1:
@@ -106,6 +109,7 @@ func hitEffect():
 			$currentAttack.endAttack(self)
 		var angle = data["angle"]*PI/180
 		var kb = data["kb"] + data["kbscaling"]*percentage
+		var blast
 		if(not state==3):
 			_velocity = Vector2(cos(angle)*opponent.scale.y, -sin(angle))*kb*10
 			totalHitstun = kb*0.2
@@ -117,11 +121,12 @@ func hitEffect():
 			anim_player.play("shake")
 			percentage += data["damage"]
 			$Label.text = str(percentage)+"%"
+			blast = explosion.instance()
 		else:
 			shieldHealth -= data["damage"]*3
 			shieldStun = data["damage"]*2
+			blast = explosion2.instance()
 		#explosiin
-		var blast = explosion.instance()
 		blast.position = self.position
 		blast.scale = Vector2(kb*0.02, kb*0.02)
 		get_node("/root/Node2D/fx").add_child(blast)
@@ -165,12 +170,12 @@ func get_direction():
 	if player_id==0:
 		return Vector2(
 			Input.get_action_strength("p1_right")-Input.get_action_strength("p1_left"),
-			-Input.get_action_strength("p1_up") #is_on_floor updated by moveandslide
+			Input.get_action_strength("p1_down")-Input.get_action_strength("p1_up") #is_on_floor updated by moveandslide
 		)
 	else:
 		return Vector2(
 			Input.get_action_strength("p2_right")-Input.get_action_strength("p2_left"),
-			-Input.get_action_strength("p2_up") #is_on_floor updated by moveandslide
+			Input.get_action_strength("p2_down")-Input.get_action_strength("p2_up") #is_on_floor updated by moveandslide
 		)
 	
 func calculate_move_velocity():
@@ -206,30 +211,34 @@ func calculate_move_velocity():
 	
 	
 	# MOVE Y
-	if direction.y == -1.0 and state == 0:
-		if is_on_floor():
-			new_velocity.y = -jumpspeed
-			anim_player.stop() #resets animation
-			anim_player.play("jump")
-			released_jump = false
-		elif released_jump == true and double_jump == true:
-			new_velocity.y = -jumpspeed
-			anim_player.stop(true) #resets animation
-			anim_player.play("double_jump")
-			double_jump = false
-	if not is_on_floor() and not direction.y == -1.0:
+	if (Input.get_action_strength("p1_jump") and player_id==0 or Input.get_action_strength("p2_jump") and player_id==1):
+		if state == 0:
+			if is_on_floor():
+				new_velocity.y = -jumpspeed
+				anim_player.stop() #resets animation
+				anim_player.play("jump")
+				released_jump = false
+			elif released_jump == true and double_jump == true:
+				new_velocity.y = -jumpspeed
+				anim_player.stop(true) #resets animation
+				anim_player.play("double_jump")
+				double_jump = false
+	elif not is_on_floor():
 		released_jump = true
 		
-	if position.y>1000:
-		respawn()
 	_velocity = new_velocity
 	
+	if position.y>1000:
+		respawn()
 
 func respawn():
 	percentage = 0
 	$Label.text = str(percentage)+"%"
 	position = Vector2(0,0)
 	_velocity = Vector2(0,0)
+	if state==1:
+		$currentAttack.interrupted = true
+		$currentAttack.endAttack(self)
 	state = 0
 	stateTimer = 0
 

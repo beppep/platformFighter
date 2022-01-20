@@ -27,5 +27,5 @@ func update(player):
 		player.anim_player.play("upb")
 
 
-func onHit():
+func onHit(name):
 	pass

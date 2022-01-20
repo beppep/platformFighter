@@ -6,6 +6,7 @@ extends Node
 # var b: String = "text"
 var hitboxes = []
 var endFrame = 100
+var fastEndFrame = 80
 var interrupted = false
 
 # Called when the node enters the scene tree for the first time.
@@ -25,26 +26,29 @@ func autoAttack(player):
 
 func endAttack(player):
 	if player.stateTimer == endFrame or interrupted:
-		player.state = 0
-		interrupted = false
-		player.anim_player.stop(true)
-		for box in get_node("../HitBoxes").get_children():
-			if(not box.is_queued_for_deletion()):
-				box.queue_free()
-		for other in get_node("/root/Node2D/Players").get_children():
-			if not other == player:
-				var replacementList = []
-				for i in other.bannedHitboxes:
-					if i[0] != player:
-						replacementList.append(i)
-				other.bannedHitboxes = replacementList
+		autoEndAttack(player)
+
+func autoEndAttack(player):
+	player.state = 0
+	interrupted = false
+	player.anim_player.stop(true)
+	for box in get_node("../HitBoxes").get_children():
+		if(not box.is_queued_for_deletion()):
+			box.queue_free()
+	for other in get_node("/root/Node2D/Players").get_children():
+		if not other == player:
+			var replacementList = []
+			for i in other.bannedHitboxes:
+				if i[0] != player:
+					replacementList.append(i)
+			other.bannedHitboxes = replacementList
 
 func update(player):
 	#print("htr")
 	pass
 
 
-func onHit():
+func onHit(name):
 	pass
 
 
