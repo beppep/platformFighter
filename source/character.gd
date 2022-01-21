@@ -63,16 +63,31 @@ func inputAction():
 	if state==3 and shieldStun < 1:
 		if not (Input.get_action_strength("p1_shield") and player_id==0 or Input.get_action_strength("p2_shield") and player_id==1):
 			shieldEnd()
+		elif (Input.get_action_strength("p1_jump") and player_id==0 or Input.get_action_strength("p2_jump") and player_id==1):
+			_velocity.y-=gravity+10
 	calculate_move_velocity()
 	if state==2:
+		z_index=0
 		var collision = move_and_collide(_velocity*1/60)
 		if collision:
 			_velocity = _velocity.bounce(collision.normal)
 			print("BOUNCE!")
-			if collision.collider.has_method("tech"):
-				collision.collider.tech()
+			
+			var blast = explosion2.instance()
+			#explosiin
+			blast.position = self.position
+			blast.scale = Vector2(2, 2)
+			get_node("/root/Node2D/fx").add_child(blast)
+			if Input.get_action_strength("p1_shield") and player_id==0 or Input.get_action_strength("p2_shield") and player_id==1:
+				tech()
 	else:
+		z_index=1
 		_velocity = move_and_slide(_velocity, Vector2.UP)
+
+func tech():
+	_velocity = Vector2(0,0)
+	state = 0
+	stateTimer = 0
 				
 func attack():
 	pass
@@ -129,6 +144,7 @@ func hitEffect():
 		#explosiin
 		blast.position = self.position
 		blast.scale = Vector2(kb*0.02, kb*0.02)
+		blast.z_index = -2
 		get_node("/root/Node2D/fx").add_child(blast)
 	
 		
@@ -142,7 +158,15 @@ func hitEffect():
 			shieldHealth=0
 			$Shield.visible = false
 			state=2
-			totalHitstun=60*3
+			stateTimer=0
+			totalHitstun=180
+			_velocity = Vector2(0,-1000)
+			
+			anim_player.stop(true) #resets animation
+			anim_player.play("standing")
+			anim_player.stop()
+			anim_player.play("stunned")
+			
 		print(shieldHealth/(2*shieldHealthMax))
 		$Shield.scale=Vector2(shieldHealth/(2*shieldHealthMax),shieldHealth/(2*shieldHealthMax))
 		print($Shield.scale)
@@ -165,6 +189,8 @@ func hitEffect():
 		if hitPause<=0:
 			hitPause=0
 			anim_player.play()
+			if state==2:
+				anim_player.play("stunned")
 
 func get_direction():
 	if player_id==0:
@@ -233,6 +259,7 @@ func calculate_move_velocity():
 
 func respawn():
 	percentage = 0
+	shieldHealth = shieldHealthMax
 	$Label.text = str(percentage)+"%"
 	position = Vector2(0,0)
 	_velocity = Vector2(0,0)

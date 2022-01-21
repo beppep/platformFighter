@@ -15,7 +15,7 @@ func _ready() -> void:
 			"name":"0",
 			"group":1,
 			"damage":8,
-			"start":6,
+			"start":5,
 			"end":12,
 			"kb":150,
 			"kbscaling":0.5,

@@ -14,6 +14,7 @@ var dair = load("res://source/characters/Froat/dair.gd")
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	player_id = 1
+	pass
 
 
 func attack():

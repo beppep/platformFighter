@@ -1,0 +1,227 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://assets/lizard/lick.png" type="Texture" id=1]
+[ext_resource path="res://source/characters/Lizard/Lizard.gd" type="Script" id=2]
+[ext_resource path="res://assets/lizard/prekick.png" type="Texture" id=3]
+[ext_resource path="res://assets/shield.png" type="Texture" id=4]
+[ext_resource path="res://assets/lizard/kick.png" type="Texture" id=5]
+[ext_resource path="res://assets/lizard/prelick.png" type="Texture" id=6]
+[ext_resource path="res://assets/lizard/idle.png" type="Texture" id=7]
+[ext_resource path="res://assets/lizard/stunned.png" type="Texture" id=8]
+[ext_resource path="res://assets/lizard/prepunch.png" type="Texture" id=9]
+[ext_resource path="res://assets/lizard/midpunch.png" type="Texture" id=10]
+[ext_resource path="res://assets/lizard/punch.png" type="Texture" id=11]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 4.10274, 4.83219 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "bair"
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.133333, 0.216667 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 3 ), ExtResource( 5 ), ExtResource( 7 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("sprite:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "double_jump"
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprite:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.233333, 0.466667 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 200.9, 360.0 ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "lick"
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.0833333, 0.233333, 0.316667 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 6 ), ExtResource( 1 ), ExtResource( 6 ), ExtResource( 7 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("sprite:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "punch"
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.0833333, 0.216667, 0.316667 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 10 ), ExtResource( 7 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("sprite:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "standing"
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 7 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("sprite:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "stunned"
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 8 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("sprite:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.983333 ),
+"transitions": PoolRealArray( 0.615572, 1 ),
+"update": 0,
+"values": [ 0.0, -360.0 ]
+}
+
+[node name="Lizard" type="KinematicBody2D"]
+collision_layer = 2
+script = ExtResource( 2 )
+groundspeed = 120.0
+jumpspeed = 1500.0
+groundfriction = 0.9
+airfriction = 0.96
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2( 6, 10 )
+shape = SubResource( 1 )
+
+[node name="sprite" type="Sprite" parent="."]
+scale = Vector2( 8, 8 )
+texture = ExtResource( 7 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/bair = SubResource( 2 )
+anims/double_jump = SubResource( 3 )
+anims/lick = SubResource( 4 )
+anims/punch = SubResource( 6 )
+anims/standing = SubResource( 7 )
+anims/stunned = SubResource( 5 )
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+scale = Vector2( 6, 10 )
+shape = SubResource( 1 )
+
+[node name="HitBoxes" type="Node2D" parent="."]
+
+[node name="currentAttack" type="Node" parent="."]
+
+[node name="Shield" type="Sprite" parent="."]
+visible = false
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 4 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = -50.0
+margin_top = -100.0
+margin_bottom = -80.0
+grow_horizontal = 2
+rect_scale = Vector2( 2, 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
