@@ -20,7 +20,6 @@ func autoAttack(player):
 			createHitBox(h)
 		if h["end"] == player.stateTimer:
 			var i = get_node("../HitBoxes/"+h["name"])
-			print(i, player.stateTimer)
 			if(not i.is_queued_for_deletion()):
 				i.queue_free()
 
@@ -48,8 +47,8 @@ func update(player):
 	pass
 
 
-func onHit(name):
-	pass
+func onHit(name, target):
+	endFrame = fastEndFrame
 
 
 func createHitBox(h):

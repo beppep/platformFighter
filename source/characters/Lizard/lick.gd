@@ -37,6 +37,6 @@ func update(player):
 		player.anim_player.play("lick")
 
 
-func onHit(name):
+func onHit(name, target):
 	if name=="1":
 		endFrame = fastEndFrame

@@ -5,6 +5,8 @@ var dtilt = load("res://source/characters/Froat/dtilt.gd")
 var bash = load("res://source/characters/Froat/bash.gd")
 var uair = load("res://source/characters/Froat/uair.gd")
 var dair = load("res://source/characters/Froat/dair.gd")
+var ramm = load("res://source/characters/Froat/ramm.gd")
+var upb = load("res://source/characters/Froat/upb.gd")
 #var utilt = load("res://source/characters/Froat/utilt.gd")
 # Declare member variables here. Examples:
 # var a: int = 2
@@ -36,6 +38,18 @@ func attack():
 			$currentAttack.set_script(dtilt)
 		else:
 			$currentAttack.set_script(jab)
+	$currentAttack._ready()
+	
+func special():
+	state = 1
+	stateTimer = 0
+	if not is_on_floor():
+		if direction.y<0:
+			$currentAttack.set_script(upb)
+		else:
+			$currentAttack.set_script(ramm)
+	else:
+		$currentAttack.set_script(ramm)
 	$currentAttack._ready()
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.

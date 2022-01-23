@@ -174,9 +174,9 @@ tracks/1/keys = {
 [node name="Lizard" type="KinematicBody2D"]
 collision_layer = 2
 script = ExtResource( 2 )
-groundspeed = 120.0
+groundspeed = 140.0
 jumpspeed = 1500.0
-groundfriction = 0.9
+groundfriction = 0.85
 airfriction = 0.96
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

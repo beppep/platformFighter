@@ -8,33 +8,20 @@ extends "../Attack.gd"
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	endFrame = 40
-	fastEndFrame = 30
+	endFrame = 48
+	fastEndFrame = 36
 	hitboxes = [
 		{
 			"name":"0",
 			"group":1,
-			"damage":4,
-			"start":6,
-			"end":10,
-			"kb":70,
-			"kbscaling":0.1,
-			"angle":90,
-			"shapes":[
-				[24,24,10,60]
-			]
-		},
-		{
-			"name":"1",
-			"group":2,
-			"damage":7,
-			"start":20,
-			"end":26,
+			"damage":15,
+			"start":19,
+			"end":33,
 			"kb":100,
-			"kbscaling":0.3,
-			"angle":80,
+			"kbscaling":1,
+			"angle":45,
 			"shapes":[
-				[24,24,10,60]
+				[28,28,30,0]
 			]
 		},
 	]
@@ -43,12 +30,18 @@ func update(player):
 	autoAttack(player)
 	if player.stateTimer==0:
 		player.anim_player.stop(true) #resets animation
-		player.anim_player.play("dair")
-	if player.is_on_floor():
-		interrupted = true
+		player.anim_player.play("ramm")
+		if player.is_on_floor():
+			hitboxes[0]["kbscaling"]=3
+			hitboxes[0]["end"]=26
+		else:
+			hitboxes[0]["kbscaling"]=1.5
+			hitboxes[0]["end"]=33
+	if player.stateTimer==10:
+		player._velocity = Vector2(800*player.scale.y, -600)
 
 
 func onHit(name, target):
 	get_parent()._velocity.y=-800#-400*int(name)
-	if name=="1":
-		endFrame = fastEndFrame #warning
+	endFrame = fastEndFrame #warning
+		

@@ -40,5 +40,5 @@ func endAttack(player):
 		autoEndAttack(player)
 		#player.groundfriction = 0.8 #original friction
 
-func onHit(name):
+func onHit(name, target):
 	endFrame = fastEndFrame

@@ -50,6 +50,6 @@ func update(player):
 		player.anim_player.play("punchin")
 
 
-func onHit(name):
+func onHit(name, target):
 	if name=="1":
 		endFrame = fastEndFrame

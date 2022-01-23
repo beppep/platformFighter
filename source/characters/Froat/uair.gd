@@ -34,6 +34,6 @@ func update(player):
 	if player.is_on_floor():
 		interrupted = true
 
-func onHit(name):
+func onHit(name, target):
 	if name=="0":
 		endFrame = fastEndFrame #warning

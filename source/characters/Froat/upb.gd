@@ -10,7 +10,7 @@ extends "../Attack.gd"
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	
-	endFrame = 60
+	endFrame = 90
 	hitboxes = [
 	]
 
@@ -18,12 +18,11 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func update(player):
 	autoAttack(player)
-	if player.stateTimer==20:
-		player.position.y-=300
-		player._velocity.y = -1000
+	if player.stateTimer<50:
+		player._velocity.y = -500
 	if player.stateTimer==0:
-		player._velocity.y = -1000
 		player.anim_player.stop(true) #resets animation
-		player.anim_player.play("upb")
+		player.anim_player.play("double_jump")
+
 
 

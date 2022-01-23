@@ -58,6 +58,3 @@ func update(player):
 		player.anim_player.stop(true) #resets animation
 		player.anim_player.play("bash")
 
-
-func onHit(name):
-	endFrame = fastEndFrame

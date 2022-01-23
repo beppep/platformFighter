@@ -32,6 +32,6 @@ func update(player):
 		player.anim_player.stop(true) #resets animation
 		player.anim_player.play("hair")
 
-func onHit(name):
+func onHit(name, target):
 	if name=="0":
 		endFrame = fastEndFrame

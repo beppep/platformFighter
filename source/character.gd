@@ -54,6 +54,8 @@ func inputAction():
 	if state==0:
 		if Input.get_action_strength("p1_a") and player_id==0 or Input.get_action_strength("p2_a") and player_id==1:
 			attack()
+		if Input.get_action_strength("p1_b") and player_id==0 or Input.get_action_strength("p2_b") and player_id==1:
+			special()
 		elif Input.get_action_strength("p1_shield") and player_id==0 or Input.get_action_strength("p2_shield") and player_id==1:
 			shield()
 	if state==1:
@@ -91,8 +93,10 @@ func tech():
 				
 func attack():
 	pass
+func special():
+	pass
 func shield():
-	_velocity.y=100
+	_velocity.y=-100
 	state = 3
 	stateTimer = 0
 	$Shield.visible = true
@@ -109,7 +113,7 @@ func hitCollision():
 		var kb = data["kb"] + data["kbscaling"]*percentage
 		nextFrameHitPause += kb*0.1 #+= for trades and stuff?
 		opponent.nextFrameHitPause += kb*0.1
-		get_node("../"+opponent.name+"/currentAttack").onHit(data["name"])
+		get_node("../"+opponent.name+"/currentAttack").onHit(data["name"], self)
 func hitEffect():
 	
 	if state==1:
@@ -167,9 +171,7 @@ func hitEffect():
 			anim_player.stop()
 			anim_player.play("stunned")
 			
-		print(shieldHealth/(2*shieldHealthMax))
 		$Shield.scale=Vector2(shieldHealth/(2*shieldHealthMax),shieldHealth/(2*shieldHealthMax))
-		print($Shield.scale)
 	else:
 		if(shieldHealth<shieldHealthMax):
 			shieldHealth+=0.5
@@ -278,7 +280,6 @@ func CheckHurtBoxes() -> Array:
 		if opponent != self:
 			var data = get_node("../"+opponent.name+"/currentAttack").hitboxes[int(hitbox["name"])] #invalid get index 169 on base array apparently
 			if not [opponent, data["group"]] in bannedHitboxes:
-				print(data, opponent.stateTimer)
 				HitActors.append([data,opponent])
 				bannedHitboxes.append([opponent,data["group"]])
 			else:
