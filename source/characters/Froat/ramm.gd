@@ -17,7 +17,7 @@ func _ready() -> void:
 			"damage":15,
 			"start":19,
 			"end":33,
-			"kb":100,
+			"kb":50,
 			"kbscaling":1,
 			"angle":45,
 			"shapes":[
@@ -41,7 +41,7 @@ func update(player):
 		player._velocity = Vector2(800*player.scale.y, -600)
 
 
-func onHit(name, target):
+func onHit(name, target, shielded=false):
 	get_parent()._velocity.y=-800#-400*int(name)
-	endFrame = fastEndFrame #warning
+	endFrame = fastEndFrame
 		

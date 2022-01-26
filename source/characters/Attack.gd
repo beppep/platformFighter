@@ -47,7 +47,7 @@ func update(player):
 	pass
 
 
-func onHit(name, target):
+func onHit(name, target, shielded=false):
 	endFrame = fastEndFrame
 
 

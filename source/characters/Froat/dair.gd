@@ -48,7 +48,9 @@ func update(player):
 		interrupted = true
 
 
-func onHit(name, target):
+
+func onHit(name, target, shielded=false):
+	print("shield")
 	get_parent()._velocity.y=-800#-400*int(name)
 	if name=="1":
-		endFrame = fastEndFrame #warning
+		endFrame = fastEndFrame

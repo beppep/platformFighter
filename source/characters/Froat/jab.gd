@@ -8,8 +8,8 @@ extends "../Attack.gd"
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	endFrame = 20
-	fastEndFrame = 14
+	endFrame = 16
+	fastEndFrame = 11
 	hitboxes = [
 		{
 			"name":"0",
@@ -31,8 +31,3 @@ func update(player):
 	if player.stateTimer==0:
 		player.anim_player.stop(true) #resets animation (noot
 		player.anim_player.play("jab")
-
-
-func onHit(name, target):
-	if name=="0":
-		endFrame = fastEndFrame

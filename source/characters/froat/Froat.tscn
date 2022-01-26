@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://assets/Froat/jump.png" type="Texture" id=1]
 [ext_resource path="res://source/characters/Froat/Froat.gd" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://assets/Froat/idle.png" type="Texture" id=5]
 [ext_resource path="res://assets/Froat/jab.png" type="Texture" id=6]
 [ext_resource path="res://assets/Froat/dtilt.png" type="Texture" id=7]
+[ext_resource path="res://assets/Froat/utilt.png" type="Texture" id=8]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -178,8 +179,35 @@ tracks/1/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="Animation" id=11]
-resource_name = "ramm"
+[sub_resource type="Animation" id=8]
+resource_name = "nair"
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.233333 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 6 ), ExtResource( 5 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("sprite:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.0333333, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, 360.0 ]
+}
+
+[sub_resource type="Animation" id=9]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:texture")
@@ -206,7 +234,7 @@ tracks/1/keys = {
 "values": [ 0.0, -58.6, 41.9 ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=10]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:texture")
@@ -233,7 +261,7 @@ tracks/1/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=11]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:texture")
@@ -260,20 +288,48 @@ tracks/1/keys = {
 "values": [ 0.0, 143.7, 157.4, 360.0 ]
 }
 
-[sub_resource type="RectangleShape2D" id=10]
+[sub_resource type="Animation" id=12]
+resource_name = "utilt"
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.133333, 0.25 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 6 ), ExtResource( 8 ), ExtResource( 5 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("sprite:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.133333, 0.25, 0.316667 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -44.3, 26.0, 0.0 ]
+}
+
+[sub_resource type="RectangleShape2D" id=13]
 
 [node name="Froat" type="KinematicBody2D"]
 collision_layer = 2
 script = ExtResource( 2 )
+jumpspeed = 2000.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2( 3, 4 )
 shape = SubResource( 1 )
 
 [node name="sprite" type="Sprite" parent="."]
-rotation = 0.731293
 scale = Vector2( 1.2, 1.2 )
-texture = ExtResource( 1 )
+texture = ExtResource( 5 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/bash = SubResource( 2 )
@@ -282,9 +338,11 @@ anims/double_jump = SubResource( 4 )
 anims/dtilt = SubResource( 5 )
 anims/jab = SubResource( 6 )
 anims/jump = SubResource( 7 )
-anims/ramm = SubResource( 11 )
-anims/standing = SubResource( 8 )
-anims/uair = SubResource( 9 )
+anims/nair = SubResource( 8 )
+anims/ramm = SubResource( 9 )
+anims/standing = SubResource( 10 )
+anims/uair = SubResource( 11 )
+anims/utilt = SubResource( 12 )
 
 [node name="HurtBox" type="Area2D" parent="."]
 collision_layer = 0
@@ -292,7 +350,7 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 scale = Vector2( 4, 4 )
-shape = SubResource( 10 )
+shape = SubResource( 13 )
 
 [node name="HitBoxes" type="Node2D" parent="."]
 

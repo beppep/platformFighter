@@ -17,8 +17,8 @@ func _ready() -> void:
 			"damage":11,
 			"start":7,
 			"end":20,
-			"kb":200,
-			"kbscaling":0.5,
+			"kb":150,
+			"kbscaling":1.5,
 			"angle":80,
 			"shapes":[
 				[24,40,10,-74]
@@ -34,6 +34,3 @@ func update(player):
 	if player.is_on_floor():
 		interrupted = true
 
-func onHit(name, target):
-	if name=="0":
-		endFrame = fastEndFrame #warning

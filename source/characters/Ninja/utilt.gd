@@ -31,7 +31,3 @@ func update(player):
 	if player.stateTimer==0:
 		player.anim_player.stop(true) #resets animation
 		player.anim_player.play("utilt")
-
-func onHit(name, target):
-	if name=="0":
-		endFrame = fastEndFrame #warning

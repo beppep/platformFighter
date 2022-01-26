@@ -14,9 +14,6 @@ func _ready():
 
 
 func attack():
-	percentage=98
-	print(percentage)
-	_velocity = Vector2(0,0)
 	state = 1
 	stateTimer = 0
 	if not is_on_floor():

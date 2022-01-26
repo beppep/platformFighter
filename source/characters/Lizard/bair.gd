@@ -39,6 +39,3 @@ func update(player):
 		interrupted = true
 
 
-func onHit(name, target):
-	if name=="1":
-		endFrame = fastEndFrame

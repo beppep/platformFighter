@@ -9,7 +9,7 @@ extends "../Attack.gd"
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	endFrame = 40
-	fastEndFrame = 32
+	fastEndFrame = 30
 	hitboxes = [
 		{
 			"name":"0",
@@ -17,8 +17,8 @@ func _ready() -> void:
 			"damage":17,
 			"start":15,
 			"end":17,
-			"kb":100,
-			"kbscaling":1,
+			"kb":90,
+			"kbscaling":2,
 			"angle":-30,
 			"shapes":[
 				[24,24,30,0]

@@ -8,8 +8,8 @@ extends "../Attack.gd"
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	endFrame = 27
-	fastEndFrame = 20
+	endFrame = 23
+	fastEndFrame = 16
 	hitboxes = [
 		{
 			"name":"0",
@@ -31,14 +31,5 @@ func update(player):
 	if player.stateTimer==0:
 		player.anim_player.stop(true) #resets animation (nooooot)
 		player.anim_player.play("dtilt")
-		#player.groundfriction = 0.95
 	if not player.is_on_floor():
 		interrupted = true
-
-func endAttack(player):
-	if player.stateTimer == endFrame or interrupted:
-		autoEndAttack(player)
-		#player.groundfriction = 0.8 #original friction
-
-func onHit(name, target):
-	endFrame = fastEndFrame

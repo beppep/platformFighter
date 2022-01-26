@@ -35,8 +35,3 @@ func update(player):
 	if player.stateTimer==0:
 		player.anim_player.stop(true) #resets animation
 		player.anim_player.play("lick")
-
-
-func onHit(name, target):
-	if name=="1":
-		endFrame = fastEndFrame

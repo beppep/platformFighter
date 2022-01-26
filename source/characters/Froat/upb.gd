@@ -23,6 +23,7 @@ func update(player):
 	if player.stateTimer==0:
 		player.anim_player.stop(true) #resets animation
 		player.anim_player.play("double_jump")
-
+	if player.stateTimer==56:
+		player.can_walljump = true
 
 

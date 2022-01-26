@@ -5,6 +5,8 @@ extends Node2D
 # var a: int = 2
 # var b: String = "text"
 
+#onready var audioPlayer: AudioStreamPlayer = get_node("AudioStreamPlayer") 
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
