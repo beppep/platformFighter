@@ -1,4 +1,4 @@
-extends "../Attack.gd"
+extends "res://source/characters/Attack.gd"
 
 
 
@@ -49,4 +49,7 @@ func update(player):
 func onHit(name, target, shielded=false):
 	endFrame = fastEndFrame
 	if not shielded:
-		target._velocity += get_parent()._velocity*(1+target.percentage)/50
+		if "percentage" in target:
+			target.kb_vector += get_parent()._velocity*(100+target.percentage)/50
+		else:
+			target.kb_vector += get_parent()._velocity*(100)/50

@@ -1,11 +1,10 @@
-extends "../Attack.gd"
+extends "res://source/characters/Attack.gd"
 
 
 # Declare member variables here. Examples:
 # var a: int = 2
 # var b: String = "text"
-var eye = load("res://source/things/goateye.tscn")
-
+var arrow = load("res://source/characters/Froat/arrow.tscn")
 
 
 # Called when the node enters the scene tree for the first time.
@@ -21,15 +20,14 @@ func update(player):
 	autoAttack(player)
 	if player.stateTimer==0:
 		player.anim_player.stop(true) #resets animation
-		player.anim_player.play("standing")
-	if player.stateTimer<20:
-		player._velocity = Vector2(0,0)
+		player.anim_player.play("jab")
 	if player.stateTimer==10:
-		var goateye = eye.instance()
-		#goateye
-		goateye.position = player.position
-		goateye.scale = Vector2(2, 2)
-		get_node("/root/Node2D/fx").add_child(goateye)
-		goateye.z_index = 2
+		
+		var arow = arrow.instance()
+		arow.position = player.position
+		arow.team = player.team
+		arow.scale.x = player.scale.y
+		arow._velocity = Vector2(400*player.scale.y,-200)
+		$"/root/Node2D/Articles".add_child(arow)
 
 

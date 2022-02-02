@@ -24,6 +24,10 @@ config/name="platform fighter?"
 run/main_scene="res://source/mainstage.tscn"
 config/icon="res://icon.png"
 
+[display]
+
+window/size/borderless=true
+
 [input]
 
 p1_left={

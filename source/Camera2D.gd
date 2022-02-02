@@ -18,6 +18,7 @@ func _process(delta: float) -> void:
 		pos += player.position
 	pos = pos / len(players) # just average pos
 	set_offset( pos*0.05 + get_offset()*0.95 )
+	$"/root/Node2D/CanvasLayer".offset = -pos/10
 	var zoom = players[0].position.distance_to(players[1].position)*0.001 + 0.5
 	zoom = Vector2(zoom,zoom)
 	if zoom>get_zoom():

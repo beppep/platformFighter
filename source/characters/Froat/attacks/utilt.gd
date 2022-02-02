@@ -1,4 +1,4 @@
-extends "../Attack.gd"
+extends "res://source/characters/Attack.gd"
 
 
 # Declare member variables here. Examples:
@@ -8,20 +8,20 @@ extends "../Attack.gd"
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	endFrame = 38
-	fastEndFrame = 28
+	endFrame = 23
+	fastEndFrame = 17
 	hitboxes = [
 		{
 			"name":"0",
 			"group":1,
-			"damage":11,
-			"start":7,
-			"end":20,
+			"damage":7,
+			"start":8,
+			"end":14,
 			"kb":150,
-			"kbscaling":1.5,
-			"angle":80,
+			"kbscaling":0.5,
+			"angle":85,
 			"shapes":[
-				[24,40,10,-74]
+				[44,32,3,-43]
 			]
 		},
 	]
@@ -29,8 +29,7 @@ func _ready() -> void:
 func update(player):
 	autoAttack(player)
 	if player.stateTimer==0:
-		player.anim_player.stop(true) #resets animation
-		player.anim_player.play("uair")
-	if player.is_on_floor():
+		player.anim_player.stop(true) #resets animation (nooooot)
+		player.anim_player.play("utilt")
+	if not player.is_on_floor():
 		interrupted = true
-

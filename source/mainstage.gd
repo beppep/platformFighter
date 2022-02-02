@@ -16,9 +16,10 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
 	var players = $Players.get_children()
-	for player in players:
+	var articles = $Articles.get_children()
+	for player in players+articles:
 		player.inputAction() #never check anything here
-	for player in players:
+	for player in players+articles:
 		player.hitCollision() #only check things here
-	for player in players:
+	for player in players+articles:
 		player.hitEffect() #never check anything here

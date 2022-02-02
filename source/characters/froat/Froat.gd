@@ -1,16 +1,17 @@
 extends Character
 
-var jab = load("res://source/characters/Froat/jab.gd")
-var dtilt = load("res://source/characters/Froat/dtilt.gd")
-var utilt = load("res://source/characters/Froat/utilt.gd")
-var bash = load("res://source/characters/Froat/bash.gd")
-var uair = load("res://source/characters/Froat/uair.gd")
-var dair = load("res://source/characters/Froat/dair.gd")
-var ramm = load("res://source/characters/Froat/ramm.gd")
-var upb = load("res://source/characters/Froat/upb.gd")
-var spin = load("res://source/characters/Froat/spin.gd")
-var eye = load("res://source/characters/Froat/eye.gd")
-#var utilt = load("res://source/characters/Froat/utilt.gd")
+var jab = load("res://source/characters/Froat/attacks/jab.gd")
+var dtilt = load("res://source/characters/Froat/attacks/dtilt.gd")
+var utilt = load("res://source/characters/Froat/attacks/utilt.gd")
+var bash = load("res://source/characters/Froat/attacks/bash.gd")
+var uair = load("res://source/characters/Froat/attacks/uair.gd")
+var dair = load("res://source/characters/Froat/attacks/dair.gd")
+var ramm = load("res://source/characters/Froat/attacks/ramm.gd")
+var upb = load("res://source/characters/Froat/attacks/upb.gd")
+var spin = load("res://source/characters/Froat/attacks/spin.gd")
+var eye = load("res://source/characters/Froat/attacks/eye.gd")
+var shoot = load("res://source/characters/Froat/attacks/shoot.gd")
+#var utilt = load("res://source/characters/Froat/attacks/utilt.gd")
 # Declare member variables here. Examples:
 # var a: int = 2
 # var b: String = "text"
@@ -30,13 +31,13 @@ func attack():
 		attackDirection = c_direction
 	else:
 		attackDirection = direction
-	if not is_on_floor():
+	if not is_on_ground:
 		if attackDirection.y<0:
 			$currentAttack.set_script(uair)
 		elif attackDirection.y>0:
 			$currentAttack.set_script(dair)
 		elif attackDirection.x*self.scale.y==0:
-			$currentAttack.set_script(jab)
+			$currentAttack.set_script(spin)
 		else:
 			$currentAttack.set_script(bash)
 	else:
@@ -60,7 +61,7 @@ func special():
 		elif direction.y>0:
 			$currentAttack.set_script(eye)
 		elif direction.x*self.scale.y==0:
-			$currentAttack.set_script(spin)
+			$currentAttack.set_script(shoot)
 		else:
 			$currentAttack.set_script(ramm)
 	else:

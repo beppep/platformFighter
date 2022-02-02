@@ -23,4 +23,4 @@ func _process(delta: float) -> void:
 		scale.x-=0.05
 		scale.y-=0.05
 		if scale.x<=0:
-			self.queue_free()
+			queue_free()
