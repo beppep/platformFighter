@@ -97,9 +97,10 @@ func inputAction():
 				dodge()
 	if state == 4:
 		if stateTimer == 8:
-			intangible = false
-			$sprite.modulate = sprite_color
 			_velocity=Vector2.ZERO
+		if stateTimer == 20:
+			$sprite.modulate = sprite_color
+			intangible = false
 		if stateTimer>30:
 			resetToIdle()
 	if state==4 and stateTimer<8:
@@ -107,9 +108,11 @@ func inputAction():
 		var collision = move_and_collide(_velocity*1/60)
 		if collision and _velocity!=Vector2(0,0): #questionable
 			#waveland
+			$sprite.modulate = sprite_color
+			intangible = false
+			released_jump = false
 			dontShield = true
 			is_on_ground = true
-			$sprite.modulate = sprite_color
 			resetToIdle()
 	elif state==2:
 		z_index=0
@@ -194,15 +197,16 @@ func calculate_move_velocity(): #basically do movement input stuff
 	
 	# MOVE Y
 	if (Input.get_action_strength("p1_jump") and player_id==0 or Input.get_action_strength("p2_jump") and player_id==1):
-		if state == 0:
+		if released_jump == true and (state == 0): #jump out of shield for perfect wavedashes!
 			if is_on_ground:
 				_velocity.y = -jumpspeed
 				anim_player.stop(true) #resets animation
 				anim_player.play("jump")
 				released_jump = false
 				is_on_ground = false
-			elif is_on_wall():
+			elif released_jump == true and is_on_wall():
 				wallJump()
+				released_jump = false
 			elif released_jump == true and double_jump == 1:
 				_velocity.y = -jumpspeed
 				anim_player.stop(true) #resets animation
@@ -211,7 +215,7 @@ func calculate_move_velocity(): #basically do movement input stuff
 				released_jump = false
 		if state == 1 and can_walljump and is_on_wall():
 			wallJump()
-	elif not is_on_ground:
+	else:
 		released_jump = true
 
 func flip():
@@ -278,9 +282,9 @@ func shieldEnd():
 func airdodge():
 	state = 4
 	stateTimer = 0
-	intangible = true
 	$Shield.visible = false
 	$sprite.modulate = sprite_color+Color(0.5,0.5,0.5,0)
+	intangible = true
 	var dodge_direction = direction.normalized()
 	_velocity = dodge_direction*1000
 	anim_player.stop(true)
@@ -290,9 +294,9 @@ func airdodge():
 func dodge():
 	state = 4
 	stateTimer = 0
-	intangible = true
 	$Shield.visible = false
 	$sprite.modulate = sprite_color+Color(0.5,0.5,0.5,0)
+	intangible = true
 	anim_player.stop(true)
 	if direction.x!=0:
 		var dodge_direction = Vector2(direction.x,0).normalized()
