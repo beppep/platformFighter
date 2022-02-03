@@ -8,33 +8,33 @@ extends "res://source/characters/Attack.gd"
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	endFrame = 40
-	fastEndFrame = 30
+	endFrame = 29
+	fastEndFrame = 20
 	hitboxes = [
 		{
 			"name":"0",
 			"group":1,
-			"damage":4,
-			"start":6,
-			"end":10,
-			"kb":70,
+			"damage":2,
+			"start":4,
+			"end":6,
+			"kb":20,
 			"kbscaling":0.1,
 			"angle":90,
 			"shapes":[
-				[24,24,10,60]
+				[30,16,48,-8]
 			]
 		},
 		{
 			"name":"1",
 			"group":2,
-			"damage":7,
-			"start":20,
-			"end":26,
-			"kb":100,
+			"damage":6,
+			"start":8,
+			"end":11,
+			"kb":80,
 			"kbscaling":0.3,
-			"angle":80,
+			"angle":130,
 			"shapes":[
-				[24,24,10,60]
+				[34,20,48,-8]
 			]
 		},
 	]
@@ -42,15 +42,9 @@ func _ready() -> void:
 func update(player):
 	autoAttack(player)
 	if player.stateTimer==0:
-		player.anim_player.stop(true) #resets animation
-		player.anim_player.play("dair")
-	if player.is_on_floor():
-		interrupted = true
-
-
+		player.anim_player.stop(true) #resets animation (noot
+		player.anim_player.play("ftilt")
 
 func onHit(name, target, shielded=false):
-	print("shield")
-	get_parent()._velocity.y=-800#-400*int(name)
 	if name=="1" and not shielded:
 		endFrame = fastEndFrame

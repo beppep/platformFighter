@@ -246,7 +246,7 @@ tracks/1/keys = {
 "values": [ 0.0, -58.6, 41.9 ]
 }
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=10]
 resource_name = "roll"
 step = 0.0166667
 tracks/0/type = "value"
@@ -274,8 +274,7 @@ tracks/1/keys = {
 "values": [ 0.0, -360.0 ]
 }
 
-[sub_resource type="Animation" id=10]
-resource_name = "shake"
+[sub_resource type="Animation" id=11]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:position")
@@ -290,7 +289,7 @@ tracks/0/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 44, 22 ), Vector2( -20, -40 ), Vector2( -0.25, 33.25 ), Vector2( -3, -28.25 ), Vector2( 28.5, -5.5 ), Vector2( -15.5, -1.75 ) ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=12]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:texture")
@@ -317,8 +316,7 @@ tracks/1/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="Animation" id=12]
-resource_name = "stunned"
+[sub_resource type="Animation" id=13]
 length = 1.06667
 step = 0.0166667
 tracks/0/type = "value"
@@ -358,7 +356,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=14]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:texture")
@@ -385,7 +383,7 @@ tracks/1/keys = {
 "values": [ 0.0, 143.7, 157.4, 360.0 ]
 }
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=15]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:texture")
@@ -412,21 +410,22 @@ tracks/1/keys = {
 "values": [ 0.0, -44.3, 26.0, 0.0 ]
 }
 
-[sub_resource type="RectangleShape2D" id=15]
+[sub_resource type="RectangleShape2D" id=16]
 
 [node name="Froat" type="KinematicBody2D"]
 collision_layer = 2
 script = ExtResource( 2 )
+groundspeed = 80.0
 jumpspeed = 2000.0
+groundfriction = 0.85
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2( 3, 4 )
 shape = SubResource( 1 )
 
 [node name="sprite" type="Sprite" parent="."]
-rotation = -6.28319
 scale = Vector2( 1.2, 1.2 )
-texture = ExtResource( 5 )
+texture = ExtResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/bash = SubResource( 2 )
@@ -437,12 +436,12 @@ anims/jab = SubResource( 6 )
 anims/jump = SubResource( 7 )
 anims/nair = SubResource( 8 )
 anims/ramm = SubResource( 9 )
-anims/roll = SubResource( 16 )
-anims/shake = SubResource( 10 )
-anims/standing = SubResource( 11 )
-anims/stunned = SubResource( 12 )
-anims/uair = SubResource( 13 )
-anims/utilt = SubResource( 14 )
+anims/roll = SubResource( 10 )
+anims/shake = SubResource( 11 )
+anims/standing = SubResource( 12 )
+anims/stunned = SubResource( 13 )
+anims/uair = SubResource( 14 )
+anims/utilt = SubResource( 15 )
 
 [node name="HurtBox" type="Area2D" parent="."]
 collision_layer = 0
@@ -450,7 +449,7 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 scale = Vector2( 4, 4 )
-shape = SubResource( 15 )
+shape = SubResource( 16 )
 
 [node name="HitBoxes" type="Node2D" parent="."]
 

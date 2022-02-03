@@ -41,6 +41,7 @@ var shieldStun = 0
 var kb_vector = Vector2(0,0)
 var intangible = false
 var is_on_ground = true
+var dontShield = true
 
 onready var anim_player: AnimationPlayer = get_node("AnimationPlayer") #basically just declared in _ready func
 
@@ -66,16 +67,19 @@ func inputAction():
 	if hitPause:
 		return
 	
-	if not (state==4 and stateTimer<20):
+	if not (state==4 and stateTimer<8):
 		calculate_move_velocity()
 	# options
 	if state==0:
 		if Input.get_action_strength("p1_shield") and player_id==0 or Input.get_action_strength("p2_shield") and player_id==1:
-			shield()
-		elif Input.get_action_strength("p1_a") and player_id==0 or Input.get_action_strength("p2_a") and player_id==1 or c_direction!=Vector2(0,0):
-			attack()
-		elif Input.get_action_strength("p1_b") and player_id==0 or Input.get_action_strength("p2_b") and player_id==1:
-			special()
+			if not dontShield:
+				shield()
+		else:
+			dontShield = false
+			if Input.get_action_strength("p1_a") and player_id==0 or Input.get_action_strength("p2_a") and player_id==1 or c_direction!=Vector2(0,0):
+				attack()
+			elif Input.get_action_strength("p1_b") and player_id==0 or Input.get_action_strength("p2_b") and player_id==1:
+				special()
 	if state==1:
 		#print(currentAttack.get_script_method_list())
 		#print(ClassDB.class_exists("jab"))
@@ -83,7 +87,7 @@ func inputAction():
 	if state==3 and shieldStun < 1:
 		if not (Input.get_action_strength("p1_shield") and player_id==0 or Input.get_action_strength("p2_shield") and player_id==1):
 			shieldEnd()
-		elif (Input.get_action_strength("p1_jump") and player_id==0 or Input.get_action_strength("p2_jump") and player_id==1):
+		elif not is_on_ground and (Input.get_action_strength("p1_jump") and player_id==0 or Input.get_action_strength("p2_jump") and player_id==1):
 			_velocity.y-=gravity+20
 			_velocity.x*=0.95
 			shieldHealth-=1
@@ -92,15 +96,19 @@ func inputAction():
 			if direction.y>0 or direction.x!=0:
 				dodge()
 	if state == 4:
-		if stateTimer == 20:
+		if stateTimer == 8:
 			intangible = false
 			$sprite.modulate = sprite_color
+			_velocity=Vector2.ZERO
 		if stateTimer>30:
 			resetToIdle()
-	if state==4 and stateTimer<20:
+	if state==4 and stateTimer<8:
 		z_index=0
 		var collision = move_and_collide(_velocity*1/60)
 		if collision and _velocity!=Vector2(0,0): #questionable
+			#waveland
+			dontShield = true
+			is_on_ground = true
 			$sprite.modulate = sprite_color
 			resetToIdle()
 	elif state==2:
@@ -256,14 +264,28 @@ func attack():
 func special():
 	pass
 func shield():
-	_velocity.y=-100
-	state = 3
-	stateTimer = 0
-	$Shield.visible = true
-	anim_player.stop(true) #resets animation
-	anim_player.play("standing")
+	if is_on_ground:
+		state = 3
+		stateTimer = 0
+		$Shield.visible = true
+		anim_player.stop(true) #resets animation
+		anim_player.play("standing")
+	else:
+		airdodge()
 func shieldEnd():
 	resetToIdle()
+
+func airdodge():
+	state = 4
+	stateTimer = 0
+	intangible = true
+	$Shield.visible = false
+	$sprite.modulate = sprite_color+Color(0.5,0.5,0.5,0)
+	var dodge_direction = direction.normalized()
+	_velocity = dodge_direction*1000
+	anim_player.stop(true)
+	anim_player.play("roll")
+	
 
 func dodge():
 	state = 4
@@ -274,7 +296,7 @@ func dodge():
 	anim_player.stop(true)
 	if direction.x!=0:
 		var dodge_direction = Vector2(direction.x,0).normalized()
-		_velocity = dodge_direction*200
+		_velocity = dodge_direction*1000
 		scale.x = -scale.y*dodge_direction.x #flip to backwards
 		anim_player.play("roll")
 	else:

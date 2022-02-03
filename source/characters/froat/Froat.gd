@@ -21,6 +21,13 @@ var shoot = load("res://source/characters/Froat/attacks/shoot.gd")
 func _ready() -> void:
 	pass
 
+func airdodge():
+	_velocity.y=-100
+	state = 3
+	stateTimer = 0
+	$Shield.visible = true
+	anim_player.stop(true) #resets animation
+	anim_player.play("standing")
 
 func attack():
 	can_walljump = false
@@ -31,17 +38,18 @@ func attack():
 		attackDirection = c_direction
 	else:
 		attackDirection = direction
+	attackDirection.x*=self.scale.y
 	if not is_on_ground:
 		if attackDirection.y<0:
 			$currentAttack.set_script(uair)
 		elif attackDirection.y>0:
 			$currentAttack.set_script(dair)
-		elif attackDirection.x*self.scale.y==0:
+		elif attackDirection.x==0:
 			$currentAttack.set_script(spin)
 		else:
 			$currentAttack.set_script(bash)
 	else:
-		if attackDirection.x*self.scale.y>0:
+		if attackDirection.x>0:
 			$currentAttack.set_script(bash)
 		elif attackDirection.y>0:
 			$currentAttack.set_script(dtilt)
@@ -60,7 +68,7 @@ func special():
 			$currentAttack.set_script(upb)
 		elif direction.y>0:
 			$currentAttack.set_script(eye)
-		elif direction.x*self.scale.y==0:
+		elif direction.x==0:
 			$currentAttack.set_script(shoot)
 		else:
 			$currentAttack.set_script(ramm)

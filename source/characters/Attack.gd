@@ -48,7 +48,8 @@ func update(player):
 
 
 func onHit(name, target, shielded=false):
-	endFrame = fastEndFrame
+	if not shielded:
+		endFrame = fastEndFrame
 
 
 func createHitBox(h):

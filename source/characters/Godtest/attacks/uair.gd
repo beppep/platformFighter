@@ -8,33 +8,33 @@ extends "res://source/characters/Attack.gd"
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	endFrame = 40
-	fastEndFrame = 30
+	endFrame = 33
+	fastEndFrame = 22
 	hitboxes = [
 		{
 			"name":"0",
-			"group":1,
-			"damage":4,
-			"start":6,
-			"end":10,
-			"kb":70,
+			"group":0,
+			"damage":3,
+			"start":5,
+			"end":8,
+			"kb":20,
 			"kbscaling":0.1,
-			"angle":90,
+			"angle":85,
 			"shapes":[
-				[24,24,10,60]
+				[20,40,20,-60]
 			]
 		},
 		{
 			"name":"1",
-			"group":2,
-			"damage":7,
-			"start":20,
-			"end":26,
-			"kb":100,
-			"kbscaling":0.3,
-			"angle":80,
+			"group":1,
+			"damage":8,
+			"start":10,
+			"end":12,
+			"kb":50,
+			"kbscaling":0.1,
+			"angle":-60,
 			"shapes":[
-				[24,24,10,60]
+				[24,44,20,-60]
 			]
 		},
 	]
@@ -43,14 +43,16 @@ func update(player):
 	autoAttack(player)
 	if player.stateTimer==0:
 		player.anim_player.stop(true) #resets animation
-		player.anim_player.play("dair")
-	if player.is_on_floor():
-		interrupted = true
+		player.anim_player.play("uair")
+	#if player.is_on_floor():
+	#	interrupted = true
 
 
 
 func onHit(name, target, shielded=false):
-	print("shield")
-	get_parent()._velocity.y=-800#-400*int(name)
+	if name=="0":
+		get_parent()._velocity.y=-100
+	if name=="1":
+		get_parent()._velocity.y=-1400
 	if name=="1" and not shielded:
 		endFrame = fastEndFrame

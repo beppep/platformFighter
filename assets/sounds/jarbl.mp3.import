@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/jarbl.mp3-8676e92c717ed1ca055736ba3e6c0fdc.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/jarbl.mp3"
+dest_files=[ "res://.import/jarbl.mp3-8676e92c717ed1ca055736ba3e6c0fdc.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -43,5 +43,7 @@ func update(player):
 
 func onHit(name, target, shielded=false):
 	get_parent()._velocity.y=-800#-400*int(name)
-	endFrame = fastEndFrame
+
+	if not shielded:
+		endFrame = fastEndFrame
 		
