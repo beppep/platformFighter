@@ -4,6 +4,7 @@ var jab = load("res://source/characters/Godtest/attacks/jab.gd")
 var uair = load("res://source/characters/Godtest/attacks/uair.gd")
 var ftilt = load("res://source/characters/Godtest/attacks/ftilt.gd")
 var bair = load("res://source/characters/Godtest/attacks/bair.gd")
+var dair = load("res://source/characters/Godtest/attacks/dair.gd")
 #var utilt = load("res://source/characters/Godtest/attacks/utilt.gd")
 # Declare member variables here. Examples:
 # var a: int = 2
@@ -28,6 +29,8 @@ func attack():
 	if not is_on_ground:
 		if attackDirection.y<0:
 			$currentAttack.set_script(uair)
+		elif attackDirection.y>0:
+			$currentAttack.set_script(dair)
 		elif attackDirection.x>0:
 			$currentAttack.set_script(ftilt)
 		elif attackDirection.x<0:

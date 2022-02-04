@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://assets/Godtest/hook.png" type="Texture" id=1]
 [ext_resource path="res://source/characters/Godtest/Godtest.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://assets/Godtest/kick.png" type="Texture" id=4]
 [ext_resource path="res://assets/Godtest/ftilt.png" type="Texture" id=5]
 [ext_resource path="res://assets/Godtest/bair.png" type="Texture" id=6]
+[ext_resource path="res://assets/Godtest/kickdown.png" type="Texture" id=7]
 [ext_resource path="res://assets/Godtest/idle.png" type="Texture" id=9]
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -24,6 +25,22 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ ExtResource( 9 ), ExtResource( 6 ), ExtResource( 9 ) ]
+}
+
+[sub_resource type="Animation" id=23]
+resource_name = "dair"
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.116667, 0.316667 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 9 ), ExtResource( 7 ), ExtResource( 9 ) ]
 }
 
 [sub_resource type="Animation" id=20]
@@ -151,6 +168,7 @@ texture = ExtResource( 9 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/bair = SubResource( 21 )
+anims/dair = SubResource( 23 )
 anims/ftilt = SubResource( 20 )
 anims/jab = SubResource( 19 )
 anims/roll = SubResource( 22 )
