@@ -220,9 +220,9 @@ func calculate_move_velocity(): #basically do movement input stuff
 
 func flip():
 	if direction.x>0:
-		scale.x = scale.y * 1
+		transform.x.x = 1
 	if direction.x<0:
-		scale.x = scale.y * -1
+		transform.x.x = -1
 
 func wallJump():
 	if state==1:

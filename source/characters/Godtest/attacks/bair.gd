@@ -18,7 +18,7 @@ func _ready() -> void:
 			"start":7,
 			"end":10,
 			"kb":90,
-			"kbscaling":1,
+			"kbscaling":2,
 			"angle":140,
 			"shapes":[
 				[7,17,-68,-10]
@@ -31,7 +31,7 @@ func _ready() -> void:
 			"start":7,
 			"end":17,
 			"kb":60,
-			"kbscaling":0.5,
+			"kbscaling":1,
 			"angle":130,
 			"shapes":[
 				[27,15,-48,-10]

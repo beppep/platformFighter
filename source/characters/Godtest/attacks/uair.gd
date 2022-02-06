@@ -31,7 +31,7 @@ func _ready() -> void:
 			"start":10,
 			"end":12,
 			"kb":50,
-			"kbscaling":0.1,
+			"kbscaling":0.5,
 			"angle":-60,
 			"shapes":[
 				[24,44,20,-60]

@@ -33,3 +33,9 @@ func update(player):
 		player.anim_player.play("dair")
 	if player.is_on_floor():
 		interrupted = true
+
+
+func onHit(name, target, shielded=false):
+	get_parent()._velocity.y=-100
+	if not shielded:
+		endFrame = fastEndFrame
