@@ -50,6 +50,6 @@ func onHit(name, target, shielded=false):
 	if not shielded:
 		endFrame = fastEndFrame
 		if "percentage" in target:
-			target.kb_vector += get_parent()._velocity*(100+target.percentage)/50
+			target.kb_vector += get_parent()._velocity*(100+target.percentage)/100
 		else:
-			target.kb_vector += get_parent()._velocity*(100)/50
+			target.kb_vector += get_parent()._velocity*(100)/100

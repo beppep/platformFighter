@@ -1,6 +1,15 @@
 extends KinematicBody2D
 class_name Character
 
+#dublehopring
+#tech yv limit min
+#tech timing
+#platform droop
+#grabs
+#jump out of shield (poggers buffer wavedash??)
+#finite downb froat
+#side b bakåt i luften
+#respawn time
 
 var explosion = load("res://source/fx/explosion.tscn")
 var explosion2 = load("res://source/fx/explosion2.tscn")
@@ -96,6 +105,10 @@ func inputAction():
 			if direction.y>0 or direction.x!=0:
 				dodge()
 	if state == 4:
+		if stateTimer < 3:
+			if is_on_ground and (Input.get_action_strength("p1_jump") and player_id==0 or Input.get_action_strength("p2_jump") and player_id==1):
+				airdodge()
+			
 		if stateTimer == 8:
 			_velocity=Vector2.ZERO
 		if stateTimer == 20:
@@ -160,7 +173,10 @@ func get_direction():
 		)
 func get_c_direction():
 	if player_id==0:
-		return Vector2(0,0)
+		return Vector2(
+			Input.get_action_strength("p1_c_right")-Input.get_action_strength("p1_c_left"),
+			Input.get_action_strength("p1_c_down")-Input.get_action_strength("p1_c_up") #is_on_floor updated by moveandslide
+		)
 	else:
 		return Vector2(
 			Input.get_action_strength("p2_c_right")-Input.get_action_strength("p2_c_left"),
@@ -280,6 +296,7 @@ func shieldEnd():
 	resetToIdle()
 
 func airdodge():
+	is_on_ground = false
 	state = 4
 	stateTimer = 0
 	$Shield.visible = false
@@ -313,7 +330,7 @@ func CheckHurtBoxes() -> Array:
 	for hitbox in $HurtBox.get_overlapping_areas():
 		var opponent=hitbox.get_parent().get_parent()
 		
-		if opponent.team != self.team:
+		if opponent.team != self.team and intangible == false:
 			var data = opponent.get_node("currentAttack").hitboxes[int(hitbox["name"])] #invalid get index 169 on base array apparently
 			if not [opponent, data["group"]] in bannedHitboxes:
 				HitActors.append([data,opponent])
@@ -330,8 +347,8 @@ func hitCollision():
 		var data = HitActors[0][0]
 		var opponent = HitActors[0][1]
 		var kb = data["kb"] + data["kbscaling"]*percentage
-		nextFrameHitPause += kb*0.1 #+= for trades and stuff?
-		opponent.nextFrameHitPause += kb*0.1
+		nextFrameHitPause += hitpauseFormula(kb) #+= for trades and stuff?
+		opponent.nextFrameHitPause += hitpauseFormula(kb)
 		
 func hitEffect():
 
@@ -419,3 +436,6 @@ func hitEffect():
 				var new_angle = kb_vector.angle() + sin(kb_vector.angle_to(direction))*0.2 #.1 to .2
 				kb_vector = Vector2(cos(new_angle), sin(new_angle))*kb_vector.length()
 				_velocity = kb_vector
+
+func hitpauseFormula(kb):
+	return min(kb*0.1,30)

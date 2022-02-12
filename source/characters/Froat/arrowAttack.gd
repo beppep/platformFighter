@@ -20,7 +20,7 @@ func _ready() -> void:
 
 
 func update(player):
-	pass
+	pass #nevercalled?
 
 func onHit(name, target, shielded=false):
 	if shielded:

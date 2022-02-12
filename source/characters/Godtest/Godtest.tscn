@@ -11,7 +11,7 @@
 
 [sub_resource type="RectangleShape2D" id=1]
 
-[sub_resource type="Animation" id=21]
+[sub_resource type="Animation" id=2]
 resource_name = "bair"
 step = 0.0166667
 tracks/0/type = "value"
@@ -27,7 +27,7 @@ tracks/0/keys = {
 "values": [ ExtResource( 9 ), ExtResource( 6 ), ExtResource( 9 ) ]
 }
 
-[sub_resource type="Animation" id=23]
+[sub_resource type="Animation" id=3]
 resource_name = "dair"
 step = 0.0166667
 tracks/0/type = "value"
@@ -43,7 +43,7 @@ tracks/0/keys = {
 "values": [ ExtResource( 9 ), ExtResource( 7 ), ExtResource( 9 ) ]
 }
 
-[sub_resource type="Animation" id=20]
+[sub_resource type="Animation" id=4]
 resource_name = "ftilt"
 step = 0.0166667
 tracks/0/type = "value"
@@ -59,7 +59,7 @@ tracks/0/keys = {
 "values": [ ExtResource( 9 ), ExtResource( 5 ), ExtResource( 9 ) ]
 }
 
-[sub_resource type="Animation" id=19]
+[sub_resource type="Animation" id=5]
 resource_name = "jab"
 step = 0.0166667
 tracks/0/type = "value"
@@ -75,7 +75,7 @@ tracks/0/keys = {
 "values": [ ExtResource( 9 ), ExtResource( 4 ), ExtResource( 9 ) ]
 }
 
-[sub_resource type="Animation" id=22]
+[sub_resource type="Animation" id=6]
 resource_name = "roll"
 step = 0.0166667
 tracks/0/type = "value"
@@ -103,7 +103,7 @@ tracks/1/keys = {
 "values": [ ExtResource( 9 ) ]
 }
 
-[sub_resource type="Animation" id=17]
+[sub_resource type="Animation" id=7]
 resource_name = "standing"
 step = 0.0166667
 tracks/0/type = "value"
@@ -131,7 +131,7 @@ tracks/1/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="Animation" id=18]
+[sub_resource type="Animation" id=8]
 resource_name = "uair"
 step = 0.0166667
 tracks/0/type = "value"
@@ -147,7 +147,7 @@ tracks/0/keys = {
 "values": [ ExtResource( 9 ), ExtResource( 1 ), ExtResource( 9 ) ]
 }
 
-[sub_resource type="RectangleShape2D" id=16]
+[sub_resource type="RectangleShape2D" id=9]
 
 [node name="Godtest" type="KinematicBody2D"]
 collision_layer = 2
@@ -167,13 +167,13 @@ scale = Vector2( 1.2, 1.2 )
 texture = ExtResource( 9 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/bair = SubResource( 21 )
-anims/dair = SubResource( 23 )
-anims/ftilt = SubResource( 20 )
-anims/jab = SubResource( 19 )
-anims/roll = SubResource( 22 )
-anims/standing = SubResource( 17 )
-anims/uair = SubResource( 18 )
+anims/bair = SubResource( 2 )
+anims/dair = SubResource( 3 )
+anims/ftilt = SubResource( 4 )
+anims/jab = SubResource( 5 )
+anims/roll = SubResource( 6 )
+anims/standing = SubResource( 7 )
+anims/uair = SubResource( 8 )
 
 [node name="HurtBox" type="Area2D" parent="."]
 collision_layer = 0
@@ -181,7 +181,7 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 scale = Vector2( 4, 4 )
-shape = SubResource( 16 )
+shape = SubResource( 9 )
 
 [node name="HitBoxes" type="Node2D" parent="."]
 

@@ -31,10 +31,10 @@ func autoEndAttack(player):
 	player.state = 0
 	interrupted = false
 	player.anim_player.stop(true)
-	for box in get_node("../HitBoxes").get_children():
+	for box in get_node("../HitBoxes").get_children(): #remove hitboxes
 		if(not box.is_queued_for_deletion()):
 			box.queue_free()
-	for other in get_node("/root/Node2D/Players").get_children():
+	for other in get_node("/root/Node2D/Players").get_children(): #remove opponents bans
 		if not other == player:
 			var replacementList = []
 			for i in other.bannedHitboxes:

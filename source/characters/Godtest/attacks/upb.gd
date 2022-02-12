@@ -6,31 +6,24 @@ extends "res://source/characters/Attack.gd"
 # var b: String = "text"
 
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	endFrame = 38
-	fastEndFrame = 28
+	
+	endFrame = 99
 	hitboxes = [
-		{
-			"name":"0",
-			"group":1,
-			"damage":11,
-			"start":7,
-			"end":20,
-			"kb":150,
-			"kbscaling":2,
-			"angle":80,
-			"shapes":[
-				[24,40,10,-74]
-			]
-		},
 	]
 
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
 func update(player):
 	autoAttack(player)
+	if player.stateTimer<50:
+		player._velocity.y = -500
 	if player.stateTimer==0:
 		player.anim_player.stop(true) #resets animation
-		player.anim_player.play("uair")
-	if player.is_on_floor():
-		interrupted = true
+		player.anim_player.play("roll")
+	if player.stateTimer==56:
+		player.can_walljump = true
+
 

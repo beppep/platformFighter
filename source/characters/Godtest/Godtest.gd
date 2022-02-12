@@ -5,6 +5,7 @@ var uair = load("res://source/characters/Godtest/attacks/uair.gd")
 var ftilt = load("res://source/characters/Godtest/attacks/ftilt.gd")
 var bair = load("res://source/characters/Godtest/attacks/bair.gd")
 var dair = load("res://source/characters/Godtest/attacks/dair.gd")
+var upb = load("res://source/characters/Godtest/attacks/upb.gd")
 #var utilt = load("res://source/characters/Godtest/attacks/utilt.gd")
 # Declare member variables here. Examples:
 # var a: int = 2
@@ -52,7 +53,7 @@ func special():
 	stateTimer = 0
 	if not is_on_floor():
 		if direction.y<0:
-			$currentAttack.set_script(jab)
+			$currentAttack.set_script(upb)
 		else:
 			$currentAttack.set_script(jab)
 	else:

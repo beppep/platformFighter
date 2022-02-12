@@ -17,9 +17,10 @@ func _process(delta: float) -> void:
 	for player in players:
 		pos += player.position
 	pos = pos / len(players) # just average pos
-	set_offset( pos*0.05 + get_offset()*0.95 )
+	set_offset( pos*0.1 + get_offset()*0.9 )
 	$"/root/Node2D/CanvasLayer".offset = -pos/10
-	var zoom = players[0].position.distance_to(players[1].position)*0.001 + 0.5
+	var zoom = max(abs(players[0].position.x-players[1].position.x), 1.5*abs(players[0].position.y-players[1].position.y))
+	zoom = zoom*0.001 + 0.5
 	zoom = Vector2(zoom,zoom)
 	if zoom>get_zoom():
 		set_zoom( zoom )

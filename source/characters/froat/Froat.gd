@@ -7,9 +7,9 @@ var bash = load("res://source/characters/Froat/attacks/bash.gd")
 var uair = load("res://source/characters/Froat/attacks/uair.gd")
 var dair = load("res://source/characters/Froat/attacks/dair.gd")
 var ramm = load("res://source/characters/Froat/attacks/ramm.gd")
-var upb = load("res://source/characters/Froat/attacks/upb.gd")
+var eye = load("res://source/characters/Froat/attacks/summon.gd")
 var spin = load("res://source/characters/Froat/attacks/spin.gd")
-var eye = load("res://source/characters/Froat/attacks/eye.gd")
+var upb = load("res://source/characters/Froat/attacks/eye.gd")
 var shoot = load("res://source/characters/Froat/attacks/shoot.gd")
 #var utilt = load("res://source/characters/Froat/attacks/utilt.gd")
 # Declare member variables here. Examples:
@@ -25,6 +25,7 @@ func airdodge():
 	_velocity.y=-100
 	state = 3
 	stateTimer = 0
+	$sprite.modulate=sprite_color
 	$Shield.visible = true
 	anim_player.stop(true) #resets animation
 	anim_player.play("standing")
