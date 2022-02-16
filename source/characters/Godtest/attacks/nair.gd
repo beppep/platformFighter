@@ -6,7 +6,6 @@ extends "res://source/characters/Attack.gd"
 # var a: int = 2
 # var b: String = "text"
 
-var rng = RandomNumberGenerator.new()
 
 
 
@@ -14,20 +13,33 @@ var rng = RandomNumberGenerator.new()
 func _ready() -> void:
 	
 	
-	endFrame = 33
-	fastEndFrame = 22
+	endFrame = 34
+	fastEndFrame = 24
 	hitboxes = [
 		{
 			"name":"0",
 			"group":1,
-			"damage":7,
-			"start":4,
-			"end":9,
-			"kb":100,
-			"kbscaling":0.2,
-			"angle":90,
+			"damage":10,
+			"start":5,
+			"end":8,
+			"kb":120,
+			"kbscaling":1.8,
+			"angle":70,
 			"shapes":[
-				[40,40,0,0]
+				[30,20,20,10]
+			]
+		},
+		{
+			"name":"1",
+			"group":1,
+			"damage":8,
+			"start":9,
+			"end":19,
+			"kb":100,
+			"kbscaling":1,
+			"angle":70,
+			"shapes":[
+				[40,30,15,15]
 			]
 		},
 	]
@@ -35,21 +47,9 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func update(player):
-	#rng.randomize()
-	#var my_random_number = rng.randf_range(0.0, 360.0)
-	#hitboxes[0]["angle"] = my_random_number
 	autoAttack(player)
 	if player.stateTimer==0:
 		player.anim_player.stop(true) #resets animation
 		player.anim_player.play("nair")
 	if player.is_on_ground:
 		interrupted = true
-
-
-func onHit(name, target, shielded=false):
-	if not shielded:
-		endFrame = fastEndFrame
-		if "percentage" in target:
-			target.kb_vector += get_parent()._velocity*(100+target.percentage)/100
-		else:
-			target.kb_vector += get_parent()._velocity*(100)/100

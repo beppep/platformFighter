@@ -51,7 +51,7 @@ func attack():
 			$currentAttack.set_script(bash)
 	else:
 		if attackDirection.x>0:
-			$currentAttack.set_script(bash)
+			$currentAttack.set_script(jab)
 		elif attackDirection.y>0:
 			$currentAttack.set_script(dtilt)
 		elif attackDirection.y<0:

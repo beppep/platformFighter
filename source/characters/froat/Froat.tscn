@@ -414,6 +414,7 @@ tracks/1/keys = {
 
 [node name="Froat" type="KinematicBody2D"]
 collision_layer = 2
+collision_mask = 17
 script = ExtResource( 2 )
 groundspeed = 80.0
 jumpspeed = 2000.0

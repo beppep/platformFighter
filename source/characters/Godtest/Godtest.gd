@@ -4,6 +4,7 @@ var jab = load("res://source/characters/Godtest/attacks/jab.gd")
 var uair = load("res://source/characters/Godtest/attacks/uair.gd")
 var ftilt = load("res://source/characters/Godtest/attacks/ftilt.gd")
 var bair = load("res://source/characters/Godtest/attacks/bair.gd")
+var nair = load("res://source/characters/Godtest/attacks/nair.gd")
 var dair = load("res://source/characters/Godtest/attacks/dair.gd")
 var upb = load("res://source/characters/Godtest/attacks/upb.gd")
 #var utilt = load("res://source/characters/Godtest/attacks/utilt.gd")
@@ -37,7 +38,7 @@ func attack():
 		elif attackDirection.x<0:
 			$currentAttack.set_script(bair)
 		else:
-			$currentAttack.set_script(jab)
+			$currentAttack.set_script(nair)
 	else:
 		if attackDirection.y<0:
 			$currentAttack.set_script(uair)

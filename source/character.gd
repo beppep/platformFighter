@@ -13,6 +13,7 @@ class_name Character
 
 var explosion = load("res://source/fx/explosion.tscn")
 var explosion2 = load("res://source/fx/explosion2.tscn")
+var jump_ring = load("res://source/fx/jump_ring.tscn")
 var sparks = load("res://source/fx/sparks.tscn")
 var sparks2 = load("res://source/fx/sparks2.tscn")
 
@@ -104,6 +105,8 @@ func inputAction():
 		if is_on_ground:
 			if direction.y>0 or direction.x!=0:
 				dodge()
+			if direction.y<0:
+				set_collision_mask_bit(4,0)
 	if state == 4:
 		if stateTimer < 3:
 			if is_on_ground and (Input.get_action_strength("p1_jump") and player_id==0 or Input.get_action_strength("p2_jump") and player_id==1):
@@ -121,28 +124,39 @@ func inputAction():
 		var collision = move_and_collide(_velocity*1/60)
 		if collision and _velocity!=Vector2(0,0): #questionable
 			#waveland
+			print("h")
+			print(_velocity.normalized())
+			if _velocity.normalized()==Vector2(0,1):
+				set_collision_mask_bit(4,0)
+				_velocity = Vector2.ZERO
 			$sprite.modulate = sprite_color
 			intangible = false
 			released_jump = false
 			dontShield = true
-			is_on_ground = true
+			if collision.normal==Vector2.UP:
+				is_on_ground = true
 			resetToIdle()
 	elif state==2:
 		z_index=0
 		var collision = move_and_collide(_velocity*1/60)
 		if collision:
-			_velocity = _velocity.bounce(collision.normal)
-			
-			#explosiin
-			var spark
-			if Input.get_action_strength("p1_shield") and player_id==0 or Input.get_action_strength("p2_shield") and player_id==1:
-				tech()
-				spark = sparks2.instance()
+			var prev_vel = _velocity
+			var bounce_vel = _velocity.bounce(collision.normal)
+			if bounce_vel.distance_to(prev_vel) > 500:
+				_velocity = bounce_vel
+				
+				#explosiin
+				var spark
+				if Input.get_action_strength("p1_shield") and player_id==0 or Input.get_action_strength("p2_shield") and player_id==1:
+					tech()
+					spark = sparks2.instance()
+				else:
+					spark = sparks.instance()
+				spark.position = self.position
+				spark.scale = Vector2(2, 2)
+				get_node("/root/Node2D/fx").add_child(spark)
 			else:
-				spark = sparks.instance()
-			spark.position = self.position
-			spark.scale = Vector2(2, 2)
-			get_node("/root/Node2D/fx").add_child(spark)
+				_velocity = _velocity.slide(collision.normal)
 		else:
 			is_on_ground=false
 	else:
@@ -191,7 +205,7 @@ func calculate_move_velocity(): #basically do movement input stuff
 			
 	
 	# FLIP
-	if state==0 and is_on_ground:
+	if state==0 and is_on_ground and not direction.y>0:
 		flip()
 	
 	# MOVE X
@@ -212,6 +226,9 @@ func calculate_move_velocity(): #basically do movement input stuff
 	
 	
 	# MOVE Y
+	if not direction.y>0:
+		set_collision_mask_bit(4,1)
+	
 	if (Input.get_action_strength("p1_jump") and player_id==0 or Input.get_action_strength("p2_jump") and player_id==1):
 		if released_jump == true and (state == 0): #jump out of shield for perfect wavedashes!
 			if is_on_ground:
@@ -229,6 +246,11 @@ func calculate_move_velocity(): #basically do movement input stuff
 				anim_player.play("double_jump")
 				double_jump -= 1
 				released_jump = false
+				#effect
+				var ring = jump_ring.instance()
+				ring.position = self.position
+				ring.z_index = -2
+				get_node("/root/Node2D/fx").add_child(ring)
 		if state == 1 and can_walljump and is_on_wall():
 			wallJump()
 	else:
@@ -256,8 +278,10 @@ func wallJump():
 	
 func respawn():
 	percentage = 0
-	shieldHealth = shieldHealthMax
 	$Label.text = str(percentage)+"%"
+	shieldHealth = shieldHealthMax
+	intangible = false
+	$sprite.modulate = sprite_color
 	position = Vector2(0,0)
 	_velocity = Vector2(0,0)
 	if state==1:
@@ -270,9 +294,8 @@ func resetToIdle():
 	stateTimer=0
 	$Shield.visible = false
 	anim_player.stop(true) #resets animation
-	if is_on_ground:
-		anim_player.play("standing")
-	else:
+	anim_player.play("standing")
+	if not is_on_ground:
 		anim_player.play("jump") #questionable
 	
 func tech():
@@ -318,7 +341,7 @@ func dodge():
 	if direction.x!=0:
 		var dodge_direction = Vector2(direction.x,0).normalized()
 		_velocity = dodge_direction*1000
-		scale.x = -scale.y*dodge_direction.x #flip to backwards
+		#transform.x.x = -dodge_direction.x #fucks up wavedashes
 		anim_player.play("roll")
 	else:
 		_velocity = Vector2(0,0)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://assets/Godtest/hook.png" type="Texture" id=1]
 [ext_resource path="res://source/characters/Godtest/Godtest.gd" type="Script" id=2]
@@ -76,7 +76,22 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id=6]
-resource_name = "roll"
+resource_name = "nair"
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.0833333, 0.366667 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 9 ), ExtResource( 4 ), ExtResource( 9 ) ]
+}
+
+[sub_resource type="Animation" id=7]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:rotation_degrees")
@@ -103,8 +118,7 @@ tracks/1/keys = {
 "values": [ ExtResource( 9 ) ]
 }
 
-[sub_resource type="Animation" id=7]
-resource_name = "standing"
+[sub_resource type="Animation" id=8]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:texture")
@@ -131,8 +145,35 @@ tracks/1/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="Animation" id=8]
-resource_name = "uair"
+[sub_resource type="Animation" id=11]
+resource_name = "stunned"
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprite:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.583333 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, -150.7 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("sprite:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 7 ) ]
+}
+
+[sub_resource type="Animation" id=9]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:texture")
@@ -146,17 +187,31 @@ tracks/0/keys = {
 "update": 1,
 "values": [ ExtResource( 9 ), ExtResource( 1 ), ExtResource( 9 ) ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("sprite:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
 
-[sub_resource type="RectangleShape2D" id=9]
+[sub_resource type="RectangleShape2D" id=10]
 
 [node name="Godtest" type="KinematicBody2D"]
 collision_layer = 2
+collision_mask = 17
 script = ExtResource( 2 )
+gravity = 75.0
 groundspeed = 50.0
-jumpspeed = 2000.0
-groundfriction = 0.9
+jumpspeed = 1900.0
+groundfriction = 0.93
 airfriction = 0.96
-yfriction = 0.9
+yfriction = 0.93
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2( 3, 4 )
@@ -171,9 +226,11 @@ anims/bair = SubResource( 2 )
 anims/dair = SubResource( 3 )
 anims/ftilt = SubResource( 4 )
 anims/jab = SubResource( 5 )
-anims/roll = SubResource( 6 )
-anims/standing = SubResource( 7 )
-anims/uair = SubResource( 8 )
+anims/nair = SubResource( 6 )
+anims/roll = SubResource( 7 )
+anims/standing = SubResource( 8 )
+anims/stunned = SubResource( 11 )
+anims/uair = SubResource( 9 )
 
 [node name="HurtBox" type="Area2D" parent="."]
 collision_layer = 0
@@ -181,7 +238,7 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 scale = Vector2( 4, 4 )
-shape = SubResource( 9 )
+shape = SubResource( 10 )
 
 [node name="HitBoxes" type="Node2D" parent="."]
 

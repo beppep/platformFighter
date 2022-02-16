@@ -148,7 +148,11 @@ position = Vector2( 0, 700 )
 scale = Vector2( 34, 41 )
 shape = SubResource( 1 )
 
-[node name="platform" type="CollisionShape2D" parent="ground"]
+[node name="platforms" type="StaticBody2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+
+[node name="platform" type="CollisionShape2D" parent="platforms"]
 position = Vector2( 0, 112 )
 scale = Vector2( 11, 1.6 )
 shape = SubResource( 1 )
@@ -167,12 +171,12 @@ tile_data = PoolIntArray( -1507376, 0, 0, -1507375, 0, 0, -1507374, 0, 0, -15073
 [node name="Froat" parent="Players" instance=ExtResource( 7 )]
 position = Vector2( 141.236, 58.7811 )
 gravity = 75.0
-yfriction = 0.94
-player_id = 1
+yfriction = 0.95
 
 [node name="Godtest" parent="Players" instance=ExtResource( 8 )]
 position = Vector2( -258.179, 136.471 )
-yfriction = 0.92
+airfriction = 0.97
+player_id = 1
 team = 1
 
 [node name="Articles" type="Node2D" parent="."]

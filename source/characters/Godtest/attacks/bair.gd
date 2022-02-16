@@ -44,5 +44,5 @@ func update(player):
 	if player.stateTimer==0:
 		player.anim_player.stop(true) #resets animation (noot
 		player.anim_player.play("bair")
-	if player.is_on_floor():
+	if player.is_on_ground:
 		interrupted = true

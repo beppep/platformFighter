@@ -14,7 +14,7 @@ func _ready() -> void:
 		{
 			"name":"0",
 			"group":1,
-			"damage":15,
+			"damage":12,
 			"start":19,
 			"end":33,
 			"kb":50,

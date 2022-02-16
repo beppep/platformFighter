@@ -28,6 +28,10 @@ func update(player):
 			if other.team == player.team:
 				if player.get_node("HitBoxes/0").overlaps_body(other):
 					other._velocity = Vector2(0,-2000)
+					#maybe not reset idk...
+					other.currentAttack.interrupted = true
+					other.currentAttack.endAttack()
+					other.resetToIdle()
 					break
 
 func endAttack(player):

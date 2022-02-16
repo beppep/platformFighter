@@ -30,9 +30,9 @@ func _ready() -> void:
 			"damage":6,
 			"start":8,
 			"end":11,
-			"kb":80,
-			"kbscaling":0.3,
-			"angle":130,
+			"kb":100,
+			"kbscaling":0.2,
+			"angle":120,
 			"shapes":[
 				[34,20,48,-8]
 			]
@@ -46,5 +46,13 @@ func update(player):
 		player.anim_player.play("ftilt")
 
 func onHit(name, target, shielded=false):
+	
+	if name=="0":
+		get_parent()._velocity.x*=0.5
+		get_parent()._velocity.y*=0.5
+		get_parent()._velocity.y-=300
+	if name=="1":
+		pass
+		#get_parent()._velocity.y-=400
 	if name=="1" and not shielded:
 		endFrame = fastEndFrame
