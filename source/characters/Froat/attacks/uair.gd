@@ -7,7 +7,7 @@ extends "res://source/characters/Attack.gd"
 
 
 # Called when the node enters the scene tree for the first time.
-func _ready() -> void:
+func _init() -> void:
 	endFrame = 38
 	fastEndFrame = 28
 	hitboxes = [
@@ -16,7 +16,7 @@ func _ready() -> void:
 			"group":1,
 			"damage":11,
 			"start":7,
-			"end":20,
+			"end":17,
 			"kb":150,
 			"kbscaling":2,
 			"angle":80,

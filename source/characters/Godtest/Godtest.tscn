@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://assets/Godtest/hook.png" type="Texture" id=1]
 [ext_resource path="res://source/characters/Godtest/Godtest.gd" type="Script" id=2]
@@ -119,6 +119,22 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id=8]
+resource_name = "shake"
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.0333333, 0.0666667, 0.1, 0.133333 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 11.688, 6.29353 ), Vector2( -27.8714, -12.5871 ), Vector2( 13.4862, 1.79814 ), Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=9]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:texture")
@@ -144,8 +160,20 @@ tracks/1/keys = {
 "update": 0,
 "values": [ 0.0 ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("sprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=10]
 resource_name = "stunned"
 step = 0.0166667
 tracks/0/type = "value"
@@ -172,8 +200,20 @@ tracks/1/keys = {
 "update": 1,
 "values": [ ExtResource( 7 ) ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("sprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=11]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:texture")
@@ -200,7 +240,7 @@ tracks/1/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="RectangleShape2D" id=10]
+[sub_resource type="RectangleShape2D" id=12]
 
 [node name="Godtest" type="KinematicBody2D"]
 collision_layer = 2
@@ -219,7 +259,7 @@ shape = SubResource( 1 )
 
 [node name="sprite" type="Sprite" parent="."]
 scale = Vector2( 1.2, 1.2 )
-texture = ExtResource( 9 )
+texture = ExtResource( 7 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/bair = SubResource( 2 )
@@ -228,9 +268,10 @@ anims/ftilt = SubResource( 4 )
 anims/jab = SubResource( 5 )
 anims/nair = SubResource( 6 )
 anims/roll = SubResource( 7 )
-anims/standing = SubResource( 8 )
-anims/stunned = SubResource( 11 )
-anims/uair = SubResource( 9 )
+anims/shake = SubResource( 8 )
+anims/standing = SubResource( 9 )
+anims/stunned = SubResource( 10 )
+anims/uair = SubResource( 11 )
 
 [node name="HurtBox" type="Area2D" parent="."]
 collision_layer = 0
@@ -238,7 +279,7 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 scale = Vector2( 4, 4 )
-shape = SubResource( 10 )
+shape = SubResource( 12 )
 
 [node name="HitBoxes" type="Node2D" parent="."]
 

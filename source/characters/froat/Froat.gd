@@ -20,15 +20,28 @@ var shoot = load("res://source/characters/Froat/attacks/shoot.gd")
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass
+	grab = load("res://source/characters/Froat/attacks/grab.gd")
 
 func airdodge():
-	_velocity.y=-100
-	state = 3
-	stateTimer = 0
-	$sprite.modulate=sprite_color
-	$Shield.visible = true
-	anim_player.stop(true) #resets animation
-	anim_player.play("standing")
+	if direction==Vector2.ZERO:
+		_velocity*=0.5
+		state = 3
+		stateTimer = 0
+		$sprite.modulate=sprite_color
+		$Shield.visible = true
+		anim_player.stop(true) #resets animation
+		anim_player.play("standing")
+	else:
+		is_on_ground = false
+		state = 4
+		stateTimer = 0
+		$Shield.visible = false
+		$sprite.modulate = sprite_color+Color(0.5,0.5,0.5,0)
+		intangible = true
+		var dodge_direction = direction.normalized()
+		_velocity = dodge_direction*1000
+		anim_player.stop(true)
+		anim_player.play("roll")
 
 func attack():
 	can_walljump = false
@@ -58,7 +71,6 @@ func attack():
 			$currentAttack.set_script(utilt)
 		else:
 			$currentAttack.set_script(jab)
-	$currentAttack._ready()
 	
 func special():
 	can_walljump = false
@@ -75,7 +87,6 @@ func special():
 			$currentAttack.set_script(ramm)
 	else:
 		$currentAttack.set_script(ramm)
-	$currentAttack._ready()
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta: float) -> void:

@@ -46,7 +46,6 @@ func attack():
 			$currentAttack.set_script(ftilt)
 		else:
 			$currentAttack.set_script(jab)
-	$currentAttack._ready()
 	
 func special():
 	can_walljump = false
@@ -59,7 +58,6 @@ func special():
 			$currentAttack.set_script(jab)
 	else:
 		$currentAttack.set_script(jab)
-	$currentAttack._ready()
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta: float) -> void:

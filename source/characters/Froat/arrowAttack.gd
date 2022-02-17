@@ -6,7 +6,7 @@ extends "res://source/characters/Attack.gd"
 # var b: String = "text"
 
 # Called when the node enters the scene tree for the first time.
-func _ready() -> void:
+func _init() -> void:
 	hitboxes = [
 		{
 			"name":"0",

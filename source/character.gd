@@ -1,15 +1,11 @@
 extends KinematicBody2D
 class_name Character
 
-#dublehopring
-#tech yv limit min
 #tech timing
-#platform droop
-#grabs
-#jump out of shield (poggers buffer wavedash??)
 #finite downb froat
 #side b bakåt i luften
 #respawn time
+var rng = RandomNumberGenerator.new()
 
 var explosion = load("res://source/fx/explosion.tscn")
 var explosion2 = load("res://source/fx/explosion2.tscn")
@@ -17,6 +13,7 @@ var jump_ring = load("res://source/fx/jump_ring.tscn")
 var sparks = load("res://source/fx/sparks.tscn")
 var sparks2 = load("res://source/fx/sparks2.tscn")
 
+var grab
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -36,7 +33,7 @@ var c_direction = Vector2.ZERO
 var released_jump = false
 var double_jump = 1
 var can_walljump = false
-var state = 0 #0: actionable, 1:attacking, 2:hitstun 3:shield, 4:dodge
+var state = 0 #0: actionable, 1:attacking, 2:hitstun 3:shield, 4:dodge, 5:grabbed?
 var currentAttack = "error"
 var stateTimer = 0
 var totalHitstun = 0
@@ -52,6 +49,7 @@ var kb_vector = Vector2(0,0)
 var intangible = false
 var is_on_ground = true
 var dontShield = true
+var grab_target
 
 onready var anim_player: AnimationPlayer = get_node("AnimationPlayer") #basically just declared in _ready func
 
@@ -90,28 +88,47 @@ func inputAction():
 				attack()
 			elif Input.get_action_strength("p1_b") and player_id==0 or Input.get_action_strength("p2_b") and player_id==1:
 				special()
-	if state==1:
-		#print(currentAttack.get_script_method_list())
-		#print(ClassDB.class_exists("jab"))
-		$currentAttack.update(self)
 	if state==3 and shieldStun < 1:
 		if not (Input.get_action_strength("p1_shield") and player_id==0 or Input.get_action_strength("p2_shield") and player_id==1):
 			shieldEnd()
-		elif not is_on_ground and (Input.get_action_strength("p1_jump") and player_id==0 or Input.get_action_strength("p2_jump") and player_id==1):
-			_velocity.y-=gravity+20
-			_velocity.x*=0.95
-			shieldHealth-=1
-			released_jump = false
+		elif Input.get_action_strength("p1_a") and player_id==0 or Input.get_action_strength("p2_a") and player_id==1:
+			shieldEnd()
+			grab()
+		elif (Input.get_action_strength("p1_jump") and player_id==0 or Input.get_action_strength("p2_jump") and player_id==1):
+			if is_on_ground:
+				shieldEnd()
+				_velocity.y = -jumpspeed/2
+				anim_player.stop(true) #resets animation
+				anim_player.play("jump")
+				is_on_ground = false
+				released_jump = false
+				dontShield = true
+			else:
+				_velocity.y-=gravity+20
+				_velocity.x*=0.95
+				shieldHealth-=1
+				released_jump = false
 		if is_on_ground:
 			if direction.y>0 or direction.x!=0:
 				dodge()
 			if direction.y<0:
 				set_collision_mask_bit(4,0)
+	if state==1:
+		#print(currentAttack.get_script_method_list())
+		#print(ClassDB.class_exists("jab"))
+		$currentAttack.update(self)
 	if state == 4:
+		# roll cancel wavedash
 		if stateTimer < 3:
-			if is_on_ground and (Input.get_action_strength("p1_jump") and player_id==0 or Input.get_action_strength("p2_jump") and player_id==1):
-				airdodge()
-			
+			if (Input.get_action_strength("p1_jump") and player_id==0 or Input.get_action_strength("p2_jump") and player_id==1):
+				if is_on_ground and not direction.y<0:
+					intangible = false
+					$sprite.modulate = sprite_color
+					resetToIdle()
+					_velocity = direction.normalized()*1000
+					dontShield = true
+					released_jump = false
+					$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".waveland)
 		if stateTimer == 8:
 			_velocity=Vector2.ZERO
 		if stateTimer == 20:
@@ -121,28 +138,32 @@ func inputAction():
 			resetToIdle()
 	if state==4 and stateTimer<8:
 		z_index=0
-		var collision = move_and_collide(_velocity*1/60)
-		if collision and _velocity!=Vector2(0,0): #questionable
+		if not is_on_ground:
 			#waveland
-			print("h")
-			print(_velocity.normalized())
-			if _velocity.normalized()==Vector2(0,1):
-				set_collision_mask_bit(4,0)
-				_velocity = Vector2.ZERO
-			$sprite.modulate = sprite_color
-			intangible = false
-			released_jump = false
-			dontShield = true
-			if collision.normal==Vector2.UP:
-				is_on_ground = true
-			resetToIdle()
+			var collision = move_and_collide(_velocity*1/60)
+			if not collision and _velocity.y>=0: #land snap
+				move_and_collide(Vector2(0,-50))
+				collision = move_and_collide(Vector2(0,100))
+				if not collision:
+					move_and_collide(Vector2(0,-50))
+			if collision:
+				$sprite.modulate = sprite_color
+				intangible = false
+				released_jump = false
+				dontShield = true
+				if collision.normal==Vector2.UP:
+					is_on_ground = true
+				resetToIdle()
+				$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".waveland)
+		else:
+			move_and_slide(_velocity)
 	elif state==2:
 		z_index=0
 		var collision = move_and_collide(_velocity*1/60)
 		if collision:
 			var prev_vel = _velocity
 			var bounce_vel = _velocity.bounce(collision.normal)
-			if bounce_vel.distance_to(prev_vel) > 500:
+			if bounce_vel.distance_to(prev_vel) > 600:
 				_velocity = bounce_vel
 				
 				#explosiin
@@ -157,13 +178,14 @@ func inputAction():
 				get_node("/root/Node2D/fx").add_child(spark)
 			else:
 				_velocity = _velocity.slide(collision.normal)
+				position += collision.get_remainder().length()/_velocity.length()*_velocity
+				is_on_ground = true
 		else:
 			is_on_ground=false
 	else:
 		z_index=1
 		_velocity = move_and_slide(_velocity, Vector2.UP)
 		is_on_ground = is_on_floor()
-	
 	
 	if position.y>1000:
 		respawn()
@@ -217,20 +239,20 @@ func calculate_move_velocity(): #basically do movement input stuff
 			_velocity.x += direction.x * airspeed
 
 	#friction
-	if not is_on_ground or state==2: #the game thinks you are grounded when sent flying
+	if is_on_ground:
+		_velocity *= groundfriction
+	else:#if not state==2:
 		_velocity.x *= airfriction
 		_velocity.y *= yfriction
-	else:
-		_velocity *= groundfriction
 	_velocity.y += gravity
 	
 	
 	# MOVE Y
-	if not direction.y>0:
-		set_collision_mask_bit(4,1)
+	#if not direction.y>0:
+	set_collision_mask_bit(4,1)
 	
 	if (Input.get_action_strength("p1_jump") and player_id==0 or Input.get_action_strength("p2_jump") and player_id==1):
-		if released_jump == true and (state == 0): #jump out of shield for perfect wavedashes!
+		if released_jump == true and (state == 0):
 			if is_on_ground:
 				_velocity.y = -jumpspeed
 				anim_player.stop(true) #resets animation
@@ -306,6 +328,11 @@ func attack():
 	pass
 func special():
 	pass
+func grab(): #brag
+	can_walljump = false
+	state = 1
+	stateTimer = 0
+	$currentAttack.set_script(grab)
 func shield():
 	if is_on_ground:
 		state = 3
@@ -341,7 +368,7 @@ func dodge():
 	if direction.x!=0:
 		var dodge_direction = Vector2(direction.x,0).normalized()
 		_velocity = dodge_direction*1000
-		#transform.x.x = -dodge_direction.x #fucks up wavedashes
+		#transform.x.x = -dodge_direction.x #fucks up wavedashes. do it frame 4
 		anim_player.play("roll")
 	else:
 		_velocity = Vector2(0,0)
@@ -387,32 +414,34 @@ func hitEffect():
 			$currentAttack.endAttack(self)
 		var angle = data["angle"]*PI/180
 		var kb = (data["kb"] + data["kbscaling"]*percentage)
-		var blast
-		if(not state==3):
-			kb_vector = Vector2(cos(angle)*opponent.scale.y, -sin(angle))*10*kb
-			totalHitstun = kb*0.2
-			state = 2
-			stateTimer = 0
-			percentage += data["damage"]
-			$Label.text = str(percentage)+"%"
-			anim_player.stop(true) #resets animation
-			anim_player.play("standing")
-			anim_player.stop(true)
-			anim_player.play("shake")
-			$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".punch, 100/kb)
-			blast = explosion.instance()
-		else:
-			shieldHealth -= data["damage"]*3
-			shieldStun = data["damage"]*2
-			$Shield.modulate=Color(0.8,0.8,0.8)
-			$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".shieldHit, 100/kb)
-			blast = explosion2.instance()
+		if kb:
+			var blast
+			if(not state==3):
+				kb_vector = Vector2(cos(angle)*opponent.transform.x.x, -sin(angle))*10*kb
+				totalHitstun = kb*0.2
+				state = 2
+				stateTimer = 0
+				percentage += data["damage"]
+				$Label.text = str(percentage)+"%"
+				anim_player.stop(true) #resets animation
+				anim_player.play("standing")
+				anim_player.stop(true)
+				anim_player.play("shake")
+				$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".punch, 100/kb)
+				blast = explosion.instance()
+			else:
+				shieldHealth -= data["damage"]*3
+				shieldStun = data["damage"]*2
+				$Shield.modulate=Color(0.7,0.7,0.7)
+				$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".shieldHit, 100/kb)
+				blast = explosion2.instance()
+			#explosiin
+			blast.position = self.position
+			blast.scale = Vector2(kb*0.02, kb*0.02)
+			blast.z_index = -2
+			get_node("/root/Node2D/fx").add_child(blast)
+		
 		opponent.get_node("currentAttack").onHit(data["name"], self, (state==3))
-		#explosiin
-		blast.position = self.position
-		blast.scale = Vector2(kb*0.02, kb*0.02)
-		blast.z_index = -2
-		get_node("/root/Node2D/fx").add_child(blast)
 	
 		
 	if state==3:
@@ -456,7 +485,10 @@ func hitEffect():
 			if state==2:
 				anim_player.play("stunned")
 				# DI
-				var new_angle = kb_vector.angle() + sin(kb_vector.angle_to(direction))*0.2 #.1 to .2
+				rng.randomize() #test
+				var my_random_number = rng.randf_range(0.0, 6.28) #test
+				var new_angle = kb_vector.angle() + sin(kb_vector.angle_to(Vector2(sin(my_random_number),cos(my_random_number))))*0.2 #test
+				#var new_angle = kb_vector.angle() + sin(kb_vector.angle_to(direction))*0.2 #.1 to .2
 				kb_vector = Vector2(cos(new_angle), sin(new_angle))*kb_vector.length()
 				_velocity = kb_vector
 

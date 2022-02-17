@@ -10,6 +10,7 @@ var rng = RandomNumberGenerator.new()
 
 var punch = load("res://assets/sounds/punch.wav")
 var shieldHit = load("res://assets/sounds/shieldHit.wav")
+var waveland = load("res://assets/sounds/whoosh3.wav")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

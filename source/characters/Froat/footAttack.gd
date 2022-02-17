@@ -6,7 +6,7 @@ extends "res://source/characters/Attack.gd"
 # var b: String = "text"
 
 # Called when the node enters the scene tree for the first time.
-func _ready() -> void:
+func _init() -> void:
 	endFrame = 16
 	fastEndFrame = 16
 	hitboxes = [
@@ -29,9 +29,9 @@ func update(player):
 				if player.get_node("HitBoxes/0").overlaps_body(other):
 					other._velocity = Vector2(0,-2000)
 					#maybe not reset idk...
-					other.currentAttack.interrupted = true
-					other.currentAttack.endAttack()
-					other.resetToIdle()
+					#other.currentAttack.interrupted = true
+					#other.currentAttack.endAttack()
+					#other.resetToIdle()
 					break
 
 func endAttack(player):

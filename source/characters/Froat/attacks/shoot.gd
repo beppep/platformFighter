@@ -8,7 +8,7 @@ var arrow = load("res://source/characters/Froat/arrow.tscn")
 
 
 # Called when the node enters the scene tree for the first time.
-func _ready() -> void:
+func _init() -> void:
 	
 	endFrame = 20
 	hitboxes = [

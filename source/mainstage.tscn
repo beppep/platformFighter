@@ -171,12 +171,11 @@ tile_data = PoolIntArray( -1507376, 0, 0, -1507375, 0, 0, -1507374, 0, 0, -15073
 [node name="Froat" parent="Players" instance=ExtResource( 7 )]
 position = Vector2( 141.236, 58.7811 )
 gravity = 75.0
-yfriction = 0.95
+player_id = 1
 
 [node name="Godtest" parent="Players" instance=ExtResource( 8 )]
 position = Vector2( -258.179, 136.471 )
 airfriction = 0.97
-player_id = 1
 team = 1
 
 [node name="Articles" type="Node2D" parent="."]
