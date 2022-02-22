@@ -52,7 +52,7 @@ func attack():
 		attackDirection = c_direction
 	else:
 		attackDirection = direction
-	attackDirection.x*=self.scale.y
+	attackDirection.x*=self.transform.x.x
 	if not is_on_ground:
 		if attackDirection.y<0:
 			$currentAttack.set_script(uair)

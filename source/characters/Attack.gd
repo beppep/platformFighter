@@ -28,9 +28,7 @@ func endAttack(player):
 		autoEndAttack(player)
 
 func autoEndAttack(player):
-	player.state = 0
 	interrupted = false
-	player.anim_player.stop(true)
 	for box in get_node("../HitBoxes").get_children(): #remove hitboxes
 		if(not box.is_queued_for_deletion()):
 			box.queue_free()
@@ -41,6 +39,7 @@ func autoEndAttack(player):
 				if i[0] != player:
 					replacementList.append(i)
 			other.bannedHitboxes = replacementList
+	player.resetToIdle()
 
 func update(player):
 	#print("htr")

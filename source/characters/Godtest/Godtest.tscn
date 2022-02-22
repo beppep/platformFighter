@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://assets/Godtest/hook.png" type="Texture" id=1]
 [ext_resource path="res://source/characters/Godtest/Godtest.gd" type="Script" id=2]
@@ -7,7 +7,9 @@
 [ext_resource path="res://assets/Godtest/ftilt.png" type="Texture" id=5]
 [ext_resource path="res://assets/Godtest/bair.png" type="Texture" id=6]
 [ext_resource path="res://assets/Godtest/kickdown.png" type="Texture" id=7]
+[ext_resource path="res://assets/Godtest/ftilt2.png" type="Texture" id=8]
 [ext_resource path="res://assets/Godtest/idle.png" type="Texture" id=9]
+[ext_resource path="res://assets/Godtest/grab.png" type="Texture" id=10]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -44,7 +46,50 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id=4]
-resource_name = "ftilt"
+resource_name = "dtilt"
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.0666667, 0.35 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 9 ), ExtResource( 7 ), ExtResource( 9 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("sprite:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.0666667, 0.316667, 0.416667 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -73.8, -73.8, 0.0 ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "fspec"
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.0666667, 0.133333, 0.35, 0.433333 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 9 ), ExtResource( 5 ), ExtResource( 8 ), ExtResource( 5 ), ExtResource( 9 ) ]
+}
+
+[sub_resource type="Animation" id=6]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:texture")
@@ -59,8 +104,35 @@ tracks/0/keys = {
 "values": [ ExtResource( 9 ), ExtResource( 5 ), ExtResource( 9 ) ]
 }
 
-[sub_resource type="Animation" id=5]
-resource_name = "jab"
+[sub_resource type="Animation" id=16]
+resource_name = "grab"
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.0666667, 0.483333, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 9 ), ExtResource( 10 ), ExtResource( 5 ), ExtResource( 9 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("sprite:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.416667, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, 18.5, 0.0 ]
+}
+
+[sub_resource type="Animation" id=7]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:texture")
@@ -75,8 +147,7 @@ tracks/0/keys = {
 "values": [ ExtResource( 9 ), ExtResource( 4 ), ExtResource( 9 ) ]
 }
 
-[sub_resource type="Animation" id=6]
-resource_name = "nair"
+[sub_resource type="Animation" id=8]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:texture")
@@ -91,7 +162,7 @@ tracks/0/keys = {
 "values": [ ExtResource( 9 ), ExtResource( 4 ), ExtResource( 9 ) ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=9]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:rotation_degrees")
@@ -118,8 +189,7 @@ tracks/1/keys = {
 "values": [ ExtResource( 9 ) ]
 }
 
-[sub_resource type="Animation" id=8]
-resource_name = "shake"
+[sub_resource type="Animation" id=10]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:position")
@@ -134,7 +204,7 @@ tracks/0/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 11.688, 6.29353 ), Vector2( -27.8714, -12.5871 ), Vector2( 13.4862, 1.79814 ), Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=11]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:texture")
@@ -173,8 +243,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=10]
-resource_name = "stunned"
+[sub_resource type="Animation" id=12]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:rotation_degrees")
@@ -213,7 +282,35 @@ tracks/2/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=17]
+resource_name = "throw"
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprite:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.166667, 0.333333, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, -62.6, 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("sprite:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.183333, 0.266667, 0.35, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 10 ), ExtResource( 5 ), ExtResource( 8 ), ExtResource( 5 ), ExtResource( 9 ) ]
+}
+
+[sub_resource type="Animation" id=13]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:texture")
@@ -240,7 +337,10 @@ tracks/1/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="RectangleShape2D" id=12]
+[sub_resource type="RectangleShape2D" id=14]
+
+[sub_resource type="RectangleShape2D" id=15]
+extents = Vector2( 20, 16 )
 
 [node name="Godtest" type="KinematicBody2D"]
 collision_layer = 2
@@ -259,19 +359,23 @@ shape = SubResource( 1 )
 
 [node name="sprite" type="Sprite" parent="."]
 scale = Vector2( 1.2, 1.2 )
-texture = ExtResource( 7 )
+texture = ExtResource( 9 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/bair = SubResource( 2 )
 anims/dair = SubResource( 3 )
-anims/ftilt = SubResource( 4 )
-anims/jab = SubResource( 5 )
-anims/nair = SubResource( 6 )
-anims/roll = SubResource( 7 )
-anims/shake = SubResource( 8 )
-anims/standing = SubResource( 9 )
-anims/stunned = SubResource( 10 )
-anims/uair = SubResource( 11 )
+anims/dtilt = SubResource( 4 )
+anims/fspec = SubResource( 5 )
+anims/ftilt = SubResource( 6 )
+anims/grab = SubResource( 16 )
+anims/jab = SubResource( 7 )
+anims/nair = SubResource( 8 )
+anims/roll = SubResource( 9 )
+anims/shake = SubResource( 10 )
+anims/standing = SubResource( 11 )
+anims/stunned = SubResource( 12 )
+anims/throw = SubResource( 17 )
+anims/uair = SubResource( 13 )
 
 [node name="HurtBox" type="Area2D" parent="."]
 collision_layer = 0
@@ -279,7 +383,7 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 scale = Vector2( 4, 4 )
-shape = SubResource( 12 )
+shape = SubResource( 14 )
 
 [node name="HitBoxes" type="Node2D" parent="."]
 
@@ -303,3 +407,11 @@ __meta__ = {
 visible = false
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 3 )
+
+[node name="snatcher" type="Area2D" parent="."]
+position = Vector2( 115.283, -12 )
+collision_layer = 0
+collision_mask = 17
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="snatcher"]
+shape = SubResource( 15 )

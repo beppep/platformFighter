@@ -95,24 +95,20 @@ func inputAction():
 			shieldEnd()
 			grab()
 		elif (Input.get_action_strength("p1_jump") and player_id==0 or Input.get_action_strength("p2_jump") and player_id==1):
-			if is_on_ground:
-				shieldEnd()
-				_velocity.y = -jumpspeed/2
-				anim_player.stop(true) #resets animation
-				anim_player.play("jump")
-				is_on_ground = false
-				released_jump = false
-				dontShield = true
-			else:
-				_velocity.y-=gravity+20
-				_velocity.x*=0.95
+			if not is_on_ground:
+				_velocity.y-=50
 				shieldHealth-=1
 				released_jump = false
 		if is_on_ground:
 			if direction.y>0 or direction.x!=0:
 				dodge()
-			if direction.y<0:
+			elif direction.y<0: #shield drop
 				set_collision_mask_bit(4,0)
+				shieldEnd()
+				dontShield=true
+		else:
+			_velocity*=0.95
+			_velocity.y-=50
 	if state==1:
 		#print(currentAttack.get_script_method_list())
 		#print(ClassDB.class_exists("jab"))
@@ -141,12 +137,13 @@ func inputAction():
 		if not is_on_ground:
 			#waveland
 			var collision = move_and_collide(_velocity*1/60)
-			if not collision and _velocity.y>=0: #land snap
+			if not collision:# and _velocity.y>=0: #land snap
 				move_and_collide(Vector2(0,-50))
 				collision = move_and_collide(Vector2(0,100))
 				if not collision:
 					move_and_collide(Vector2(0,-50))
 			if collision:
+				#print("waveland")
 				$sprite.modulate = sprite_color
 				intangible = false
 				released_jump = false
@@ -169,6 +166,8 @@ func inputAction():
 				#explosiin
 				var spark
 				if Input.get_action_strength("p1_shield") and player_id==0 or Input.get_action_strength("p2_shield") and player_id==1:
+					if collision.normal==Vector2(0,-1):
+						is_on_ground = true
 					tech()
 					spark = sparks2.instance()
 				else:
@@ -178,7 +177,7 @@ func inputAction():
 				get_node("/root/Node2D/fx").add_child(spark)
 			else:
 				_velocity = _velocity.slide(collision.normal)
-				position += collision.get_remainder().length()/_velocity.length()*_velocity
+				position += collision.get_remainder().length()*_velocity.normalized()
 				is_on_ground = true
 		else:
 			is_on_ground=false
@@ -187,14 +186,6 @@ func inputAction():
 		_velocity = move_and_slide(_velocity, Vector2.UP)
 		is_on_ground = is_on_floor()
 	
-	if position.y>1000:
-		respawn()
-	if position.y<-750:
-		respawn()
-	if position.x>1500:
-		respawn()
-	if position.x<-1500:
-		respawn()
 
 func get_direction():
 	if player_id==0:
@@ -275,8 +266,10 @@ func calculate_move_velocity(): #basically do movement input stuff
 				get_node("/root/Node2D/fx").add_child(ring)
 		if state == 1 and can_walljump and is_on_wall():
 			wallJump()
-	else:
+	elif released_jump==false:
 		released_jump = true
+		if _velocity.y<0:
+			_velocity.y*=0.4
 
 func flip():
 	if direction.x>0:
@@ -318,7 +311,8 @@ func resetToIdle():
 	anim_player.stop(true) #resets animation
 	anim_player.play("standing")
 	if not is_on_ground:
-		anim_player.play("jump") #questionable
+		pass#
+		#anim_player.play("jump") #questionable
 	
 func tech():
 	#_velocity = Vector2(0,0)
@@ -443,6 +437,15 @@ func hitEffect():
 		
 		opponent.get_node("currentAttack").onHit(data["name"], self, (state==3))
 	
+	
+	if position.y>1000:
+		respawn()
+	if position.y<-750:
+		respawn()
+	if position.x>1500:
+		respawn()
+	if position.x<-1500:
+		respawn()
 		
 	if state==3:
 		if(shieldStun > 0):

@@ -29,5 +29,14 @@ func update(player):
 		foot.team = player.team
 		foot.scale.x = player.scale.y
 		$"/root/Node2D/Articles".add_child(foot)
+		var foot2 = footScene.instance()
+		foot2.position = Vector2(player.position.x, -750)
+		foot2.transform.y.y = -1
+		foot2._velocity.y *= -1
+		foot2.upsideDown = true
+		foot2.changeHitbox() #only for feet 
+		foot2.team = player.team
+		foot2.scale.x = player.scale.y
+		$"/root/Node2D/Articles".add_child(foot2)
 
 

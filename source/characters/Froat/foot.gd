@@ -13,6 +13,7 @@ var nextFrameHitPause = 0
 var state = 1
 var stateTimer = 0
 var team = 0
+var upsideDown = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -35,9 +36,14 @@ func inputAction():
 	
 	if position.y>1000:
 		queue_free()
+	if position.y<-750:
+		queue_free()
 
 func hitCollision():			
 	pass
+
+func changeHitbox():
+	$currentAttack.changeHitbox()
 		
 func hitEffect():
 	

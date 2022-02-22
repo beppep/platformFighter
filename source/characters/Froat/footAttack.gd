@@ -21,9 +21,24 @@ func _init() -> void:
 			"angle":90,
 		},
 	]
+	
+
+func changeHitbox():
+	hitboxes = [
+		{
+			"name":"0",
+			"group":1,
+			"start":3,
+			"end":15,
+			"damage":14,
+			"kb":50,
+			"kbscaling":2,
+			"angle":-90,
+		},
+	]
 
 func update(player):
-	if player.stateTimer<15:
+	if player.stateTimer<15 and not player.upsideDown:
 		for other in $"/root/Node2D/Players".get_children():
 			if other.team == player.team:
 				if player.get_node("HitBoxes/0").overlaps_body(other):
@@ -34,12 +49,15 @@ func update(player):
 					#other.resetToIdle()
 					break
 
+	
+	
+	
 func endAttack(player):
 	if player.stateTimer == endFrame or interrupted:
 		autoEndAttack(player)
 
 func autoEndAttack(player):
-	player._velocity = Vector2(0,200)
+	player._velocity.y *= -0.4
 	for box in get_node("../HitBoxes").get_children(): #remove hitboxes
 		if(not box.is_queued_for_deletion()):
 			box.queue_free()
