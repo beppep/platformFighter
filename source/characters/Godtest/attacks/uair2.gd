@@ -8,8 +8,8 @@ var grabbedWall = false
 
 # Called when the node enters the scene tree for the first time.
 func _init() -> void:
-	endFrame = 38
-	fastEndFrame = 30
+	endFrame = 44
+	fastEndFrame = 34
 	hitboxes = [
 		{
 			"name":"0",
@@ -21,20 +21,20 @@ func _init() -> void:
 			"kbscaling":0.1,
 			"angle":90,
 			"shapes":[
-				[30,16,98,-8]
+				[20,40,33,-100]
 			]
 		},
 		{
 			"name":"1",
 			"group":2,
 			"damage":9,
-			"start":20,
-			"end":23,
+			"start":25,
+			"end":27,
 			"kb":100,
 			"kbscaling":0.2,
-			"angle":125,
+			"angle":-100,
 			"shapes":[
-				[36,20,98,-8]
+				[24,44,33,-100]
 			]
 		},
 	]
@@ -43,14 +43,14 @@ func update(player):
 	autoAttack(player)
 	if player.stateTimer==0:
 		player.anim_player.stop(true) #resets animation (noot
-		player.anim_player.play("fspec")
+		player.anim_player.play("hook")
 	if 10<=player.stateTimer and player.stateTimer<=13:
-		if len(player.get_node("snatcher").get_overlapping_bodies())>0:
+		if len(player.get_node("snatcher2").get_overlapping_bodies())>0:
 			grabbedWall = true
-	if grabbedWall and player.stateTimer<23:
+	if grabbedWall and player.stateTimer<27:
 		player._velocity = Vector2.ZERO
-	if grabbedWall and player.stateTimer==23:
-		player._velocity = Vector2(1000*player.transform.x.x, -1000)
+	if grabbedWall and player.stateTimer==27:
+		player._velocity = Vector2(100*player.transform.x.x, -2500)
 		grabbedWall = false
 		endFrame = fastEndFrame
 
@@ -59,10 +59,10 @@ func onHit(name, target, shielded=false):
 	if name=="0":
 		player._velocity.x*=0.4
 		if not player.is_on_ground:
-			player._velocity.y*=0.4
-			player._velocity.y-=500
+			player._velocity.y*=0.3
+			player._velocity.y-=1000
 	if name=="1":
 		if not player.is_on_ground:
-			player._velocity = Vector2(100*player.transform.x.x, -1000)
+			player._velocity = Vector2(100*player.transform.x.x, -2500)
 	if name=="1" and not shielded:
 		endFrame = fastEndFrame

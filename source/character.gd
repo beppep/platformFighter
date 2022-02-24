@@ -72,6 +72,8 @@ func inputAction():
 	if(nextFrameHitPause):
 		hitPause=nextFrameHitPause
 		nextFrameHitPause=0
+		if direction.y>0:
+			_velocity.y = gravity*20
 	if hitPause:
 		return
 	
@@ -235,7 +237,12 @@ func calculate_move_velocity(): #basically do movement input stuff
 	else:#if not state==2:
 		_velocity.x *= airfriction
 		_velocity.y *= yfriction
-	_velocity.y += gravity
+	if state==2:
+		_velocity.y += gravity*0.6
+		#if _velocity.y>gravity*10:
+		#	_velocity.y = gravity*10
+	else:
+		_velocity.y += gravity
 	
 	
 	# MOVE Y
@@ -496,4 +503,4 @@ func hitEffect():
 				_velocity = kb_vector
 
 func hitpauseFormula(kb):
-	return min(kb*0.1,30)
+	return kb*0.05+2

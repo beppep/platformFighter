@@ -63,6 +63,7 @@ func attack():
 		else:
 			$currentAttack.set_script(bash)
 	else:
+		flip()
 		if attackDirection.x>0:
 			$currentAttack.set_script(jab)
 		elif attackDirection.y>0:
@@ -76,6 +77,7 @@ func special():
 	can_walljump = false
 	state = 1
 	stateTimer = 0
+	flip()
 	if not is_on_floor():
 		if direction.y<0:
 			$currentAttack.set_script(upb)

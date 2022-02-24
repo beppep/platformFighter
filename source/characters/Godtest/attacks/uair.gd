@@ -53,6 +53,7 @@ func onHit(name, target, shielded=false):
 	if name=="0":
 		get_parent()._velocity.y=-100
 	if name=="1":
+		pass
 		get_parent()._velocity.y=-1400
 	if name=="1" and not shielded:
 		endFrame = fastEndFrame
