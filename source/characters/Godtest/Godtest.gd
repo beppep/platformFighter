@@ -24,7 +24,9 @@ func _ready() -> void:
 
 
 func attack():
+	grab_target = false
 	can_walljump = false
+	cant_hitfall = false
 	state = 1
 	stateTimer = 0
 	var attackDirection
@@ -56,6 +58,7 @@ func attack():
 			$currentAttack.set_script(jab)
 	
 func special():
+	grab_target = false
 	can_walljump = false
 	state = 1
 	stateTimer = 0

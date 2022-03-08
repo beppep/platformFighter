@@ -168,7 +168,9 @@ p1_c_down={
 [layer_names]
 
 2d_physics/layer_1="ground"
-2d_physics/layer_2="characters"
+2d_physics/layer_2="characters etc"
+2d_physics/layer_3="hitbox/hurtbox"
+2d_physics/layer_5="platforms"
 
 [physics]
 

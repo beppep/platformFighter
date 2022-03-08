@@ -31,7 +31,7 @@ func _init() -> void:
 			"start":25,
 			"end":27,
 			"kb":100,
-			"kbscaling":0.2,
+			"kbscaling":1,
 			"angle":-100,
 			"shapes":[
 				[24,44,33,-100]
@@ -65,4 +65,4 @@ func onHit(name, target, shielded=false):
 		if not player.is_on_ground:
 			player._velocity = Vector2(100*player.transform.x.x, -2500)
 	if name=="1" and not shielded:
-		endFrame = fastEndFrame
+		endFast = true

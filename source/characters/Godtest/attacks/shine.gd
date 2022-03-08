@@ -7,7 +7,9 @@ extends "res://source/characters/Attack.gd"
 
 
 # Called when the node enters the scene tree for the first time.
+
 func _init() -> void:
+	can_grabcancel=false
 	endFrame = -1
 	fastEndFrame = -1
 	hitboxes = [
@@ -17,8 +19,8 @@ func _init() -> void:
 			"damage":6,
 			"start":0,
 			"end":1,
-			"kb":150,
-			"kbscaling":0.2,
+			"kb":200,
+			"kbscaling":0.3,
 			"angle":90,
 			"shapes":[
 				[34,34,8,0]
@@ -30,8 +32,8 @@ func _init() -> void:
 			"damage":4,
 			"start":0,
 			"end":1,
-			"kb":100,
-			"kbscaling":0.2,
+			"kb":150,
+			"kbscaling":0.3,
 			"angle":60,
 			"shapes":[
 				[44,44,8,0]
@@ -41,13 +43,14 @@ func _init() -> void:
 
 func update(player):
 	autoAttack(player)
+	player._velocity *= 0.8
 	if player.stateTimer==0:
+		$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".shine)
 		player.anim_player.stop(true) #resets animation (noot
 		player.anim_player.play("shine")
-		player._velocity = Vector2.ZERO
-	if (Input.get_action_strength("p1_shield") and player.player_id==0 or Input.get_action_strength("p2_shield") and player.player_id==1):
+	if player.buttons[0]:
 		interrupted = true
 		endAttack(player)
-	elif (Input.get_action_strength("p1_jump") and player.player_id==0 or Input.get_action_strength("p2_jump") and player.player_id==1):
+	elif player.buttons[3]:
 		interrupted = true
 		endAttack(player)

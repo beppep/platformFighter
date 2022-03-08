@@ -10,6 +10,7 @@ var throw = load("res://source/characters/Godtest/attacks/throw.gd")
 
 # Called when the node enters the scene tree for the first time.
 func _init():
+	can_grabcancel = false
 	endFrame = 37
 	hitboxes = [
 		{
@@ -23,7 +24,8 @@ func _init():
 			"angle":90,
 			"shapes":[
 				[32,20,44,5]
-			]
+			],
+			#"unshieldable":true
 		},
 	]
 

@@ -10,6 +10,7 @@ var throw = load("res://source/characters/Froat/attacks/throw.gd")
 
 # Called when the node enters the scene tree for the first time.
 func _init():
+	can_grabcancel = false
 	endFrame = 36
 	hitboxes = [
 		{
@@ -23,7 +24,8 @@ func _init():
 			"angle":90,
 			"shapes":[
 				[28,14,48,0]
-			]
+			],
+			#"unshieldable":true
 		},
 	]
 
@@ -34,7 +36,7 @@ func update(player):
 		player.anim_player.play("grab")
 
 func onHit(name, target, shielded=false):
-	target.state = 5
+	target.state = 5 #they are dolls and cant tech or stuff
 	target.stateTimer = 0
 	
 	var player = get_parent()

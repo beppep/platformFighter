@@ -21,13 +21,15 @@ func update(player):
 	if player.stateTimer==0:
 		player.anim_player.stop(true) #resets animation
 		player.anim_player.play("jab")
+	if player.stateTimer < 6:
+		player.reverse()
 	if player.stateTimer==10:
 		
 		var arow = arrow.instance()
 		arow.position = player.position
 		arow.team = player.team
-		arow.scale.x = player.scale.y
-		arow._velocity = Vector2(400*player.scale.y,-200)
+		arow.transform.x.x = player.transform.x.x
+		arow._velocity = Vector2(400*player.transform.x.x,-200) + player._velocity
 		$"/root/Node2D/Articles".add_child(arow)
 
 

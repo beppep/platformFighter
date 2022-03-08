@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/falco1e.mp3-db286af6110258ee73c4972f2f99d140.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/falco1e.mp3"
+dest_files=[ "res://.import/falco1e.mp3-db286af6110258ee73c4972f2f99d140.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

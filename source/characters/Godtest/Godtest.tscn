@@ -383,9 +383,9 @@ collision_layer = 2
 collision_mask = 17
 script = ExtResource( 2 )
 gravity = 75.0
-groundspeed = 50.0
+groundspeed = 60.0
 jumpspeed = 1900.0
-groundfriction = 0.93
+groundfriction = 0.9
 airfriction = 0.96
 yfriction = 0.93
 
@@ -395,7 +395,7 @@ shape = SubResource( 1 )
 
 [node name="sprite" type="Sprite" parent="."]
 scale = Vector2( 1.2, 1.2 )
-texture = ExtResource( 12 )
+texture = ExtResource( 9 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/bair = SubResource( 2 )

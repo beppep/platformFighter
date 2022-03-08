@@ -17,8 +17,8 @@ func _init() -> void:
 			"damage":12,
 			"start":19,
 			"end":33,
-			"kb":50,
-			"kbscaling":1,
+			"kb":120,
+			"kbscaling":3,
 			"angle":45,
 			"shapes":[
 				[28,28,30,0]
@@ -45,5 +45,5 @@ func onHit(name, target, shielded=false):
 	get_parent()._velocity.y=-800#-400*int(name)
 
 	if not shielded:
-		endFrame = fastEndFrame
+		endFast = true
 		

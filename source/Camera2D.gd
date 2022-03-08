@@ -4,7 +4,6 @@ extends Camera2D
 # Declare member variables here. Examples:
 # var a: int = 2
 # var b: String = "text"
-onready var players = get_node("../Players").get_children()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -13,12 +12,15 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	var players = get_node("../Players").get_children()
 	var pos = Vector2(0,0)
 	for player in players:
 		pos += player.position
 	pos = pos / len(players) # just average pos
 	set_offset( pos*0.1 + get_offset()*0.9 )
 	$"/root/Node2D/CanvasLayer".offset = -pos/10
+	if len(players)<2:
+		return
 	var zoom = max(abs(players[0].position.x-players[1].position.x), 1.5*abs(players[0].position.y-players[1].position.y))
 	zoom = zoom*0.001 + 0.5
 	zoom = Vector2(zoom,zoom)

@@ -16,8 +16,8 @@ func _init() -> void:
 			"start":3,
 			"end":15,
 			"damage":14,
-			"kb":200,
-			"kbscaling":2,
+			"kb":250,
+			"kbscaling":1.5,
 			"angle":90,
 		},
 	]
@@ -42,27 +42,22 @@ func update(player):
 		for other in $"/root/Node2D/Players".get_children():
 			if other.team == player.team:
 				if player.get_node("HitBoxes/0").overlaps_body(other):
-					other._velocity = Vector2(0,-2000)
+					other._velocity = Vector2(0,-3000)
 					#maybe not reset idk...
 					#other.currentAttack.interrupted = true
 					#other.currentAttack.endAttack()
 					#other.resetToIdle()
 					break
-
-	
-	
-	
-func endAttack(player):
-	if player.stateTimer == endFrame or interrupted:
-		autoEndAttack(player)
-
+					
+					
+#this is stupid
 func autoEndAttack(player):
 	player._velocity.y *= -0.4
+	endFast = false
+	interrupted = false
 	for box in get_node("../HitBoxes").get_children(): #remove hitboxes
 		if(not box.is_queued_for_deletion()):
 			box.queue_free()
-	
-	#this is pointless maybe
 	for other in get_node("/root/Node2D/Players").get_children(): #remove opponents bans
 		if not other == player:
 			var replacementList = []

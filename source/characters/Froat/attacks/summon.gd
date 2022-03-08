@@ -10,7 +10,7 @@ var footScene = load("res://source/characters/Froat/foot.tscn")
 # Called when the node enters the scene tree for the first time.
 func _init() -> void:
 	
-	endFrame = 34
+	endFrame = 24
 	hitboxes = [
 	]
 

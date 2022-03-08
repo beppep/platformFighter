@@ -2,6 +2,7 @@ extends Character
 
 var jab = load("res://source/characters/Froat/attacks/jab.gd")
 var dtilt = load("res://source/characters/Froat/attacks/dtilt.gd")
+var ftilt = load("res://source/characters/Froat/attacks/ftilt.gd")
 var utilt = load("res://source/characters/Froat/attacks/utilt.gd")
 var bash = load("res://source/characters/Froat/attacks/bash.gd")
 var uair = load("res://source/characters/Froat/attacks/uair.gd")
@@ -44,7 +45,9 @@ func airdodge():
 		anim_player.play("roll")
 
 func attack():
+	grab_target = false
 	can_walljump = false
+	cant_hitfall = false
 	state = 1
 	stateTimer = 0
 	var attackDirection
@@ -65,7 +68,7 @@ func attack():
 	else:
 		flip()
 		if attackDirection.x>0:
-			$currentAttack.set_script(jab)
+			$currentAttack.set_script(ftilt)
 		elif attackDirection.y>0:
 			$currentAttack.set_script(dtilt)
 		elif attackDirection.y<0:
@@ -74,6 +77,7 @@ func attack():
 			$currentAttack.set_script(jab)
 	
 func special():
+	grab_target = false
 	can_walljump = false
 	state = 1
 	stateTimer = 0

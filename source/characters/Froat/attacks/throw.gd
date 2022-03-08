@@ -7,6 +7,7 @@ var target
 
 # Called when the node enters the scene tree for the first time.
 func _init():
+	can_grabcancel = false
 	endFrame = 16
 	hitboxes = [
 		{
@@ -15,8 +16,8 @@ func _init():
 			"damage":8,
 			"start":8,
 			"end":9,
-			"kb":200,
-			"kbscaling":0.2,
+			"kb":150,
+			"kbscaling":2,
 			"angle":80,
 			"shapes":[
 				[28,28,48,0]

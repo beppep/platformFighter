@@ -7,7 +7,9 @@ extends Node
 var hitboxes = []
 var endFrame = 100
 var fastEndFrame = 80
+var endFast = false
 var interrupted = false
+var can_grabcancel = true
 
 # Called when the node enters the scene tree for the first time.
 func _init() -> void:
@@ -24,10 +26,11 @@ func autoAttack(player):
 				i.queue_free()
 
 func endAttack(player):
-	if player.stateTimer == endFrame or interrupted:
+	if player.stateTimer == endFrame or (player.stateTimer == fastEndFrame and endFast) or interrupted:
 		autoEndAttack(player)
 
 func autoEndAttack(player):
+	endFast = false
 	interrupted = false
 	for box in get_node("../HitBoxes").get_children(): #remove hitboxes
 		if(not box.is_queued_for_deletion()):
@@ -39,7 +42,16 @@ func autoEndAttack(player):
 				if i[0] != player:
 					replacementList.append(i)
 			other.bannedHitboxes = replacementList
-	player.resetToIdle()
+	print(player.grab_target)
+	if player.grab_target and player.grab_target.state==5:
+		player.grab_target.state=0
+		print("grab released?!")
+	player.resetToIdle() #hmm
+	if player.grab_target and player.grab_target.state==5:
+		player.grab_target.state=2
+		player.grab_target.stateTimer = 0
+		player.grab_target._velocity = Vector2(500*player.transform.x.x,5000)
+		player.grab_target.totalHitstun = 20
 
 func update(player):
 	#print("htr")
@@ -48,7 +60,7 @@ func update(player):
 
 func onHit(name, target, shielded=false):
 	if not shielded:
-		endFrame = fastEndFrame
+		endFast = true
 
 
 func createHitBox(h):

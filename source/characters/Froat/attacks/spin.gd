@@ -48,7 +48,7 @@ func update(player):
 
 func onHit(name, target, shielded=false):
 	if not shielded:
-		endFrame = fastEndFrame
+		endFast = true
 		if "percentage" in target:
 			target.kb_vector += get_parent()._velocity*(100+target.percentage)/100
 		else:

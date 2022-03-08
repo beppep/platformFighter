@@ -30,9 +30,11 @@ var sprite_color = Color(1,1,1)
 var _velocity = Vector2(0,-100) #pixels per second
 var direction = Vector2.ZERO
 var c_direction = Vector2.ZERO
+var buttons = [0,0,0,0]
 var released_jump = false
 var double_jump = 1
 var can_walljump = false
+var cant_hitfall = false
 var state = 0 #0: actionable, 1:attacking, 2:hitstun 3:shield, 4:dodge, 5:grabbed?
 var currentAttack = "error"
 var stateTimer = 0
@@ -66,37 +68,44 @@ func _ready():
 #	pass
 func inputAction():
 	# input 
+	buttons = get_buttons()
 	direction = get_direction()
 	c_direction = get_c_direction()
-	# movement
+	
+	# hitpause
 	if(nextFrameHitPause):
-		hitPause=nextFrameHitPause
+		if (stateTimer==2 and state==1): #electric shine op lol
+			hitPause=nextFrameHitPause*0.6
+		else:
+			hitPause=nextFrameHitPause
 		nextFrameHitPause=0
-		if direction.y>0:
+		if direction.y>0 and not cant_hitfall: #hitfalling
 			_velocity.y = gravity*20
 	if hitPause:
 		return
 	
+	
+	# movement
 	if not (state==4 and stateTimer<8):
 		calculate_move_velocity()
 	# options
+	if not buttons[3]:
+		dontShield = false
 	if state==0:
-		if Input.get_action_strength("p1_shield") and player_id==0 or Input.get_action_strength("p2_shield") and player_id==1:
-			if not dontShield:
-				shield()
+		if buttons[3] and not dontShield:
+			shield()
 		else:
-			dontShield = false
-			if Input.get_action_strength("p1_a") and player_id==0 or Input.get_action_strength("p2_a") and player_id==1 or c_direction!=Vector2(0,0):
+			if buttons[1] or c_direction!=Vector2(0,0):
 				attack()
-			elif Input.get_action_strength("p1_b") and player_id==0 or Input.get_action_strength("p2_b") and player_id==1:
+			elif buttons[2]:
 				special()
 	if state==3 and shieldStun < 1:
-		if not (Input.get_action_strength("p1_shield") and player_id==0 or Input.get_action_strength("p2_shield") and player_id==1):
+		if not buttons[3]:
 			shieldEnd()
-		elif Input.get_action_strength("p1_a") and player_id==0 or Input.get_action_strength("p2_a") and player_id==1:
+		elif buttons[1]:
 			shieldEnd()
 			grab()
-		elif (Input.get_action_strength("p1_jump") and player_id==0 or Input.get_action_strength("p2_jump") and player_id==1):
+		elif buttons[0]:
 			if not is_on_ground:
 				_velocity.y-=50
 				shieldHealth-=1
@@ -108,17 +117,21 @@ func inputAction():
 				set_collision_mask_bit(4,0)
 				shieldEnd()
 				dontShield=true
+				is_on_ground = false
 		else:
 			_velocity*=0.95
 			_velocity.y-=50
 	if state==1:
-		#print(currentAttack.get_script_method_list())
-		#print(ClassDB.class_exists("jab"))
+		if stateTimer <= 2 and buttons[3] and $currentAttack.can_grabcancel and not dontShield: #attack cancel grab
+			print("grabcancel")
+			$currentAttack.interrupted = true # this doesnt work because if you hit you need to wait with ending attack until the end of the frame. this should remove the hitboxes no?
+			$currentAttack.endAttack(self) # we need to do something thats faster than queue free here :(((
+			grab()
 		$currentAttack.update(self)
 	if state == 4:
 		# roll cancel wavedash
 		if stateTimer < 3:
-			if (Input.get_action_strength("p1_jump") and player_id==0 or Input.get_action_strength("p2_jump") and player_id==1):
+			if buttons[0]:
 				if is_on_ground and not direction.y<0:
 					intangible = false
 					$sprite.modulate = sprite_color
@@ -134,17 +147,22 @@ func inputAction():
 			intangible = false
 		if stateTimer>30:
 			resetToIdle()
+			
+	# MOVE
+	
 	if state==4 and stateTimer<8:
 		z_index=0
 		if not is_on_ground:
 			#waveland
+			move_and_collide(Vector2(0,-50)) #rewrite this shit
 			var collision = move_and_collide(_velocity*1/60)
+			if collision: # hit wall or floor or ceiling
+				move_and_collide(Vector2(0,50))
 			if not collision:# and _velocity.y>=0: #land snap
-				move_and_collide(Vector2(0,-50))
 				collision = move_and_collide(Vector2(0,100))
 				if not collision:
 					move_and_collide(Vector2(0,-50))
-			if collision:
+			if collision: #and collision.normal==Vector2.UP: #waveland on walls?
 				#print("waveland")
 				$sprite.modulate = sprite_color
 				intangible = false
@@ -152,6 +170,7 @@ func inputAction():
 				dontShield = true
 				if collision.normal==Vector2.UP:
 					is_on_ground = true
+				_velocity = _velocity.slide(collision.normal)
 				resetToIdle()
 				$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".waveland)
 		else:
@@ -167,7 +186,7 @@ func inputAction():
 				
 				#explosiin
 				var spark
-				if Input.get_action_strength("p1_shield") and player_id==0 or Input.get_action_strength("p2_shield") and player_id==1:
+				if buttons[3]: #teching
 					if collision.normal==Vector2(0,-1):
 						is_on_ground = true
 					tech()
@@ -187,10 +206,22 @@ func inputAction():
 		z_index=1
 		_velocity = move_and_slide(_velocity, Vector2.UP)
 		is_on_ground = is_on_floor()
+	if state==5:
+		z_index=0
 	
-
+func get_buttons():
+	if player_id==0:
+		#rng.randomize() #test
+		#return [(rng.randf()<0.1),(rng.randf()<0.3),(rng.randf()<0.1),(rng.randf()<0.1)] #test
+		
+		return [Input.get_action_strength("p1_jump"),Input.get_action_strength("p1_a"),Input.get_action_strength("p1_b"),Input.get_action_strength("p1_shield")]
+	else:
+		return [Input.get_action_strength("p2_jump"),Input.get_action_strength("p2_a"),Input.get_action_strength("p2_b"),Input.get_action_strength("p2_shield")]
 func get_direction():
 	if player_id==0:
+		#var my_random_number = rng.randf_range(0.0, 2*PI) #test
+		#return Vector2(sin(my_random_number),cos(my_random_number))*int(rng.randf()<0.1) #test
+
 		return Vector2(
 			Input.get_action_strength("p1_right")-Input.get_action_strength("p1_left"),
 			Input.get_action_strength("p1_down")-Input.get_action_strength("p1_up") #is_on_floor updated by moveandslide
@@ -228,7 +259,9 @@ func calculate_move_velocity(): #basically do movement input stuff
 		if state == 0:
 			_velocity.x += direction.x * groundspeed
 	else:
-		if state !=2:
+		if state == 2:
+			_velocity.x += direction.x * airspeed * 0.5
+		else:
 			_velocity.x += direction.x * airspeed
 
 	#friction
@@ -246,49 +279,54 @@ func calculate_move_velocity(): #basically do movement input stuff
 	
 	
 	# MOVE Y
-	#if not direction.y>0:
 	set_collision_mask_bit(4,1)
 	
-	if (Input.get_action_strength("p1_jump") and player_id==0 or Input.get_action_strength("p2_jump") and player_id==1):
-		if released_jump == true and (state == 0):
+	if buttons[0]: #jumping
+		var jumped = false
+		if released_jump == true and (state == 0 or state == 1 and stateTimer<=2):
 			if is_on_ground:
 				_velocity.y = -jumpspeed
 				anim_player.stop(true) #resets animation
 				anim_player.play("jump")
-				released_jump = false
-				is_on_ground = false
+				jumped = true
 			elif released_jump == true and is_on_wall():
 				wallJump()
-				released_jump = false
+				jumped = true
 			elif released_jump == true and double_jump == 1:
 				_velocity.y = -jumpspeed
 				anim_player.stop(true) #resets animation
 				anim_player.play("double_jump")
 				double_jump -= 1
-				released_jump = false
+				jumped = true
 				#effect
 				var ring = jump_ring.instance()
-				ring.position = self.position
+				ring.position = self.position + Vector2(0,50)
 				ring.z_index = -2
 				get_node("/root/Node2D/fx").add_child(ring)
 		if state == 1 and can_walljump and is_on_wall():
 			wallJump()
+		if jumped:
+			is_on_ground = false
+			released_jump = false
+			if state==1: #jump interrupt attack buffer thing
+				$currentAttack.interrupted = true
+				$currentAttack.endAttack(self)
+				state=0
+				stateTimer=0
 	elif released_jump==false:
 		released_jump = true
 		if _velocity.y<0:
 			_velocity.y*=0.4
 
 func flip():
-	if direction.x>0:
-		transform.x.x = 1
-	if direction.x<0:
-		transform.x.x = -1
+	if (direction.x>0 or c_direction.x>0) and transform.x.x == -1 or (direction.x<0 or c_direction.x<0) and transform.x.x == 1:
+		transform.x.x *= -1
+func reverse():
+	if direction.x>0 and transform.x.x == -1 or direction.x<0 and transform.x.x == 1:
+		transform.x.x *= -1
+		_velocity.x *= -1
 
 func wallJump():
-	if state==1:
-		$currentAttack.interrupted = true
-		$currentAttack.endAttack(self)
-		resetToIdle()
 	_velocity.y = -jumpspeed
 	if position.x>0:
 		_velocity.x = 500
@@ -296,7 +334,6 @@ func wallJump():
 		_velocity.x = -500
 	anim_player.stop(true) #resets animation
 	anim_player.play("double_jump")
-	released_jump = false
 	
 func respawn():
 	percentage = 0
@@ -330,6 +367,7 @@ func attack():
 func special():
 	pass
 func grab(): #brag
+	grab_target = false
 	can_walljump = false
 	state = 1
 	stateTimer = 0
@@ -381,8 +419,8 @@ func CheckHurtBoxes() -> Array:
 	for hitbox in $HurtBox.get_overlapping_areas():
 		var opponent=hitbox.get_parent().get_parent()
 		
-		if opponent.team != self.team and intangible == false:
-			var data = opponent.get_node("currentAttack").hitboxes[int(hitbox["name"])] #invalid get index 169 on base array apparently
+		if opponent.team != team and intangible == false:
+			var data = opponent.get_node("currentAttack").hitboxes[int(hitbox["name"])] #invalid get index 169 on base array apparently #also 1
 			if not [opponent, data["group"]] in bannedHitboxes:
 				HitActors.append([data,opponent])
 				bannedHitboxes.append([opponent,data["group"]])
@@ -402,7 +440,6 @@ func hitCollision():
 		opponent.nextFrameHitPause += hitpauseFormula(kb)
 		
 func hitEffect():
-
 	if state==1:
 		$currentAttack.endAttack(self)
 	if HitActors:
@@ -417,16 +454,16 @@ func hitEffect():
 		var kb = (data["kb"] + data["kbscaling"]*percentage)
 		if kb:
 			var blast
-			if(not state==3):
-				kb_vector = Vector2(cos(angle)*opponent.transform.x.x, -sin(angle))*10*kb
+			if (not state==3):# or data["unshieldable"]:
+				kb_vector = Vector2(cos(angle)*opponent.transform.x.x, -sin(angle))*8*kb
 				totalHitstun = kb*0.2
 				state = 2
 				stateTimer = 0
 				percentage += data["damage"]
 				$Label.text = str(percentage)+"%"
-				anim_player.stop(true) #resets animation
-				anim_player.play("standing")
-				anim_player.stop(true)
+				anim_player.stop(true) #resets animation?
+				#anim_player.play("standing")
+				#anim_player.stop(true)
 				anim_player.play("shake")
 				$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".punch, 100/kb)
 				blast = explosion.instance()
@@ -495,10 +532,7 @@ func hitEffect():
 			if state==2:
 				anim_player.play("stunned")
 				# DI
-				rng.randomize() #test
-				var my_random_number = rng.randf_range(0.0, 6.28) #test
-				var new_angle = kb_vector.angle() + sin(kb_vector.angle_to(Vector2(sin(my_random_number),cos(my_random_number))))*0.2 #test
-				#var new_angle = kb_vector.angle() + sin(kb_vector.angle_to(direction))*0.2 #.1 to .2
+				var new_angle = kb_vector.angle() + sin(kb_vector.angle_to(direction))*0.2 #.1 to .2
 				kb_vector = Vector2(cos(new_angle), sin(new_angle))*kb_vector.length()
 				_velocity = kb_vector
 

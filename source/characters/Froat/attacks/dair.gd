@@ -17,7 +17,7 @@ func _init() -> void:
 			"damage":4,
 			"start":6,
 			"end":11,
-			"kb":70,
+			"kb":66,
 			"kbscaling":0.1,
 			"angle":90,
 			"shapes":[
@@ -31,7 +31,7 @@ func _init() -> void:
 			"start":20,
 			"end":26,
 			"kb":100,
-			"kbscaling":0.3,
+			"kbscaling":1,
 			"angle":80,
 			"shapes":[
 				[24,24,10,60]
@@ -42,6 +42,7 @@ func _init() -> void:
 func update(player):
 	autoAttack(player)
 	if player.stateTimer==0:
+		player.cant_hitfall = true
 		player.anim_player.stop(true) #resets animation
 		player.anim_player.play("dair")
 	if player.is_on_floor():
@@ -52,6 +53,7 @@ func update(player):
 func onHit(name, target, shielded=false):
 	if name=="0":
 		get_parent()._velocity.x*=0.5
-	get_parent()._velocity.y=-800#-400*int(name)
+	get_parent()._velocity.y=-1000#-400*int(name)
 	if name=="1" and not shielded:
-		endFrame = fastEndFrame
+		get_parent().cant_hitfall = false
+		endFast = true

@@ -86,17 +86,18 @@ func hitEffect():
 		
 		var angle = data["angle"]*PI/180
 		var kb = (data["kb"])
-		kb_vector = Vector2(cos(angle)*opponent.scale.y, -sin(angle))*10*kb
+		if kb:
+			kb_vector = Vector2(cos(angle)*opponent.scale.y, -sin(angle))*10*kb
+			
+			$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".punch, 100/kb)
 
-		$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".punch, 100/kb)
-
-		opponent.get_node("currentAttack").onHit(data["name"], self, false)
-		#explosiin
-		var blast = explosion.instance()
-		blast.position = self.position
-		blast.scale = Vector2(kb*0.02, kb*0.02)
-		blast.z_index = -2
-		get_node("/root/Node2D/fx").add_child(blast)
+			opponent.get_node("currentAttack").onHit(data["name"], self, false)
+			#explosiin
+			var blast = explosion.instance()
+			blast.position = self.position
+			blast.scale = Vector2(kb*0.02, kb*0.02)
+			blast.z_index = -2
+			get_node("/root/Node2D/fx").add_child(blast)
 			
 	#progress states
 	if hitPause==0:

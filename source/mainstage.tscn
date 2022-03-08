@@ -6,8 +6,8 @@
 [ext_resource path="res://assets/bg.png" type="Texture" id=4]
 [ext_resource path="res://source/Camera2D.gd" type="Script" id=5]
 [ext_resource path="res://source/mainstage.gd" type="Script" id=6]
-[ext_resource path="res://source/characters/Froat/Froat.tscn" type="PackedScene" id=7]
-[ext_resource path="res://source/characters/Godtest/Godtest.tscn" type="PackedScene" id=8]
+[ext_resource path="res://source/characters/Svampkoloni/Svampkoloni.tscn" type="PackedScene" id=7]
+[ext_resource path="res://source/characters/Froat/Froat.tscn" type="PackedScene" id=8]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 11.2837, 10 )
@@ -168,15 +168,13 @@ tile_data = PoolIntArray( -1507376, 0, 0, -1507375, 0, 0, -1507374, 0, 0, -15073
 
 [node name="Players" type="Node2D" parent="."]
 
-[node name="Froat" parent="Players" instance=ExtResource( 7 )]
-position = Vector2( 141.236, 58.7811 )
-gravity = 75.0
-
-[node name="Godtest" parent="Players" instance=ExtResource( 8 )]
-position = Vector2( -258.179, 136.471 )
-airfriction = 0.97
-player_id = 1
+[node name="Svampkoloni" parent="Players" instance=ExtResource( 7 )]
+position = Vector2( -185.434, 136.643 )
 team = 1
+
+[node name="Froat" parent="Players" instance=ExtResource( 8 )]
+position = Vector2( -315.601, 216.014 )
+player_id = 1
 
 [node name="Articles" type="Node2D" parent="."]
 
@@ -184,5 +182,5 @@ team = 1
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )
-volume_db = -22.566
+volume_db = -24.408
 script = ExtResource( 3 )
