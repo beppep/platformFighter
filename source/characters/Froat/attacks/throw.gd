@@ -8,7 +8,7 @@ var target
 # Called when the node enters the scene tree for the first time.
 func _init():
 	can_grabcancel = false
-	endFrame = 16
+	endFrame = 14
 	hitboxes = [
 		{
 			"name":"0",
@@ -17,7 +17,7 @@ func _init():
 			"start":8,
 			"end":9,
 			"kb":150,
-			"kbscaling":2,
+			"kbscaling":1,
 			"angle":80,
 			"shapes":[
 				[28,28,48,0]
@@ -27,7 +27,8 @@ func _init():
 
 func update(player):
 	autoAttack(player)
-	if player.stateTimer==0:
+	if player.stateTimer==1:
+		player._velocity*=0.5
 		player.anim_player.stop(true) #resets animation (noot
 		player.anim_player.play("throw")
 	if player.stateTimer<7:

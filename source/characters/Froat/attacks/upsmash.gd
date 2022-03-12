@@ -31,12 +31,7 @@ func _init() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func update(player):
 	autoAttack(player)
-	if player.stateTimer<50:
-		player._velocity.y -= 50
-		player._velocity.y *= 0.95
-		player._velocity.x *= 0.95
 	if player.stateTimer==0:
-		player._velocity = Vector2(0,0)
 		chargeTime = 50
 		player.anim_player.stop(true) #resets animation (noot
 		player.anim_player.play("upb")
@@ -45,13 +40,10 @@ func update(player):
 			chargeTime = player.stateTimer
 			player.stateTimer = 50
 	if player.stateTimer==51:
-		print(chargeTime)
 		player.anim_player.stop(true) #resets animation
 		player.anim_player.play("nair")
 		player._velocity = Vector2(0,-chargeTime*50-1000)
-		hitboxes[0]["kbscaling"] = (chargeTime)*0.04 + 1.5
-		hitboxes[0]["kb"] = chargeTime*0.6 + 100
+		hitboxes[0]["kbscaling"] = (chargeTime)*0.08 + 3
+		hitboxes[0]["kb"] = chargeTime*1.2 + 200
 	if player.stateTimer==56:
 		player.can_walljump = true
-
-

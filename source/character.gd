@@ -52,6 +52,7 @@ var intangible = false
 var is_on_ground = true
 var dontShield = true
 var grab_target
+var dodge_direction
 
 onready var anim_player: AnimationPlayer = get_node("AnimationPlayer") #basically just declared in _ready func
 
@@ -78,6 +79,7 @@ func inputAction():
 			hitPause=nextFrameHitPause*0.6
 		else:
 			hitPause=nextFrameHitPause
+			anim_player.stop(false)
 		nextFrameHitPause=0
 		if direction.y>0 and not cant_hitfall: #hitfalling
 			_velocity.y = gravity*20
@@ -94,23 +96,28 @@ func inputAction():
 	if state==0:
 		if buttons[3] and not dontShield:
 			shield()
+		elif buttons[4]:
+			grab()
 		else:
 			if buttons[1] or c_direction!=Vector2(0,0):
 				attack()
 			elif buttons[2]:
 				special()
 	if state==3 and shieldStun < 1:
-		if not buttons[3]:
-			shieldEnd()
-		elif buttons[1]:
+		if not is_on_ground:
+			_velocity*=0.95
+			_velocity.y-=50
+		if buttons[4]:
 			shieldEnd()
 			grab()
-		elif buttons[0]:
+		elif not buttons[3]:
+			shieldEnd()
+		elif buttons[0]: #shield float
 			if not is_on_ground:
 				_velocity.y-=50
 				shieldHealth-=1
 				released_jump = false
-		if is_on_ground:
+		elif is_on_ground:
 			if direction.y>0 or direction.x!=0:
 				dodge()
 			elif direction.y<0: #shield drop
@@ -118,15 +125,7 @@ func inputAction():
 				shieldEnd()
 				dontShield=true
 				is_on_ground = false
-		else:
-			_velocity*=0.95
-			_velocity.y-=50
 	if state==1:
-		if stateTimer <= 2 and buttons[3] and $currentAttack.can_grabcancel and not dontShield: #attack cancel grab
-			print("grabcancel")
-			$currentAttack.interrupted = true # this doesnt work because if you hit you need to wait with ending attack until the end of the frame. this should remove the hitboxes no?
-			$currentAttack.endAttack(self) # we need to do something thats faster than queue free here :(((
-			grab()
 		$currentAttack.update(self)
 	if state == 4:
 		# roll cancel wavedash
@@ -140,6 +139,9 @@ func inputAction():
 					dontShield = true
 					released_jump = false
 					$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".waveland)
+		elif stateTimer==4:
+			if is_on_ground and dodge_direction!=Vector2.ZERO:
+				transform.x.x = -dodge_direction.x
 		if stateTimer == 8:
 			_velocity=Vector2.ZERO
 		if stateTimer == 20:
@@ -162,14 +164,14 @@ func inputAction():
 				collision = move_and_collide(Vector2(0,100))
 				if not collision:
 					move_and_collide(Vector2(0,-50))
-			if collision: #and collision.normal==Vector2.UP: #waveland on walls?
+			if collision and collision.normal==Vector2.UP: #waveland on walls?
 				#print("waveland")
 				$sprite.modulate = sprite_color
 				intangible = false
 				released_jump = false
 				dontShield = true
-				if collision.normal==Vector2.UP:
-					is_on_ground = true
+				#if collision.normal==Vector2.UP:
+				is_on_ground = true
 				_velocity = _velocity.slide(collision.normal)
 				resetToIdle()
 				$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".waveland)
@@ -181,21 +183,22 @@ func inputAction():
 		if collision:
 			var prev_vel = _velocity
 			var bounce_vel = _velocity.bounce(collision.normal)
-			if bounce_vel.distance_to(prev_vel) > 600:
+			if prev_vel.length() > 300:
 				_velocity = bounce_vel
 				
 				#explosiin
 				var spark
-				if buttons[3]: #teching
-					if collision.normal==Vector2(0,-1):
-						is_on_ground = true
-					tech()
-					spark = sparks2.instance()
-				else:
-					spark = sparks.instance()
-				spark.position = self.position
-				spark.scale = Vector2(2, 2)
-				get_node("/root/Node2D/fx").add_child(spark)
+				if not is_on_ground:
+					if buttons[3]: #teching
+						if collision.normal==Vector2(0,-1):
+							is_on_ground = true
+						tech()
+						spark = sparks2.instance()
+					else:
+						spark = sparks.instance()
+					spark.position = self.position
+					spark.scale = Vector2(2, 2)
+					get_node("/root/Node2D/fx").add_child(spark)
 			else:
 				_velocity = _velocity.slide(collision.normal)
 				position += collision.get_remainder().length()*_velocity.normalized()
@@ -214,13 +217,13 @@ func get_buttons():
 		#rng.randomize() #test
 		#return [(rng.randf()<0.1),(rng.randf()<0.3),(rng.randf()<0.1),(rng.randf()<0.1)] #test
 		
-		return [Input.get_action_strength("p1_jump"),Input.get_action_strength("p1_a"),Input.get_action_strength("p1_b"),Input.get_action_strength("p1_shield")]
+		return [Input.get_action_strength("p1_jump"),Input.get_action_strength("p1_a"),Input.get_action_strength("p1_b"),Input.get_action_strength("p1_shield"),Input.get_action_strength("p1_z")]
 	else:
-		return [Input.get_action_strength("p2_jump"),Input.get_action_strength("p2_a"),Input.get_action_strength("p2_b"),Input.get_action_strength("p2_shield")]
+		return [Input.get_action_strength("p2_jump"),Input.get_action_strength("p2_a"),Input.get_action_strength("p2_b"),Input.get_action_strength("p2_shield"),Input.get_action_strength("p2_z")]
 func get_direction():
 	if player_id==0:
-		#var my_random_number = rng.randf_range(0.0, 2*PI) #test
-		#return Vector2(sin(my_random_number),cos(my_random_number))*int(rng.randf()<0.1) #test
+		var my_random_number = rng.randf_range(0.0, 2*PI) #test
+		return Vector2(sin(my_random_number),cos(my_random_number))*int(rng.randf()<0.1) #test
 
 		return Vector2(
 			Input.get_action_strength("p1_right")-Input.get_action_strength("p1_left"),
@@ -305,6 +308,7 @@ func calculate_move_velocity(): #basically do movement input stuff
 				get_node("/root/Node2D/fx").add_child(ring)
 		if state == 1 and can_walljump and is_on_wall():
 			wallJump()
+			jumped = true
 		if jumped:
 			is_on_ground = false
 			released_jump = false
@@ -315,8 +319,9 @@ func calculate_move_velocity(): #basically do movement input stuff
 				stateTimer=0
 	elif released_jump==false:
 		released_jump = true
-		if _velocity.y<0:
-			_velocity.y*=0.4
+		if _velocity.y<0: # short hop
+			_velocity.y*=0.5
+			position.y = position.y - _velocity.y*(1/60)
 
 func flip():
 	if (direction.x>0 or c_direction.x>0) and transform.x.x == -1 or (direction.x<0 or c_direction.x<0) and transform.x.x == 1:
@@ -391,8 +396,9 @@ func airdodge():
 	$Shield.visible = false
 	$sprite.modulate = sprite_color+Color(0.5,0.5,0.5,0)
 	intangible = true
-	var dodge_direction = direction.normalized()
-	_velocity = dodge_direction*1000
+	var airdodge_direction = direction.normalized()
+	_velocity = airdodge_direction*1000
+	dodge_direction=Vector2(0,0)
 	anim_player.stop(true)
 	anim_player.play("roll")
 	
@@ -405,11 +411,11 @@ func dodge():
 	intangible = true
 	anim_player.stop(true)
 	if direction.x!=0:
-		var dodge_direction = Vector2(direction.x,0).normalized()
+		dodge_direction = Vector2(direction.x,0).normalized()
 		_velocity = dodge_direction*1000
-		#transform.x.x = -dodge_direction.x #fucks up wavedashes. do it frame 4
 		anim_player.play("roll")
 	else:
+		dodge_direction = Vector2(0,0)
 		_velocity = Vector2(0,0)
 		anim_player.play("stunned")
 
@@ -440,7 +446,7 @@ func hitCollision():
 		opponent.nextFrameHitPause += hitpauseFormula(kb)
 		
 func hitEffect():
-	if state==1:
+	if state==1 and hitPause==0:
 		$currentAttack.endAttack(self)
 	if HitActors:
 		
@@ -455,8 +461,8 @@ func hitEffect():
 		if kb:
 			var blast
 			if (not state==3):# or data["unshieldable"]:
-				kb_vector = Vector2(cos(angle)*opponent.transform.x.x, -sin(angle))*8*kb
-				totalHitstun = kb*0.2
+				kb_vector = Vector2(0,-1)*kb + Vector2(cos(angle)*opponent.transform.x.x, -sin(angle))*pow(kb,1.2)*3
+				totalHitstun = pow(kb,0.9)*0.3
 				state = 2
 				stateTimer = 0
 				percentage += data["damage"]
@@ -465,13 +471,13 @@ func hitEffect():
 				#anim_player.play("standing")
 				#anim_player.stop(true)
 				anim_player.play("shake")
-				$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".punch, 100/kb)
+				$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".punch, 0.5+100/kb)
 				blast = explosion.instance()
 			else:
 				shieldHealth -= data["damage"]*3
-				shieldStun = data["damage"]*2
+				shieldStun = data["damage"]*0+1
 				$Shield.modulate=Color(0.7,0.7,0.7)
-				$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".shieldHit, 100/kb)
+				$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".shieldHit, 0.5+100/kb)
 				blast = explosion2.instance()
 			#explosiin
 			blast.position = self.position
@@ -490,31 +496,32 @@ func hitEffect():
 		respawn()
 	if position.x<-1500:
 		respawn()
-		
-	if state==3:
-		if(shieldStun > 0):
-			shieldStun-= 1
+	
+	if hitPause==0:
+		if state==3: 
+			if(shieldStun > 0):
+				shieldStun-= 1
+			else:
+				$Shield.modulate=Color(1,1,1)
+				shieldHealth-=1
+			if(shieldHealth<1):
+				shieldStun=0
+				shieldHealth=0
+				$Shield.visible = false
+				state=2
+				stateTimer=0
+				totalHitstun=180
+				_velocity = Vector2(0,-1000)
+				
+				anim_player.stop(true) #resets animation
+				anim_player.play("standing")
+				anim_player.stop(true)
+				anim_player.play("stunned")
+				
+			$Shield.scale=Vector2(shieldHealth/(2*shieldHealthMax),shieldHealth/(2*shieldHealthMax))
 		else:
-			$Shield.modulate=Color(1,1,1)
-			shieldHealth-=1
-		if(shieldHealth<1):
-			shieldStun=0
-			shieldHealth=0
-			$Shield.visible = false
-			state=2
-			stateTimer=0
-			totalHitstun=180
-			_velocity = Vector2(0,-1000)
-			
-			anim_player.stop(true) #resets animation
-			anim_player.play("standing")
-			anim_player.stop(true)
-			anim_player.play("stunned")
-			
-		$Shield.scale=Vector2(shieldHealth/(2*shieldHealthMax),shieldHealth/(2*shieldHealthMax))
-	else:
-		if(shieldHealth<shieldHealthMax):
-			shieldHealth+=0.5
+			if(shieldHealth<shieldHealthMax):
+				shieldHealth+=0.5
 			
 	#progress states
 	if hitPause==0:
@@ -535,6 +542,8 @@ func hitEffect():
 				var new_angle = kb_vector.angle() + sin(kb_vector.angle_to(direction))*0.2 #.1 to .2
 				kb_vector = Vector2(cos(new_angle), sin(new_angle))*kb_vector.length()
 				_velocity = kb_vector
+			else:
+				anim_player.play()
 
 func hitpauseFormula(kb):
 	return kb*0.05+2

@@ -31,8 +31,8 @@ func changeHitbox():
 			"start":3,
 			"end":15,
 			"damage":14,
-			"kb":50,
-			"kbscaling":2,
+			"kb":100,
+			"kbscaling":3,
 			"angle":-90,
 		},
 	]
@@ -52,7 +52,7 @@ func update(player):
 					
 #this is stupid
 func autoEndAttack(player):
-	player._velocity.y *= -0.4
+	player._velocity.y *= -0.5
 	endFast = false
 	interrupted = false
 	for box in get_node("../HitBoxes").get_children(): #remove hitboxes

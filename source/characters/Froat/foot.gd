@@ -18,6 +18,8 @@ var upsideDown = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
+	z_index = -2
+
 
 func inputAction():	
 	
@@ -47,7 +49,8 @@ func changeHitbox():
 		
 func hitEffect():
 	
-	$currentAttack.endAttack(self)
+	if hitPause==0:
+		$currentAttack.endAttack(self)
 	
 	#progress states
 	if hitPause==0:

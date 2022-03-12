@@ -36,6 +36,7 @@ func update(player):
 		player.anim_player.play("grab")
 
 func onHit(name, target, shielded=false):
+	target.resetToIdle()
 	target.state = 5 #they are dolls and cant tech or stuff
 	target.stateTimer = 0
 	

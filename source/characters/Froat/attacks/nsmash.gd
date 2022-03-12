@@ -10,7 +10,7 @@ var footScene = load("res://source/characters/Froat/foot.tscn")
 # Called when the node enters the scene tree for the first time.
 func _init() -> void:
 	
-	endFrame = 28
+	endFrame = 54
 	hitboxes = [
 	]
 
@@ -22,16 +22,16 @@ func update(player):
 		player.anim_player.stop(true) #resets animation
 		player.anim_player.play("stunned")
 		player._velocity*=0.8
-	if player.stateTimer==1:
+	if player.stateTimer==15:
 		
 		var foot = footScene.instance()
-		foot.position = Vector2(player.position.x+player._velocity.x*0.1, 1000)
+		foot.position = Vector2(player.position.x+player.transform.x.x*150, player.position.y)
 		foot.team = player.team
 		foot.scale.x = player.scale.y
 		$"/root/Node2D/Articles".add_child(foot)
 		
 		var foot2 = footScene.instance()
-		foot2.position = Vector2(player.position.x+player._velocity.x*0.1, -750)
+		foot2.position = Vector2(player.position.x+player.transform.x.x*100, -750)
 		foot2.transform.y.y = -1
 		foot2._velocity.y *= -1
 		foot2.upsideDown = true

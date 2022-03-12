@@ -16,12 +16,12 @@ func _init() -> void:
 			"group":1,
 			"damage":8,
 			"start":6,
-			"end":9,
+			"end":11,
 			"kb":150,
 			"kbscaling":1,
-			"angle":72,
+			"angle":56,
 			"shapes":[
-				[28,33,43,-6]
+				[45,25,55,-6]
 			]
 		},
 	]
@@ -32,4 +32,5 @@ func update(player):
 		player.anim_player.stop(true) #resets animation (nooooot)
 		player.anim_player.play("ftilt")
 	if not player.is_on_ground:
-		interrupted = true
+		pass
+		#interrupted = true

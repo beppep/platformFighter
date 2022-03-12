@@ -11,7 +11,8 @@ var endFast = false
 var interrupted = false
 var can_grabcancel = true
 
-# Called when the node enters the scene tree for the first time.
+
+# Called when the script loads or somethn
 func _init() -> void:
 	pass # Replace with function body.
 
@@ -44,14 +45,12 @@ func autoEndAttack(player):
 			other.bannedHitboxes = replacementList
 	print(player.grab_target)
 	if player.grab_target and player.grab_target.state==5:
-		player.grab_target.state=0
 		print("grab released?!")
-	player.resetToIdle() #hmm
-	if player.grab_target and player.grab_target.state==5:
 		player.grab_target.state=2
 		player.grab_target.stateTimer = 0
-		player.grab_target._velocity = Vector2(500*player.transform.x.x,5000)
+		player.grab_target._velocity = Vector2(500*player.transform.x.x,2000)
 		player.grab_target.totalHitstun = 20
+	player.resetToIdle() #hmm
 
 func update(player):
 	#print("htr")
