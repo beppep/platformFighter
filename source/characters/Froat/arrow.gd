@@ -22,6 +22,9 @@ var team = 0
 func _ready() -> void:
 	pass # Replace with function body.
 
+func onHit(name, target, shielded=false):
+	pass
+	
 func inputAction():	
 	
 	if(nextFrameHitPause):

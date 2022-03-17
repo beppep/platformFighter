@@ -63,7 +63,7 @@ func special():
 	state = 1
 	stateTimer = 0
 	flip()
-	if not is_on_floor():
+	if not is_on_ground:
 		if direction.y<0:
 			$currentAttack.set_script(uair2)
 		elif direction.y>0:

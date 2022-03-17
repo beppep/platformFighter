@@ -8,9 +8,13 @@ var bash = load("res://source/characters/Froat/attacks/bash.gd")
 var uair = load("res://source/characters/Froat/attacks/uair.gd")
 var dair = load("res://source/characters/Froat/attacks/dair.gd")
 var ramm = load("res://source/characters/Froat/attacks/ramm.gd")
-var eye = load("res://source/characters/Froat/attacks/summon.gd")
+var summon = load("res://source/characters/Froat/attacks/summon.gd")
 var spin = load("res://source/characters/Froat/attacks/spin.gd")
-var upb = load("res://source/characters/Froat/attacks/eye.gd")
+var upb = load("res://source/characters/Froat/attacks/upb.gd")
+var downb = load("res://source/characters/Froat/attacks/downb.gd")
+var upsmash = load("res://source/characters/Froat/attacks/upsmash.gd")
+var nsmash = load("res://source/characters/Froat/attacks/nsmash.gd")
+var dsmash = load("res://source/characters/Froat/attacks/dsmash.gd")
 var shoot = load("res://source/characters/Froat/attacks/shoot.gd")
 #var utilt = load("res://source/characters/Froat/attacks/utilt.gd")
 # Declare member variables here. Examples:
@@ -61,8 +65,8 @@ func attack():
 			$currentAttack.set_script(uair)
 		elif attackDirection.y>0:
 			$currentAttack.set_script(dair)
-		elif attackDirection.x==0:
-			$currentAttack.set_script(spin)
+		elif attackDirection.x>0:
+			$currentAttack.set_script(ftilt)
 		else:
 			$currentAttack.set_script(bash)
 	else:
@@ -82,17 +86,29 @@ func special():
 	state = 1
 	stateTimer = 0
 	flip()
-	if not is_on_floor():
+	if not is_on_ground:
 		if direction.y<0:
 			$currentAttack.set_script(upb)
 		elif direction.y>0:
-			$currentAttack.set_script(eye)
+			$currentAttack.set_script(downb)
 		elif direction.x==0:
-			$currentAttack.set_script(shoot)
+			if B_charged:
+				$currentAttack.set_script(summon)
+				B_charged = false
+			else:
+				state = 0
+				stateTimer = 0
 		else:
 			$currentAttack.set_script(ramm)
 	else:
-		$currentAttack.set_script(ramm)
+		if direction.y<0:
+			$currentAttack.set_script(upsmash)
+		elif direction.y>0:
+			$currentAttack.set_script(dsmash)
+		elif direction.x==0:
+			$currentAttack.set_script(nsmash)
+		else:
+			$currentAttack.set_script(ramm)
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta: float) -> void:

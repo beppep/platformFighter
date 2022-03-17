@@ -16,8 +16,8 @@ func _init() -> void:
 			"start":3,
 			"end":15,
 			"damage":14,
-			"kb":250,
-			"kbscaling":1.5,
+			"kb":100,
+			"kbscaling":2,
 			"angle":90,
 		},
 	]
@@ -42,7 +42,7 @@ func update(player):
 		for other in $"/root/Node2D/Players".get_children():
 			if other.team == player.team:
 				if player.get_node("HitBoxes/0").overlaps_body(other):
-					other._velocity = Vector2(0,-3000)
+					other._velocity = Vector2(0,-2000)
 					#maybe not reset idk...
 					#other.currentAttack.interrupted = true
 					#other.currentAttack.endAttack()

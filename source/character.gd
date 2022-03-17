@@ -53,6 +53,9 @@ var is_on_ground = true
 var dontShield = true
 var grab_target
 var dodge_direction
+var fullhop_timer = 0
+var B_charged = true
+var wallJumps = jumpspeed
 
 onready var anim_player: AnimationPlayer = get_node("AnimationPlayer") #basically just declared in _ready func
 
@@ -63,6 +66,11 @@ func _ready():
 		$sprite.modulate=sprite_color
 	$Label.text = str(percentage)+"%"
 
+func onHit(name, target, shielded=false):
+	pass
+	#double_jump = 1
+	wallJumps = jumpspeed
+	B_charged = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -114,7 +122,7 @@ func inputAction():
 			shieldEnd()
 		elif buttons[0]: #shield float
 			if not is_on_ground:
-				_velocity.y-=50
+				_velocity.y-=40
 				shieldHealth-=1
 				released_jump = false
 		elif is_on_ground:
@@ -168,7 +176,6 @@ func inputAction():
 				#print("waveland")
 				$sprite.modulate = sprite_color
 				intangible = false
-				released_jump = false
 				dontShield = true
 				#if collision.normal==Vector2.UP:
 				is_on_ground = true
@@ -223,8 +230,7 @@ func get_buttons():
 func get_direction():
 	if player_id==0:
 		var my_random_number = rng.randf_range(0.0, 2*PI) #test
-		return Vector2(sin(my_random_number),cos(my_random_number))*int(rng.randf()<0.1) #test
-
+		return Vector2(sin(my_random_number),cos(my_random_number))*rng.randf() #test
 		return Vector2(
 			Input.get_action_strength("p1_right")-Input.get_action_strength("p1_left"),
 			Input.get_action_strength("p1_down")-Input.get_action_strength("p1_up") #is_on_floor updated by moveandslide
@@ -249,6 +255,8 @@ func get_c_direction():
 func calculate_move_velocity(): #basically do movement input stuff
 	if is_on_ground:
 		double_jump = 1
+		wallJumps = jumpspeed
+		B_charged = true
 		if state==0:
 			anim_player.play("standing")
 			
@@ -284,15 +292,28 @@ func calculate_move_velocity(): #basically do movement input stuff
 	# MOVE Y
 	set_collision_mask_bit(4,1)
 	
+	if fullhop_timer>0:
+		fullhop_timer-=1
+		
+	if fullhop_timer == 1: # full hop
+		if buttons[0]:
+			#position.y += _velocity.y*(1/60)
+			_velocity.y*=2
+		else:
+			position.y -= _velocity.y*(1/60)
+			_velocity.y*=0.6
+		
+		
 	if buttons[0]: #jumping
 		var jumped = false
 		if released_jump == true and (state == 0 or state == 1 and stateTimer<=2):
 			if is_on_ground:
-				_velocity.y = -jumpspeed
+				_velocity.y = -jumpspeed*0.6
+				fullhop_timer = 5 #time that jump must be held for fullhop
 				anim_player.stop(true) #resets animation
 				anim_player.play("jump")
 				jumped = true
-			elif released_jump == true and is_on_wall():
+			elif released_jump == true and is_on_wall() and wallJumps:
 				wallJump()
 				jumped = true
 			elif released_jump == true and double_jump == 1:
@@ -306,22 +327,21 @@ func calculate_move_velocity(): #basically do movement input stuff
 				ring.position = self.position + Vector2(0,50)
 				ring.z_index = -2
 				get_node("/root/Node2D/fx").add_child(ring)
-		if state == 1 and can_walljump and is_on_wall():
+		if state == 1 and can_walljump and is_on_wall() and wallJumps:
 			wallJump()
 			jumped = true
 		if jumped:
 			is_on_ground = false
 			released_jump = false
 			if state==1: #jump interrupt attack buffer thing
+				print("cancel atack")
 				$currentAttack.interrupted = true
 				$currentAttack.endAttack(self)
 				state=0
 				stateTimer=0
-	elif released_jump==false:
+	elif released_jump == false:
 		released_jump = true
-		if _velocity.y<0: # short hop
-			_velocity.y*=0.5
-			position.y = position.y - _velocity.y*(1/60)
+		
 
 func flip():
 	if (direction.x>0 or c_direction.x>0) and transform.x.x == -1 or (direction.x<0 or c_direction.x<0) and transform.x.x == 1:
@@ -332,7 +352,10 @@ func reverse():
 		_velocity.x *= -1
 
 func wallJump():
-	_velocity.y = -jumpspeed
+	_velocity.y = -wallJumps
+	wallJumps-=400
+	if wallJumps<0:
+		wallJumps = 0
 	if position.x>0:
 		_velocity.x = 500
 	else:
@@ -396,6 +419,7 @@ func airdodge():
 	$Shield.visible = false
 	$sprite.modulate = sprite_color+Color(0.5,0.5,0.5,0)
 	intangible = true
+	released_jump = false
 	var airdodge_direction = direction.normalized()
 	_velocity = airdodge_direction*1000
 	dodge_direction=Vector2(0,0)
@@ -461,8 +485,8 @@ func hitEffect():
 		if kb:
 			var blast
 			if (not state==3):# or data["unshieldable"]:
-				kb_vector = Vector2(0,-1)*kb + Vector2(cos(angle)*opponent.transform.x.x, -sin(angle))*pow(kb,1.2)*3
-				totalHitstun = pow(kb,0.9)*0.3
+				kb_vector = (Vector2(0,-1)*0.8 + Vector2(cos(angle)*opponent.transform.x.x, -sin(angle))*2.7) *pow(kb,1.2)
+				totalHitstun = pow(kb,0.9)*0.4
 				state = 2
 				stateTimer = 0
 				percentage += data["damage"]
@@ -486,9 +510,10 @@ func hitEffect():
 			get_node("/root/Node2D/fx").add_child(blast)
 		
 		opponent.get_node("currentAttack").onHit(data["name"], self, (state==3))
+		opponent.onHit(data["name"], self, (state==3))
 	
 	
-	if position.y>1000:
+	if position.y>750:
 		respawn()
 	if position.y<-750:
 		respawn()

@@ -25,7 +25,7 @@ func update(player):
 	if player.stateTimer==1:
 		
 		var foot = footScene.instance()
-		foot.position = Vector2(player.position.x+player._velocity.x*0.1, 1000)
+		foot.position = Vector2(player.position.x+player._velocity.x*0.1, 750)
 		foot.team = player.team
 		foot.scale.x = player.scale.y
 		$"/root/Node2D/Articles".add_child(foot)

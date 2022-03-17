@@ -33,6 +33,8 @@ func update(player):
 		player.anim_player.play("ramm")
 	if player.stateTimer==10:
 		player._velocity = Vector2(800*player.scale.y, -600)
+	if player.stateTimer==36:
+		player.can_walljump = true
 
 
 func onHit(name, target, shielded=false):

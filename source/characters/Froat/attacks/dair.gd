@@ -8,15 +8,15 @@ extends "res://source/characters/Attack.gd"
 
 # Called when the node enters the scene tree for the first time.
 func _init() -> void:
-	endFrame = 40
-	fastEndFrame = 30
+	endFrame = 35
+	fastEndFrame = 27
 	hitboxes = [
 		{
 			"name":"0",
 			"group":1,
 			"damage":4,
-			"start":6,
-			"end":11,
+			"start":5,
+			"end":10,
 			"kb":80,
 			"kbscaling":0.1,
 			"angle":90,
@@ -28,8 +28,8 @@ func _init() -> void:
 			"name":"1",
 			"group":2,
 			"damage":7,
-			"start":20,
-			"end":26,
+			"start":16,
+			"end":21,
 			"kb":120,
 			"kbscaling":0.8,
 			"angle":80,

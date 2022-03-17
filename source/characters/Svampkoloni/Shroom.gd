@@ -36,6 +36,9 @@ func _ready() -> void:
 	pass # Replace with function body.
 	z_index = -1
 
+func onHit(name, target, shielded=false):
+	pass
+	
 func inputAction():	
 	
 	if(nextFrameHitPause):

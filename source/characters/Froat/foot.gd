@@ -20,6 +20,8 @@ func _ready() -> void:
 	pass # Replace with function body.
 	z_index = -2
 
+func onHit(name, target, shielded=false):
+	pass
 
 func inputAction():	
 	
@@ -36,7 +38,7 @@ func inputAction():
 	
 	move_and_slide(_velocity)
 	
-	if position.y>1000:
+	if position.y>750:
 		queue_free()
 	if position.y<-750:
 		queue_free()

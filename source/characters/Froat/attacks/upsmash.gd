@@ -43,7 +43,7 @@ func update(player):
 		player.anim_player.stop(true) #resets animation
 		player.anim_player.play("nair")
 		player._velocity = Vector2(0,-chargeTime*50-1000)
-		hitboxes[0]["kbscaling"] = (chargeTime)*0.08 + 3
-		hitboxes[0]["kb"] = chargeTime*1.2 + 200
+		hitboxes[0]["kbscaling"] = (chargeTime)*0.05 + 3
+		hitboxes[0]["kb"] = chargeTime*0.5 + 100
 	if player.stateTimer==56:
 		player.can_walljump = true
