@@ -20,6 +20,7 @@ func _init() -> void:
 			"kb":40,
 			"kbscaling":0.1,
 			"angle":90,
+			"autolinkX":1,
 			"shapes":[
 				[30,16,98,-8]
 			]
@@ -32,7 +33,7 @@ func _init() -> void:
 			"end":23,
 			"kb":100,
 			"kbscaling":0.5,
-			"angle":125,
+			"angle":145,
 			"shapes":[
 				[36,20,98,-8]
 			]
@@ -57,10 +58,9 @@ func update(player):
 func onHit(name, target, shielded=false):
 	var player = get_parent()
 	if name=="0":
-		player._velocity.x*=0.4
-		if not player.is_on_ground:
-			player._velocity.y*=0.4
-			player._velocity.y-=500
+		#if not player.is_on_ground:
+		#player._velocity.y*=0.4
+		player._velocity.y=-500
 	if name=="1":
 		if not player.is_on_ground:
 			player._velocity = Vector2(100*player.transform.x.x, -1000)

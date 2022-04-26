@@ -18,7 +18,7 @@ func _init() -> void:
 			"start":19,
 			"end":33,
 			"kb":140,
-			"kbscaling":4,
+			"kbscaling":3.1,
 			"angle":55,
 			"shapes":[
 				[28,28,30,0]
@@ -29,12 +29,20 @@ func _init() -> void:
 func update(player):
 	autoAttack(player)
 	if player.stateTimer==0:
+		player._velocity *= 0.5
 		player.anim_player.stop(true) #resets animation
 		player.anim_player.play("ramm")
 	if player.stateTimer==10:
-		player._velocity = Vector2(800*player.scale.y, -600)
+		player._velocity = Vector2(800*player.transform.x.x, -600)
 	if player.stateTimer==36:
 		player.can_walljump = true
+		if not endFast:
+			player._velocity.x*=0.8
+	"""
+	if player.stateTimer>20 and player.is_on_wall():
+		player._velocity=Vector2(-800*player.transform.x.x,-1000)
+		#player.transform.x.x *=-1
+	"""
 
 
 func onHit(name, target, shielded=false):

@@ -33,11 +33,10 @@ func update(player):
 	autoAttack(player)
 	if player.stateTimer<50:
 		player._velocity.y -= 50
-		player._velocity.y *= 0.95
-		player._velocity.x *= 0.95
+		player._velocity.y *= 0.9
+		player._velocity.x *= 0.9
 	if player.stateTimer==0:
 		player._velocity.y = 0
-		player._velocity.y *= 0.5
 		chargeTime = 50
 		player.anim_player.stop(true) #resets animation (noot
 		player.anim_player.play("upb")
@@ -48,11 +47,16 @@ func update(player):
 	if player.stateTimer==51:
 		player.anim_player.stop(true) #resets animation
 		player.anim_player.play("nair")
-		player._velocity = Vector2(0,-chargeTime*30-1000)
+		player._velocity = Vector2(150*player.transform.x.x,-chargeTime*30-1000)
 		hitboxes[0]["kbscaling"] = (chargeTime)*0.04 + 1.5
 		hitboxes[0]["kb"] = chargeTime*0.5 + 100
 		endFrame = 90 + chargeTime
 	if player.stateTimer==56:
 		player.can_walljump = true
+	
+	if player.is_on_ground:
+		interrupted = true #remove hitboxes? idk
+		if not endFast:
+			landingLag = -1#20
 
 

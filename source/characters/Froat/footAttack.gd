@@ -37,17 +37,6 @@ func changeHitbox():
 		},
 	]
 
-func update(player):
-	if player.stateTimer<15 and not player.upsideDown:
-		for other in $"/root/Node2D/Players".get_children():
-			if other.team == player.team:
-				if player.get_node("HitBoxes/0").overlaps_body(other):
-					other._velocity = Vector2(0,-2000)
-					#maybe not reset idk...
-					#other.currentAttack.interrupted = true
-					#other.currentAttack.endAttack()
-					#other.resetToIdle()
-					break
 					
 					
 #this is stupid

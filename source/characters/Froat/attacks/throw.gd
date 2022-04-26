@@ -19,6 +19,7 @@ func _init():
 			"kb":120,
 			"kbscaling":1,
 			"angle":80,
+			"autolink":1,
 			"shapes":[
 				[28,28,48,0]
 			]
@@ -27,6 +28,8 @@ func _init():
 
 func update(player):
 	autoAttack(player)
+	if player.stateTimer==0:
+		player.cant_hitfall = true
 	if player.stateTimer==1:
 		player._velocity*=0.5
 		player.anim_player.stop(true) #resets animation (noot

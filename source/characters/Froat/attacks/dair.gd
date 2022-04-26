@@ -9,7 +9,7 @@ extends "res://source/characters/Attack.gd"
 # Called when the node enters the scene tree for the first time.
 func _init() -> void:
 	endFrame = 35
-	fastEndFrame = 27
+	fastEndFrame = 24
 	hitboxes = [
 		{
 			"name":"0",
@@ -20,6 +20,7 @@ func _init() -> void:
 			"kb":80,
 			"kbscaling":0.1,
 			"angle":90,
+			"autolinkX":0.8,
 			"shapes":[
 				[24,24,10,60]
 			]
@@ -45,14 +46,16 @@ func update(player):
 		player.cant_hitfall = true
 		player.anim_player.stop(true) #resets animation
 		player.anim_player.play("dair")
-	if player.is_on_floor():
-		interrupted = true
+	if player.is_on_ground:
+		interrupted = true #remove hitboxes? idk
+		if not endFast:
+			landingLag = 10
 
 
 
 func onHit(name, target, shielded=false):
 	if name=="0":
-		get_parent()._velocity.x*=0.5
+		get_parent()._velocity.x*=0.8
 	get_parent()._velocity.y=-950#-400*int(name)
 	if name=="1" and not shielded:
 		get_parent().cant_hitfall = false

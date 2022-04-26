@@ -17,8 +17,8 @@ func _init():
 			"start":16,
 			"end":18,
 			"kb":100,
-			"kbscaling":2.5,
-			"angle":110,
+			"kbscaling":0.5,
+			"angle":140,
 			"shapes":[
 				[30,30,92,-78]
 			]

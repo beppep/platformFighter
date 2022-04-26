@@ -8,15 +8,15 @@ extends "res://source/characters/Attack.gd"
 
 # Called when the node enters the scene tree for the first time.
 func _init() -> void:
-	endFrame = 55
-	fastEndFrame = 50 #?
+	endFrame = 40
+	fastEndFrame = 40 #?
 	hitboxes = [
 		{
 			"name":"0",
 			"group":1,
 			"damage":13,
-			"start":16,
-			"end":33,
+			"start":12,
+			"end":30,
 			"kb":150,
 			"kbscaling":2,
 			"angle":-90,
@@ -31,20 +31,23 @@ func update(player):
 	if player.stateTimer==0:
 		player.anim_player.stop(true) #resets animation
 		player.anim_player.play("upb")
-	if player.stateTimer<16:
-		player._velocity = Vector2(0, -60)
-	if player.stateTimer==16:
-		player._velocity = Vector2(0, 1500)
-	if player.stateTimer==33:
-		player._velocity *= 0.0
-	if player.is_on_floor():
-		interrupted = true
-
+	if player.stateTimer<12:
+		player._velocity *= 0.8#Vector2(0, -60)
+	if 16<player.stateTimer and player.stateTimer<30:
+		if not interrupted: #why
+			player._velocity = Vector2(player.transform.x.x*100, 2000)
+	if player.stateTimer>30:
+		player._velocity *= 0
+	#if player.is_on_floor() and player.stateTimer==fastEndFrame and player.buttons[0]:
+		#player._velocity = Vector2(0, -3000)
+	if player.is_on_ground:
+		interrupted = true #remove hitboxes? idk
+		if not endFast:
+			landingLag = 25
 
 func onHit(name, target, shielded=false):
 	get_parent()._velocity.y=-1500
-	get_parent()._velocity.x*=0.9
-
+	
 	if not shielded:
 		#endFast = true
 		interrupted = true

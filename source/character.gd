@@ -21,6 +21,7 @@ export var gravity = 80.0 #per second squared
 export var airspeed = 20.0
 export var groundspeed = 100.0
 export var jumpspeed = 1000.0
+export var fallspeed = 1000.0
 export var groundfriction = 0.8
 export var airfriction = 0.98
 export var yfriction = 0.95
@@ -35,10 +36,11 @@ var released_jump = false
 var double_jump = 1
 var can_walljump = false
 var cant_hitfall = false
-var state = 0 #0: actionable, 1:attacking, 2:hitstun 3:shield, 4:dodge, 5:grabbed?
+var state = 0 #0: actionable, 1:attacking, 2:hitstun 3:shield, 4:dodge, 5:grabbed?, 6:landinglag, 7:lying, 8:shieldlag
 var currentAttack = "error"
 var stateTimer = 0
 var totalHitstun = 0
+var totalLandingLag = 0
 var hitPause = 0 #descends
 var nextFrameHitPause = 0
 var bannedHitboxes = []
@@ -55,22 +57,27 @@ var grab_target
 var dodge_direction
 var fullhop_timer = 0
 var B_charged = true
-var wallJumps = jumpspeed
+var has_airdodge = 1
+var wallJumps = jumpspeed*0.9
 
 onready var anim_player: AnimationPlayer = get_node("AnimationPlayer") #basically just declared in _ready func
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	if player_id==1:
-		sprite_color=Color(0.8,0.8,2.5)
+	pass
+func _ready2():
+	if team==1:
+		sprite_color=Color(0.8,0.8,2)
 		$sprite.modulate=sprite_color
 	$Label.text = str(percentage)+"%"
+
 
 func onHit(name, target, shielded=false):
 	pass
 	#double_jump = 1
 	wallJumps = jumpspeed
 	B_charged = true
+	has_airdodge = 1
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -87,7 +94,10 @@ func inputAction():
 			hitPause=nextFrameHitPause*0.6
 		else:
 			hitPause=nextFrameHitPause
-			anim_player.stop(false)
+			if state==2:
+				anim_player.play("shake")
+			else:
+				anim_player.stop(false)
 		nextFrameHitPause=0
 		if direction.y>0 and not cant_hitfall: #hitfalling
 			_velocity.y = gravity*20
@@ -122,7 +132,7 @@ func inputAction():
 			shieldEnd()
 		elif buttons[0]: #shield float
 			if not is_on_ground:
-				_velocity.y-=40
+				_velocity.y-=30
 				shieldHealth-=1
 				released_jump = false
 		elif is_on_ground:
@@ -157,6 +167,9 @@ func inputAction():
 			intangible = false
 		if stateTimer>30:
 			resetToIdle()
+	if state==7:
+		if stateTimer>20 and (direction!=Vector2.ZERO or buttons[3]):
+			tech()
 			
 	# MOVE
 	
@@ -190,7 +203,7 @@ func inputAction():
 		if collision:
 			var prev_vel = _velocity
 			var bounce_vel = _velocity.bounce(collision.normal)
-			if prev_vel.length() > 300:
+			if prev_vel.length() > 700:
 				_velocity = bounce_vel
 				
 				#explosiin
@@ -202,6 +215,11 @@ func inputAction():
 						tech()
 						spark = sparks2.instance()
 					else:
+						if collision.normal==Vector2(0,-1):
+							is_on_ground = true
+						state = 7
+						stateTimer = 0
+						anim_player.play("lying")
 						spark = sparks.instance()
 					spark.position = self.position
 					spark.scale = Vector2(2, 2)
@@ -221,8 +239,8 @@ func inputAction():
 	
 func get_buttons():
 	if player_id==0:
-		#rng.randomize() #test
-		#return [(rng.randf()<0.1),(rng.randf()<0.3),(rng.randf()<0.1),(rng.randf()<0.1)] #test
+		rng.randomize() #test
+		return [(rng.randf()<0.1),(rng.randf()<0.3),(rng.randf()<0.1),(rng.randf()<0.1),(rng.randf()<0.1)] #test
 		
 		return [Input.get_action_strength("p1_jump"),Input.get_action_strength("p1_a"),Input.get_action_strength("p1_b"),Input.get_action_strength("p1_shield"),Input.get_action_strength("p1_z")]
 	else:
@@ -257,8 +275,13 @@ func calculate_move_velocity(): #basically do movement input stuff
 		double_jump = 1
 		wallJumps = jumpspeed
 		B_charged = true
+		has_airdodge = 1
 		if state==0:
 			anim_player.play("standing")
+	else:
+		if state==6:
+			state=0
+			stateTimer=0
 			
 	
 	# FLIP
@@ -271,22 +294,27 @@ func calculate_move_velocity(): #basically do movement input stuff
 			_velocity.x += direction.x * groundspeed
 	else:
 		if state == 2:
-			_velocity.x += direction.x * airspeed * 0.5
+			_velocity.x += direction.x * airspeed * 0.2
 		else:
 			_velocity.x += direction.x * airspeed
 
 	#friction
 	if is_on_ground:
 		_velocity *= groundfriction
-	else:#if not state==2:
-		_velocity.x *= airfriction
+	else:
+		if not state==2:
+			_velocity.x *= airfriction
 		_velocity.y *= yfriction
 	if state==2:
-		_velocity.y += gravity*0.6
-		#if _velocity.y>gravity*10:
-		#	_velocity.y = gravity*10
+		if _velocity.y<fallspeed:
+			_velocity.y += gravity*0.6
+		if _velocity.y>0:
+			_velocity.y *= yfriction
 	else:
-		_velocity.y += gravity
+		if _velocity.y>0 and direction.y>0:
+			_velocity.y += direction.y * airspeed
+		if _velocity.y<fallspeed:
+			_velocity.y += gravity
 	
 	
 	# MOVE Y
@@ -317,7 +345,7 @@ func calculate_move_velocity(): #basically do movement input stuff
 				wallJump()
 				jumped = true
 			elif released_jump == true and double_jump == 1:
-				_velocity.y = -jumpspeed
+				_velocity.y = -jumpspeed*0.9
 				anim_player.stop(true) #resets animation
 				anim_player.play("double_jump")
 				double_jump -= 1
@@ -357,12 +385,12 @@ func wallJump():
 	if wallJumps<0:
 		wallJumps = 0
 	if position.x>0:
-		_velocity.x = 500
+		_velocity.x = 700
 	else:
-		_velocity.x = -500
+		_velocity.x = -700
 	anim_player.stop(true) #resets animation
 	anim_player.play("double_jump")
-	
+"""
 func respawn():
 	percentage = 0
 	$Label.text = str(percentage)+"%"
@@ -375,7 +403,7 @@ func respawn():
 		$currentAttack.interrupted = true
 		$currentAttack.endAttack(self)
 	resetToIdle()
-
+"""
 func resetToIdle():
 	state=0
 	stateTimer=0
@@ -394,6 +422,13 @@ func attack():
 	pass
 func special():
 	pass
+func attackWith(script):
+	grab_target = false
+	can_walljump = false
+	cant_hitfall = false
+	state = 1
+	stateTimer = 0
+	$currentAttack.set_script(script)
 func grab(): #brag
 	grab_target = false
 	can_walljump = false
@@ -407,10 +442,15 @@ func shield():
 		$Shield.visible = true
 		anim_player.stop(true) #resets animation
 		anim_player.play("standing")
-	else:
+	elif has_airdodge>0:
 		airdodge()
 func shieldEnd():
-	resetToIdle()
+	$Shield.visible = false
+	state = 6
+	stateTimer = 0
+	totalLandingLag = 8
+	anim_player.play("land")
+	
 
 func airdodge():
 	is_on_ground = false
@@ -425,6 +465,7 @@ func airdodge():
 	dodge_direction=Vector2(0,0)
 	anim_player.stop(true)
 	anim_player.play("roll")
+	has_airdodge = 0
 	
 
 func dodge():
@@ -456,6 +497,7 @@ func CheckHurtBoxes() -> Array:
 				bannedHitboxes.append([opponent,data["group"]])
 			else:
 				pass#print("banned")
+		
 	#print(HitActors)
 	return HitActors
 
@@ -466,8 +508,8 @@ func hitCollision():
 		var data = HitActors[0][0]
 		var opponent = HitActors[0][1]
 		var kb = data["kb"] + data["kbscaling"]*percentage
-		nextFrameHitPause += hitpauseFormula(kb) #+= for trades and stuff?
-		opponent.nextFrameHitPause += hitpauseFormula(kb)
+		nextFrameHitPause = max(nextFrameHitPause, hitpauseFormula(kb)) #+= for trades and stuff?
+		opponent.nextFrameHitPause = max(opponent.nextFrameHitPause, hitpauseFormula(kb))
 		
 func hitEffect():
 	if state==1 and hitPause==0:
@@ -485,16 +527,21 @@ func hitEffect():
 		if kb:
 			var blast
 			if (not state==3):# or data["unshieldable"]:
-				kb_vector = (Vector2(0,-1)*0.8 + Vector2(cos(angle)*opponent.transform.x.x, -sin(angle))*2.7) *pow(kb,1.2)
-				totalHitstun = pow(kb,0.9)*0.4
+				kb_vector += Vector2(0,-1)*2*pow(kb,0.9) + Vector2(cos(angle)*opponent.transform.x.x, -sin(angle))*2.7 *pow(kb,1.2)
+				if "autolink" in data and data["autolink"]>0:
+					kb_vector += opponent._velocity*data["autolink"]
+				else:
+					if "autolinkX" in data and data["autolinkX"]>0:
+						kb_vector.x += opponent._velocity.x*data["autolinkX"]
+					if "autolinkY" in data and data["autolinkY"]>0:
+						kb_vector.y += opponent._velocity.y*data["autolinkY"]
+				totalHitstun = hitstunFormula(kb)
 				state = 2
 				stateTimer = 0
 				percentage += data["damage"]
+				
+				$"/root/Node2D/Camera2D".screenShake = int(kb/50)
 				$Label.text = str(percentage)+"%"
-				anim_player.stop(true) #resets animation?
-				#anim_player.play("standing")
-				#anim_player.stop(true)
-				anim_player.play("shake")
 				$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".punch, 0.5+100/kb)
 				blast = explosion.instance()
 			else:
@@ -514,13 +561,13 @@ func hitEffect():
 	
 	
 	if position.y>750:
-		respawn()
-	if position.y<-750:
-		respawn()
+		queue_free()
+	if position.y<-750 and state == 2:
+		queue_free()
 	if position.x>1500:
-		respawn()
+		queue_free()
 	if position.x<-1500:
-		respawn()
+		queue_free()
 	
 	if hitPause==0:
 		if state==3: 
@@ -547,6 +594,8 @@ func hitEffect():
 		else:
 			if(shieldHealth<shieldHealthMax):
 				shieldHealth+=0.5
+			else:
+				shieldHealth-=0.5
 			
 	#progress states
 	if hitPause==0:
@@ -554,21 +603,26 @@ func hitEffect():
 		if state == 2:
 			if stateTimer >= totalHitstun:
 				resetToIdle()
+		if state == 6:
+			if stateTimer >= totalLandingLag:
+				resetToIdle()
 	if hitPause>0:
 		hitPause-=1
 		#position+=direction #asdi #test_move ( 
 		#_velocity+=direction #this is not di this is just weird
 		if hitPause<=0:
 			hitPause=0
-			anim_player.play()
 			if state==2:
 				anim_player.play("stunned")
 				# DI
-				var new_angle = kb_vector.angle() + sin(kb_vector.angle_to(direction))*0.2 #.1 to .2
+				var new_angle = kb_vector.angle() + sin(kb_vector.angle_to(direction))*0.1 #.1 to .2
 				kb_vector = Vector2(cos(new_angle), sin(new_angle))*kb_vector.length()
 				_velocity = kb_vector
+				kb_vector = Vector2.ZERO
 			else:
 				anim_player.play()
 
 func hitpauseFormula(kb):
 	return kb*0.05+2
+func hitstunFormula(kb):
+	return pow(kb,0.9)*0.4 + 10

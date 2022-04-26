@@ -25,7 +25,15 @@ func onHit(name, target, shielded=false):
 
 func inputAction():	
 	
-	$currentAttack.update(self) #inconventionally placed before hitpause check
+	if stateTimer<15 and not upsideDown:
+		for other in $"/root/Node2D/Players".get_children():
+			if other.team == team:
+				if get_node("HitBoxes/0").overlaps_body(other):
+					other._velocity = Vector2(0,-2000)
+					#maybe not reset idk...
+					#other.currentAttack.interrupted = true
+					#other.currentAttack.endAttack()
+					#other.resetToIdle()
 	
 	
 	if(nextFrameHitPause):

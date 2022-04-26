@@ -9,16 +9,16 @@ extends "res://source/characters/Attack.gd"
 
 # Called when the script loads or somethn
 func _init() -> void:
-	endFrame = 35
-	fastEndFrame = 27
+	endFrame = 34
+	fastEndFrame = 24
 	hitboxes = [
 		{
 			"name":"0",
 			"group":1,
-			"damage":15,
-			"start":12,
-			"end":14,
-			"kb":120,
+			"damage":13,
+			"start":9,
+			"end":11,
+			"kb":100,
 			"kbscaling":2.5,
 			"angle":-70,
 			"shapes":[
@@ -28,27 +28,14 @@ func _init() -> void:
 		{
 			"name":"1",
 			"group":1,
-			"damage":6,
-			"start":15,
-			"end":24,
-			"kb":80,
-			"kbscaling":0.5,
-			"angle":55,
-			"shapes":[
-				[24,24,30,0]
-			]
-		},
-		{
-			"name":"2",
-			"group":1,
-			"damage":9,
-			"start":12,
+			"damage":7,
+			"start":9,
 			"end":16,
-			"kb":130,
-			"kbscaling":2,
-			"angle":120,
+			"kb":100,
+			"kbscaling":0.5,
+			"angle":110,
 			"shapes":[
-				[44,24,-70,20]
+				[30,30,-10,0]
 			]
 		},
 	]
@@ -59,4 +46,6 @@ func update(player):
 		player.anim_player.stop(true) #resets animation
 		player.anim_player.play("bash")
 	if player.is_on_ground:
-		interrupted = true
+		interrupted = true #remove hitboxes? idk
+		if not endFast:
+			landingLag = 10

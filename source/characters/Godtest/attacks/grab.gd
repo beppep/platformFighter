@@ -42,8 +42,7 @@ func onHit(name, target, shielded=false):
 	var player = get_parent()
 	interrupted = true
 	endAttack(player)
-	player.can_walljump = false
-	player.state = 1
-	player.stateTimer = 0
+	
+	player.attackWith(throw)
+	player.stateTimer = -1
 	player.grab_target = target
-	set_script(throw)

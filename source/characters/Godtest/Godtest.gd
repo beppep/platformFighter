@@ -5,30 +5,30 @@ var uair = load("res://source/characters/Godtest/attacks/uair.gd")
 var uair2 = load("res://source/characters/Godtest/attacks/uair2.gd")
 var ftilt = load("res://source/characters/Godtest/attacks/ftilt.gd")
 var dtilt = load("res://source/characters/Godtest/attacks/dtilt.gd")
+var utilt = load("res://source/characters/Godtest/attacks/utilt.gd")
 var bair = load("res://source/characters/Godtest/attacks/bair.gd")
 var nair = load("res://source/characters/Godtest/attacks/nair.gd")
 var dair = load("res://source/characters/Godtest/attacks/dair.gd")
 var upb = load("res://source/characters/Godtest/attacks/upb.gd")
 var sideb = load("res://source/characters/Godtest/attacks/sideb.gd")
 var shine = load("res://source/characters/Godtest/attacks/shine.gd")
+var hover = load("res://source/characters/Godtest/attacks/float.gd")
 #var utilt = load("res://source/characters/Godtest/attacks/utilt.gd")
 # Declare member variables here. Examples:
 # var a: int = 2
 # var b: String = "text"
-
+var sunScene = load("res://source/characters/Godtest/sun.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass
+
 	grab = load("res://source/characters/Godtest/attacks/grab.gd")
+	#var sun = sunScene.instance()
+	#get_node("/root/Node2D/Articles").add_child(sun)
 
 
 func attack():
-	grab_target = false
-	can_walljump = false
-	cant_hitfall = false
-	state = 1
-	stateTimer = 0
 	var attackDirection
 	if c_direction!=Vector2(0,0):
 		attackDirection = c_direction
@@ -37,50 +37,46 @@ func attack():
 	attackDirection.x*=self.transform.x.x
 	if not is_on_ground:
 		if attackDirection.y<0:
-			$currentAttack.set_script(uair)
+			attackWith(uair)
 		elif attackDirection.y>0:
-			$currentAttack.set_script(dair)
+			attackWith(dair)
 		elif attackDirection.x>0:
-			$currentAttack.set_script(ftilt)
+			attackWith(ftilt)
 		elif attackDirection.x<0:
-			$currentAttack.set_script(bair)
+			attackWith(bair)
 		else:
-			$currentAttack.set_script(nair)
+			attackWith(nair)
 	else:
 		flip()
 		if attackDirection.y<0:
-			$currentAttack.set_script(uair)
+			attackWith(utilt)
 		elif attackDirection.y>0:
-			$currentAttack.set_script(dtilt)
+			attackWith(dtilt)
 		elif attackDirection.x>0:
-			$currentAttack.set_script(ftilt)
+			attackWith(ftilt)
 		else:
-			$currentAttack.set_script(jab)
+			attackWith(jab)
 	
 func special():
-	grab_target = false
-	can_walljump = false
-	state = 1
-	stateTimer = 0
 	flip()
 	if not is_on_ground:
 		if direction.y<0:
-			$currentAttack.set_script(uair2)
+			attackWith(upb)
 		elif direction.y>0:
-			$currentAttack.set_script(shine)
+			attackWith(hover)
 		elif direction.x != 0:
-			$currentAttack.set_script(sideb)
+			attackWith(sideb)
 		else:
-			$currentAttack.set_script(shine)
+			attackWith(uair2)
 	else:
 		if direction.y<0:
-			$currentAttack.set_script(uair2)
+			attackWith(upb)
 		elif direction.y>0:
-			$currentAttack.set_script(shine)
+			attackWith(hover)
 		elif direction.x != 0:
-			$currentAttack.set_script(sideb)
+			attackWith(sideb)
 		else:
-			$currentAttack.set_script(shine)
+			attackWith(uair2)
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta: float) -> void:

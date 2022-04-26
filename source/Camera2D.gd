@@ -4,6 +4,8 @@ extends Camera2D
 # Declare member variables here. Examples:
 # var a: int = 2
 # var b: String = "text"
+var screenShake = 0
+var rng = RandomNumberGenerator.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -17,6 +19,10 @@ func _process(delta: float) -> void:
 	for player in players:
 		pos += player.position
 	pos = pos / len(players) # just average pos
+	if screenShake>0:
+		rng.randomize() #test
+		pos += Vector2((rng.randf()-0.5),(rng.randf()-0.5))*screenShake*20  #test
+		screenShake -= 1
 	set_offset( pos*0.1 + get_offset()*0.9 )
 	$"/root/Node2D/CanvasLayer".offset = -pos/10
 	if len(players)<2:

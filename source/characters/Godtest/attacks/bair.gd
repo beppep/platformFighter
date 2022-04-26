@@ -31,7 +31,7 @@ func _init() -> void:
 			"start":7,
 			"end":17,
 			"kb":100,
-			"kbscaling":2,
+			"kbscaling":1.5,
 			"angle":130,
 			"shapes":[
 				[27,15,-48,-10]
@@ -45,4 +45,6 @@ func update(player):
 		player.anim_player.stop(true) #resets animation (noot
 		player.anim_player.play("bair")
 	if player.is_on_ground:
-		interrupted = true
+		interrupted = true #remove hitboxes? idk
+		if not endFast:
+			landingLag = 5

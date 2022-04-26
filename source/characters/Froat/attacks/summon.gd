@@ -21,7 +21,7 @@ func update(player):
 	if player.stateTimer==0:
 		player.anim_player.stop(true) #resets animation
 		player.anim_player.play("stunned")
-		player._velocity*=0.8
+		player._velocity*=0.8 # !?
 	if player.stateTimer==1:
 		
 		var foot = footScene.instance()

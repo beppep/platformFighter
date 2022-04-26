@@ -10,6 +10,7 @@ var fastEndFrame = 80
 var endFast = false
 var interrupted = false
 var can_grabcancel = true
+var landingLag = 0
 
 
 # Called when the script loads or somethn
@@ -31,26 +32,37 @@ func endAttack(player):
 		autoEndAttack(player)
 
 func autoEndAttack(player):
-	endFast = false
-	interrupted = false
 	for box in get_node("../HitBoxes").get_children(): #remove hitboxes
 		if(not box.is_queued_for_deletion()):
 			box.queue_free()
-	for other in get_node("/root/Node2D/Players").get_children(): #remove opponents bans
+	for other in get_node("/root/Node2D/Players").get_children()+get_node("/root/Node2D/Articles").get_children(): #remove opponents bans
 		if not other == player:
 			var replacementList = []
 			for i in other.bannedHitboxes:
 				if i[0] != player:
 					replacementList.append(i)
 			other.bannedHitboxes = replacementList
-	print(player.grab_target)
+	#print(player.grab_target)
 	if player.grab_target and player.grab_target.state==5:
 		print("grab released?!")
 		player.grab_target.state=2
 		player.grab_target.stateTimer = 0
 		player.grab_target._velocity = Vector2(500*player.transform.x.x,2000)
 		player.grab_target.totalHitstun = 20
-	player.resetToIdle() #hmm
+	if not endFast and landingLag!=0 and player.is_on_ground:
+		if landingLag == -1:
+			player.state = 7
+			player.stateTimer = 0
+			player.anim_player.play("lying")
+		else:
+			player.state = 6
+			player.stateTimer = 0
+			player.totalLandingLag = landingLag
+			player.anim_player.play("land")
+	else:
+		player.state=0 #hmm
+	endFast = false
+	interrupted = false
 
 func update(player):
 	#print("htr")

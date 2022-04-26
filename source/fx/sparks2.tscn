@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://source/fx/sparks.gd" type="Script" id=1]
 [ext_resource path="res://assets/fx/sparks2.png" type="Texture" id=2]
@@ -6,72 +6,57 @@
 [sub_resource type="AtlasTexture" id=1]
 flags = 4
 atlas = ExtResource( 2 )
-region = Rect2( 0, 0, 150, 115 )
+region = Rect2( 450, 0, 150, 115 )
 
 [sub_resource type="AtlasTexture" id=2]
 flags = 4
 atlas = ExtResource( 2 )
-region = Rect2( 150, 0, 150, 115 )
+region = Rect2( 600, 0, 150, 115 )
 
 [sub_resource type="AtlasTexture" id=3]
 flags = 4
 atlas = ExtResource( 2 )
-region = Rect2( 300, 0, 150, 115 )
+region = Rect2( 750, 0, 150, 115 )
 
 [sub_resource type="AtlasTexture" id=4]
 flags = 4
 atlas = ExtResource( 2 )
-region = Rect2( 450, 0, 150, 115 )
+region = Rect2( 0, 115, 150, 115 )
 
 [sub_resource type="AtlasTexture" id=5]
 flags = 4
 atlas = ExtResource( 2 )
-region = Rect2( 600, 0, 150, 115 )
+region = Rect2( 150, 115, 150, 115 )
 
 [sub_resource type="AtlasTexture" id=6]
 flags = 4
 atlas = ExtResource( 2 )
-region = Rect2( 750, 0, 150, 115 )
+region = Rect2( 300, 115, 150, 115 )
 
 [sub_resource type="AtlasTexture" id=7]
 flags = 4
 atlas = ExtResource( 2 )
-region = Rect2( 0, 115, 150, 115 )
+region = Rect2( 450, 115, 150, 115 )
 
 [sub_resource type="AtlasTexture" id=8]
 flags = 4
 atlas = ExtResource( 2 )
-region = Rect2( 150, 115, 150, 115 )
+region = Rect2( 600, 115, 150, 115 )
 
 [sub_resource type="AtlasTexture" id=9]
 flags = 4
 atlas = ExtResource( 2 )
-region = Rect2( 300, 115, 150, 115 )
-
-[sub_resource type="AtlasTexture" id=10]
-flags = 4
-atlas = ExtResource( 2 )
-region = Rect2( 450, 115, 150, 115 )
-
-[sub_resource type="AtlasTexture" id=11]
-flags = 4
-atlas = ExtResource( 2 )
-region = Rect2( 600, 115, 150, 115 )
-
-[sub_resource type="AtlasTexture" id=12]
-flags = 4
-atlas = ExtResource( 2 )
 region = Rect2( 750, 115, 150, 115 )
 
-[sub_resource type="SpriteFrames" id=13]
+[sub_resource type="SpriteFrames" id=10]
 animations = [ {
-"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ) ],
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
 "loop": false,
 "name": "boom",
 "speed": 30.0
 } ]
 
 [node name="Explosion" type="AnimatedSprite"]
-frames = SubResource( 13 )
+frames = SubResource( 10 )
 animation = "boom"
 script = ExtResource( 1 )

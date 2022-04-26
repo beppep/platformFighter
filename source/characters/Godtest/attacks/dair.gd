@@ -31,8 +31,10 @@ func update(player):
 	if player.stateTimer==0:
 		player.anim_player.stop(true) #resets animation (noot
 		player.anim_player.play("dair")
-	if player.is_on_floor():
-		interrupted = true
+	if player.is_on_ground:
+		interrupted = true #remove hitboxes? idk
+		if not endFast:
+			landingLag = 10
 
 
 func onHit(name, target, shielded=false):

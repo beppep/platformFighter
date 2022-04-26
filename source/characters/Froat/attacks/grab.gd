@@ -32,19 +32,20 @@ func _init():
 func update(player):
 	autoAttack(player)
 	if player.stateTimer==0:
+		player.cant_hitfall = true
 		player.anim_player.stop(true) #resets animation (noot
 		player.anim_player.play("grab")
+		
 
 func onHit(name, target, shielded=false):
-	target.resetToIdle()
 	target.state = 5 #they are dolls and cant tech or stuff
 	target.stateTimer = 0
 	
 	var player = get_parent()
 	interrupted = true
 	endAttack(player)
-	player.can_walljump = false
-	player.state = 1
-	player.stateTimer = 0
+	
+	player.attackWith(throw)
+	player.cant_hitfall = true
+	player.stateTimer = -1
 	player.grab_target = target
-	set_script(throw)
