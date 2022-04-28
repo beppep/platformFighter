@@ -43,7 +43,6 @@ func _init() -> void:
 func update(player):
 	autoAttack(player)
 	if player.stateTimer==0:
-		player.anim_player.stop(true) #resets animation (noot
 		player.anim_player.play("fspec")
 	if 10<=player.stateTimer and player.stateTimer<=13:
 		if len(player.get_node("snatcher").get_overlapping_bodies())>0:

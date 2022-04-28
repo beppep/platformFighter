@@ -29,7 +29,6 @@ func _init() -> void:
 func update(player):
 	autoAttack(player)
 	if player.stateTimer==0:
-		player.anim_player.stop(true) #resets animation (nooooot)
-		player.anim_player.play("utilt")
+		player.anim_sprite.play("utilt")
 	if not player.is_on_floor():
 		interrupted = true

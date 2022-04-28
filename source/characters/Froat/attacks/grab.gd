@@ -33,8 +33,7 @@ func update(player):
 	autoAttack(player)
 	if player.stateTimer==0:
 		player.cant_hitfall = true
-		player.anim_player.stop(true) #resets animation (noot
-		player.anim_player.play("grab")
+		player.anim_sprite.play("grab")
 		
 
 func onHit(name, target, shielded=false):

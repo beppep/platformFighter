@@ -17,7 +17,7 @@ func _init() -> void:
 			"damage":4,
 			"start":5,
 			"end":10,
-			"kb":80,
+			"kb":90,
 			"kbscaling":0.1,
 			"angle":90,
 			"autolinkX":0.8,
@@ -31,8 +31,8 @@ func _init() -> void:
 			"damage":7,
 			"start":16,
 			"end":21,
-			"kb":120,
-			"kbscaling":0.8,
+			"kb":110,
+			"kbscaling":0.5,
 			"angle":80,
 			"shapes":[
 				[24,24,10,60]
@@ -44,8 +44,7 @@ func update(player):
 	autoAttack(player)
 	if player.stateTimer==0:
 		player.cant_hitfall = true
-		player.anim_player.stop(true) #resets animation
-		player.anim_player.play("dair")
+		player.anim_sprite.play("dair")
 	if player.is_on_ground:
 		interrupted = true #remove hitboxes? idk
 		if not endFast:
@@ -56,7 +55,7 @@ func update(player):
 func onHit(name, target, shielded=false):
 	if name=="0":
 		get_parent()._velocity.x*=0.8
-	get_parent()._velocity.y=-950#-400*int(name)
+	get_parent()._velocity.y=-900#-400*int(name)
 	if name=="1" and not shielded:
 		get_parent().cant_hitfall = false
 		endFast = true

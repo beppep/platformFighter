@@ -20,7 +20,7 @@ func _init() -> void:
 			"end":11,
 			"kb":100,
 			"kbscaling":2.5,
-			"angle":-70,
+			"angle":-60,
 			"shapes":[
 				[20,20,30,0]
 			]
@@ -33,7 +33,7 @@ func _init() -> void:
 			"end":16,
 			"kb":100,
 			"kbscaling":0.5,
-			"angle":110,
+			"angle":100,
 			"shapes":[
 				[30,30,-10,0]
 			]
@@ -44,7 +44,7 @@ func update(player):
 	autoAttack(player)
 	if player.stateTimer==0:
 		player.anim_player.stop(true) #resets animation
-		player.anim_player.play("bash")
+		player.anim_sprite.play("nair")
 	if player.is_on_ground:
 		interrupted = true #remove hitboxes? idk
 		if not endFast:
