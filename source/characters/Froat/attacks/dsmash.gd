@@ -43,8 +43,7 @@ func update(player):
 	print(endFast, player.stateTimer)
 	autoAttack(player)
 	if player.stateTimer==0:
-		player.anim_player.stop(true) #resets animation (nooooot)
-		player.anim_player.play("dsmash")
+		player.anim_sprite.play("dsmash")
 	if not player.is_on_ground:
 		interrupted = true
 

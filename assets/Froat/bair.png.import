@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/nair.png-5913b93f3391cd9ff65416359bea4acc.stex"
+path="res://.import/bair.png-aba5189e0e18d9724c3ab4cda27a37c7.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Froat/nair/nair.png"
-dest_files=[ "res://.import/nair.png-5913b93f3391cd9ff65416359bea4acc.stex" ]
+source_file="res://assets/Froat/bair.png"
+dest_files=[ "res://.import/bair.png-aba5189e0e18d9724c3ab4cda27a37c7.stex" ]
 
 [params]
 

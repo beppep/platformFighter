@@ -16,12 +16,25 @@ func _init() -> void:
 			"group":1,
 			"damage":12,
 			"start":19,
-			"end":33,
+			"end":23,
 			"kb":140,
 			"kbscaling":3.1,
 			"angle":55,
 			"shapes":[
 				[28,28,30,0]
+			]
+		},
+		{
+			"name":"1",
+			"group":1,
+			"damage":8,
+			"start":24,
+			"end":30,
+			"kb":120,
+			"kbscaling":1.1,
+			"angle":55,
+			"shapes":[
+				[20,20,20,0]
 			]
 		},
 	]
@@ -30,8 +43,7 @@ func update(player):
 	autoAttack(player)
 	if player.stateTimer==0:
 		player._velocity *= 0.5
-		player.anim_player.stop(true) #resets animation
-		player.anim_player.play("ramm")
+		player.anim_sprite.play("sideb")
 	if player.stateTimer==10:
 		player._velocity = Vector2(800*player.transform.x.x, -600)
 	if player.stateTimer==36:

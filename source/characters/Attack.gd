@@ -47,20 +47,24 @@ func autoEndAttack(player):
 		print("grab released?!")
 		player.grab_target.state=2
 		player.grab_target.stateTimer = 0
-		player.grab_target._velocity = Vector2(500*player.transform.x.x,2000)
+		player.grab_target._velocity = Vector2(500*player.transform.x.x,1000)
 		player.grab_target.totalHitstun = 20
-	if not endFast and landingLag!=0 and player.is_on_ground:
-		if landingLag == -1:
-			player.state = 7
-			player.stateTimer = 0
-			player.anim_player.play("lying")
+	if player.is_on_ground:
+		if not endFast and landingLag!=0: #landinglag
+			if landingLag == -1:
+				player.state = 7
+				player.stateTimer = 0
+				player.anim_sprite.play("lying")
+			else:
+				player.state = 6
+				player.stateTimer = 0
+				player.totalLandingLag = landingLag
+				player.anim_sprite.play("land")
 		else:
-			player.state = 6
-			player.stateTimer = 0
-			player.totalLandingLag = landingLag
-			player.anim_player.play("land")
+			player.state=0 #grounded
 	else:
-		player.state=0 #hmm
+		player.state=0
+		player.anim_sprite.play("jump")
 	endFast = false
 	interrupted = false
 

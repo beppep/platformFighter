@@ -49,7 +49,9 @@ var percentage = 0
 var shieldHealthMax = 150.0
 var shieldHealth = shieldHealthMax
 var shieldStun = 0
-var kb_vector = Vector2(0,0)
+var kb_vector = Vector2(0,0) # to be applied after hitpause
+var autolink_vector = Vector2(0,0) # to apply autolink after hitpause
+var autolink_player
 var intangible = false
 var is_on_ground = true
 var dontShield = true
@@ -63,14 +65,20 @@ var wallJumps = jumpspeed*0.9
 # Monk elemental conditions
 
 onready var anim_player: AnimationPlayer = get_node("AnimationPlayer") #basically just declared in _ready func
+onready var anim_sprite = $AnimatedSprite #basically just declared in _ready func
+
+"""
+If updating both an animation and a separate property at once (for example, a platformer may update the sprite's h_flip/v_flip properties when a character turns while starting a 'turning' animation), it's important to keep in mind that play() isn't applied instantly. Instead, it's applied the next time the AnimationPlayer is processed. This may end up being on the next frame, causing a 'glitch' frame, where the property change was applied but the animation was not. If this turns out to be a problem, after calling play(), you can call advance(0) to update the animation immediately.
+"""
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
 func _ready2():
 	if team==1:
-		sprite_color=Color(0.8,0.8,2)
-		$sprite.modulate=sprite_color
+		sprite_color=Color(0.9,0.9,1.2)
+		anim_sprite.modulate=sprite_color
 	$Label.text = str(percentage)+"%"
 
 
@@ -97,9 +105,11 @@ func inputAction():
 		else:
 			hitPause=nextFrameHitPause
 			if state==2:
+				anim_sprite.play("hurt")
+				anim_player.stop(true)
 				anim_player.play("shake")
 			else:
-				anim_player.stop(false)
+				anim_sprite.stop()
 		nextFrameHitPause=0
 		if direction.y>0 and not cant_hitfall: #hitfalling
 			_velocity.y = gravity*20
@@ -153,7 +163,7 @@ func inputAction():
 			if buttons[0]:
 				if is_on_ground and not direction.y<0:
 					intangible = false
-					$sprite.modulate = sprite_color
+					anim_sprite.modulate = sprite_color
 					resetToIdle()
 					_velocity = direction.normalized()*1000
 					dontShield = true
@@ -165,7 +175,7 @@ func inputAction():
 		if stateTimer == 8:
 			_velocity=Vector2.ZERO
 		if stateTimer == 20:
-			$sprite.modulate = sprite_color
+			anim_sprite.modulate = sprite_color
 			intangible = false
 		if stateTimer>30:
 			resetToIdle()
@@ -189,7 +199,7 @@ func inputAction():
 					move_and_collide(Vector2(0,-50))
 			if collision and collision.normal==Vector2.UP: #waveland on walls?
 				#print("waveland")
-				$sprite.modulate = sprite_color
+				anim_sprite.modulate = sprite_color
 				intangible = false
 				dontShield = true
 				#if collision.normal==Vector2.UP:
@@ -211,17 +221,20 @@ func inputAction():
 				#explosiin
 				var spark
 				if not is_on_ground:
-					if buttons[3]: #teching
+					if buttons[3]: # teching correctly
 						if collision.normal==Vector2(0,-1):
 							is_on_ground = true
 						tech()
 						spark = sparks2.instance()
 					else:
-						if collision.normal==Vector2(0,-1):
+						if collision.normal==Vector2(0,-1) and prev_vel.length() < 2000: # missed tech situation
 							is_on_ground = true
-						state = 7
-						stateTimer = 0
-						anim_player.play("lying")
+							_velocity = Vector2.ZERO
+							state = 7
+							stateTimer = 0
+							anim_sprite.play("lying")
+							anim_player.stop(true)
+							anim_player.play("shake")
 						spark = sparks.instance()
 					spark.position = self.position
 					spark.scale = Vector2(2, 2)
@@ -237,7 +250,9 @@ func inputAction():
 		_velocity = move_and_slide(_velocity, Vector2.UP)
 		is_on_ground = is_on_floor()
 	if state==5:
+		$Shield.visible = false
 		z_index=0
+		anim_sprite.play("roll")
 	
 func get_buttons():
 	if player_id==0:
@@ -278,12 +293,9 @@ func calculate_move_velocity(): #basically do movement input stuff
 		wallJumps = jumpspeed
 		B_charged = true
 		has_airdodge = 1
-		if state==0:
-			anim_player.play("standing")
 	else:
-		if state==6:
-			state=0
-			stateTimer=0
+		if state==6 or state==7:
+			resetToIdle()
 			
 	
 	# FLIP
@@ -294,6 +306,10 @@ func calculate_move_velocity(): #basically do movement input stuff
 	if is_on_ground:
 		if state == 0:
 			_velocity.x += direction.x * groundspeed
+			if direction.x:
+				anim_sprite.play("run")
+			else:
+				anim_sprite.play("standing")
 	else:
 		if state == 2:
 			_velocity.x += direction.x * airspeed * 0.2
@@ -340,16 +356,14 @@ func calculate_move_velocity(): #basically do movement input stuff
 			if is_on_ground:
 				_velocity.y = -jumpspeed*0.6
 				fullhop_timer = 5 #time that jump must be held for fullhop
-				anim_player.stop(true) #resets animation
-				anim_player.play("jump")
+				anim_sprite.play("jump")
 				jumped = true
 			elif released_jump == true and is_on_wall() and wallJumps:
 				wallJump()
 				jumped = true
 			elif released_jump == true and double_jump == 1:
 				_velocity.y = -jumpspeed*0.9
-				anim_player.stop(true) #resets animation
-				anim_player.play("double_jump")
+				anim_sprite.play("double_jump")
 				double_jump -= 1
 				jumped = true
 				#effect
@@ -390,31 +404,15 @@ func wallJump():
 		_velocity.x = 700
 	else:
 		_velocity.x = -700
-	anim_player.stop(true) #resets animation
-	anim_player.play("double_jump")
-"""
-func respawn():
-	percentage = 0
-	$Label.text = str(percentage)+"%"
-	shieldHealth = shieldHealthMax
-	intangible = false
-	$sprite.modulate = sprite_color
-	position = Vector2(0,0)
-	_velocity = Vector2(0,0)
-	if state==1:
-		$currentAttack.interrupted = true
-		$currentAttack.endAttack(self)
-	resetToIdle()
-"""
+	anim_sprite.play("double_jump")
+
 func resetToIdle():
 	state=0
 	stateTimer=0
-	$Shield.visible = false
-	anim_player.stop(true) #resets animation
-	anim_player.play("standing")
-	if not is_on_ground:
-		pass#
-		#anim_player.play("jump") #questionable
+	if is_on_ground:
+		anim_sprite.play("standing")
+	else:
+		anim_sprite.play("jump")
 	
 func tech():
 	#_velocity = Vector2(0,0)
@@ -442,8 +440,7 @@ func shield():
 		state = 3
 		stateTimer = 0
 		$Shield.visible = true
-		anim_player.stop(true) #resets animation
-		anim_player.play("standing")
+		anim_sprite.play("standing")
 	elif has_airdodge>0:
 		airdodge()
 func shieldEnd():
@@ -451,7 +448,7 @@ func shieldEnd():
 	state = 6
 	stateTimer = 0
 	totalLandingLag = 8
-	anim_player.play("land")
+	anim_sprite.play("land")
 	
 
 func airdodge():
@@ -459,14 +456,13 @@ func airdodge():
 	state = 4
 	stateTimer = 0
 	$Shield.visible = false
-	$sprite.modulate = sprite_color+Color(0.5,0.5,0.5,0)
+	anim_sprite.modulate = sprite_color+Color(0.5,0.5,0.5,0)
 	intangible = true
 	released_jump = false
 	var airdodge_direction = direction.normalized()
 	_velocity = airdodge_direction*1000
 	dodge_direction=Vector2(0,0)
-	anim_player.stop(true)
-	anim_player.play("roll")
+	anim_sprite.play("roll")
 	has_airdodge = 0
 	
 
@@ -474,17 +470,16 @@ func dodge():
 	state = 4
 	stateTimer = 0
 	$Shield.visible = false
-	$sprite.modulate = sprite_color+Color(0.5,0.5,0.5,0)
+	anim_sprite.modulate = sprite_color+Color(0.5,0.5,0.5,0)
 	intangible = true
-	anim_player.stop(true)
 	if direction.x!=0:
 		dodge_direction = Vector2(direction.x,0).normalized()
 		_velocity = dodge_direction*1000
-		anim_player.play("roll")
+		anim_sprite.play("roll")
 	else:
 		dodge_direction = Vector2(0,0)
 		_velocity = Vector2(0,0)
-		anim_player.play("stunned")
+		anim_sprite.play("stunned")
 
 func CheckHurtBoxes() -> Array:
 	var HitActors = []
@@ -530,19 +525,18 @@ func hitEffect():
 			var blast
 			if (not state==3):# or data["unshieldable"]:
 				kb_vector += Vector2(0,-1)*2*pow(kb,0.9) + Vector2(cos(angle)*opponent.transform.x.x, -sin(angle))*2.7 *pow(kb,1.2)
-				if "autolink" in data and data["autolink"]>0:
-					kb_vector += opponent._velocity*data["autolink"]
-				else:
-					if "autolinkX" in data and data["autolinkX"]>0:
-						kb_vector.x += opponent._velocity.x*data["autolinkX"]
-					if "autolinkY" in data and data["autolinkY"]>0:
-						kb_vector.y += opponent._velocity.y*data["autolinkY"]
+				autolink_vector = Vector2.ZERO
+				if "autolinkX" in data and data["autolinkX"]>0:
+					autolink_vector.x = data["autolinkX"]
+				if "autolinkY" in data and data["autolinkY"]>0:
+					autolink_vector.y = data["autolinkY"]
+				autolink_player = opponent
 				totalHitstun = hitstunFormula(kb)
 				state = 2
 				stateTimer = 0
 				percentage += data["damage"]
 				
-				$"/root/Node2D/Camera2D".screenShake = int(kb/50)
+				$"/root/Node2D/Camera2D".screenShake = int(kb/20)
 				$Label.text = str(percentage)+"%"
 				$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".punch, 0.5+100/kb)
 				blast = explosion.instance()
@@ -586,11 +580,7 @@ func hitEffect():
 				stateTimer=0
 				totalHitstun=180
 				_velocity = Vector2(0,-1000)
-				
-				anim_player.stop(true) #resets animation
-				anim_player.play("standing")
-				anim_player.stop(true)
-				anim_player.play("stunned")
+				anim_sprite.play("stunned")
 				
 			$Shield.scale=Vector2(shieldHealth/(2*shieldHealthMax),shieldHealth/(2*shieldHealthMax))
 		else:
@@ -615,14 +605,20 @@ func hitEffect():
 		if hitPause<=0:
 			hitPause=0
 			if state==2:
-				anim_player.play("stunned")
+				anim_sprite.play("stunned")
 				# DI
 				var new_angle = kb_vector.angle() + sin(kb_vector.angle_to(direction))*0.1 #.1 to .2
 				kb_vector = Vector2(cos(new_angle), sin(new_angle))*kb_vector.length()
+				if autolink_player:
+					if autolink_vector.x!=0:
+						kb_vector.x += autolink_player._velocity.x*autolink_vector.x
+					if autolink_vector.y!=0:
+						kb_vector.y += autolink_player._velocity.y*autolink_vector.y
 				_velocity = kb_vector
 				kb_vector = Vector2.ZERO
+				autolink_vector = Vector2.ZERO
 			else:
-				anim_player.play()
+				anim_sprite.play()
 
 func hitpauseFormula(kb):
 	return kb*0.05+2
