@@ -17,7 +17,7 @@ var stockCounts = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	chosenCharacters = [froatScene,froatScene,]
+	chosenCharacters = [godtestScene,froatScene,]
 	stockCounts = [40,40]
 	
 	var new

@@ -254,16 +254,16 @@ func inputAction():
 	
 func get_buttons():
 	if player_id==0:
-		rng.randomize() #test
-		return [(rng.randf()<0.1),(rng.randf()<0.3),(rng.randf()<0.1),(rng.randf()<0.1),(rng.randf()<0.1)] #test
+		#rng.randomize() #test
+		#return [(rng.randf()<0.1),(rng.randf()<0.3),(rng.randf()<0.1),(rng.randf()<0.1),(rng.randf()<0.1)] #test
 		
 		return [Input.get_action_strength("p1_jump"),Input.get_action_strength("p1_a"),Input.get_action_strength("p1_b"),Input.get_action_strength("p1_shield"),Input.get_action_strength("p1_z")]
 	else:
 		return [Input.get_action_strength("p2_jump"),Input.get_action_strength("p2_a"),Input.get_action_strength("p2_b"),Input.get_action_strength("p2_shield"),Input.get_action_strength("p2_z")]
 func get_direction():
 	if player_id==0:
-		var my_random_number = rng.randf_range(0.0, 2*PI) #test
-		return Vector2(sin(my_random_number),cos(my_random_number))*rng.randf() #test
+		#var my_random_number = rng.randf_range(0.0, 2*PI) #test
+		#return Vector2(sin(my_random_number),cos(my_random_number))*rng.randf() #test
 		return Vector2(
 			Input.get_action_strength("p1_right")-Input.get_action_strength("p1_left"),
 			Input.get_action_strength("p1_down")-Input.get_action_strength("p1_up") #is_on_floor updated by moveandslide
@@ -306,8 +306,10 @@ func calculate_move_velocity(): #basically do movement input stuff
 			_velocity.x += direction.x * groundspeed
 			if direction.x:
 				anim_sprite.play("run")
+				anim_player.play("run")
 			else:
 				anim_sprite.play("standing")
+				anim_player.play("standing")
 	else:
 		if state == 2:
 			_velocity.x += direction.x * airspeed * 0.2
@@ -355,6 +357,7 @@ func calculate_move_velocity(): #basically do movement input stuff
 				_velocity.y = -jumpspeed*0.6
 				fullhop_timer = 5 #time that jump must be held for fullhop
 				anim_sprite.play("jump")
+				anim_player.play("jump")
 				jumped = true
 			elif released_jump == true and is_on_wall() and wallJumps:
 				wallJump()
@@ -362,6 +365,7 @@ func calculate_move_velocity(): #basically do movement input stuff
 			elif released_jump == true and double_jump == 1:
 				_velocity.y = -jumpspeed*0.9
 				anim_sprite.play("double_jump")
+				anim_player.play("double_jump")
 				double_jump -= 1
 				jumped = true
 				#effect
@@ -403,14 +407,17 @@ func wallJump():
 	else:
 		_velocity.x = -700
 	anim_sprite.play("double_jump")
+	anim_player.play("double_jump")
 
 func resetToIdle():
 	state=0
 	stateTimer=0
 	if is_on_ground:
 		anim_sprite.play("standing")
+		anim_player.play("standing")
 	else:
 		anim_sprite.play("jump")
+		anim_player.play("jump")
 	
 func tech():
 	#_velocity = Vector2(0,0)
@@ -439,6 +446,7 @@ func shield():
 		stateTimer = 0
 		$Shield.visible = true
 		anim_sprite.play("standing")
+		anim_player.play("standing")
 	elif has_airdodge>0:
 		airdodge()
 func shieldEnd():
