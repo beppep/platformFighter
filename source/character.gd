@@ -60,6 +60,8 @@ var B_charged = true
 var has_airdodge = 1
 var wallJumps = jumpspeed*0.9
 
+# Monk elemental conditions
+
 onready var anim_player: AnimationPlayer = get_node("AnimationPlayer") #basically just declared in _ready func
 
 # Called when the node enters the scene tree for the first time.
@@ -240,7 +242,7 @@ func inputAction():
 func get_buttons():
 	if player_id==0:
 		rng.randomize() #test
-		return [(rng.randf()<0.1),(rng.randf()<0.3),(rng.randf()<0.1),(rng.randf()<0.1),(rng.randf()<0.1)] #test
+		#return [(rng.randf()<0.1),(rng.randf()<0.3),(rng.randf()<0.1),(rng.randf()<0.1),(rng.randf()<0.1)] #test
 		
 		return [Input.get_action_strength("p1_jump"),Input.get_action_strength("p1_a"),Input.get_action_strength("p1_b"),Input.get_action_strength("p1_shield"),Input.get_action_strength("p1_z")]
 	else:
@@ -248,7 +250,7 @@ func get_buttons():
 func get_direction():
 	if player_id==0:
 		var my_random_number = rng.randf_range(0.0, 2*PI) #test
-		return Vector2(sin(my_random_number),cos(my_random_number))*rng.randf() #test
+		#return Vector2(sin(my_random_number),cos(my_random_number))*rng.randf() #test
 		return Vector2(
 			Input.get_action_strength("p1_right")-Input.get_action_strength("p1_left"),
 			Input.get_action_strength("p1_down")-Input.get_action_strength("p1_up") #is_on_floor updated by moveandslide
