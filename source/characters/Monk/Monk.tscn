@@ -257,7 +257,7 @@ tracks/1/keys = {
 "values": [ 0.0, -15.2, 0.0 ]
 }
 
-[sub_resource type="Animation" id=25]
+[sub_resource type="Animation" id=11]
 resource_name = "jump"
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:texture")
@@ -296,8 +296,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=11]
-resource_name = "land"
+[sub_resource type="Animation" id=12]
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:rotation_degrees")
 tracks/0/interp = 1
@@ -335,7 +334,7 @@ tracks/2/keys = {
 "values": [ Vector2( 1.2, 1.2 ) ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=13]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:texture")
@@ -362,10 +361,10 @@ tracks/1/keys = {
 "values": [ 0.0, -15.0, 180.0, 360.0, 0.0 ]
 }
 
-[sub_resource type="Animation" id=26]
+[sub_resource type="Animation" id=14]
 resource_name = "nuair"
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=15]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:rotation_degrees")
@@ -392,7 +391,7 @@ tracks/1/keys = {
 "values": [ ExtResource( 9 ) ]
 }
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=16]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:position")
@@ -407,7 +406,7 @@ tracks/0/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 11.688, 6.29353 ), Vector2( -27.8714, -12.5871 ), Vector2( 13.4862, 1.79814 ), Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id=17]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:texture")
@@ -422,7 +421,7 @@ tracks/0/keys = {
 "values": [ ExtResource( 12 ) ]
 }
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=18]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:texture")
@@ -473,7 +472,7 @@ tracks/3/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=17]
+[sub_resource type="Animation" id=19]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:rotation_degrees")
@@ -512,7 +511,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=18]
+[sub_resource type="Animation" id=20]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:rotation_degrees")
@@ -539,7 +538,7 @@ tracks/1/keys = {
 "values": [ ExtResource( 10 ), ExtResource( 5 ), ExtResource( 8 ), ExtResource( 5 ), ExtResource( 9 ) ]
 }
 
-[sub_resource type="Animation" id=19]
+[sub_resource type="Animation" id=21]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:texture")
@@ -553,32 +552,8 @@ tracks/0/keys = {
 "update": 1,
 "values": [ ExtResource( 30 ), ExtResource( 26 ) ]
 }
-tracks/1/type = "value"
-tracks/1/path = NodePath("sprite:hframes")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.416667 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ 9, 1 ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("sprite:frame")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 0.116667, 0.383333 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ 0, 0, 8 ]
-}
 
-[sub_resource type="Animation" id=20]
+[sub_resource type="Animation" id=22]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:texture")
@@ -605,7 +580,7 @@ tracks/1/keys = {
 "values": [ 0.0, -360.0, 0.0 ]
 }
 
-[sub_resource type="Animation" id=21]
+[sub_resource type="Animation" id=23]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:texture")
@@ -632,13 +607,13 @@ tracks/1/keys = {
 "values": [ 0.0, 45.0, 0.0 ]
 }
 
-[sub_resource type="RectangleShape2D" id=22]
+[sub_resource type="RectangleShape2D" id=24]
 extents = Vector2( 4.625, 12.75 )
 
-[sub_resource type="RectangleShape2D" id=23]
+[sub_resource type="RectangleShape2D" id=25]
 extents = Vector2( 20, 16 )
 
-[sub_resource type="RectangleShape2D" id=24]
+[sub_resource type="RectangleShape2D" id=26]
 extents = Vector2( 16.8688, 18.1992 )
 
 [node name="Monk" type="KinematicBody2D"]
@@ -660,10 +635,11 @@ position = Vector2( -4.5, -4 )
 scale = Vector2( 3, 4 )
 shape = SubResource( 1 )
 
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+
 [node name="sprite" type="Sprite" parent="."]
 scale = Vector2( 1.2, 1.2 )
-texture = ExtResource( 16 )
-hframes = 9
+texture = ExtResource( 30 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/bair = SubResource( 2 )
@@ -675,19 +651,19 @@ anims/ftilt = SubResource( 7 )
 anims/grab = SubResource( 8 )
 anims/hook = SubResource( 9 )
 anims/jab = SubResource( 10 )
-anims/jump = SubResource( 25 )
-anims/land = SubResource( 11 )
-anims/nair = SubResource( 12 )
-anims/nuair = SubResource( 26 )
-anims/roll = SubResource( 13 )
-anims/shake = SubResource( 14 )
-anims/shine = SubResource( 15 )
-anims/standing = SubResource( 16 )
-anims/stunned = SubResource( 17 )
-anims/throw = SubResource( 18 )
-anims/uair = SubResource( 19 )
-anims/upb = SubResource( 20 )
-anims/utilt = SubResource( 21 )
+anims/jump = SubResource( 11 )
+anims/land = SubResource( 12 )
+anims/nair = SubResource( 13 )
+anims/nuair = SubResource( 14 )
+anims/roll = SubResource( 15 )
+anims/shake = SubResource( 16 )
+anims/shine = SubResource( 17 )
+anims/standing = SubResource( 18 )
+anims/stunned = SubResource( 19 )
+anims/throw = SubResource( 20 )
+anims/uair = SubResource( 21 )
+anims/upb = SubResource( 22 )
+anims/utilt = SubResource( 23 )
 
 [node name="HurtBox" type="Area2D" parent="."]
 collision_layer = 8
@@ -696,7 +672,7 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 position = Vector2( -7.5, -5 )
 scale = Vector2( 4, 4 )
-shape = SubResource( 22 )
+shape = SubResource( 24 )
 
 [node name="HitBoxes" type="Node2D" parent="."]
 
@@ -727,7 +703,7 @@ collision_layer = 0
 collision_mask = 17
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="snatcher"]
-shape = SubResource( 23 )
+shape = SubResource( 25 )
 
 [node name="snatcher2" type="Area2D" parent="."]
 position = Vector2( 18.6203, -111.335 )
@@ -736,4 +712,4 @@ collision_mask = 17
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="snatcher2"]
 position = Vector2( 0.445465, 0 )
-shape = SubResource( 24 )
+shape = SubResource( 26 )

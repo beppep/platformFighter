@@ -256,11 +256,7 @@ func inputAction():
 	
 func get_buttons():
 	if player_id==0:
-<<<<<<< HEAD
 		#rng.randomize() #test
-=======
-		rng.randomize() #test
->>>>>>> cbce5b5a29517c9ec3fc8c1fd40e8e33e0dd7acd
 		#return [(rng.randf()<0.1),(rng.randf()<0.3),(rng.randf()<0.1),(rng.randf()<0.1),(rng.randf()<0.1)] #test
 		
 		return [Input.get_action_strength("p1_jump"),Input.get_action_strength("p1_a"),Input.get_action_strength("p1_b"),Input.get_action_strength("p1_shield"),Input.get_action_strength("p1_z")]
@@ -268,11 +264,7 @@ func get_buttons():
 		return [Input.get_action_strength("p2_jump"),Input.get_action_strength("p2_a"),Input.get_action_strength("p2_b"),Input.get_action_strength("p2_shield"),Input.get_action_strength("p2_z")]
 func get_direction():
 	if player_id==0:
-<<<<<<< HEAD
 		#var my_random_number = rng.randf_range(0.0, 2*PI) #test
-=======
-		var my_random_number = rng.randf_range(0.0, 2*PI) #test
->>>>>>> cbce5b5a29517c9ec3fc8c1fd40e8e33e0dd7acd
 		#return Vector2(sin(my_random_number),cos(my_random_number))*rng.randf() #test
 		return Vector2(
 			Input.get_action_strength("p1_right")-Input.get_action_strength("p1_left"),

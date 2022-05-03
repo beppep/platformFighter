@@ -612,3 +612,5 @@ collision_mask = 17
 [node name="CollisionShape2D" type="CollisionShape2D" parent="snatcher2"]
 position = Vector2( 0.445465, 0 )
 shape = SubResource( 24 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
