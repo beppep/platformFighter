@@ -10,6 +10,7 @@ var lizardScene = load("res://source/characters/Lizard/Lizard.tscn")
 var froatScene = load("res://source/characters/Froat/Froat2.tscn")
 var godtestScene = load("res://source/characters/Godtest/Godtest.tscn")
 var svampScene = load("res://source/characters/Svampkoloni/Svampkoloni.tscn")
+var monkScene = load("res://source/characters/Monk/Monk.tscn")
 var chosenCharacters = []
 var stockCounts = []
 
@@ -17,7 +18,8 @@ var stockCounts = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	chosenCharacters = [godtestScene,froatScene,]
+	chosenCharacters = [monkScene,godtestScene,]
+
 	stockCounts = [40,40]
 	
 	var new
