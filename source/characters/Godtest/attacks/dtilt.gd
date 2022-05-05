@@ -21,7 +21,7 @@ func _init() -> void:
 			"kbscaling":0.5,
 			"angle":65,
 			"shapes":[
-				[28,12,43,30]
+				[28,22,43,22]
 			]
 		},
 	]
@@ -29,9 +29,8 @@ func _init() -> void:
 func update(player):
 	autoAttack(player)
 	if player.stateTimer==0:
-		player.anim_player.stop(true) #resets animation (nooooot)
-		player.anim_player.play("dtilt")
+		player.anim_sprite.play("dtilt")
 	if player.stateTimer==4:
-		player._velocity.x+=player.transform.x.x*500
+		player._velocity.x+=player.transform.x.x*600
 	if not player.is_on_ground:
 		interrupted = true

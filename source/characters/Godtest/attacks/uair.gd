@@ -44,8 +44,7 @@ func update(player):
 	autoAttack(player)
 	if player.stateTimer==0:
 		player.cant_hitfall = true
-		player.anim_player.stop(true) #resets animation
-		player.anim_player.play("uair")
+		player.anim_sprite.play("uair")
 	if player.stateTimer==9:
 		player.cant_hitfall = false
 	if player.is_on_ground:

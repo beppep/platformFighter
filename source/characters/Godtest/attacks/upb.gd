@@ -32,8 +32,7 @@ func _init() -> void:
 func update(player):
 	autoAttack(player)
 	if player.stateTimer==0:
-		player.anim_player.stop(true) #resets animation
-		player.anim_player.play("upb")
+		player.anim_sprite.play("upb")
 	if player.stateTimer<25:
 		player._velocity = Vector2.ZERO
 	elif player.stateTimer==25:

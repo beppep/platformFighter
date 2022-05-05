@@ -13,8 +13,8 @@ extends "res://source/characters/Attack.gd"
 func _init() -> void:
 	
 	
-	endFrame = 34
-	fastEndFrame = 24
+	endFrame = 33
+	fastEndFrame = 23
 	hitboxes = [
 		{
 			"name":"0",
@@ -39,7 +39,7 @@ func _init() -> void:
 			"kbscaling":1.1,
 			"angle":55,
 			"shapes":[
-				[50,50,0,0]
+				[48,48,0,0]
 			]
 		},
 	]
@@ -49,7 +49,6 @@ func _init() -> void:
 func update(player):
 	autoAttack(player)
 	if player.stateTimer==0:
-		player.anim_player.stop(true) #resets animation
-		player.anim_player.play("nair")
+		player.anim_sprite.play("nair")
 	if player.is_on_ground:
 		interrupted = true

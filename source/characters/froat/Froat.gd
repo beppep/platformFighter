@@ -11,6 +11,7 @@ var bair = load("res://source/characters/Froat/attacks/bair.gd")
 var fair = load("res://source/characters/Froat/attacks/fair.gd")
 var ramm = load("res://source/characters/Froat/attacks/ramm.gd")
 var summon2 = load("res://source/characters/Froat/attacks/summon2.gd")
+var eye = load("res://source/characters/Froat/attacks/eye.gd")
 var spin = load("res://source/characters/Froat/attacks/spin.gd")
 var upb = load("res://source/characters/Froat/attacks/upb.gd")
 var downb = load("res://source/characters/Froat/attacks/downb.gd")
@@ -18,16 +19,19 @@ var upsmash = load("res://source/characters/Froat/attacks/upsmash.gd")
 var nsmash = load("res://source/characters/Froat/attacks/nsmash.gd")
 var dsmash = load("res://source/characters/Froat/attacks/dsmash.gd")
 var shoot = load("res://source/characters/Froat/attacks/shoot.gd")
-#var utilt = load("res://source/characters/Froat/attacks/utilt.gd")
 # Declare member variables here. Examples:
 # var a: int = 2
 # var b: String = "text"
-
+var B_charge = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass
 	grab = load("res://source/characters/Froat/attacks/grab.gd")
+
+
+func regain_resources():
+	B_charge = true
 
 func shield():
 	if direction==Vector2.ZERO:
@@ -36,8 +40,7 @@ func shield():
 		state = 3
 		stateTimer = 0
 		$Shield.visible = true
-		anim_player.stop(true) #resets animation
-		anim_player.play("standing")
+		anim_sprite.play("standing")
 	elif has_airdodge>0:
 		airdodge()
 
@@ -78,9 +81,9 @@ func special():
 		elif direction.y>0:
 			attackWith(downb)
 		elif direction.x==0:
-			if B_charged:
-				attackWith(summon2)
-				B_charged = false
+			if B_charge:
+				attackWith(eye)
+				B_charge = false
 			else:
 				state = 0
 				stateTimer = 0
@@ -92,7 +95,7 @@ func special():
 		elif direction.y>0:
 			attackWith(dsmash)
 		elif direction.x==0:
-			attackWith(dsmash)
+			attackWith(eye)
 		else:
 			attackWith(ramm)
 	

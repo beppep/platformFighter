@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/utilt_0.png-c1c2091628b85ee2a22e5f88d48dcbc0.stex"
+path="res://.import/utilt.png-986d5aa278a8b86c64b3d4b1d42e74bd.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Monk/utilt_0.png"
-dest_files=[ "res://.import/utilt_0.png-c1c2091628b85ee2a22e5f88d48dcbc0.stex" ]
+source_file="res://assets/Monk/utilt.png"
+dest_files=[ "res://.import/utilt.png-986d5aa278a8b86c64b3d4b1d42e74bd.stex" ]
 
 [params]
 

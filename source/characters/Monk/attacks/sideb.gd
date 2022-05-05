@@ -43,26 +43,4 @@ func _init() -> void:
 func update(player):
 	autoAttack(player)
 	if player.stateTimer==0:
-		player.anim_player.stop(true) #resets animation (noot
-		player.anim_player.play("fspec")
-	if 10<=player.stateTimer and player.stateTimer<=13:
-		if len(player.get_node("snatcher").get_overlapping_bodies())>0:
-			grabbedWall = true
-	if grabbedWall and player.stateTimer<23:
-		player._velocity = Vector2.ZERO
-	if grabbedWall and player.stateTimer==23:
-		player._velocity = Vector2(1000*player.transform.x.x, -1000)
-		grabbedWall = false
-		endFrame = fastEndFrame
-
-func onHit(name, target, shielded=false):
-	var player = get_parent()
-	if name=="0":
-		#if not player.is_on_ground:
-		#player._velocity.y*=0.4
-		player._velocity.y=-500
-	if name=="1":
-		if not player.is_on_ground:
-			player._velocity = Vector2(100*player.transform.x.x, -1000)
-	if name=="1" and not shielded:
-		endFast = true
+		player.amin_sprite.play("fspec")

@@ -18,6 +18,7 @@ var hover = load("res://source/characters/Godtest/attacks/float.gd")
 # var a: int = 2
 # var b: String = "text"
 var sunScene = load("res://source/characters/Godtest/sun.tscn")
+var B_charge = 8
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -27,6 +28,8 @@ func _ready() -> void:
 	#var sun = sunScene.instance()
 	#get_node("/root/Node2D/Articles").add_child(sun)
 
+func regain_resources():
+	B_charge = 8
 
 func attack():
 	var attackDirection
@@ -63,7 +66,11 @@ func special():
 		if direction.y<0:
 			attackWith(upb)
 		elif direction.y>0:
-			attackWith(hover)
+			if B_charge>0:
+				attackWith(hover)
+			else:
+				state = 0
+				stateTimer = 0
 		elif direction.x != 0:
 			attackWith(sideb)
 		else:

@@ -8,34 +8,51 @@ extends "res://source/characters/Attack.gd"
 
 # Called when the node enters the scene tree for the first time.
 func _init() -> void:
-	endFrame = 26
+	endFrame = 28
 	fastEndFrame = 18
 	hitboxes = [
+		
 		{
 			"name":"0",
-			"group":0,
-			"damage":3,
+			"group":1,
+			"damage":2,
 			"start":5,
-			"end":8,
-			"kb":30,
+			"end":6,
+			"kb":70,
 			"kbscaling":0.1,
 			"angle":90,
-			"autolinkX":1,
+			"autolinkX":0.5,
+			"autolinkY":0.5,
 			"shapes":[
-				[20,40,20,-60]
+				[50,40,7,-64]
 			]
 		},
 		{
 			"name":"1",
-			"group":1,
-			"damage":8,
-			"start":10,
-			"end":12,
-			"kb":50,
-			"kbscaling":1,
-			"angle":-80,
+			"group":2,
+			"damage":2,
+			"start":8,
+			"end":9,
+			"kb":70,
+			"kbscaling":0.1,
+			"angle":90,
+			"autolinkX":0.5,
+			"autolinkY":0.5,
 			"shapes":[
-				[24,44,20,-60]
+				[50,40,7,-64]
+			]
+		},
+		{
+			"name":"2",
+			"group":3,
+			"damage":5,
+			"start":11,
+			"end":13,
+			"kb":50,
+			"kbscaling":1.4,
+			"angle":88,
+			"shapes":[
+				[52,42,7,-64]
 			]
 		},
 	]
@@ -43,22 +60,10 @@ func _init() -> void:
 func update(player):
 	autoAttack(player)
 	if player.stateTimer==0:
-		player.cant_hitfall = true
-		player.anim_player.stop(true) #resets animation
-		player.anim_player.play("uair")
-	if player.stateTimer==9:
-		player.cant_hitfall = false
+		player.anim_sprite.play("uair")
+	if player.stateTimer>3 and player.stateTimer<13:
+		player._velocity.y -= 80
 	if player.is_on_ground:
 		interrupted = true #remove hitboxes? idk
 		if not endFast:
 			landingLag = 10
-
-
-
-func onHit(name, target, shielded=false):
-	if name=="0":
-		get_parent()._velocity.y=-200
-	if name=="1":
-		get_parent()._velocity.y=-1400
-	if name=="1" and not shielded:
-		endFast = true

@@ -42,8 +42,7 @@ func _init() -> void:
 func update(player):
 	autoAttack(player)
 	if player.stateTimer==0:
-		player.anim_player.stop(true) #resets animation (noot
-		player.anim_player.play("hook")
+		player.anim_sprite.play("uair2")
 	if 10<=player.stateTimer and player.stateTimer<=13:
 		if len(player.get_node("snatcher2").get_overlapping_bodies())>0:
 			grabbedWall = true

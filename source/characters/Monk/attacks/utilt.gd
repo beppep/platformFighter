@@ -8,29 +8,15 @@ extends "res://source/characters/Attack.gd"
 
 # Called when the node enters the scene tree for the first time.
 func _init() -> void:
-	endFrame = 31
-	fastEndFrame = 30
+	endFrame = 34
+	fastEndFrame = 24
 	hitboxes = [
 		{
-			"name":"earth",
+			"name":"0",
 			"group":1,
-			"damage":10,
-			"start":12,
-			"end":15,
-			"kb":45,
-			"kbscaling":0.3,
-			"angle":50,
-			"autolink":1,
-			"shapes":[
-				[25,25,22,6]
-			]
-		},
-		{
-			"name":"1",
-			"group":2,
 			"damage":9,
-			"start":18,
-			"end":27,
+			"start":6,
+			"end":12,
 			"kb":110,
 			"kbscaling":1,
 			"angle":100,
@@ -38,12 +24,24 @@ func _init() -> void:
 				[15,30,-8,-87]
 			]
 		},
+		{
+			"name":"1",
+			"group":2,
+			"damage":9,
+			"start":18,
+			"end":21,
+			"kb":55,
+			"kbscaling":0.7,
+			"angle":-45,
+			"shapes":[
+				[25,25,22,6]
+			]
+		},
 	]
 
 func update(player):
 	autoAttack(player)
 	if player.stateTimer==0:
-		player.anim_player.stop(true) #resets animation (nooooot)
-		player.anim_player.play("utilt")
+		player.anim_sprite.play("utilt")
 	if not player.is_on_floor():
 		interrupted = true

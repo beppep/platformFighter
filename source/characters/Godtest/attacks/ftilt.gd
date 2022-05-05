@@ -43,8 +43,7 @@ func update(player):
 	autoAttack(player)
 	if player.stateTimer==0:
 		player.cant_hitfall = true
-		player.anim_player.stop(true) #resets animation (noot
-		player.anim_player.play("ftilt")
+		player.anim_sprite.play("ftilt")
 	if player.stateTimer==7:
 		player.cant_hitfall = false
 

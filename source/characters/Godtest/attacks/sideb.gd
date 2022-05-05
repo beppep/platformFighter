@@ -43,7 +43,7 @@ func _init() -> void:
 func update(player):
 	autoAttack(player)
 	if player.stateTimer==0:
-		player.anim_player.play("fspec")
+		player.anim_sprite.play("sideb")
 	if 10<=player.stateTimer and player.stateTimer<=13:
 		if len(player.get_node("snatcher").get_overlapping_bodies())>0:
 			grabbedWall = true

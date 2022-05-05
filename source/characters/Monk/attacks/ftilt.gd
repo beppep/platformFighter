@@ -9,14 +9,14 @@ extends "res://source/characters/Attack.gd"
 # Called when the node enters the scene tree for the first time.
 func _init() -> void:
 	endFrame = 38
-	fastEndFrame = 30
+	fastEndFrame = 29
 	hitboxes = [
 		{
 			"name":"earth",
 			"group":1,
 			"damage":12,
-			"start":14,
-			"end":16,
+			"start":6,
+			"end":10,
 			"kb":60,
 			"kbscaling":0.8,
 			"angle":180-80,
@@ -42,20 +42,4 @@ func _init() -> void:
 func update(player):
 	autoAttack(player)
 	if player.stateTimer==0:
-		player.cant_hitfall = true
-		player.anim_player.stop(true) #resets animation (noot
-		player.anim_player.play("ftilt")
-	if player.stateTimer==7:
-		player.cant_hitfall = false
-
-#func onHit(name, target, shielded=false):
-#	
-#	if name=="0":
-#		get_parent()._velocity.x*=0.5
-#		get_parent()._velocity.y*=0.5
-#		get_parent()._velocity.y-=300
-#	if name=="1":
-#		pass
-#		#get_parent()._velocity.y-=400
-#	if name=="1" and not shielded:
-#		endFast = true
+		player.anim_sprite.play("ftilt")

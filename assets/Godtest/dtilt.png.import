@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/ftilt_e.png-65c558f6870aaeeb9622109890a302ec.stex"
+path="res://.import/dtilt.png-62bdc3f9b7ea66d315dda29acb0f82a3.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Monk/ftilt_e.png"
-dest_files=[ "res://.import/ftilt_e.png-65c558f6870aaeeb9622109890a302ec.stex" ]
+source_file="res://assets/Godtest/dtilt.png"
+dest_files=[ "res://.import/dtilt.png-62bdc3f9b7ea66d315dda29acb0f82a3.stex" ]
 
 [params]
 

@@ -42,8 +42,7 @@ func _init() -> void:
 func update(player):
 	autoAttack(player)
 	if player.stateTimer==0:
-		player.anim_player.stop(true) #resets animation (noot
-		player.anim_player.play("bair")
+		player.anim_sprite.play("bair")
 	if player.is_on_ground:
 		interrupted = true #remove hitboxes? idk
 		if not endFast:

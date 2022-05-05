@@ -58,7 +58,6 @@ var dontShield = true
 var grab_target
 var dodge_direction
 var fullhop_timer = 0
-var B_charged = true
 var has_airdodge = 1
 var wallJumps = jumpspeed*0.9
 
@@ -86,8 +85,10 @@ func onHit(name, target, shielded=false):
 	pass
 	#double_jump = 1
 	wallJumps = jumpspeed
-	B_charged = true
-	has_airdodge = 1
+	#has_airdodge = 1
+
+func regain_resources(): # i.e. while grounded
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -291,8 +292,8 @@ func calculate_move_velocity(): #basically do movement input stuff
 	if is_on_ground:
 		double_jump = 1
 		wallJumps = jumpspeed
-		B_charged = true
 		has_airdodge = 1
+		regain_resources()
 	else:
 		if state==6 or state==7:
 			resetToIdle()
@@ -308,10 +309,8 @@ func calculate_move_velocity(): #basically do movement input stuff
 			_velocity.x += direction.x * groundspeed
 			if direction.x:
 				anim_sprite.play("run")
-				anim_player.play("run")
 			else:
 				anim_sprite.play("standing")
-				anim_player.play("standing")
 	else:
 		if state == 2:
 			_velocity.x += direction.x * airspeed * 0.2
@@ -332,7 +331,7 @@ func calculate_move_velocity(): #basically do movement input stuff
 			_velocity.y *= yfriction
 	else:
 		if _velocity.y>0 and direction.y>0:
-			_velocity.y += direction.y * airspeed
+			_velocity.y += direction.y * gravity
 		if _velocity.y<fallspeed:
 			_velocity.y += gravity
 	
@@ -359,7 +358,6 @@ func calculate_move_velocity(): #basically do movement input stuff
 				_velocity.y = -jumpspeed*0.6
 				fullhop_timer = 5 #time that jump must be held for fullhop
 				anim_sprite.play("jump")
-				anim_player.play("jump")
 				jumped = true
 			elif released_jump == true and is_on_wall() and wallJumps:
 				wallJump()
@@ -367,7 +365,6 @@ func calculate_move_velocity(): #basically do movement input stuff
 			elif released_jump == true and double_jump == 1:
 				_velocity.y = -jumpspeed*0.9
 				anim_sprite.play("double_jump")
-				anim_player.play("double_jump")
 				double_jump -= 1
 				jumped = true
 				#effect
@@ -409,17 +406,14 @@ func wallJump():
 	else:
 		_velocity.x = -700
 	anim_sprite.play("double_jump")
-	anim_player.play("double_jump")
 
 func resetToIdle():
 	state=0
 	stateTimer=0
 	if is_on_ground:
 		anim_sprite.play("standing")
-		anim_player.play("standing")
 	else:
 		anim_sprite.play("jump")
-		anim_player.play("jump")
 	
 func tech():
 	#_velocity = Vector2(0,0)
@@ -448,7 +442,6 @@ func shield():
 		stateTimer = 0
 		$Shield.visible = true
 		anim_sprite.play("standing")
-		anim_player.play("standing")
 	elif has_airdodge>0:
 		airdodge()
 func shieldEnd():
@@ -629,6 +622,6 @@ func hitEffect():
 				anim_sprite.play()
 
 func hitpauseFormula(kb):
-	return kb*0.05+2
+	return kb*0.06+2
 func hitstunFormula(kb):
 	return pow(kb,0.9)*0.4 + 10

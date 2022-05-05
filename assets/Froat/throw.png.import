@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/ftilt_1.png-a2eb54a598dff4f0d19e24baede2dfca.stex"
+path="res://.import/throw.png-5d2818b311ac645f6be6fb41e122e376.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Monk/ftilt_1.png"
-dest_files=[ "res://.import/ftilt_1.png-a2eb54a598dff4f0d19e24baede2dfca.stex" ]
+source_file="res://assets/Froat/throw.png"
+dest_files=[ "res://.import/throw.png-5d2818b311ac645f6be6fb41e122e376.stex" ]
 
 [params]
 

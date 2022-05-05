@@ -29,7 +29,6 @@ func _init() -> void:
 func update(player):
 	autoAttack(player)
 	if player.stateTimer==0:
-		player.anim_player.stop(true) #resets animation (noot
-		player.anim_player.play("jab")
+		player.anim_sprite.play("jab")
 	if not player.is_on_ground:
 		interrupted = true

@@ -10,8 +10,8 @@ extends "res://source/characters/Attack.gd"
 
 func _init() -> void:
 	can_grabcancel=false
-	endFrame = 28
-	fastEndFrame = 8
+	endFrame = 26
+	fastEndFrame = 9
 	hitboxes = [
 		{
 			"name":"0",
@@ -48,10 +48,9 @@ func update(player):
 	if player.stateTimer<10:
 		player._velocity.y = 0
 	if player.stateTimer==0:
-		#$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".woosh)
-		player.anim_player.stop(true) #resets animation (noot
-		player.anim_player.play("float")
-	if player.buttons[2] and player.stateTimer == 7:
+		player.anim_sprite.play("float")
+	if player.buttons[2] and player.stateTimer == 7 and player.B_charge>0:
+		player.B_charge-=1
 		interrupted = true
 		autoEndAttack(player)
 		player.state=1
