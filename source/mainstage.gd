@@ -4,6 +4,7 @@ extends Node2D
 # Declare member variables here. Examples:
 # var a: int = 2
 # var b: String = "text"
+var uiScene = load("res://source/ui.tscn")
 var puncherScene = load("res://source/characters/Puncher/Puncher.tscn")
 var ninjaScene = load("res://source/characters/Ninja/Ninja.tscn")
 var lizardScene = load("res://source/characters/Lizard/Lizard.tscn")
@@ -18,13 +19,23 @@ var stockCounts = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	var playerNum = 2
+	
 	chosenCharacters = [froatScene,godtestScene,]
 	chosenCharacters = [froatScene,froatScene,]
 
-	stockCounts = [40,40]
+	stockCounts = [4,4]
+	
+	for i in range(0,playerNum):
+		var uiThing = uiScene.instance()
+		uiThing.anchor_left = i*1.0/playerNum
+		uiThing.anchor_right = (i+1)*1.0/playerNum
+		uiThing.set_name("ui"+str(i))
+		$uiElements.add_child(uiThing)
+		
 	
 	var new
-	for i in range(0,2):
+	for i in range(0,playerNum):
 		new = chosenCharacters[i].instance()
 		$Players.add_child(new)
 		new.player_id = i
@@ -44,6 +55,10 @@ func _physics_process(delta: float) -> void:
 		player.hitCollision() #only check things here
 	for player in players+articles:
 		player.hitEffect() #never check opponents here
+		
+		
+	for player in players:
+		get_node("uiElements/ui"+str(player.player_id)+"/Label").text = str(player.percentage)+"%"
 	
 	var representedPlayers = []
 	for player in players:
@@ -52,9 +67,12 @@ func _physics_process(delta: float) -> void:
 	for i in range(0,2):
 		if not i in representedPlayers:
 			stockCounts[i]-=1
-			if stockCounts[i]>0:
-				var new = chosenCharacters[i].instance()
-				$Players.add_child(new)
-				new.player_id = i
-				new.team = i
-				new._ready2()
+			if stockCounts[i]>=0:
+				get_node("uiElements/ui"+str(i)).get_node(str(stockCounts[i]+1)).queue_free()
+				if stockCounts[i]>0:
+					var new = chosenCharacters[i].instance()
+					$Players.add_child(new)
+					new.player_id = i
+					new.team = i
+					new._ready2()
+					new.position = Vector2(0,-1000)
