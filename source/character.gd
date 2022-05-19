@@ -60,6 +60,7 @@ var dodge_direction
 var fullhop_timer = 0
 var has_airdodge = 1
 var wallJumps = jumpspeed*0.9
+var can_shield_float = false
 
 # Monk elemental conditions
 
@@ -101,16 +102,13 @@ func inputAction():
 	
 	# hitpause
 	if(nextFrameHitPause):
-		if (stateTimer==2 and state==1): #electric shine op lol
-			hitPause=nextFrameHitPause*0.6
+		hitPause=nextFrameHitPause
+		if state==2:
+			anim_sprite.play("hurt")
+			anim_player.stop(true)
+			anim_player.play("shake")
 		else:
-			hitPause=nextFrameHitPause
-			if state==2:
-				anim_sprite.play("hurt")
-				anim_player.stop(true)
-				anim_player.play("shake")
-			else:
-				anim_sprite.stop()
+			anim_sprite.stop()
 		nextFrameHitPause=0
 		if direction.y>0 and not cant_hitfall: #hitfalling
 			_velocity.y = gravity*20
@@ -138,18 +136,24 @@ func inputAction():
 		if not is_on_ground:
 			_velocity*=0.95
 			_velocity.y-=50
-		if buttons[4]:
+		if buttons[4]: # shield grab
 			shieldEnd()
 			grab()
-		elif not buttons[3]:
+		elif not buttons[3]: # drop shield
 			shieldEnd()
-		elif buttons[0]: #shield float
-			if not is_on_ground:
-				_velocity.y-=30
-				shieldHealth-=1
-				released_jump = false
+		elif not is_on_ground: # shield float
+			if can_shield_float:
+				if buttons[0]:
+					_velocity.y-=30
+					shieldHealth-=1
+					released_jump = false
+			else:
+				shieldEnd()
+				state = 2
+				stateTimer = 0
+				totalHitstun = 30
 		elif is_on_ground:
-			if direction.y>0 or direction.x!=0:
+			if direction.y>0 or direction.x!=0 and not (buttons[1] or buttons[2]):
 				dodge()
 			elif direction.y<0: #shield drop
 				set_collision_mask_bit(4,0)
@@ -230,6 +234,8 @@ func inputAction():
 					else:
 						if collision.normal==Vector2(0,-1) and prev_vel.length() < 2000: # missed tech situation
 							is_on_ground = true
+							percentage += 1
+							$Label.text = str(percentage)+"%"
 							_velocity = Vector2.ZERO
 							state = 7
 							stateTimer = 0
@@ -437,7 +443,9 @@ func grab(): #brag
 	stateTimer = 0
 	$currentAttack.set_script(grab)
 func shield():
-	if is_on_ground:
+	if direction==Vector2.ZERO and can_shield_float:
+		_velocity*=0.5
+	if is_on_ground or (direction==Vector2.ZERO and can_shield_float):
 		state = 3
 		stateTimer = 0
 		$Shield.visible = true
@@ -542,6 +550,7 @@ func hitEffect():
 				$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".punch, 0.5+100/kb)
 				blast = explosion.instance()
 			else:
+				_velocity.x += data["kb"]*cos(angle)*opponent.transform.x.x
 				shieldHealth -= data["damage"]*3
 				shieldStun = data["damage"]*0+1
 				$Shield.modulate=Color(0.7,0.7,0.7)

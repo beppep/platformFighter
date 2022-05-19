@@ -19,7 +19,8 @@ func _init():
 			"kb":120,
 			"kbscaling":1,
 			"angle":80,
-			"autolink":1,
+			"autolinkX":1,
+			"autolinkY":1,
 			"shapes":[
 				[28,28,48,0]
 			]

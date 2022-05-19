@@ -9,20 +9,20 @@ var chargeTime
 # Called when the script loads or somethn #nooooooot lmao
 func _init() -> void:
 	
-	endFrame = 90
-	fastEndFrame = 70
+	endFrame = 64
+	fastEndFrame = 46
 	hitboxes = [
 		{
 			"name":"0",
 			"group":1,
-			"damage":10,
-			"start":51,
-			"end":65,
-			"kb":100,
-			"kbscaling":5,
-			"angle":80,
+			"damage":14,
+			"start":19,
+			"end":25,
+			"kb":150,
+			"kbscaling":2,
+			"angle":88,
 			"shapes":[
-				[40,40,0,0]
+				[80,60,0,-100]
 			]
 		},
 	]
@@ -32,16 +32,4 @@ func _init() -> void:
 func update(player):
 	autoAttack(player)
 	if player.stateTimer==0:
-		chargeTime = 50
-		player.anim_sprite.play("upb1")
-	if player.stateTimer>10 and player.stateTimer<=50:
-		if not player.buttons[2]:
-			chargeTime = player.stateTimer
-			player.stateTimer = 50
-	if player.stateTimer==51:
-		player.anim_sprite.play("upb2")
-		player._velocity = Vector2(0,-chargeTime*30-1000)
-		hitboxes[0]["kbscaling"] = (chargeTime)*0.03 + 3
-		hitboxes[0]["kb"] = chargeTime*0.5 + 100
-	if player.stateTimer==56:
-		player.can_walljump = true
+		player.anim_sprite.play("upsmash")

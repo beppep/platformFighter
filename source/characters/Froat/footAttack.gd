@@ -7,8 +7,8 @@ extends "res://source/characters/Attack.gd"
 
 # Called when the node enters the scene tree for the first time.
 func _init() -> void:
-	endFrame = 16
-	fastEndFrame = 16
+	endFrame = 33
+	fastEndFrame = 22
 	hitboxes = [
 		{
 			"name":"0",
@@ -37,20 +37,11 @@ func changeHitbox():
 		},
 	]
 
-					
-					
-#this is stupid
-func autoEndAttack(player):
-	player._velocity.y *= -0.5
-	endFast = false
-	interrupted = false
-	for box in get_node("../HitBoxes").get_children(): #remove hitboxes
-		if(not box.is_queued_for_deletion()):
-			box.queue_free()
-	for other in get_node("/root/Node2D/Players").get_children(): #remove opponents bans
-		if not other == player:
-			var replacementList = []
-			for i in other.bannedHitboxes:
-				if i[0] != player:
-					replacementList.append(i)
-			other.bannedHitboxes = replacementList
+func update(player):
+	if player.stateTimer==16:
+		player._velocity *= 0
+		player.intangible = false
+
+func onHit(name, target, shielded=false):
+	if not shielded:
+		owner.get_node("currentAttack").endFast = true

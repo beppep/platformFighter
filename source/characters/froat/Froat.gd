@@ -10,6 +10,7 @@ var dair = load("res://source/characters/Froat/attacks/dair.gd")
 var bair = load("res://source/characters/Froat/attacks/bair.gd")
 var fair = load("res://source/characters/Froat/attacks/fair.gd")
 var ramm = load("res://source/characters/Froat/attacks/ramm.gd")
+var summon = load("res://source/characters/Froat/attacks/summon.gd")
 var summon2 = load("res://source/characters/Froat/attacks/summon2.gd")
 var eye = load("res://source/characters/Froat/attacks/eye.gd")
 var spin = load("res://source/characters/Froat/attacks/spin.gd")
@@ -28,21 +29,10 @@ var B_charge = true
 func _ready() -> void:
 	pass
 	grab = load("res://source/characters/Froat/attacks/grab.gd")
-
+	can_shield_float = true
 
 func regain_resources():
 	B_charge = true
-
-func shield():
-	if direction==Vector2.ZERO:
-		_velocity*=0.5
-	if is_on_ground or direction==Vector2.ZERO:
-		state = 3
-		stateTimer = 0
-		$Shield.visible = true
-		anim_sprite.play("standing")
-	elif has_airdodge>0:
-		airdodge()
 
 func attack():
 	var attackDirection
@@ -95,7 +85,7 @@ func special():
 		elif direction.y>0:
 			attackWith(dsmash)
 		elif direction.x==0:
-			attackWith(eye)
+			attackWith(nsmash)
 		else:
 			attackWith(ramm)
 	

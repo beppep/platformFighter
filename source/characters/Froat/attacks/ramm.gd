@@ -4,7 +4,7 @@ extends "res://source/characters/Attack.gd"
 # Declare member variables here. Examples:
 # var a: int = 2
 # var b: String = "text"
-
+var wasGrounded = false
 
 # Called when the node enters the scene tree for the first time.
 func _init() -> void:
@@ -44,6 +44,7 @@ func update(player):
 	if player.stateTimer==0:
 		player._velocity *= 0.5
 		player.anim_sprite.play("sideb")
+		wasGrounded = false
 	if player.stateTimer==10:
 		player._velocity = Vector2(800*player.transform.x.x, -600)
 	if player.stateTimer==36:
@@ -55,6 +56,11 @@ func update(player):
 		player._velocity=Vector2(-800*player.transform.x.x,-1000)
 		#player.transform.x.x *=-1
 	"""
+	if player.stateTimer>12:
+		if player.is_on_ground:
+			wasGrounded = true
+		if not player.is_on_ground and wasGrounded:
+			interrupted = true #remove hitboxes? idk
 
 
 func onHit(name, target, shielded=false):

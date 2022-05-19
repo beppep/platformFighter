@@ -22,7 +22,7 @@ func _init() -> void:
 			"angle":90,
 			"autolinkX":0.8,
 			"shapes":[
-				[24,24,10,60]
+				[34,24,3,60]
 			]
 		},
 		{
@@ -35,7 +35,7 @@ func _init() -> void:
 			"kbscaling":0.5,
 			"angle":80,
 			"shapes":[
-				[24,24,10,60]
+				[34,24,3,60]
 			]
 		},
 	]

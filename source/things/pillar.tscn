@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://source/characters/Froat/footAttack.gd" type="Script" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 75, 49.0149 )
+
+[node name="KinematicBody2D" type="KinematicBody2D"]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="HitBoxes" type="Node2D" parent="."]
+
+[node name="0" type="Area2D" parent="HitBoxes"]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBoxes/0"]
+position = Vector2( 0, 50 )
+shape = SubResource( 1 )
+
+[node name="currentAttack" type="Node" parent="."]
+script = ExtResource( 1 )
