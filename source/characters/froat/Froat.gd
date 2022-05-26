@@ -72,7 +72,7 @@ func special():
 			attackWith(downb)
 		elif direction.x==0:
 			if B_charge:
-				attackWith(eye)
+				attackWith(shoot)
 				B_charge = false
 			else:
 				state = 0

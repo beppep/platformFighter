@@ -105,8 +105,8 @@ func hitCollision():
 		var data = HitActors[0][0]
 		var opponent = HitActors[0][1]
 		var kb = data["kb"]
-		nextFrameHitPause = max(nextFrameHitPause, opponent.hitpauseFormula(kb)) #+= for trades and stuff?
-		opponent.nextFrameHitPause = max(opponent.nextFrameHitPause, opponent.hitpauseFormula(kb))
+		nextFrameHitPause = max(nextFrameHitPause, hitpauseFormula(kb)) #+= for trades and stuff?
+		opponent.nextFrameHitPause = max(opponent.nextFrameHitPause, hitpauseFormula(kb))
 		
 func hitEffect():
 	if state==1 and hitPause==0:
@@ -146,3 +146,6 @@ func hitEffect():
 		hitPause-=1
 		if hitPause<=0:
 			hitPause=0
+
+func hitpauseFormula(kb):
+	return kb*0.06+2

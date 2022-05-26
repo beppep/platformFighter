@@ -34,7 +34,7 @@ var c_direction = Vector2.ZERO
 var buttons = [0,0,0,0]
 var released_jump = false
 var double_jump = 1
-var can_walljump = false
+var can_walljump = true
 var cant_hitfall = false
 var state = 0 #0: actionable, 1:attacking, 2:hitstun 3:shield, 4:dodge, 5:grabbed?, 6:landinglag, 7:lying, 8:shieldlag
 var currentAttack = "error"
@@ -53,7 +53,7 @@ var kb_vector = Vector2(0,0) # to be applied after hitpause
 var autolink_vector = Vector2(0,0) # to apply autolink after hitpause
 var autolink_player
 var intangible = false
-var is_on_ground = true
+var is_on_ground = false
 var dontShield = true
 var grab_target
 var dodge_direction
@@ -220,7 +220,7 @@ func inputAction():
 		if collision:
 			var prev_vel = _velocity
 			var bounce_vel = _velocity.bounce(collision.normal)
-			if prev_vel.length() > 700:
+			if prev_vel.length() > 700 or (collision.normal!=Vector2(0,-1) and buttons[3]):
 				_velocity = bounce_vel
 				
 				#explosiin
@@ -229,7 +229,15 @@ func inputAction():
 					if buttons[3]: # teching correctly
 						if collision.normal==Vector2(0,-1):
 							is_on_ground = true
-						tech()
+							tech()
+						else:
+							if buttons[0]:
+								wallJump()
+								released_jump = false
+							state=0
+							stateTimer=0
+							dontShield = true
+							$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".waveland)
 						spark = sparks2.instance()
 					else:
 						if collision.normal==Vector2(0,-1) and prev_vel.length() < 2000: # missed tech situation
@@ -263,7 +271,7 @@ func inputAction():
 	
 func get_buttons():
 	if player_id==0:
-		#rng.randomize() #test
+		rng.randomize() #test
 		#return [(rng.randf()<0.1),(rng.randf()<0.3),(rng.randf()<0.1),(rng.randf()<0.1),(rng.randf()<0.1)] #test
 		
 		return [Input.get_action_strength("p1_jump"),Input.get_action_strength("p1_a"),Input.get_action_strength("p1_b"),Input.get_action_strength("p1_shield"),Input.get_action_strength("p1_z")]
@@ -271,7 +279,7 @@ func get_buttons():
 		return [Input.get_action_strength("p2_jump"),Input.get_action_strength("p2_a"),Input.get_action_strength("p2_b"),Input.get_action_strength("p2_shield"),Input.get_action_strength("p2_z")]
 func get_direction():
 	if player_id==0:
-		#var my_random_number = rng.randf_range(0.0, 2*PI) #test
+		var my_random_number = rng.randf_range(0.0, 2*PI) #test
 		#return Vector2(sin(my_random_number),cos(my_random_number))*rng.randf() #test
 		return Vector2(
 			Input.get_action_strength("p1_right")-Input.get_action_strength("p1_left"),
@@ -378,7 +386,7 @@ func calculate_move_velocity(): #basically do movement input stuff
 				ring.position = self.position + Vector2(0,50)
 				ring.z_index = -2
 				get_node("/root/Node2D/fx").add_child(ring)
-		if state == 1 and can_walljump and is_on_wall() and wallJumps:
+		if state == 1 and can_walljump and is_on_wall() and wallJumps>0:
 			wallJump()
 			jumped = true
 		if jumped:
@@ -404,7 +412,7 @@ func reverse():
 
 func wallJump():
 	_velocity.y = -wallJumps
-	wallJumps-=400
+	wallJumps-=300
 	if wallJumps<0:
 		wallJumps = 0
 	if position.x>0:
@@ -431,14 +439,14 @@ func special():
 	pass
 func attackWith(script):
 	grab_target = false
-	can_walljump = false
+	#can_walljump = false
 	cant_hitfall = false
 	state = 1
 	stateTimer = 0
 	$currentAttack.set_script(script)
 func grab(): #brag
 	grab_target = false
-	can_walljump = false
+	#can_walljump = false
 	state = 1
 	stateTimer = 0
 	$currentAttack.set_script(grab)
@@ -564,6 +572,8 @@ func hitEffect():
 		
 		opponent.get_node("currentAttack").onHit(data["name"], self, (state==3))
 		opponent.onHit(data["name"], self, (state==3))
+		wallJumps = jumpspeed
+		has_airdodge = 1
 	
 	
 	if position.y>750:
@@ -620,9 +630,9 @@ func hitEffect():
 				var new_angle = kb_vector.angle() + sin(kb_vector.angle_to(direction))*0.1 #.1 to .2
 				kb_vector = Vector2(cos(new_angle), sin(new_angle))*kb_vector.length()
 				if autolink_player:
-					if autolink_vector.x!=0:
+					if autolink_vector.x!=0 and autolink_player:
 						kb_vector.x += autolink_player._velocity.x*autolink_vector.x
-					if autolink_vector.y!=0:
+					if autolink_vector.y!=0 and autolink_player:
 						kb_vector.y += autolink_player._velocity.y*autolink_vector.y
 				_velocity = kb_vector
 				kb_vector = Vector2.ZERO
