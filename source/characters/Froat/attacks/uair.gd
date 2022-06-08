@@ -83,6 +83,7 @@ func update(player):
 func onHit(name, target, shielded=false):
 	if name!="3":
 		#target.totalHitstun+=0 illegal if they dont have attribute totalhitstun!!!
-		target.kb_vector+=Vector2(0,0)
+		#target.kb_vector+=Vector2(0,0)
+		pass
 	if not shielded:
 		endFast = true

@@ -9,13 +9,31 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node",
+"class": "Attack",
+"language": "GDScript",
+"path": "res://source/characters/Attack.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "Character",
 "language": "GDScript",
-"path": "res://source/character.gd"
+"path": "res://source/Character.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "HitableBody",
+"language": "GDScript",
+"path": "res://source/HitableBody.gd"
+}, {
+"base": "Attack",
+"class": "Jab",
+"language": "GDScript",
+"path": "res://source/characters/Froat/attacks/jab.gd"
 } ]
 _global_script_class_icons={
-"Character": ""
+"Attack": "",
+"Character": "",
+"HitableBody": "",
+"Jab": ""
 }
 
 [application]

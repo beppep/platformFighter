@@ -51,4 +51,6 @@ func update(player):
 	if player.stateTimer==0:
 		player.anim_sprite.play("nair")
 	if player.is_on_ground:
-		interrupted = true
+		interrupted = true #remove hitboxes? idk
+		if not endFast:
+			landingLag = 10

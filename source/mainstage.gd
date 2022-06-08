@@ -10,6 +10,7 @@ var ninjaScene = load("res://source/characters/Ninja/Ninja.tscn")
 var lizardScene = load("res://source/characters/Lizard/Lizard.tscn")
 var froatScene = load("res://source/characters/Froat/Froat2.tscn")
 var godtestScene = load("res://source/characters/Godtest/Godtest.tscn")
+var NoxhScene = load("res://source/characters/Noxh/Noxh.tscn")
 var svampScene = load("res://source/characters/Svampkoloni/Svampkoloni.tscn")
 var monkScene = load("res://source/characters/Monk/Monk.tscn")
 var chosenCharacters = []
@@ -21,8 +22,8 @@ var stockCounts = []
 func _ready() -> void:
 	var playerNum = 2
 	
-	chosenCharacters = [froatScene,godtestScene,]
-	chosenCharacters = [froatScene,froatScene,]
+	chosenCharacters = [froatScene,NoxhScene,]
+	#chosenCharacters = [froatScene,froatScene,]
 
 	stockCounts = [4,4]
 	

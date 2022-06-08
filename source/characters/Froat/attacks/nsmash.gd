@@ -21,8 +21,10 @@ func update(player):
 	autoAttack(player)
 	if player.stateTimer==0:
 		player.anim_sprite.play("nsmash")
+		$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".groat1)
 		player._velocity*=0.8
 	if player.stateTimer==15:
+		$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".rocks)
 		
 		var foot = footScene.instance()
 		foot.position = Vector2(player.position.x+player.transform.x.x*10, player.position.y+200)

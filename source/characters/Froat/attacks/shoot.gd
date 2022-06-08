@@ -18,10 +18,12 @@ func _init() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func update(player):
 	autoAttack(player)
-	player._velocity*=0.9
+	player._velocity.x*=0.95
+	player._velocity.y*=0.9
 	player._velocity.y-=50
 	if player.stateTimer==0:
 		player.anim_sprite.play("shoot")
+		$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".spew)
 	if player.stateTimer < 6:
 		player.reverse()
 	if player.stateTimer==24:

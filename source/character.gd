@@ -17,16 +17,16 @@ var grab
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-export var gravity = 80.0 #per second squared
-export var airspeed = 20.0
-export var groundspeed = 100.0
-export var jumpspeed = 1000.0
-export var fallspeed = 1000.0
-export var groundfriction = 0.8
-export var airfriction = 0.98
-export var yfriction = 0.95
-export var player_id = 0
-export var team = 0
+export (float) var gravity = 80.0 #per second squared
+export (float) var airspeed = 20.0
+export (float) var groundspeed = 100.0
+export (float) var jumpspeed = 1000.0
+export (float) var fallspeed = 1000.0
+export (float) var groundfriction = 0.8
+export (float) var airfriction = 0.98
+export (float) var yfriction = 0.95
+export (int) var player_id = 0
+export (int) var team = 0
 var sprite_color = Color(1,1,1)
 var _velocity = Vector2(0,-100) #pixels per second
 var direction = Vector2.ZERO
@@ -37,6 +37,16 @@ var double_jump = 1
 var can_walljump = true
 var cant_hitfall = false
 var state = 0 #0: actionable, 1:attacking, 2:hitstun 3:shield, 4:dodge, 5:grabbed?, 6:landinglag, 7:lying, 8:shieldlag
+#enum states = {
+#	actionable,
+#	attacking,
+#	hitstun,
+#	shield,
+#	dodge,
+#	grabbed,
+#	landinglag,
+#	lying,
+#}
 var currentAttack = "error"
 var stateTimer = 0
 var totalHitstun = 0
@@ -62,6 +72,18 @@ var has_airdodge = 1
 var wallJumps = jumpspeed*0.9
 var can_shield_float = false
 
+#func process:...::
+#	match state:
+	#	states.actionable:
+#			idle()
+#			if buttons[3]:
+	#			state = states.shield
+#				
+#		states.shield:
+			
+			
+			
+
 # Monk elemental conditions
 
 onready var anim_player: AnimationPlayer = get_node("AnimationPlayer") #basically just declared in _ready func
@@ -77,7 +99,7 @@ func _ready():
 	pass
 func _ready2():
 	if team==1:
-		sprite_color=Color(0.9,0.9,1.2)
+		sprite_color=Color(0.8,0.8,1.3)
 		anim_sprite.modulate=sprite_color
 	$Label.text = str(percentage)+"%"
 
@@ -173,7 +195,7 @@ func inputAction():
 					_velocity = direction.normalized()*1000
 					dontShield = true
 					released_jump = false
-					$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".waveland)
+					$"/root/Node2D/AudioStreamPlayerLow".playSound($"/root/Node2D/AudioStreamPlayer".waveland)
 		elif stateTimer==4:
 			if is_on_ground and dodge_direction!=Vector2.ZERO:
 				transform.x.x = -dodge_direction.x
@@ -211,7 +233,7 @@ func inputAction():
 				is_on_ground = true
 				_velocity = _velocity.slide(collision.normal)
 				resetToIdle()
-				$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".waveland)
+				$"/root/Node2D/AudioStreamPlayerLow".playSound($"/root/Node2D/AudioStreamPlayer".waveland)
 		else:
 			move_and_slide(_velocity)
 	elif state==2:
@@ -237,8 +259,8 @@ func inputAction():
 							state=0
 							stateTimer=0
 							dontShield = true
-							$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".waveland)
 						spark = sparks2.instance()
+						$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".tech)
 					else:
 						if collision.normal==Vector2(0,-1) and prev_vel.length() < 2000: # missed tech situation
 							is_on_ground = true
@@ -555,7 +577,8 @@ func hitEffect():
 				
 				$"/root/Node2D/Camera2D".screenShake = int(kb/20)
 				$Label.text = str(percentage)+"%"
-				$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".punch, 0.5+100/kb)
+				$"/root/Node2D/AudioStreamPlayerLow".playSound($"/root/Node2D/AudioStreamPlayer".punch, 0.5+100/kb)
+				$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".rocks, 0.5+100/kb)
 				blast = explosion.instance()
 			else:
 				_velocity.x += data["kb"]*cos(angle)*opponent.transform.x.x
@@ -610,16 +633,16 @@ func hitEffect():
 				shieldHealth-=0.5
 			
 	#progress states
-	if hitPause==0:
-		stateTimer+=1
+	if hitPause == 0:
+		stateTimer += 1
 		if state == 2:
 			if stateTimer >= totalHitstun:
 				resetToIdle()
 		if state == 6:
 			if stateTimer >= totalLandingLag:
 				resetToIdle()
-	if hitPause>0:
-		hitPause-=1
+	if hitPause > 0:
+		hitPause -= 1
 		#position+=direction #asdi #test_move ( 
 		#_velocity+=direction #this is not di this is just weird
 		if hitPause<=0:

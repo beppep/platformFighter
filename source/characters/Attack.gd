@@ -1,5 +1,5 @@
 extends Node
-
+class_name Attack
 
 # Declare member variables here. Examples:
 # var a: int = 2

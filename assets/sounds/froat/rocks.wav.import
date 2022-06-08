@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/rocks.wav-68f60d7515f504ebd9e4ac3b1caaff73.sample"
+
+[deps]
+
+source_file="res://assets/sounds/froat/rocks.wav"
+dest_files=[ "res://.import/rocks.wav-68f60d7515f504ebd9e4ac3b1caaff73.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

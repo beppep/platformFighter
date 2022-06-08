@@ -173,7 +173,7 @@ collision_layer = 16
 collision_mask = 0
 
 [node name="platform" type="CollisionShape2D" parent="platforms"]
-position = Vector2( 225.666, 144.528 )
+position = Vector2( 224, 144 )
 scale = Vector2( 11, 1.6 )
 shape = SubResource( 1 )
 one_way_collision = true
@@ -200,7 +200,11 @@ tile_data = PoolIntArray( -1507376, 0, 0, -1507375, 0, 0, -1507374, 0, 0, -15073
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )
-volume_db = -24.408
+script = ExtResource( 3 )
+
+[node name="AudioStreamPlayerLow" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+volume_db = -10.0
 script = ExtResource( 3 )
 
 [node name="uiElements" type="CanvasLayer" parent="."]

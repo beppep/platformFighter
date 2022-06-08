@@ -1,6 +1,6 @@
 extends Character
 
-var jab = load("res://source/characters/Froat/attacks/jab.gd")
+#var jab = load("res://source/characters/Froat/attacks/jab.gd")
 var dtilt = load("res://source/characters/Froat/attacks/dtilt.gd")
 var ftilt = load("res://source/characters/Froat/attacks/ftilt.gd")
 var utilt = load("res://source/characters/Froat/attacks/utilt.gd")
@@ -61,7 +61,7 @@ func attack():
 		elif attackDirection.y<0:
 			attackWith(utilt)
 		else:
-			attackWith(jab)
+			attackWith(Jab.new())
 	
 func special():
 	flip()

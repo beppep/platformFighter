@@ -33,3 +33,4 @@ func update(player):
 	autoAttack(player)
 	if player.stateTimer==0:
 		player.anim_sprite.play("upsmash")
+		$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".groat2)

@@ -1,0 +1,422 @@
+[gd_scene load_steps=77 format=2]
+
+[ext_resource path="res://source/characters/Noxh/Noxh.gd" type="Script" id=1]
+[ext_resource path="res://assets/Godtest/landing.png" type="Texture" id=2]
+[ext_resource path="res://assets/Godtest/sun.png" type="Texture" id=3]
+[ext_resource path="res://assets/Godtest/bair.png" type="Texture" id=4]
+[ext_resource path="res://assets/Godtest/shine.png" type="Texture" id=5]
+[ext_resource path="res://assets/Godtest/hook.png" type="Texture" id=6]
+[ext_resource path="res://assets/Godtest/kick.png" type="Texture" id=7]
+[ext_resource path="res://assets/Noxh/aim.png" type="Texture" id=8]
+[ext_resource path="res://assets/shield.png" type="Texture" id=9]
+[ext_resource path="res://assets/Godtest/idle.png" type="Texture" id=10]
+[ext_resource path="res://assets/Godtest/grab.png" type="Texture" id=11]
+[ext_resource path="res://assets/Godtest/hook2.png" type="Texture" id=12]
+[ext_resource path="res://assets/Godtest/utilt.png" type="Texture" id=13]
+[ext_resource path="res://assets/Noxh/dair.png" type="Texture" id=14]
+[ext_resource path="res://assets/Godtest/moon.png" type="Texture" id=15]
+[ext_resource path="res://assets/Godtest/dtilt.png" type="Texture" id=16]
+[ext_resource path="res://assets/Godtest/ftilt.png" type="Texture" id=17]
+[ext_resource path="res://assets/Noxh/run.png" type="Texture" id=18]
+[ext_resource path="res://assets/Noxh/idle.png" type="Texture" id=19]
+[ext_resource path="res://assets/Noxh/aimdown.png" type="Texture" id=20]
+[ext_resource path="res://assets/Noxh/nb.png" type="Texture" id=21]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 7.46097, 10.9679 )
+
+[sub_resource type="AtlasTexture" id=2]
+flags = 4
+atlas = ExtResource( 11 )
+region = Rect2( 0, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=3]
+flags = 4
+atlas = ExtResource( 10 )
+region = Rect2( 0, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=4]
+flags = 4
+atlas = ExtResource( 5 )
+region = Rect2( 0, 0, 512, 512 )
+
+[sub_resource type="AtlasTexture" id=5]
+flags = 4
+atlas = ExtResource( 15 )
+region = Rect2( 0, 0, 512, 512 )
+
+[sub_resource type="AtlasTexture" id=6]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 512, 512 )
+
+[sub_resource type="AtlasTexture" id=7]
+flags = 4
+atlas = ExtResource( 20 )
+region = Rect2( 0, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=8]
+flags = 4
+atlas = ExtResource( 16 )
+region = Rect2( 256, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=9]
+flags = 4
+atlas = ExtResource( 16 )
+region = Rect2( 512, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=10]
+flags = 4
+atlas = ExtResource( 17 )
+region = Rect2( 0, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=11]
+flags = 4
+atlas = ExtResource( 13 )
+region = Rect2( 0, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=12]
+flags = 4
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 512, 512 )
+
+[sub_resource type="AtlasTexture" id=13]
+flags = 4
+atlas = ExtResource( 14 )
+region = Rect2( 0, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=14]
+flags = 4
+atlas = ExtResource( 14 )
+region = Rect2( 256, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=15]
+flags = 4
+atlas = ExtResource( 14 )
+region = Rect2( 512, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=16]
+flags = 4
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 512, 512 )
+
+[sub_resource type="AtlasTexture" id=17]
+flags = 4
+atlas = ExtResource( 7 )
+region = Rect2( 0, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=18]
+flags = 4
+atlas = ExtResource( 8 )
+region = Rect2( 0, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=19]
+flags = 4
+atlas = ExtResource( 19 )
+region = Rect2( 0, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=20]
+flags = 4
+atlas = ExtResource( 12 )
+region = Rect2( 0, 0, 512, 512 )
+
+[sub_resource type="AtlasTexture" id=21]
+flags = 4
+atlas = ExtResource( 19 )
+region = Rect2( 0, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=22]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=23]
+flags = 4
+atlas = ExtResource( 18 )
+region = Rect2( 0, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=24]
+flags = 4
+atlas = ExtResource( 18 )
+region = Rect2( 256, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=25]
+flags = 4
+atlas = ExtResource( 19 )
+region = Rect2( 0, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=26]
+flags = 4
+atlas = ExtResource( 21 )
+region = Rect2( 0, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=27]
+flags = 4
+atlas = ExtResource( 21 )
+region = Rect2( 256, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=28]
+flags = 4
+atlas = ExtResource( 21 )
+region = Rect2( 512, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=29]
+flags = 4
+atlas = ExtResource( 21 )
+region = Rect2( 768, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=30]
+flags = 4
+atlas = ExtResource( 21 )
+region = Rect2( 1024, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=31]
+flags = 4
+atlas = ExtResource( 21 )
+region = Rect2( 1280, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=32]
+flags = 4
+atlas = ExtResource( 21 )
+region = Rect2( 1536, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=33]
+flags = 4
+atlas = ExtResource( 21 )
+region = Rect2( 1792, 0, 256, 256 )
+
+[sub_resource type="SpriteFrames" id=34]
+animations = [ {
+"frames": [ SubResource( 2 ), SubResource( 3 ) ],
+"loop": false,
+"name": "grab",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 3 ), SubResource( 4 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 4 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 6 ), SubResource( 3 ) ],
+"loop": false,
+"name": "upb",
+"speed": 20.0
+}, {
+"frames": [ SubResource( 7 ) ],
+"loop": false,
+"name": "downb",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 8 ), SubResource( 9 ) ],
+"loop": false,
+"name": "dtilt",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 10 ), SubResource( 10 ), SubResource( 3 ) ],
+"loop": false,
+"name": "ftilt",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 11 ), SubResource( 3 ), SubResource( 11 ), SubResource( 3 ) ],
+"loop": false,
+"name": "utilt",
+"speed": 20.0
+}, {
+"frames": [ SubResource( 12 ) ],
+"loop": false,
+"name": "bair",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 14 ), SubResource( 15 ), SubResource( 14 ), SubResource( 15 ), SubResource( 13 ) ],
+"loop": false,
+"name": "dair",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 16 ), SubResource( 16 ), SubResource( 3 ) ],
+"loop": false,
+"name": "uair",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 17 ) ],
+"loop": false,
+"name": "nair",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 18 ), SubResource( 19 ) ],
+"loop": false,
+"name": "sideb",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 17 ), SubResource( 3 ) ],
+"loop": false,
+"name": "jab",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 16 ), SubResource( 20 ), SubResource( 20 ), SubResource( 16 ), SubResource( 3 ) ],
+"loop": false,
+"name": "uair2",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 21 ) ],
+"loop": false,
+"name": "jump",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 22 ) ],
+"loop": false,
+"name": "land",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 23 ), SubResource( 24 ) ],
+"loop": true,
+"name": "run",
+"speed": 20.0
+}, {
+"frames": [ SubResource( 25 ) ],
+"loop": false,
+"name": "standing",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 3 ) ],
+"loop": true,
+"name": "stunned",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 26 ), SubResource( 27 ), SubResource( 28 ), SubResource( 28 ), SubResource( 29 ), SubResource( 30 ), SubResource( 31 ), SubResource( 32 ), SubResource( 32 ), SubResource( 33 ) ],
+"loop": false,
+"name": "nb",
+"speed": 15.0
+} ]
+
+[sub_resource type="Animation" id=35]
+step = 0.0166667
+
+[sub_resource type="Animation" id=36]
+step = 0.0166667
+
+[sub_resource type="Animation" id=37]
+step = 0.0166667
+
+[sub_resource type="Animation" id=38]
+step = 0.0166667
+
+[sub_resource type="Animation" id=39]
+step = 0.0166667
+
+[sub_resource type="Animation" id=40]
+step = 0.0166667
+
+[sub_resource type="Animation" id=41]
+step = 0.0166667
+
+[sub_resource type="Animation" id=42]
+step = 0.0166667
+
+[sub_resource type="Animation" id=43]
+step = 0.0166667
+
+[sub_resource type="Animation" id=44]
+
+[sub_resource type="Animation" id=45]
+step = 0.0166667
+
+[sub_resource type="Animation" id=46]
+step = 0.0166667
+
+[sub_resource type="Animation" id=47]
+step = 0.0166667
+
+[sub_resource type="Animation" id=48]
+step = 0.0166667
+
+[sub_resource type="Animation" id=49]
+step = 0.0166667
+
+[sub_resource type="Animation" id=50]
+step = 0.0166667
+
+[sub_resource type="Animation" id=51]
+step = 0.0166667
+
+[sub_resource type="Animation" id=52]
+step = 0.0166667
+
+[sub_resource type="Animation" id=53]
+step = 0.0166667
+
+[sub_resource type="Animation" id=54]
+step = 0.0166667
+
+[sub_resource type="RectangleShape2D" id=55]
+extents = Vector2( 7.84318, 10.406 )
+
+[node name="Noxh" type="KinematicBody2D"]
+collision_layer = 2
+collision_mask = 17
+script = ExtResource( 1 )
+airspeed = 35.0
+groundspeed = 250.0
+jumpspeed = 2000.0
+fallspeed = 900.0
+groundfriction = 0.75
+airfriction = 0.94
+yfriction = 0.96
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2( 3, 4 )
+shape = SubResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+scale = Vector2( 1.2, 1.2 )
+frames = SubResource( 34 )
+animation = "nb"
+frame = 9
+playing = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/bair = SubResource( 35 )
+anims/dair = SubResource( 36 )
+anims/dtilt = SubResource( 37 )
+anims/float = SubResource( 38 )
+anims/fspec = SubResource( 39 )
+anims/ftilt = SubResource( 40 )
+anims/grab = SubResource( 41 )
+anims/hook = SubResource( 42 )
+anims/jab = SubResource( 43 )
+anims/land = SubResource( 44 )
+anims/nair = SubResource( 45 )
+anims/roll = SubResource( 46 )
+anims/shake = SubResource( 47 )
+anims/shine = SubResource( 48 )
+anims/standing = SubResource( 49 )
+anims/stunned = SubResource( 50 )
+anims/throw = SubResource( 51 )
+anims/uair = SubResource( 52 )
+anims/upb = SubResource( 53 )
+anims/utilt = SubResource( 54 )
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+scale = Vector2( 4, 4 )
+shape = SubResource( 55 )
+
+[node name="HitBoxes" type="Node2D" parent="."]
+
+[node name="currentAttack" type="Node" parent="."]
+
+[node name="Label" type="Label" parent="."]
+margin_left = -50.0
+margin_top = -100.0
+margin_bottom = -80.0
+grow_horizontal = 2
+rect_scale = Vector2( 2, 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Shield" type="Sprite" parent="."]
+visible = false
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 9 )

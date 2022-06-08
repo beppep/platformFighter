@@ -1,5 +1,5 @@
-extends "res://source/characters/Attack.gd"
-
+extends Attack
+class_name Jab
 
 var jab2 = load("res://source/characters/Froat/attacks/jab2.gd")
 # Declare member variables here. Examples:
@@ -8,7 +8,7 @@ var jab2 = load("res://source/characters/Froat/attacks/jab2.gd")
 
 
 # Called when the node enters the scene tree for the first time.
-func _init() -> void:
+func _init():
 	endFrame = 16
 	fastEndFrame = 10
 	hitboxes = [
