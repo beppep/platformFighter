@@ -6,43 +6,99 @@ extends "res://source/characters/Attack.gd"
 # var b: String = "text"
 
 
-
 # Called when the node enters the scene tree for the first time.
 func _init() -> void:
-	endFrame = 70
-	fastEndFrame = 28
+	endFrame = 63
+	fastEndFrame = 37
 	hitboxes = [
 		{
 			"name":"0",
 			"group":1,
-			"damage":14,
-			"start":25,
-			"end":28,
-			"kb":100,
-			"kbscaling":0.5,#2.5?
-			"angle":90,
+			"damage":2,
+			"start":5,
+			"end":7,
+			"kb":37,
+			"kbscaling":0.1,
+			"angle":99,
+			"autolinkX":0.9,
+			"autolinkY":0.9,
 			"shapes":[
-				[50,50,0,0]
+				[33,33,0,-30]
+			]
+		},
+		{
+			"name":"1",
+			"group":2,
+			"damage":2,
+			"start":8,
+			"end":10,
+			"kb":37,
+			"kbscaling":0.1,
+			"angle":90,
+			"autolinkX":0.9,
+			"autolinkY":0.9,
+			"shapes":[
+				[33,33,0,-30]
+			]
+		},
+		{
+			"name":"2",
+			"group":3,
+			"damage":2,
+			"start":11,
+			"end":13,
+			"kb":37,
+			"kbscaling":0.1,
+			"angle":90,
+			"autolinkX":0.9,
+			"autolinkY":0.9,
+			"shapes":[
+				[33,33,0,-30]
+			]
+		},
+		{
+			"name":"3",
+			"group":4,
+			"damage":2,
+			"start":14,
+			"end":16,
+			"kb":37,
+			"kbscaling":0.1,
+			"angle":90,
+			"autolinkX":0.9,
+			"autolinkY":0.9,
+			"shapes":[
+				[33,33,0,-30]
+			]
+		},
+		{
+			"name":"4",
+			"group":5,
+			"damage":3,
+			"start":17,
+			"end":20,
+			"kb":94,
+			"kbscaling":0.4,
+			"angle":80,
+			"shapes":[
+				[33,33,0,-30]
 			]
 		},
 	]
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func update(player):
-	autoAttack(player)
+func update():
 	if player.stateTimer==0:
+		#player.cant_hitfall = true
 		player.anim_sprite.play("upb")
-	if player.stateTimer<25:
-		player._velocity = Vector2.ZERO
-	elif player.stateTimer==25:
-		player.position += player.direction*250
-		player._velocity = Vector2(0,-1000)
-	elif player.stateTimer>25:
-		player._velocity *=0.9
-		player.can_walljump = true
-	if player.is_on_ground and player.stateTimer>28:
-		interrupted = true #remove hitboxes? idk
-		if not endFast:
-			landingLag = 28
+	if player.stateTimer<15:
+		player.reverse()
+	if player.stateTimer<30:
+		player._velocity *= 0.9
+		player._velocity.y-=150
 
+func onHit(name, target, shielded=false):
+	target.position = (target.position*0.9+player.position*0.1)
+	if not shielded:
+		endFast = true
+	if name=="3" and not shielded:
+		player.cant_hitfall = false

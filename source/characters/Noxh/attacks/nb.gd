@@ -1,5 +1,4 @@
-extends "res://source/characters/Attack.gd"
-
+extends Attack
 
 # Declare member variables here. Examples:
 # var a: int = 2
@@ -25,7 +24,7 @@ func _init() -> void:
 			"autolinkX":0.5,
 			"autolinkY":0.5,
 			"shapes":[
-				[34,54,40,0]
+				[34,44,40,10]
 			]
 		},
 		{
@@ -38,17 +37,20 @@ func _init() -> void:
 			"kbscaling":1,
 			"angle":-70,
 			"shapes":[
-				[24,44,38,0]
+				[24,40,38,10]
 			]
 		},
 	]
 
-func update(player):
-	autoAttack(player)
-	player._velocity.x *= 0.9
-	player._velocity.y *= 0.85
-	player._velocity.y -= 50
+func update():
 	if player.stateTimer==0:
+		player._velocity.y -= 50
 		player.anim_sprite.play("nb")
+	if player.stateTimer < 6:
+		player.reverse()
+	if player.stateTimer<48:
+		player._velocity.x *= 0.9
+		player._velocity.y *= 0.85
+		player._velocity.y -= 50
 	if not player.buttons[2] and player.stateTimer==26:
 		interrupted = true

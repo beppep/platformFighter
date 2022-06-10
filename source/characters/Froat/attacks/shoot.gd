@@ -1,4 +1,4 @@
-extends "res://source/characters/Attack.gd"
+extends Attack
 
 
 # Declare member variables here. Examples:
@@ -16,14 +16,13 @@ func _init() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func update(player):
-	autoAttack(player)
+func update():
 	player._velocity.x*=0.95
 	player._velocity.y*=0.9
 	player._velocity.y-=50
 	if player.stateTimer==0:
 		player.anim_sprite.play("shoot")
-		$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".spew)
+		player.get_node("/root/Node2D/AudioStreamPlayer").playSound(player.get_node("/root/Node2D/AudioStreamPlayer").spew)
 	if player.stateTimer < 6:
 		player.reverse()
 	if player.stateTimer==24:
@@ -34,7 +33,7 @@ func update(player):
 		player.bannedHitboxes.append([rock,1])
 		#rock.transform.x.x = player.transform.x.x
 		rock._velocity = Vector2(300*player.transform.x.x,-600) + player._velocity
-		$"/root/Node2D/Articles".add_child(rock)
+		player.get_node("/root/Node2D/Articles").add_child(rock)
 		
 	if player.is_on_ground:
 		interrupted = true

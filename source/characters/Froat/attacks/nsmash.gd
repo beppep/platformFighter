@@ -17,21 +17,20 @@ func _init() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func update(player):
-	autoAttack(player)
+func update():
 	if player.stateTimer==0:
 		player.anim_sprite.play("nsmash")
-		$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".groat1)
+		#player.audioStreamPlayer.playSound(player.audioStreamPlayer.groat1)
 		player._velocity*=0.8
 	if player.stateTimer==15:
-		$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".rocks)
+		#player.audioStreamPlayer.playSound(player.audioStreamPlayer.rocks)
 		
 		var foot = footScene.instance()
 		foot.position = Vector2(player.position.x+player.transform.x.x*10, player.position.y+200)
 		foot.team = player.team
 		foot.scale.x = player.scale.y
-		foot.owner = self
-		$"/root/Node2D/Articles".add_child(foot)
+		foot.ownerPlayer = player
+		player.get_node("/root/Node2D/Articles").add_child(foot)
 		
 		
 		

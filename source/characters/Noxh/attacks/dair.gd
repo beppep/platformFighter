@@ -1,5 +1,5 @@
-extends "res://source/characters/Attack.gd"
-
+extends Attack
+class_name Dair
 
 # Declare member variables here. Examples:
 # var a: int = 2
@@ -71,8 +71,7 @@ func _init() -> void:
 		},
 	]
 
-func update(player):
-	autoAttack(player)
+func update():
 	if player.stateTimer==0:
 		player.cant_hitfall = true
 		player.anim_sprite.play("dair")
@@ -83,8 +82,8 @@ func update(player):
 
 
 func onHit(name, target, shielded=false):
-	get_parent()._velocity.y*=0.5
+	player._velocity.y*=0.5
 	if not shielded:
 		endFast = true
 	if name=="3" and not shielded:
-		get_parent().cant_hitfall = false
+		player.cant_hitfall = false

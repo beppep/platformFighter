@@ -21,13 +21,12 @@ func _init() -> void:
 			"kbscaling":1.5,
 			"angle":33,
 			"shapes":[
-				[45,25,55,-16]
+				[43,25,53,-16]
 			]
 		},
 	]
 
-func update(player):
-	autoAttack(player)
+func update():
 	if player.stateTimer==0:
 		player.anim_sprite.play("ftilt")
 	if not player.is_on_ground:

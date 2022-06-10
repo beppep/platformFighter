@@ -4,9 +4,8 @@ extends KinematicBody2D
 
 var explosion = load("res://source/fx/explosion.tscn")
 
-# Declare member variables here. Examples:
-# var a: int = 2
-# var b: String = "text"
+
+
 export var gravity = 0.0
 var _velocity = Vector2(400,-400)
 var bannedHitboxes = []
@@ -15,13 +14,20 @@ var hitPause = 0
 var nextFrameHitPause = 0
 var kb_vector = Vector2(0,0)
 var team = 0
+var currentAttack
+
+var sleepDart = false
 
 # Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+func _ready():
+	pass
+	currentAttack = load("res://source/characters/Noxh/bulletAttack.gd").new()
 
 func onHit(name, target, shielded=false):
-	pass
+	if sleepDart and not shielded:
+		target.state = 2
+		target.totalHitstun = 100
+		target.stateTimer = 0
 	
 func inputAction():	
 	

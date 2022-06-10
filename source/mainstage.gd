@@ -5,14 +5,14 @@ extends Node2D
 # var a: int = 2
 # var b: String = "text"
 var uiScene = load("res://source/ui.tscn")
-var puncherScene = load("res://source/characters/Puncher/Puncher.tscn")
-var ninjaScene = load("res://source/characters/Ninja/Ninja.tscn")
-var lizardScene = load("res://source/characters/Lizard/Lizard.tscn")
+#var puncherScene = load("res://source/characters/Puncher/Puncher.tscn")
+#var ninjaScene = load("res://source/characters/Ninja/Ninja.tscn")
+#var lizardScene = load("res://source/characters/Lizard/Lizard.tscn")
 var froatScene = load("res://source/characters/Froat/Froat2.tscn")
 var godtestScene = load("res://source/characters/Godtest/Godtest.tscn")
 var NoxhScene = load("res://source/characters/Noxh/Noxh.tscn")
-var svampScene = load("res://source/characters/Svampkoloni/Svampkoloni.tscn")
-var monkScene = load("res://source/characters/Monk/Monk.tscn")
+#var svampScene = load("res://source/characters/Svampkoloni/Svampkoloni.tscn")
+#var monkScene = load("res://source/characters/Monk/Monk.tscn")
 var chosenCharacters = []
 var stockCounts = []
 

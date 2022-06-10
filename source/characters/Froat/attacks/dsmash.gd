@@ -39,9 +39,8 @@ func _init() -> void:
 		},
 	]
 
-func update(player):
+func update():
 	print(endFast, player.stateTimer)
-	autoAttack(player)
 	if player.stateTimer==0:
 		player.anim_sprite.play("dsmash")
 	if not player.is_on_ground:

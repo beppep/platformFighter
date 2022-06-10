@@ -27,8 +27,7 @@ func _init():
 		},
 	]
 
-func update(player):
-	autoAttack(player)
+func update():
 	if player.stateTimer==0:
 		player.cant_hitfall = true
 	if player.stateTimer==1:

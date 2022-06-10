@@ -1,4 +1,4 @@
-extends "res://source/characters/Attack.gd"
+extends Attack
 
 
 # Declare member variables here. Examples:
@@ -7,19 +7,19 @@ extends "res://source/characters/Attack.gd"
 
 
 # Called when the script loads or somethn
-func _init() -> void:
+func _init():
 	hitboxes = [
 		{
 			"name":"0",
 			"group":1,
-			"damage":6,
-			"kb":80,
-			"kbscaling":0.5,
+			"damage":3,
+			"kb":20,
+			"kbscaling":0.3,
 			"angle":-60#80,
 		},
 	]
 
 
-func update(player):
+func update():
 	pass #nevercalled?
 

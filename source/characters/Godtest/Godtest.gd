@@ -1,31 +1,31 @@
 extends Character
 
-var jab = load("res://source/characters/Godtest/attacks/jab.gd")
-var uair = load("res://source/characters/Godtest/attacks/uair.gd")
-var uair2 = load("res://source/characters/Godtest/attacks/uair2.gd")
-var ftilt = load("res://source/characters/Godtest/attacks/ftilt.gd")
-var dtilt = load("res://source/characters/Godtest/attacks/dtilt.gd")
-var utilt = load("res://source/characters/Godtest/attacks/utilt.gd")
-var bair = load("res://source/characters/Godtest/attacks/bair.gd")
-var nair = load("res://source/characters/Godtest/attacks/nair.gd")
-var dair = load("res://source/characters/Godtest/attacks/dair.gd")
-var upb = load("res://source/characters/Godtest/attacks/upb.gd")
-#var sideb = load("res://source/characters/Godtest/attacks/sideb.gd")
-var sideb = load("res://source/characters/Godtest/attacks/swiftstrike.gd")
-var shine = load("res://source/characters/Godtest/attacks/shine.gd")
-var hover = load("res://source/characters/Godtest/attacks/float.gd")
-#var utilt = load("res://source/characters/Godtest/attacks/utilt.gd")
-# Declare member variables here. Examples:
-# var a: int = 2
-# var b: String = "text"
+
+
+
+
 var sunScene = load("res://source/characters/Godtest/sun.tscn")
 var B_charge = 8
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass
+	attacks = {
+		"grab": load("res://source/characters/Godtest/attacks/grab.gd"),
+		"jab": load("res://source/characters/Godtest/attacks/jab.gd"),
+		"ftilt": load("res://source/characters/Godtest/attacks/ftilt.gd"),
+		"dtilt": load("res://source/characters/Godtest/attacks/dtilt.gd"),
+		"utilt": load("res://source/characters/Godtest/attacks/utilt.gd"),
+		"fair": load("res://source/characters/Godtest/attacks/ftilt.gd"),
+		"bair": load("res://source/characters/Godtest/attacks/bair.gd"),
+		"nair": load("res://source/characters/Godtest/attacks/nair.gd"),
+		"dair": load("res://source/characters/Godtest/attacks/dair.gd"),
+		"uair": load("res://source/characters/Godtest/attacks/uair.gd"),
+		"nb": load("res://source/characters/Godtest/attacks/uair2.gd"),
+		"ub": load("res://source/characters/Godtest/attacks/upb.gd"),
+		"fb": load("res://source/characters/Godtest/attacks/swiftstrike.gd"),
+		"db": load("res://source/characters/Godtest/attacks/float.gd"),
+	}
 
-	grab = load("res://source/characters/Godtest/attacks/grab.gd")
 	#var sun = sunScene.instance()
 	#get_node("/root/Node2D/Articles").add_child(sun)
 
@@ -41,50 +41,50 @@ func attack():
 	attackDirection.x*=self.transform.x.x
 	if not is_on_ground:
 		if attackDirection.y<0:
-			attackWith(uair)
+			attackWith("uair")
 		elif attackDirection.y>0:
-			attackWith(dair)
+			attackWith("dair")
 		elif attackDirection.x>0:
-			attackWith(ftilt)
+			attackWith("fair")
 		elif attackDirection.x<0:
-			attackWith(bair)
+			attackWith("bair")
 		else:
-			attackWith(nair)
+			attackWith("nair")
 	else:
 		flip()
 		if attackDirection.y<0:
-			attackWith(utilt)
+			attackWith("utilt")
 		elif attackDirection.y>0:
-			attackWith(dtilt)
+			attackWith("dtilt")
 		elif attackDirection.x>0:
-			attackWith(ftilt)
+			attackWith("ftilt")
 		else:
-			attackWith(jab)
+			attackWith("jab")
 	
 func special():
 	flip()
 	if not is_on_ground:
 		if direction.y<0:
-			attackWith(upb)
+			attackWith("ub")
 		elif direction.y>0:
 			if B_charge>0:
-				attackWith(hover)
+				attackWith("db")
 			else:
 				state = 0
 				stateTimer = 0
 		elif direction.x != 0:
-			attackWith(sideb)
+			attackWith("fb")
 		else:
-			attackWith(uair2)
+			attackWith("nb")
 	else:
 		if direction.y<0:
-			attackWith(upb)
+			attackWith("ub")
 		elif direction.y>0:
-			attackWith(hover)
+			attackWith("db")
 		elif direction.x != 0:
-			attackWith(sideb)
+			attackWith("fb")
 		else:
-			attackWith(uair2)
+			attackWith("nb")
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta: float) -> void:

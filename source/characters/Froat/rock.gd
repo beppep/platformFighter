@@ -16,10 +16,13 @@ var nextFrameHitPause = 0
 var kb_vector = Vector2(0,0)
 var wasHit = false
 var team = 0
+var currentAttack
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
+	currentAttack = load("res://source/characters/Froat/rockAttack.gd").new()
+	currentAttack.player = self
 
 func onHit(name, target, shielded=false):
 	pass
@@ -37,7 +40,7 @@ func inputAction():
 	if collision:
 		_velocity = _velocity.bounce(collision.normal)
 	
-	$currentAttack.update(self)
+	currentAttack.update()
 	
 	if position.y>1000:
 		queue_free()
@@ -55,7 +58,7 @@ func CheckHurtBoxes() -> Array:
 		var opponent=hitbox.get_parent().get_parent()
 		
 		if opponent.team != self.team:
-			var data = opponent.get_node("currentAttack").hitboxes[int(hitbox["name"])] #invalid get index 169 on base array apparently
+			var data = opponent.currentAttack.hitboxes[int(hitbox["name"])] #invalid get index 169 on base array apparently
 			if not [opponent, data["group"]] in bannedHitboxes:
 				HitActors.append([data,opponent])
 				bannedHitboxes.append([opponent,data["group"]])
@@ -93,9 +96,9 @@ func hitEffect():
 			if "autolinkY" in data and data["autolinkY"]>0:
 				kb_vector.y += data["autolinkY"]
 			
-			$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".punch, 100/kb)
+			$"/root/Node2D/AudioStreamPlayerLow".playSound($"/root/Node2D/AudioStreamPlayerLow".punch, 100/kb)
 
-			opponent.get_node("currentAttack").onHit(data["name"], self, false)
+			opponent.currentAttack.onHit(data["name"], self, false)
 			#explosiin
 			var blast = explosion.instance()
 			blast.position = self.position

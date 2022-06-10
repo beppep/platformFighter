@@ -8,7 +8,7 @@ extends "res://source/characters/Attack.gd"
 
 
 # Called when the script loads or somethn
-func _init() -> void:
+func _init():
 	endFrame = 34
 	fastEndFrame = 24
 	hitboxes = [
@@ -40,8 +40,7 @@ func _init() -> void:
 		},
 	]
 
-func update(player):
-	autoAttack(player)
+func update():
 	if player.stateTimer==0:
 		player.anim_player.stop(true) #resets animation
 		player.anim_sprite.play("nair")

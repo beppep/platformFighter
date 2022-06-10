@@ -39,8 +39,7 @@ func _init() -> void:
 		},
 	]
 
-func update(player):
-	autoAttack(player)
+func update():
 	if player.stateTimer==0:
 		player._velocity *= 0.5
 		player.anim_sprite.play("sideb")
@@ -64,8 +63,8 @@ func update(player):
 
 
 func onHit(name, target, shielded=false):
-	get_parent()._velocity.y=-1000
-	get_parent()._velocity.x*=0.9
+	player._velocity.y=-1000
+	player._velocity.x*=0.9
 
 	if not shielded:
 		endFast = true

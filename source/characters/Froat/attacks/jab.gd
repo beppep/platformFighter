@@ -1,7 +1,6 @@
 extends Attack
 class_name Jab
 
-var jab2 = load("res://source/characters/Froat/attacks/jab2.gd")
 # Declare member variables here. Examples:
 # var a: int = 2
 # var b: String = "text"
@@ -27,15 +26,14 @@ func _init():
 		},
 	]
 
-func update(player):
-	autoAttack(player)
+func update():
 	if player.stateTimer==0:
 		player.anim_sprite.play("jab")
 	if not player.is_on_ground:
 		interrupted = true
 	if player.stateTimer == 9 and player.buttons[1]:
 		interrupted = true
-		endAttack(player)
+		endAttack()
 		
-		player.attackWith(jab2)
+		player.attackWith("jab2")
 		player.stateTimer = -1

@@ -1,7 +1,6 @@
 extends "res://source/characters/Attack.gd"
 
 
-var throw = load("res://source/characters/Froat/attacks/throw.gd")
 
 # Declare member variables here. Examples:
 # var a: int = 2
@@ -29,8 +28,7 @@ func _init():
 		},
 	]
 
-func update(player):
-	autoAttack(player)
+func update():
 	if player.stateTimer==0:
 		player.cant_hitfall = true
 		player.anim_sprite.play("grab")
@@ -40,11 +38,10 @@ func onHit(name, target, shielded=false):
 	target.state = 5 #they are dolls and cant tech or stuff
 	target.stateTimer = 0
 	
-	var player = get_parent()
 	interrupted = true
-	endAttack(player)
+	endAttack()
 	
-	player.attackWith(throw)
+	player.attackWith("throw")
 	player.cant_hitfall = true
 	player.stateTimer = -1
 	player.grab_target = target

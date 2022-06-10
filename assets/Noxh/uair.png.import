@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/moon.png-45f995ecb134cc4e2c4cf73ab39e3aa1.stex"
+path="res://.import/uair.png-634bb7eb76ad9625cbc97a95a225c826.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Noxh/moon.png"
-dest_files=[ "res://.import/moon.png-45f995ecb134cc4e2c4cf73ab39e3aa1.stex" ]
+source_file="res://assets/Noxh/uair.png"
+dest_files=[ "res://.import/uair.png-634bb7eb76ad9625cbc97a95a225c826.stex" ]
 
 [params]
 

@@ -14,23 +14,24 @@ func _init() -> void:
 		{
 			"name":"0",
 			"group":1,
-			"damage":9,
-			"start":5,
-			"end":15,
-			"kb":120,
+			"damage":7,
+			"start":6,
+			"end":11,
+			"kb":100,
 			"kbscaling":0.5,
-			"angle":65,
+			"angle":77,
 			"shapes":[
 				[28,22,43,22]
 			]
 		},
 	]
 
-func update(player):
-	autoAttack(player)
+func update():
 	if player.stateTimer==0:
 		player.anim_sprite.play("dtilt")
-	if player.stateTimer==4:
-		player._velocity.x+=player.transform.x.x*600
+	if player.stateTimer>4 and player.stateTimer<8:
+		player._velocity.x = player.transform.x.x*800
+		player._velocity.y = 40
 	if not player.is_on_ground:
+		pass
 		interrupted = true

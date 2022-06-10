@@ -1,5 +1,5 @@
-extends "res://source/characters/Attack.gd"
-
+extends Attack
+class_name Fair
 
 # Declare member variables here. Examples:
 # var a: int = 2
@@ -21,13 +21,12 @@ func _init() -> void:
 			"kbscaling":1.3,
 			"angle":50,
 			"shapes":[
-				[45,25,55,-16]
+				[43,25,53,-16]
 			]
 		},
 	]
 
-func update(player):
-	autoAttack(player)
+func update():
 	if player.stateTimer==0:
 		player.anim_sprite.play("ftilt")
 	if player.is_on_ground:

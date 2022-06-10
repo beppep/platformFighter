@@ -11,43 +11,42 @@ var endFast = false
 var interrupted = false
 var can_grabcancel = true
 var landingLag = 0
+var player
 
 
 # Called when the script loads or somethn
-func _init() -> void:
-	pass # Replace with function body.
+func _init():
+	pass
 
-
-func autoAttack(player):
-	for h in hitboxes:
-		if h["start"] == player.stateTimer:
-			createHitBox(h)
-		if h["end"] == player.stateTimer:
-			var i = get_node("../HitBoxes/"+h["name"])
+func manageHitboxes():
+	for hitboxData in hitboxes:
+		if hitboxData["start"] == player.stateTimer:
+			createHitBox(hitboxData)
+		if hitboxData["end"] == player.stateTimer:
+			var i = player.get_node("HitBoxes/"+hitboxData["name"])
 			if(not i.is_queued_for_deletion()):
 				i.queue_free()
 
-func endAttack(player):
+func endAttack():
 	if player.stateTimer == endFrame or (player.stateTimer == fastEndFrame and endFast) or interrupted:
-		autoEndAttack(player)
+		autoEndAttack()
 
-func autoEndAttack(player):
-	for box in get_node("../HitBoxes").get_children(): #remove hitboxes
+func autoEndAttack():
+	for box in player.get_node("HitBoxes").get_children(): #remove hitboxes
 		if(not box.is_queued_for_deletion()):
 			box.queue_free()
-	for other in get_node("/root/Node2D/Players").get_children()+get_node("/root/Node2D/Articles").get_children(): #remove opponents bans
+	for other in player.get_node("/root/Node2D/Players").get_children()+player.get_node("/root/Node2D/Articles").get_children(): #remove opponents bans
 		if not other == player:
 			var replacementList = []
 			for i in other.bannedHitboxes:
 				if i[0] != player:
 					replacementList.append(i)
 			other.bannedHitboxes = replacementList
-	#print(player.grab_target)
 	if player.grab_target and player.grab_target.state==5:
 		print("grab released?!")
 		player.grab_target.state=2
 		player.grab_target.stateTimer = 0
-		player.grab_target._velocity = Vector2(500*player.transform.x.x,1000)
+		player.grab_target._velocity = Vector2(500*player.transform.x.x,-500)
 		player.grab_target.totalHitstun = 20
 	if player.is_on_ground:
 		if not endFast and landingLag!=0: #landinglag
@@ -65,10 +64,9 @@ func autoEndAttack(player):
 	else:
 		player.state=0
 		player.anim_sprite.play("jump")
-	endFast = false
-	interrupted = false
+	onEnd()
 
-func update(player):
+func update():
 	#print("htr")
 	pass
 
@@ -77,14 +75,16 @@ func onHit(name, target, shielded=false):
 	if not shielded:
 		endFast = true
 
+func onEnd():
+	pass
 
-func createHitBox(h):
+func createHitBox(hitboxData):
 	var hitbox = Area2D.new()
-	get_node("../HitBoxes").add_child(hitbox)
+	player.get_node("HitBoxes").add_child(hitbox)
 	hitbox.set_collision_layer(4)
 	hitbox.set_collision_mask(0)
-	hitbox.set_name(h["name"])
-	for i in h["shapes"]:
+	hitbox.set_name(hitboxData["name"])
+	for i in hitboxData["shapes"]:
 		var _bs = RectangleShape2D.new()
 		_bs.extents.x = i[0]
 		_bs.extents.y = i[1]

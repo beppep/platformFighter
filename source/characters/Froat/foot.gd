@@ -13,12 +13,15 @@ var nextFrameHitPause = 0
 var state = 1
 var stateTimer = 0
 var team = 0
+var ownerPlayer
 var upsideDown = false
 var bannedHitboxes = []
 var grab_target = false
 var is_on_ground = false
 var intangible = false #?
 var HitActors = []
+var totalHitstun
+var currentAttack
 # Called when the node enters the scene tree for the first time.
 
 onready var anim_sprite = $AnimatedSprite #basically just declared in _ready func
@@ -28,6 +31,8 @@ onready var anim_player: AnimationPlayer = get_node("AnimationPlayer") #basicall
 func _ready() -> void:
 	pass # Replace with function body.
 	z_index = -10+position.y*0.005
+	currentAttack = load("res://source/characters/Froat/footAttack.gd").new()
+	currentAttack.player = self
 
 func onHit(name, target, shielded=false):
 	pass
@@ -54,7 +59,7 @@ func inputAction():
 		
 	
 	move_and_slide(_velocity)
-	$currentAttack.update(self)
+	currentAttack.update()
 	
 	if state == 2:
 		queue_free()
@@ -64,19 +69,8 @@ func inputAction():
 		queue_free()
 
 func changeHitbox():
-	$currentAttack.changeHitbox()
+	currentAttack.changeHitbox()
 
-func autoEndAttack(player):
-	for box in get_node("../HitBoxes").get_children(): #remove hitboxes
-		if(not box.is_queued_for_deletion()):
-			box.queue_free()
-	for other in get_node("/root/Node2D/Players").get_children()+get_node("/root/Node2D/Articles").get_children(): #remove opponents bans
-		if not other == player:
-			var replacementList = []
-			for i in other.bannedHitboxes:
-				if i[0] != player:
-					replacementList.append(i)
-			other.bannedHitboxes = replacementList
 			
 			
 			
@@ -88,7 +82,7 @@ func CheckHurtBoxes() -> Array:
 		var opponent=hitbox.get_parent().get_parent()
 		
 		if opponent.team != team and intangible == false:
-			var data = opponent.get_node("currentAttack").hitboxes[int(hitbox["name"])] #invalid get index 169 on base array apparently #also 1
+			var data = opponent.currentAttack.hitboxes[int(hitbox["name"])] #invalid get index 169 on base array apparently #also 1
 			if not [opponent, data["group"]] in bannedHitboxes:
 				HitActors.append([data,opponent])
 				bannedHitboxes.append([opponent,data["group"]])
@@ -110,20 +104,20 @@ func hitCollision():
 		
 func hitEffect():
 	if state==1 and hitPause==0:
-		$currentAttack.endAttack(self)
+		currentAttack.endAttack()
 	if HitActors:
 		var data = HitActors[0][0]
 		var opponent = HitActors[0][1]
 		
 		if state == 1:
-			$currentAttack.interrupted = true
-			$currentAttack.endAttack(self)
+			currentAttack.interrupted = true
+			currentAttack.endAttack()
 		var angle = data["angle"]*PI/180
 		var kb = (data["kb"])
 		if kb:
 			var blast
 			$"/root/Node2D/Camera2D".screenShake = int(kb/20)
-			$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".punch, 0.5+100/kb)
+			$"/root/Node2D/AudioStreamPlayerLow".playSound($"/root/Node2D/AudioStreamPlayerLow".punch, 0.5+100/kb)
 			blast = explosion.instance()
 			#explosiin
 			blast.position = self.position
@@ -131,13 +125,13 @@ func hitEffect():
 			blast.z_index = -2
 			get_node("/root/Node2D/fx").add_child(blast)
 		state=2
-		opponent.get_node("currentAttack").onHit(data["name"], self, (state==3))
+		opponent.currentAttack.onHit(data["name"], self, (state==3))
 		opponent.onHit(data["name"], self, (state==3))
 		
 		
 		
 	if hitPause==0:
-		$currentAttack.endAttack(self)
+		currentAttack.endAttack()
 
 	#progress states
 	if hitPause==0:

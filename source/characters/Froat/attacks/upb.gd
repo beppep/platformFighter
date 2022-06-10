@@ -29,8 +29,7 @@ func _init() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func update(player):
-	autoAttack(player)
+func update():
 	if player.stateTimer==0:
 		player.can_walljump = false
 		player._velocity.y = 0
@@ -41,9 +40,12 @@ func update(player):
 	if player.stateTimer<40:
 		player._velocity.y -= 53
 		player._velocity.y *= 0.8
-		player._velocity.x *= 0.9
+		if player.stateTimer<10:
+			player._velocity.x *= 0.9
+		else:
+			player._velocity.x *= 0.8
 	else:
-		player._velocity.x *= 0.98
+		player._velocity.x *= 0.97
 	if player.stateTimer>10 and player.stateTimer<=40:
 		if not player.buttons[2]:
 			chargeTime = player.stateTimer

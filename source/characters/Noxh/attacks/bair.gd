@@ -1,13 +1,10 @@
-extends "res://source/characters/Attack.gd"
+extends Attack
+class_name Bair
 
 
-# Declare member variables here. Examples:
-# var a: int = 2
-# var b: String = "text"
 
 
-# Called when the node enters the scene tree for the first time.
-func _init() -> void:
+func _init():
 	endFrame = 36
 	fastEndFrame = 26
 	hitboxes = [
@@ -39,8 +36,7 @@ func _init() -> void:
 		},
 	]
 
-func update(player):
-	autoAttack(player)
+func update():
 	if player.stateTimer==0:
 		player.anim_sprite.play("bair")
 	if player.is_on_ground:

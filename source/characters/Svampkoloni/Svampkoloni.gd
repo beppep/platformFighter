@@ -1,5 +1,6 @@
 extends Character
-
+"""
+	grab = load("res://source/characters/Svampkoloni/attacks/grab.gd")
 var jab = load("res://source/characters/Svampkoloni/attacks/jab.gd")
 var uair = load("res://source/characters/Svampkoloni/attacks/uair.gd")
 var utilt = load("res://source/characters/Svampkoloni/attacks/utilt.gd")
@@ -11,13 +12,12 @@ var dair = load("res://source/characters/Svampkoloni/attacks/dair.gd")
 var upb = load("res://source/characters/Svampkoloni/attacks/upb.gd")
 var sideb = load("res://source/characters/Svampkoloni/attacks/sideb.gd")
 var downb = load("res://source/characters/Svampkoloni/attacks/transform.gd")
-
+"""
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass
-	grab = load("res://source/characters/Svampkoloni/attacks/grab.gd")
 
 
 func attack():

@@ -1,17 +1,16 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://source/characters/Noxh/bulletAttack.gd" type="Script" id=1]
 [ext_resource path="res://source/characters/Noxh/Bullet.gd" type="Script" id=2]
-[ext_resource path="res://assets/Froat/arow.png" type="Texture" id=3]
+[ext_resource path="res://assets/Noxh/bullet.png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 9.16968, 9.67872 )
+extents = Vector2( 5.83286, 6.00777 )
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 4.05769, 13.0158 )
+extents = Vector2( 3.27913, 10.0123 )
 
 [sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 16.5113, 17.0203 )
+extents = Vector2( 9.16997, 9.6786 )
 
 [node name="KinematicBody2D" type="KinematicBody2D"]
 collision_layer = 0
@@ -21,8 +20,6 @@ script = ExtResource( 2 )
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 1.4983, -3.74577 )
-scale = Vector2( 0.170325, 0.358046 )
 texture = ExtResource( 3 )
 
 [node name="HurtBox" type="Area2D" parent="."]
@@ -41,6 +38,3 @@ collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBoxes/0"]
 shape = SubResource( 3 )
-
-[node name="currentAttack" type="Node" parent="."]
-script = ExtResource( 1 )

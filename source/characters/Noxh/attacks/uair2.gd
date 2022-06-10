@@ -1,4 +1,4 @@
-extends "res://source/characters/Attack.gd"
+extends Attack
 
 
 # Declare member variables here. Examples:
@@ -39,8 +39,7 @@ func _init() -> void:
 		},
 	]
 
-func update(player):
-	autoAttack(player)
+func update():
 	if player.stateTimer==0:
 		player.anim_sprite.play("uair2")
 	if 10<=player.stateTimer and player.stateTimer<=13:

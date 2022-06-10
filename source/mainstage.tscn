@@ -204,7 +204,7 @@ script = ExtResource( 3 )
 
 [node name="AudioStreamPlayerLow" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )
-volume_db = -10.0
+volume_db = -20.0
 script = ExtResource( 3 )
 
 [node name="uiElements" type="CanvasLayer" parent="."]

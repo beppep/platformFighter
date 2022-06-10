@@ -26,8 +26,7 @@ func _init() -> void:
 		},
 	]
 
-func update(player):
-	autoAttack(player)
+func update():
 	if player.stateTimer==0:
 		player.anim_sprite.play("downb")
 	if player.stateTimer<12:
@@ -45,7 +44,7 @@ func update(player):
 			landingLag = 25
 
 func onHit(name, target, shielded=false):
-	get_parent()._velocity.y=-1000
+	player._velocity.y=-1000
 	
 	if not shielded:
 		#endFast = true

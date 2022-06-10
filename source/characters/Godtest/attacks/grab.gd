@@ -29,8 +29,7 @@ func _init():
 		},
 	]
 
-func update(player):
-	autoAttack(player)
+func update():
 	if player.stateTimer==0:
 		player.anim_sprite.play("grab")
 		
@@ -42,7 +41,7 @@ func onHit(name, target, shielded=false):
 	
 	var player = get_parent()
 	interrupted = true
-	endAttack(player)
+	endAttack()
 	
 	player.attackWith(throw)
 	player.stateTimer = -1
