@@ -46,7 +46,8 @@ func _ready2():
 
 func onHit(name, target, shielded=false):
 	pass
-
+func gotHit():
+	pass
 
 func inputAction():
 	if state==0:
@@ -54,7 +55,7 @@ func inputAction():
 	
 	
 	if state==1:
-		$currentAttack.update(self)
+		currentAttack.update()
 
 func CheckHurtBoxes() -> Array:
 	var HitActors = []
@@ -85,15 +86,15 @@ func hitCollision():
 		
 func hitEffect():
 	if state==1 and hitPause==0:
-		$currentAttack.endAttack(self)
+		currentAttack.endAttack()
 	if HitActors:
 		
 		var data = HitActors[0][0]
 		var opponent = HitActors[0][1]
 		
 		if state == 1:
-			$currentAttack.interrupted = true
-			$currentAttack.endAttack(self)
+			currentAttack.interrupted = true
+			currentAttack.endAttack()
 		var angle = data["angle"]*PI/180
 		var kb = (data["kb"] + data["kbscaling"]*percentage)
 		if kb:
@@ -131,8 +132,7 @@ func hitEffect():
 		
 		opponent.get_node("currentAttack").onHit(data["name"], self, (state==3))
 		opponent.onHit(data["name"], self, (state==3))
-		wallJumps = jumpspeed
-		has_airdodge = 1
+		gotHit()
 	
 	
 	if position.y>750:

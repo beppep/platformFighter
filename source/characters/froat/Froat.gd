@@ -52,8 +52,10 @@ func attack():
 		else:
 			attackWith("nair")
 	else:
-		flip()
 		if attackDirection.x>0:
+			attackWith("ftilt")
+		elif attackDirection.x<0:
+			transform.x.x *= -1
 			attackWith("ftilt")
 		elif attackDirection.y>0:
 			attackWith("dtilt")

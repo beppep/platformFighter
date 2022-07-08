@@ -18,10 +18,12 @@ var currentAttack
 
 var sleepDart = false
 
+onready var anim_sprite = $AnimatedSprite #basically just declared in _ready func
+
 # Called when the node enters the scene tree for the first time.
-func _ready():
-	pass
-	currentAttack = load("res://source/characters/Noxh/bulletAttack.gd").new()
+func attackWith(scriptName):
+	currentAttack = load("res://source/characters/Noxh/"+scriptName+".gd").new()
+	currentAttack.player = self
 
 func onHit(name, target, shielded=false):
 	if sleepDart and not shielded:

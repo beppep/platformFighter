@@ -17,7 +17,7 @@ func _init() -> void:
 			"damage":2,
 			"start":5,
 			"end":7,
-			"kb":40,
+			"kb":35,
 			"kbscaling":0.1,
 			"angle":-100,
 			"autolinkX":0.9,
@@ -32,7 +32,7 @@ func _init() -> void:
 			"damage":2,
 			"start":8,
 			"end":10,
-			"kb":40,
+			"kb":35,
 			"kbscaling":0.1,
 			"angle":-70,
 			"autolinkX":0.9,
@@ -47,7 +47,7 @@ func _init() -> void:
 			"damage":2,
 			"start":11,
 			"end":13,
-			"kb":40,
+			"kb":35,
 			"kbscaling":0.1,
 			"angle":-100,
 			"autolinkX":0.9,
@@ -63,8 +63,8 @@ func _init() -> void:
 			"start":15,
 			"end":18,
 			"kb":50,
-			"kbscaling":1,
-			"angle":-60,
+			"kbscaling":0.9,
+			"angle":-70,
 			"shapes":[
 				[28,28,0,40]
 			]
@@ -78,7 +78,7 @@ func update():
 	if player.is_on_floor():
 		interrupted = true
 		if not endFast:
-			landingLag = 10
+			landingLag = 11
 
 
 func onHit(name, target, shielded=false):

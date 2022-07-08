@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/proj.png-2be3a7ad1049da1c7e6eb40cff90a4e1.stex"
+path="res://.import/fb.png-75b1acca4ccc1863e65fbd87daa9b367.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Froat/proj.png"
-dest_files=[ "res://.import/proj.png-2be3a7ad1049da1c7e6eb40cff90a4e1.stex" ]
+source_file="res://assets/Froat/fb.png"
+dest_files=[ "res://.import/fb.png-75b1acca4ccc1863e65fbd87daa9b367.stex" ]
 
 [params]
 

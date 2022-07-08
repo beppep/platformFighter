@@ -18,9 +18,9 @@ func _init() -> void:
 			"damage":6,
 			"start":8,
 			"end":10,
-			"kb":40,
-			"kbscaling":0.3,
-			"angle":80,
+			"kb":50,
+			"kbscaling":0.2,
+			"angle":85,
 			"autolinkX":0.5,
 			"autolinkY":0.5,
 			"shapes":[
@@ -52,5 +52,5 @@ func update():
 		player._velocity.x *= 0.9
 		player._velocity.y *= 0.85
 		player._velocity.y -= 50
-	if not player.buttons[2] and player.stateTimer==26:
+	if player.stateTimer==26 and not (player.buttons[2] and player.direction == Vector2.ZERO):
 		interrupted = true

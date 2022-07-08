@@ -6,6 +6,7 @@ extends Character
 
 var sunScene = load("res://source/characters/Godtest/sun.tscn")
 var B_charge = 8
+var hasHoverboard = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -22,7 +23,7 @@ func _ready() -> void:
 		"uair": load("res://source/characters/Godtest/attacks/uair.gd"),
 		"nb": load("res://source/characters/Godtest/attacks/uair2.gd"),
 		"ub": load("res://source/characters/Godtest/attacks/upb.gd"),
-		"fb": load("res://source/characters/Godtest/attacks/swiftstrike.gd"),
+		"fb": load("res://source/characters/Godtest/attacks/sideb.gd"),
 		"db": load("res://source/characters/Godtest/attacks/float.gd"),
 	}
 
@@ -31,6 +32,8 @@ func _ready() -> void:
 
 func regain_resources():
 	B_charge = 8
+	if hasHoverboard:
+		double_jump = 2
 
 func attack():
 	var attackDirection

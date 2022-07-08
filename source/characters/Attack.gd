@@ -42,7 +42,7 @@ func autoEndAttack():
 				if i[0] != player:
 					replacementList.append(i)
 			other.bannedHitboxes = replacementList
-	if player.grab_target and player.grab_target.state==5:
+	if player.grab_target and is_instance_valid(player.grab_target) and player.grab_target.state==5: # i dragged a player out with grab
 		print("grab released?!")
 		player.grab_target.state=2
 		player.grab_target.stateTimer = 0

@@ -14,11 +14,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://source/characters/Attack.gd"
 }, {
-"base": "Attack",
-"class": "Bair",
-"language": "GDScript",
-"path": "res://source/characters/Noxh/attacks/bair.gd"
-}, {
 "base": "KinematicBody2D",
 "class": "Character",
 "language": "GDScript",
@@ -51,7 +46,6 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Attack": "",
-"Bair": "",
 "Character": "",
 "Dair": "",
 "DownB": "",

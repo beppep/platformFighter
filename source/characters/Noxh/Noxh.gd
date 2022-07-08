@@ -1,13 +1,15 @@
 extends Character
 
 
-
+var bulletScene = load("res://source/characters/Noxh/Bullet.tscn")
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	attacks = {
-		"grab": load("res://source/characters/Godtest/attacks/grab.gd"),
+		"grab": load("res://source/characters/Noxh/attacks/grab.gd"),
+		"throw": load("res://source/characters/Noxh/attacks/throw.gd"),
+		"zair": load("res://source/characters/Noxh/attacks/airthrow.gd"),
 		"jab": load("res://source/characters/Noxh/attacks/jab.gd"),
 		"ftilt": load("res://source/characters/Noxh/attacks/ftilt.gd"),
 		"dtilt": load("res://source/characters/Noxh/attacks/dtilt.gd"),
@@ -15,11 +17,13 @@ func _ready() -> void:
 		"uair": load("res://source/characters/Noxh/attacks/uair.gd"),
 		"bair": load("res://source/characters/Noxh/attacks/bair.gd"),
 		"nair": load("res://source/characters/Noxh/attacks/nair.gd"),
+		"fair": load("res://source/characters/Noxh/attacks/fair.gd"),
 		"dair": load("res://source/characters/Noxh/attacks/dair.gd"),
 		"ub": load("res://source/characters/Noxh/attacks/upb.gd"),
 		"fb": load("res://source/characters/Noxh/attacks/fb.gd"),
 		"nb": load("res://source/characters/Noxh/attacks/nb.gd"),
 		"db": load("res://source/characters/Noxh/attacks/downb.gd"),
+		"nsmash": load("res://source/characters/Noxh/attacks/nsmash.gd"),
 		"dsmash": load("res://source/characters/Noxh/attacks/dsmash.gd"),
 	}
 
@@ -42,19 +46,21 @@ func attack():
 		elif attackDirection.y>0:
 			attackWith("dair")
 		elif attackDirection.x>0:
-			attackWith("nair")
+			attackWith("fair")
 		elif attackDirection.x<0:
-			transform.x.x *=-1
-			attackWith("nair")
+			attackWith("bair")
 		else:
 			attackWith("nair")
 	else:
-		flip()
+		#flip()
 		if attackDirection.y<0:
 			attackWith("utilt")
 		elif attackDirection.y>0:
 			attackWith("dtilt")
 		elif attackDirection.x>0:
+			attackWith("ftilt")
+		elif attackDirection.x<0:
+			transform.x.x *= -1
 			attackWith("ftilt")
 		else:
 			attackWith("jab")
@@ -78,8 +84,8 @@ func special():
 		elif direction.x != 0:
 			attackWith("fb")
 		else:
-			attackWith("nb")
+			attackWith("nsmash")
 	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta: float) -> void:
-#	pass
+func grab():
+	flip() #?
+	attackWith("grab")

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/hook.png-bc9c4b47f5cab3508ff39d1836c6dfae.stex"
+path="res://.import/nair.png-01a298fc55b48cd725b78685e5cab063.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Noxh/hook.png"
-dest_files=[ "res://.import/hook.png-bc9c4b47f5cab3508ff39d1836c6dfae.stex" ]
+source_file="res://assets/Noxh/nair.png"
+dest_files=[ "res://.import/nair.png-01a298fc55b48cd725b78685e5cab063.stex" ]
 
 [params]
 

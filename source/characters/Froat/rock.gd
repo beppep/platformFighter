@@ -127,7 +127,7 @@ func hitEffect():
 				_velocity = kb_vector
 				wasHit = false
 			else:
-				_velocity *= -1
+				pass#_velocity *= -1
 				#_velocity.y -= 500
 
 func hitpauseFormula(kb):

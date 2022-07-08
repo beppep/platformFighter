@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/kickdown.png-9d2aa5618e74fd3a2d9e42a09d4109dc.stex"
+path="res://.import/kqI5K7HZ8dRXsOtyt3q8.jpg-96aecb7a040bfe9cd1339318b7d66d44.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Noxh/kickdown.png"
-dest_files=[ "res://.import/kickdown.png-9d2aa5618e74fd3a2d9e42a09d4109dc.stex" ]
+source_file="res://assets/backgrounds/kqI5K7HZ8dRXsOtyt3q8.jpg"
+dest_files=[ "res://.import/kqI5K7HZ8dRXsOtyt3q8.jpg-96aecb7a040bfe9cd1339318b7d66d44.stex" ]
 
 [params]
 

@@ -23,7 +23,7 @@ func _init() -> void:
 			"autolinkX":0.9,
 			"autolinkY":0.9,
 			"shapes":[
-				[33,33,0,-30]
+				[33,37,0,-27]
 			]
 		},
 		{
@@ -38,7 +38,7 @@ func _init() -> void:
 			"autolinkX":0.9,
 			"autolinkY":0.9,
 			"shapes":[
-				[33,33,0,-30]
+				[33,37,0,-27]
 			]
 		},
 		{
@@ -53,7 +53,7 @@ func _init() -> void:
 			"autolinkX":0.9,
 			"autolinkY":0.9,
 			"shapes":[
-				[33,33,0,-30]
+				[33,37,0,-27]
 			]
 		},
 		{
@@ -68,7 +68,7 @@ func _init() -> void:
 			"autolinkX":0.9,
 			"autolinkY":0.9,
 			"shapes":[
-				[33,33,0,-30]
+				[33,37,0,-27]
 			]
 		},
 		{
@@ -77,17 +77,18 @@ func _init() -> void:
 			"damage":3,
 			"start":17,
 			"end":20,
-			"kb":94,
-			"kbscaling":0.4,
+			"kb":83,
+			"kbscaling":0.1,
 			"angle":80,
 			"shapes":[
-				[33,33,0,-30]
+				[33,37,0,-27]
 			]
 		},
 	]
 
 func update():
 	if player.stateTimer==0:
+		player._velocity.y=0
 		#player.cant_hitfall = true
 		player.anim_sprite.play("upb")
 	if player.stateTimer<15:
@@ -95,6 +96,12 @@ func update():
 	if player.stateTimer<30:
 		player._velocity *= 0.9
 		player._velocity.y-=150
+	
+	
+	if player.is_on_ground and player.stateTimer>31:
+		interrupted = true #remove hitboxes? idk
+		if not endFast:
+			landingLag = 20
 
 func onHit(name, target, shielded=false):
 	target.position = (target.position*0.9+player.position*0.1)

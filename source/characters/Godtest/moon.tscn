@@ -22,8 +22,6 @@ shape = SubResource( 1 )
 
 [node name="HitBoxes" type="Node2D" parent="."]
 
-[node name="currentAttack" type="Node" parent="."]
-
 [node name="burner" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 10

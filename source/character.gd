@@ -63,6 +63,7 @@ var kb_vector = Vector2(0,0) # to be applied after hitpause
 var autolink_vector = Vector2(0,0) # to apply autolink after hitpause
 var autolink_player
 var intangible = false
+var intangibleFrames = 0
 var is_on_ground = false
 var dontShield = true
 var grab_target
@@ -140,7 +141,7 @@ func inputAction():
 	
 	
 	# movement
-	if not (state==4 and stateTimer<8):
+	if not (state==4 and stateTimer<20):
 		calculate_move_velocity()
 	# options
 	if not buttons[3]:
@@ -299,7 +300,7 @@ func inputAction():
 	
 func get_buttons():
 	if player_id==0:
-		if 1:
+		if 0:
 			rng.randomize() #test
 			return [(rng.randf()<0.1 or position.y>300 and rng.randf()<0.9),(rng.randf()<0.3),(rng.randf()<0.1 or position.y>300 and rng.randf()<0.99),(rng.randf()<0.1),(rng.randf()<0.1)] #test
 		
@@ -308,7 +309,7 @@ func get_buttons():
 		return [Input.get_action_strength("p2_jump"),Input.get_action_strength("p2_a"),Input.get_action_strength("p2_b"),Input.get_action_strength("p2_shield"),Input.get_action_strength("p2_z")]
 func get_direction():
 	if player_id==0:
-		if 1:
+		if 0:
 			var my_random_number = rng.randf_range(0.0, 2*PI) #test
 			if position.y>200 or abs(position.x) > 300:
 				if position.x >0:
@@ -416,8 +417,9 @@ func calculate_move_velocity(): #basically do movement input stuff
 				wallJump()
 				jumped = true
 			elif released_jump == true and double_jump == 1:
-				_velocity.y = -jumpspeed*0.9
-				_velocity.x += direction.x * jumpspeed*0.1
+				_velocity.y = -jumpspeed * 0.9
+				if direction.x * _velocity.x < 0:
+					_velocity.x = direction.x * jumpspeed*0.1
 				anim_sprite.play("double_jump")
 				double_jump -= 1
 				jumped = true
@@ -514,7 +516,7 @@ func airdodge():
 	$Shield.visible = false
 	anim_sprite.modulate = sprite_color+Color(0.5,0.5,0.5,0)
 	intangible = true
-	released_jump = false
+	#released_jump = false
 	var airdodge_direction = direction.normalized()
 	_velocity = airdodge_direction*1000
 	dodge_direction=Vector2(0,0)
@@ -584,7 +586,7 @@ func hitEffect():
 			else:
 				jablocked = 0
 			if (not state==3):# or data["unshieldable"]:
-				kb_vector += Vector2(0,-1)*2*pow(kb,0.9) + Vector2(cos(angle)*opponent.transform.x.x, -sin(angle))*2.7 *pow(kb,1.2)
+				kb_vector = Vector2(0,-1)*2*pow(kb,0.9) + Vector2(cos(angle)*opponent.transform.x.x, -sin(angle))*2.7 *pow(kb,1.2) # not += imo
 				autolink_vector = Vector2.ZERO
 				if "autolinkX" in data and data["autolinkX"]>0:
 					autolink_vector.x = data["autolinkX"]
@@ -652,7 +654,16 @@ func hitEffect():
 				shieldHealth+=0.5
 			else:
 				shieldHealth-=0.5
-			
+		
+	if intangibleFrames>0:
+		intangibleFrames -= 1
+		if intangibleFrames>1:
+			intangible = true
+			anim_sprite.modulate = sprite_color+Color(0.5,0.5,0.5,0)
+	if intangibleFrames == 1:
+		print(intangibleFrames)
+		intangible = false
+		anim_sprite.modulate = sprite_color
 	#progress states
 	if hitPause == 0:
 		stateTimer += 1
@@ -689,6 +700,7 @@ func hitEffect():
 					is_on_ground = true
 				else:
 					_velocity = kb_vector
+					is_on_ground = false
 				kb_vector = Vector2.ZERO
 				autolink_vector = Vector2.ZERO
 			else:

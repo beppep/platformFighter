@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/arow.png-3364ef82ee72846e011af15958ed1f8c.stex"
+path="res://.import/arow.png-3c620565a2b84dc2b91efbafb60bb074.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Froat/arow.png"
-dest_files=[ "res://.import/arow.png-3364ef82ee72846e011af15958ed1f8c.stex" ]
+source_file="res://assets/Noxh/arow.png"
+dest_files=[ "res://.import/arow.png-3c620565a2b84dc2b91efbafb60bb074.stex" ]
 
 [params]
 

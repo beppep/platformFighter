@@ -22,7 +22,7 @@ var stockCounts = []
 func _ready() -> void:
 	var playerNum = 2
 	
-	chosenCharacters = [froatScene,NoxhScene,]
+	chosenCharacters = [froatScene,NoxhScene]
 	#chosenCharacters = [froatScene,froatScene,]
 
 	stockCounts = [4,4]
@@ -76,4 +76,6 @@ func _physics_process(delta: float) -> void:
 					new.player_id = i
 					new.team = i
 					new._ready2()
-					new.position = Vector2(0,-1000)
+					new.position = Vector2(0,-500)
+					new.intangibleFrames = 100
+					new.intangible = true

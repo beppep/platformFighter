@@ -7,23 +7,23 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 70, 200 )
 
-[sub_resource type="AtlasTexture" id=6]
+[sub_resource type="AtlasTexture" id=2]
 flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 0, 0, 512, 1024 )
 
-[sub_resource type="SpriteFrames" id=5]
+[sub_resource type="SpriteFrames" id=3]
 animations = [ {
-"frames": [ SubResource( 6 ) ],
+"frames": [ SubResource( 2 ) ],
 "loop": false,
 "name": "default",
 "speed": 5.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 75, 49.0149 )
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 68.6182, 9.38026 )
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 6, 10 )
 
 [node name="KinematicBody2D" type="KinematicBody2D"]
@@ -38,7 +38,7 @@ shape = SubResource( 1 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, 360 )
 scale = Vector2( 0.5, 1 )
-frames = SubResource( 5 )
+frames = SubResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
@@ -57,8 +57,8 @@ collision_layer = 4
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBoxes/0"]
-position = Vector2( 0, 50 )
-shape = SubResource( 2 )
+position = Vector2( 0, 10 )
+shape = SubResource( 4 )
 
 [node name="currentAttack" type="Node" parent="."]
 script = ExtResource( 3 )
@@ -70,5 +70,5 @@ collision_mask = 0
 [node name="platform2" type="CollisionShape2D" parent="platforms"]
 position = Vector2( 0, 16 )
 scale = Vector2( 11, 1.6 )
-shape = SubResource( 3 )
+shape = SubResource( 5 )
 one_way_collision = true

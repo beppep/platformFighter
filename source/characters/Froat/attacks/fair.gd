@@ -8,7 +8,7 @@ class_name Fair
 
 # Called when the node enters the scene tree for the first time.
 func _init() -> void:
-	endFrame = 36
+	endFrame = 39
 	fastEndFrame = 24
 	hitboxes = [
 		{
@@ -17,9 +17,9 @@ func _init() -> void:
 			"damage":8,
 			"start":6,
 			"end":10,
-			"kb":100,
-			"kbscaling":1.3,
-			"angle":50,
+			"kb":70,
+			"kbscaling":1.2,
+			"angle":40,
 			"shapes":[
 				[43,25,53,-16]
 			]
