@@ -31,7 +31,7 @@ func _init():
 			"damage":7,
 			"start":9,
 			"end":16,
-			"kb":100,
+			"kb":85,
 			"kbscaling":0.5,
 			"angle":100,
 			"shapes":[
@@ -47,4 +47,10 @@ func update():
 	if player.is_on_ground:
 		interrupted = true #remove hitboxes? idk
 		if not endFast:
-			landingLag = 10
+			landingLag = 11
+
+func onHit(name, target, shielded=false):
+	#player._velocity.y*=0.7
+	player._velocity.y=-999
+	if not shielded:
+		endFast = true

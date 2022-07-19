@@ -14,11 +14,24 @@ func _init() -> void:
 		{
 			"name":"0",
 			"group":1,
-			"damage":7,
+			"damage":9,
 			"start":6,
-			"end":9,
+			"end":8,
 			"kb":50,
 			"kbscaling":1.1,
+			"angle":40,
+			"shapes":[
+				[10,10,95,5]
+			]
+		},
+		{
+			"name":"1",
+			"group":1,
+			"damage":6,
+			"start":6,
+			"end":9,
+			"kb":33,
+			"kbscaling":0.8,
 			"angle":45,
 			"shapes":[
 				[50,20,55,5]

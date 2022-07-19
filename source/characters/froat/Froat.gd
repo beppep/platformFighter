@@ -12,6 +12,7 @@ func _ready() -> void:
 		"throw": load("res://source/characters/Froat/attacks/throw.gd"),
 		"jab": load("res://source/characters/Froat/attacks/jab.gd"),
 		"jab2": load("res://source/characters/Froat/attacks/jab2.gd"),
+		"jab3": load("res://source/characters/Froat/attacks/jab3.gd"),
 		"dtilt": load("res://source/characters/Froat/attacks/dtilt.gd"),
 		"ftilt": load("res://source/characters/Froat/attacks/ftilt.gd"),
 		"utilt": load("res://source/characters/Froat/attacks/utilt.gd"),

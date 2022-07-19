@@ -25,6 +25,7 @@ func _ready() -> void:
 		"db": load("res://source/characters/Noxh/attacks/downb.gd"),
 		"nsmash": load("res://source/characters/Noxh/attacks/nsmash.gd"),
 		"dsmash": load("res://source/characters/Noxh/attacks/dsmash.gd"),
+		"usmash": load("res://source/characters/Noxh/attacks/usmash.gd"),
 	}
 
 	#var sun = sunScene.instance()
@@ -78,7 +79,7 @@ func special():
 			attackWith("nb")
 	else:
 		if direction.y<0:
-			attackWith("ub")
+			attackWith("usmash")
 		elif direction.y>0:
 			attackWith("dsmash")
 		elif direction.x != 0:

@@ -22,7 +22,7 @@ var stockCounts = []
 func _ready() -> void:
 	var playerNum = 2
 	
-	chosenCharacters = [froatScene,NoxhScene]
+	chosenCharacters = [NoxhScene,froatScene,]
 	#chosenCharacters = [froatScene,froatScene,]
 
 	stockCounts = [4,4]

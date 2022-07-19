@@ -179,9 +179,9 @@ func inputAction():
 				totalLandingLag = 0
 				anim_sprite.play("stunned")
 		elif is_on_ground:
-			if direction.y>0 or direction.x!=0 and not (buttons[1] or buttons[2]):
+			if direction.y>0.8 or direction.x!=0 and not (buttons[1] or buttons[2]):
 				dodge()
-			elif direction.y<0: #shield drop
+			elif direction.y<-0.8: #shield drop
 				#set_collision_mask_bit(4,0)
 				#shieldEnd()
 				#dontShield=true
@@ -388,7 +388,7 @@ func calculate_move_velocity(): #basically do movement input stuff
 	
 	
 	# MOVE Y
-	if direction.y == 1 and (state == states.actionable or not is_on_ground) and not state == states.dodge:
+	if direction.y > 0.9 and (state == states.actionable or not is_on_ground) and not state == states.dodge:
 		set_collision_mask_bit(4,0)
 	else:
 		set_collision_mask_bit(4,1)
