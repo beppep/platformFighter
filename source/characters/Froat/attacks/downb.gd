@@ -34,7 +34,9 @@ func update():
 	if 16<player.stateTimer and player.stateTimer<30:
 		if not interrupted: #why
 			player._velocity.y = 2000
+		#player.double_jumps = 1 #?
 	if player.stateTimer>30:
+		player.double_jumps = 1
 		player._velocity *= 0
 	#if player.is_on_floor() and player.stateTimer==fastEndFrame and player.buttons[0]:
 		#player._velocity = Vector2(0, -3000)

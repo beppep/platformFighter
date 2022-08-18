@@ -39,7 +39,6 @@ func _init() -> void:
 		},
 	]
 
-func update(player):
-	autoAttack(player)
+func update():
 	if player.stateTimer==0:
 		player.anim_sprite.play("ftilt")

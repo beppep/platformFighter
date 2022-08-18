@@ -44,3 +44,10 @@ func update():
 		player.anim_sprite.play("jab3")
 	if not player.is_on_ground:
 		interrupted = true
+
+func onHit(name, target, shielded=false):
+	if not shielded:
+		endFast = true
+		if player.percentage>0:
+			player.percentage-=1
+			player.get_node("Label").text = str(player.percentage)+"%"

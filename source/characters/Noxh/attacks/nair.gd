@@ -25,10 +25,15 @@ func _init() -> void:
 func update():
 	if player.stateTimer==0:
 		player.anim_sprite.play("nair")
-	if player.stateTimer==5:
-		player._velocity.y *= 0.6
-		player._velocity.y -= 600
 	if player.is_on_ground:
 		interrupted = true #remove hitboxes? idk
 		if not endFast:
 			landingLag = 9
+			
+func onHit(name, target, shielded=false):
+
+	player._velocity.y *= 0.6
+	player._velocity.y -= 600
+
+	if not shielded:
+		endFast = true

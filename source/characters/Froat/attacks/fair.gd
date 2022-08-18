@@ -8,27 +8,27 @@ class_name Fair
 
 # Called when the node enters the scene tree for the first time.
 func _init() -> void:
-	endFrame = 39
-	fastEndFrame = 24
+	endFrame = 29
+	fastEndFrame = 19
 	hitboxes = [
 		{
 			"name":"0",
 			"group":1,
 			"damage":8,
-			"start":6,
-			"end":10,
+			"start":4,
+			"end":7,
 			"kb":70,
-			"kbscaling":1.2,
-			"angle":40,
+			"kbscaling":0.8,
+			"angle":57,
 			"shapes":[
-				[43,25,53,-16]
+				[41,32,44,34]
 			]
 		},
 	]
 
 func update():
 	if player.stateTimer==0:
-		player.anim_sprite.play("ftilt")
+		player.anim_sprite.play("fair")
 	if player.is_on_ground:
 		interrupted = true #remove hitboxes? idk
 		if not endFast:

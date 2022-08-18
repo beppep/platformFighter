@@ -6,7 +6,9 @@ var bulletScene = load("res://source/characters/Noxh/Bullet.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	can_getupattack = true
 	attacks = {
+		"getupa": load("res://source/characters/Noxh/attacks/getupattack.gd"),
 		"grab": load("res://source/characters/Noxh/attacks/grab.gd"),
 		"throw": load("res://source/characters/Noxh/attacks/throw.gd"),
 		"zair": load("res://source/characters/Noxh/attacks/airthrow.gd"),
@@ -26,6 +28,7 @@ func _ready() -> void:
 		"nsmash": load("res://source/characters/Noxh/attacks/nsmash.gd"),
 		"dsmash": load("res://source/characters/Noxh/attacks/dsmash.gd"),
 		"usmash": load("res://source/characters/Noxh/attacks/usmash.gd"),
+		"fsmash": load("res://source/characters/Noxh/attacks/fsmash.gd"),
 	}
 
 	#var sun = sunScene.instance()
@@ -83,7 +86,7 @@ func special():
 		elif direction.y>0:
 			attackWith("dsmash")
 		elif direction.x != 0:
-			attackWith("fb")
+			attackWith("fsmash")
 		else:
 			attackWith("nsmash")
 	

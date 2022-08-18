@@ -40,8 +40,7 @@ func _init() -> void:
 		},
 	]
 
-func update(player):
-	autoAttack(player)
+func update():
 	if player.stateTimer==0:
 		player.anim_sprite.play("sideb")
 	if 10<=player.stateTimer and player.stateTimer<=13:
@@ -55,7 +54,6 @@ func update(player):
 		endFrame = fastEndFrame
 
 func onHit(name, target, shielded=false):
-	var player = get_parent()
 	if name=="0":
 		#if not player.is_on_ground:
 		#player._velocity.y*=0.4

@@ -39,8 +39,7 @@ func _init() -> void:
 		},
 	]
 
-func update(player):
-	autoAttack(player)
+func update():
 	if player.stateTimer==0:
 		player.anim_sprite.play("utilt")
 	if not player.is_on_floor():

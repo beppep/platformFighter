@@ -7,7 +7,7 @@ var explosion = load("res://source/fx/explosion.tscn")
 # Declare member variables here. Examples:
 # var a: int = 2
 # var b: String = "text"
-export var gravity = 40.0
+#export var gravity = 40.0
 var _velocity = Vector2(0,0)
 var bannedHitboxes = []
 var HitActors = []
@@ -16,15 +16,20 @@ var nextFrameHitPause = 0
 var kb_vector = Vector2(0,0)
 var wasHit = false
 var team = 0
-var currentAttack
+var state = 0
+var stateTimer = 0
+var currentAttack = false
+var attacks
+var ownerObject
 
-var recallAttack = load("res://source/characters/Godtest/hoverboardRecall.gd")
+var recallAttack = load("res://source/characters/Godtest/hoverboard/hoverboardRecall.gd")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
-	currentAttack = false
-	#currentAttack.player = self
+	attacks = {
+		"recall": load("res://source/characters/Godtest/hoverboard/hoverboardRecall.gd"),
+		"dthrow": load("res://source/characters/Godtest/hoverboard/boardDthrow.gd"),
+	}
 
 func onHit(name, target, shielded=false):
 	pass
@@ -37,12 +42,35 @@ func inputAction():
 	if hitPause:
 		return
 		
-	_velocity.y += gravity
-	var collision = move_and_collide(_velocity*1/60)
-	if collision:
-		_velocity = _velocity.bounce(collision.normal)
+	_velocity *= 0.95
+	move_and_slide(_velocity, Vector2.UP)
 	
-	currentAttack.update()
+	if state == 1:
+		currentAttack.manageHitboxes()
+		currentAttack.update()
+		
+	if state == 0:
+		for other in $"/root/Node2D/Players".get_children(): # this is stupid just have a ref
+			if other.name == "Godtest":
+				if other._velocity.y>0 and get_node("catcher").overlaps_body(other):
+					attachTo(other)
+
+func attachTo(other):
+	other._velocity = Vector2(0,0)
+	other.hasHoverboard = true
+	other.boardObject = false
+	other.get_node("Hoverboard").visible = true
+	other.double_jumps = 2
+	if other.state == 1:
+		other.currentAttack.interrupted = true
+	#other.state = 0
+	queue_free()
+
+func attackWith(script):
+	state = 1
+	stateTimer = 0
+	currentAttack = attacks[script].new()
+	currentAttack.player = self
 
 func CheckHurtBoxes() -> Array:
 	var HitActors = []
@@ -50,7 +78,7 @@ func CheckHurtBoxes() -> Array:
 	for hitbox in $HurtBox.get_overlapping_areas():
 		var opponent=hitbox.get_parent().get_parent()
 		
-		if opponent.team != self.team:
+		if opponent.team != team:
 			var data = opponent.currentAttack.hitboxes[int(hitbox["name"])] #invalid get index 169 on base array apparently
 			if not [opponent, data["group"]] in bannedHitboxes:
 				HitActors.append([data,opponent])
@@ -111,7 +139,7 @@ func hitEffect():
 		
 	#progress states
 	if hitPause==0:
-		pass
+		stateTimer += 1
 	if hitPause>0:
 		hitPause-=1
 		if hitPause<=0:

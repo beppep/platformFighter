@@ -41,8 +41,7 @@ func _init() -> void:
 		},
 	]
 
-func update(player):
-	autoAttack(player)
+func update():
 	player._velocity *= 0.8
 	if player.stateTimer==0:
 		$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".shine)
@@ -50,7 +49,5 @@ func update(player):
 		player.anim_player.play("shine")
 	if player.buttons[0]:
 		interrupted = true
-		endAttack(player)
 	elif player.buttons[3]:
 		interrupted = true
-		endAttack(player)

@@ -26,11 +26,10 @@ func _init() -> void:
 		},
 	]
 
-func update(player):
-	autoAttack(player)
+func update():
 	if player.stateTimer==0:
 		player.anim_sprite.play("dtilt")
 	if player.stateTimer==4:
 		player._velocity.x+=player.transform.x.x*600
 	if not player.is_on_ground:
-		interrupted = true
+		pass#interrupted = true

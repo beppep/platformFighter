@@ -46,8 +46,7 @@ func _init() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func update(player):
-	autoAttack(player)
+func update():
 	if player.stateTimer==0:
 		player.anim_sprite.play("nair")
 	if player.is_on_ground:

@@ -64,7 +64,7 @@ func update():
 
 func onHit(name, target, shielded=false):
 	player._velocity.y=-1000
-	player._velocity.x*=0.9
+	player._velocity.x*=0.5
 
 	if not shielded:
 		endFast = true

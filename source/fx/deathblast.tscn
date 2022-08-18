@@ -1,0 +1,97 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://source/fx/deathblast.gd" type="Script" id=1]
+[ext_resource path="res://assets/fx/blastline.png" type="Texture" id=2]
+
+[sub_resource type="AtlasTexture" id=18]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 576, 0, 64, 256 )
+
+[sub_resource type="AtlasTexture" id=19]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 192, 0, 64, 256 )
+
+[sub_resource type="AtlasTexture" id=20]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 64, 256 )
+
+[sub_resource type="AtlasTexture" id=21]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 64, 0, 64, 256 )
+
+[sub_resource type="AtlasTexture" id=22]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 128, 0, 64, 256 )
+
+[sub_resource type="AtlasTexture" id=23]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 256, 0, 64, 256 )
+
+[sub_resource type="AtlasTexture" id=24]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 320, 0, 64, 256 )
+
+[sub_resource type="AtlasTexture" id=25]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 384, 0, 64, 256 )
+
+[sub_resource type="AtlasTexture" id=26]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 448, 0, 64, 256 )
+
+[sub_resource type="AtlasTexture" id=27]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 512, 0, 64, 256 )
+
+[sub_resource type="AtlasTexture" id=28]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 640, 0, 64, 256 )
+
+[sub_resource type="AtlasTexture" id=29]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 704, 0, 64, 256 )
+
+[sub_resource type="AtlasTexture" id=30]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 768, 0, 64, 256 )
+
+[sub_resource type="AtlasTexture" id=31]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 832, 0, 64, 256 )
+
+[sub_resource type="AtlasTexture" id=32]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 896, 0, 64, 256 )
+
+[sub_resource type="AtlasTexture" id=33]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 960, 0, 64, 256 )
+
+[sub_resource type="SpriteFrames" id=17]
+animations = [ {
+"frames": [ SubResource( 18 ), SubResource( 19 ), SubResource( 20 ), SubResource( 21 ), SubResource( 22 ), SubResource( 19 ), SubResource( 23 ), SubResource( 24 ), SubResource( 25 ), SubResource( 26 ), SubResource( 27 ), SubResource( 18 ), SubResource( 28 ), SubResource( 29 ), SubResource( 30 ), SubResource( 31 ), SubResource( 32 ), SubResource( 33 ) ],
+"loop": true,
+"name": "boom",
+"speed": 30.0
+} ]
+
+[node name="Deathblast" type="AnimatedSprite"]
+frames = SubResource( 17 )
+animation = "boom"
+script = ExtResource( 1 )

@@ -39,8 +39,7 @@ func _init() -> void:
 		},
 	]
 
-func update(player):
-	autoAttack(player)
+func update():
 	if player.stateTimer==0:
 		player.cant_hitfall = true
 		player.anim_sprite.play("ftilt")
@@ -50,9 +49,9 @@ func update(player):
 func onHit(name, target, shielded=false):
 	
 	if name=="0":
-		get_parent()._velocity.x*=0.5
-		get_parent()._velocity.y*=0.5
-		get_parent()._velocity.y-=300
+		player._velocity.x*=0.5
+		player._velocity.y*=0.5
+		player._velocity.y-=300
 	if name=="1":
 		pass
 		#get_parent()._velocity.y-=400

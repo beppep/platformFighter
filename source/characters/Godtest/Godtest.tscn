@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=2]
+[gd_scene load_steps=66 format=2]
 
 [ext_resource path="res://assets/Godtest/hook.png" type="Texture" id=1]
 [ext_resource path="res://source/characters/Godtest/Godtest.gd" type="Script" id=2]
@@ -18,42 +18,48 @@
 [ext_resource path="res://assets/Godtest/dtilt.png" type="Texture" id=16]
 [ext_resource path="res://assets/Godtest/landing.png" type="Texture" id=17]
 [ext_resource path="res://assets/Godtest/hoverboard.png" type="Texture" id=18]
+[ext_resource path="res://assets/Godtest/dthrow.png" type="Texture" id=19]
 
 [sub_resource type="RectangleShape2D" id=1]
 
-[sub_resource type="AtlasTexture" id=2]
+[sub_resource type="AtlasTexture" id=42]
 flags = 4
-atlas = ExtResource( 9 )
+atlas = ExtResource( 1 )
 region = Rect2( 0, 0, 256, 256 )
 
 [sub_resource type="AtlasTexture" id=3]
 flags = 4
-atlas = ExtResource( 7 )
+atlas = ExtResource( 9 )
 region = Rect2( 0, 0, 256, 256 )
 
 [sub_resource type="AtlasTexture" id=4]
 flags = 4
-atlas = ExtResource( 6 )
-region = Rect2( 0, 0, 512, 512 )
-
-[sub_resource type="AtlasTexture" id=5]
-flags = 4
-atlas = ExtResource( 4 )
+atlas = ExtResource( 10 )
 region = Rect2( 0, 0, 256, 256 )
 
-[sub_resource type="AtlasTexture" id=6]
+[sub_resource type="AtlasTexture" id=5]
 flags = 4
 atlas = ExtResource( 16 )
 region = Rect2( 256, 0, 256, 256 )
 
-[sub_resource type="AtlasTexture" id=7]
+[sub_resource type="AtlasTexture" id=6]
 flags = 4
 atlas = ExtResource( 16 )
 region = Rect2( 512, 0, 256, 256 )
 
+[sub_resource type="AtlasTexture" id=2]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 512, 512 )
+
+[sub_resource type="AtlasTexture" id=7]
+flags = 4
+atlas = ExtResource( 11 )
+region = Rect2( 0, 0, 512, 512 )
+
 [sub_resource type="AtlasTexture" id=8]
 flags = 4
-atlas = ExtResource( 13 )
+atlas = ExtResource( 17 )
 region = Rect2( 0, 0, 256, 256 )
 
 [sub_resource type="AtlasTexture" id=9]
@@ -68,125 +74,150 @@ region = Rect2( 0, 0, 256, 256 )
 
 [sub_resource type="AtlasTexture" id=11]
 flags = 4
-atlas = ExtResource( 1 )
-region = Rect2( 0, 0, 512, 512 )
-
-[sub_resource type="AtlasTexture" id=12]
-flags = 4
-atlas = ExtResource( 11 )
-region = Rect2( 0, 0, 512, 512 )
-
-[sub_resource type="AtlasTexture" id=13]
-flags = 4
-atlas = ExtResource( 17 )
+atlas = ExtResource( 4 )
 region = Rect2( 0, 0, 256, 256 )
 
-[sub_resource type="AtlasTexture" id=14]
+[sub_resource type="AtlasTexture" id=12]
 flags = 4
 atlas = ExtResource( 12 )
 region = Rect2( 0, 0, 512, 512 )
 
-[sub_resource type="AtlasTexture" id=15]
+[sub_resource type="AtlasTexture" id=13]
 flags = 4
 atlas = ExtResource( 15 )
 region = Rect2( 0, 0, 512, 512 )
 
-[sub_resource type="AtlasTexture" id=16]
+[sub_resource type="AtlasTexture" id=14]
 flags = 4
 atlas = ExtResource( 14 )
 region = Rect2( 0, 0, 512, 512 )
 
+[sub_resource type="AtlasTexture" id=15]
+flags = 4
+atlas = ExtResource( 7 )
+region = Rect2( 0, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=16]
+flags = 4
+atlas = ExtResource( 13 )
+region = Rect2( 0, 0, 256, 256 )
+
 [sub_resource type="AtlasTexture" id=17]
 flags = 4
-atlas = ExtResource( 10 )
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 512, 512 )
+
+[sub_resource type="AtlasTexture" id=43]
+flags = 4
+atlas = ExtResource( 19 )
 region = Rect2( 0, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=44]
+flags = 4
+atlas = ExtResource( 19 )
+region = Rect2( 256, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=45]
+flags = 4
+atlas = ExtResource( 19 )
+region = Rect2( 512, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=46]
+flags = 4
+atlas = ExtResource( 19 )
+region = Rect2( 768, 0, 256, 256 )
 
 [sub_resource type="SpriteFrames" id=18]
 animations = [ {
-"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 3 ), SubResource( 2 ) ],
-"loop": false,
-"name": "dair",
-"speed": 10.0
-}, {
-"frames": [ SubResource( 4 ) ],
-"loop": false,
-"name": "bair",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 5 ), SubResource( 2 ) ],
-"loop": false,
-"name": "jab",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 2 ) ],
-"loop": false,
-"name": "standing",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 6 ), SubResource( 7 ) ],
-"loop": false,
-"name": "dtilt",
-"speed": 10.0
-}, {
-"frames": [ SubResource( 8 ), SubResource( 2 ), SubResource( 8 ), SubResource( 2 ) ],
-"loop": false,
-"name": "utilt",
-"speed": 20.0
-}, {
-"frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 10 ), SubResource( 9 ), SubResource( 2 ) ],
-"loop": false,
-"name": "sideb",
-"speed": 10.0
-}, {
-"frames": [ SubResource( 2 ) ],
-"loop": false,
-"name": "jump",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 11 ), SubResource( 11 ), SubResource( 2 ) ],
+"frames": [ SubResource( 42 ), SubResource( 42 ), SubResource( 3 ) ],
 "loop": false,
 "name": "uair",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 11 ), SubResource( 12 ), SubResource( 12 ), SubResource( 11 ), SubResource( 2 ) ],
-"loop": false,
-"name": "uair2",
-"speed": 10.0
-}, {
-"frames": [ SubResource( 13 ) ],
-"loop": false,
-"name": "land",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 2 ) ],
-"loop": true,
-"name": "stunned",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 9 ), SubResource( 9 ), SubResource( 2 ) ],
-"loop": false,
-"name": "ftilt",
-"speed": 10.0
-}, {
-"frames": [ SubResource( 2 ), SubResource( 14 ), SubResource( 2 ), SubResource( 14 ), SubResource( 15 ), SubResource( 14 ), SubResource( 2 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 16 ), SubResource( 2 ) ],
-"loop": false,
-"name": "upb",
-"speed": 20.0
-}, {
-"frames": [ SubResource( 17 ), SubResource( 2 ) ],
+"frames": [ SubResource( 4 ), SubResource( 3 ) ],
 "loop": false,
 "name": "grab",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 2 ) ],
+"frames": [ SubResource( 5 ), SubResource( 6 ) ],
+"loop": false,
+"name": "dtilt",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 2 ), SubResource( 7 ), SubResource( 7 ), SubResource( 2 ), SubResource( 3 ) ],
+"loop": false,
+"name": "uair2",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 8 ) ],
+"loop": false,
+"name": "land",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 10 ), SubResource( 9 ), SubResource( 3 ) ],
+"loop": false,
+"name": "sideb",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 11 ) ],
+"loop": false,
+"name": "nair",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 3 ) ],
 "loop": true,
 "name": "run",
 "speed": 30.0
 }, {
-"frames": [ SubResource( 5 ) ],
+"frames": [ SubResource( 3 ), SubResource( 12 ), SubResource( 3 ), SubResource( 12 ), SubResource( 13 ), SubResource( 12 ), SubResource( 3 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 14 ), SubResource( 3 ) ],
 "loop": false,
-"name": "nair",
+"name": "upb",
+"speed": 20.0
+}, {
+"frames": [ SubResource( 3 ), SubResource( 15 ), SubResource( 15 ), SubResource( 3 ) ],
+"loop": false,
+"name": "dair",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 9 ), SubResource( 9 ), SubResource( 3 ) ],
+"loop": false,
+"name": "ftilt",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 3 ) ],
+"loop": false,
+"name": "jump",
 "speed": 5.0
+}, {
+"frames": [ SubResource( 3 ) ],
+"loop": true,
+"name": "stunned",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 11 ), SubResource( 3 ) ],
+"loop": false,
+"name": "jab",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 16 ), SubResource( 3 ), SubResource( 16 ), SubResource( 3 ) ],
+"loop": false,
+"name": "utilt",
+"speed": 20.0
+}, {
+"frames": [ SubResource( 3 ) ],
+"loop": false,
+"name": "standing",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 17 ) ],
+"loop": false,
+"name": "bair",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 43 ), SubResource( 44 ), SubResource( 45 ), SubResource( 46 ) ],
+"loop": false,
+"name": "dthrow",
+"speed": 10.0
 } ]
 
 [sub_resource type="Animation" id=19]
@@ -275,7 +306,9 @@ shape = SubResource( 1 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 1.2, 1.2 )
 frames = SubResource( 18 )
-animation = "utilt"
+animation = "dthrow"
+frame = 3
+playing = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/bair = SubResource( 19 )
@@ -329,6 +362,7 @@ scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 3 )
 
 [node name="Hoverboard" type="Sprite" parent="."]
+position = Vector2( 0, 40 )
 scale = Vector2( 1.2, 1.2 )
 z_index = -1
 texture = ExtResource( 18 )

@@ -9,18 +9,18 @@ extends "res://source/characters/Attack.gd"
 
 # Called when the script loads or somethn
 func _init() -> void:
-	endFrame = 33
-	fastEndFrame = 25
+	endFrame = 39
+	fastEndFrame = 28
 	hitboxes = [
 		{
 			"name":"0",
 			"group":1,
 			"damage":9,
-			"start":6,
-			"end":12,
+			"start":7,
+			"end":11,
 			"kb":50,
 			"kbscaling":1.8,
-			"angle":120,
+			"angle":130,
 			"shapes":[
 				[44,24,-70,20]
 			]

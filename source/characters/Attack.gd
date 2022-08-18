@@ -19,9 +19,12 @@ func _init():
 	pass
 
 func manageHitboxes():
+	print(player.stateTimer)
 	for hitboxData in hitboxes:
 		if hitboxData["start"] == player.stateTimer:
 			createHitBox(hitboxData)
+			print("ffh")
+		print("h2")
 		if hitboxData["end"] == player.stateTimer:
 			var i = player.get_node("HitBoxes/"+hitboxData["name"])
 			if(not i.is_queued_for_deletion()):

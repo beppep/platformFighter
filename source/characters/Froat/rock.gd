@@ -8,6 +8,7 @@ var explosion = load("res://source/fx/explosion.tscn")
 # var a: int = 2
 # var b: String = "text"
 export var gravity = 40.0
+export var fallspeed = 1000
 var _velocity = Vector2(400,400)
 var bannedHitboxes = []
 var HitActors = []
@@ -35,7 +36,8 @@ func inputAction():
 	if hitPause:
 		return
 		
-	_velocity.y += gravity
+	if _velocity.y<fallspeed:
+		_velocity.y += gravity
 	var collision = move_and_collide(_velocity*1/60)
 	if collision:
 		_velocity = _velocity.bounce(collision.normal)

@@ -9,6 +9,7 @@ var rng = RandomNumberGenerator.new()
 
 var explosion = load("res://source/fx/explosion.tscn")
 var explosion2 = load("res://source/fx/explosion2.tscn")
+var blastline = load("res://source/fx/deathblast.tscn")
 var jump_ring = load("res://source/fx/jump_ring.tscn")
 var sparks = load("res://source/fx/sparks.tscn")
 var sparks2 = load("res://source/fx/sparks2.tscn")
@@ -32,7 +33,7 @@ var direction = Vector2.ZERO
 var c_direction = Vector2.ZERO
 var buttons = [0,0,0,0]
 var released_jump = false
-var double_jump = 1
+var double_jumps = 1
 var can_walljump = true
 var cant_hitfall = false
 enum states {
@@ -72,6 +73,7 @@ var fullhop_timer = 0
 var has_airdodge = 1
 var wallJumps = jumpspeed*0.9
 var can_shield_float = false
+var can_getupattack = false
 var jablocked = 0
 
 #func process:...::
@@ -108,7 +110,7 @@ func _ready2():
 
 func onHit(name, target, shielded=false):
 	pass
-	#double_jump = 1
+	#double_jumps = 1
 	wallJumps = jumpspeed
 	#has_airdodge = 1
 
@@ -213,8 +215,11 @@ func inputAction():
 		if stateTimer>30:
 			resetToIdle()
 	if state==7:
-		if stateTimer>40 and (direction!=Vector2.ZERO or buttons[3]):
-			tech()
+		if stateTimer>40:
+			if can_getupattack and buttons[1]:
+				attackWith("getupa")
+			elif (direction!=Vector2.ZERO or buttons[3] or buttons[1]):
+				tech()
 			jablocked = 0
 			
 	# MOVE
@@ -341,7 +346,7 @@ func get_c_direction():
 
 func calculate_move_velocity(): #basically do movement input stuff
 	if is_on_ground:
-		double_jump = 1
+		double_jumps = 1
 		wallJumps = jumpspeed
 		has_airdodge = 1
 		regain_resources()
@@ -416,18 +421,9 @@ func calculate_move_velocity(): #basically do movement input stuff
 			elif released_jump == true and is_on_wall() and wallJumps:
 				wallJump()
 				jumped = true
-			elif released_jump == true and double_jump == 1:
-				_velocity.y = -jumpspeed * 0.9
-				if direction.x * _velocity.x < 0:
-					_velocity.x = direction.x * jumpspeed*0.1
-				anim_sprite.play("double_jump")
-				double_jump -= 1
+			elif released_jump == true and double_jumps>0:
+				double_jump()
 				jumped = true
-				#effect
-				var ring = jump_ring.instance()
-				ring.position = self.position + Vector2(0,50)
-				ring.z_index = -2
-				get_node("/root/Node2D/fx").add_child(ring)
 		if state == 1 and can_walljump and is_on_wall() and wallJumps>0:
 			wallJump()
 			jumped = true
@@ -452,6 +448,17 @@ func reverse():
 		transform.x.x *= -1
 		_velocity.x *= -1
 
+func double_jump():
+	_velocity.y = -jumpspeed * 0.9
+	if direction.x * _velocity.x < 0:
+		_velocity.x = direction.x * jumpspeed*0.1
+	anim_sprite.play("double_jump")
+	double_jumps -= 1
+	#effect
+	var ring = jump_ring.instance()
+	ring.position = self.position + Vector2(0,50)
+	ring.z_index = -2
+	get_node("/root/Node2D/fx").add_child(ring)
 func wallJump():
 	_velocity.y = -wallJumps
 	wallJumps-=300
@@ -623,13 +630,13 @@ func hitEffect():
 	
 	
 	if position.y>750:
-		queue_free()
+		die(0)
 	if position.y<-750 and state == 2:
-		queue_free()
+		die(180)
 	if position.x>1500:
-		queue_free()
+		die(270)
 	if position.x<-1500:
-		queue_free()
+		die(90)
 	
 	if hitPause==0:
 		if state==3: 
@@ -661,7 +668,7 @@ func hitEffect():
 			intangible = true
 			anim_sprite.modulate = sprite_color+Color(0.5,0.5,0.5,0)
 	if intangibleFrames == 1:
-		print(intangibleFrames)
+		#print(intangibleFrames)
 		intangible = false
 		anim_sprite.modulate = sprite_color
 	#progress states
@@ -705,6 +712,15 @@ func hitEffect():
 				autolink_vector = Vector2.ZERO
 			else:
 				anim_sprite.play()
+
+func die(angle):
+	var blast = blastline.instance()
+	blast.rotation_degrees = angle
+	blast.position = position +- Vector2(0,128*8).rotated(deg2rad(angle))
+	blast.scale = Vector2(8, 8)
+	blast.z_index = -2
+	get_node("/root/Node2D/fx").add_child(blast)
+	queue_free()
 
 func hitpauseFormula(kb):
 	return kb*0.06+2

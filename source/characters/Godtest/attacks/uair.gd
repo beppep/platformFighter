@@ -40,8 +40,7 @@ func _init() -> void:
 		},
 	]
 
-func update(player):
-	autoAttack(player)
+func update():
 	if player.stateTimer==0:
 		player.cant_hitfall = true
 		player.anim_sprite.play("uair")
@@ -56,8 +55,8 @@ func update(player):
 
 func onHit(name, target, shielded=false):
 	if name=="0":
-		get_parent()._velocity.y=-200
+		player._velocity.y=-200
 	if name=="1":
-		get_parent()._velocity.y=-1400
+		player._velocity.y=-1400
 	if name=="1" and not shielded:
 		endFast = true

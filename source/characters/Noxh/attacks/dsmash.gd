@@ -10,7 +10,7 @@ var bulletScene = load("res://source/characters/Noxh/Bullet.tscn")
 # Called when the node enters the scene tree for the first time.
 func _init() -> void:
 	
-	endFrame = 50
+	endFrame = 40
 	hitboxes = [
 	]
 
@@ -19,7 +19,7 @@ func _init() -> void:
 func update():
 	if player.stateTimer==0:
 		player.anim_sprite.play("dsmash")
-	if player.stateTimer==30:
+	if player.stateTimer==20:
 		
 		var bullet = bulletScene.instance()
 		bullet.position = player.position + Vector2(10,0)*player.transform.x.x

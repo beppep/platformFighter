@@ -26,8 +26,7 @@ func _init() -> void:
 		},
 	]
 
-func update(player):
-	autoAttack(player)
+func update():
 	if player.stateTimer==0:
 		player.anim_player.stop(true) #resets animation (noot
 		player.anim_player.play("dair")
@@ -38,6 +37,6 @@ func update(player):
 
 
 func onHit(name, target, shielded=false):
-	get_parent()._velocity.y=-1000
+	player._velocity.y=-1000
 	if not shielded:
 		endFast = true

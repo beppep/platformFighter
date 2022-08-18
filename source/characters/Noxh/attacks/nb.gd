@@ -10,7 +10,7 @@ extends Attack
 func _init() -> void:
 	can_grabcancel=false
 	endFrame = 58
-	fastEndFrame = 38
+	fastEndFrame = 38 # for second hit
 	hitboxes = [
 		{
 			"name":"0",
@@ -35,7 +35,7 @@ func _init() -> void:
 			"end":30,
 			"kb":100,
 			"kbscaling":1,
-			"angle":-70,
+			"angle":-75,
 			"shapes":[
 				[24,40,38,10]
 			]

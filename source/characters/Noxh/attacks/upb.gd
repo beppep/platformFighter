@@ -87,6 +87,8 @@ func _init() -> void:
 	]
 
 func update():
+	if player.stateTimer==13:
+		player.cant_hitfall = true
 	if player.stateTimer==0:
 		player._velocity.y=0
 		#player.cant_hitfall = true
