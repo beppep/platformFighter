@@ -254,7 +254,7 @@ func inputAction():
 		if collision:
 			var prev_vel = _velocity
 			var bounce_vel = _velocity.bounce(collision.normal)
-			if prev_vel.length() > 700 or (collision.normal!=Vector2(0,-1) and buttons[3]):
+			if prev_vel.length() > 600 or (collision.normal!=Vector2(0,-1) and buttons[3]):
 				_velocity = bounce_vel
 				
 				#explosiin
@@ -274,7 +274,7 @@ func inputAction():
 						spark = sparks2.instance()
 						$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".tech)
 					else:
-						if collision.normal==Vector2(0,-1) and prev_vel.length() < 2000: # missed tech situation
+						if collision.normal==Vector2(0,-1) and prev_vel.length() < 1600: # missed tech situation
 							is_on_ground = true
 							percentage += 1
 							$Label.text = str(percentage)+"%"

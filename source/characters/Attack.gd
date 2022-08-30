@@ -45,13 +45,13 @@ func autoEndAttack():
 				if i[0] != player:
 					replacementList.append(i)
 			other.bannedHitboxes = replacementList
-	if player.grab_target and is_instance_valid(player.grab_target) and player.grab_target.state==5: # i dragged a player out with grab
+	if "grab_target" in player and player.grab_target and is_instance_valid(player.grab_target) and player.grab_target.state==5: # i dragged a player out with grab
 		print("grab released?!")
 		player.grab_target.state=2
 		player.grab_target.stateTimer = 0
 		player.grab_target._velocity = Vector2(500*player.transform.x.x,-500)
 		player.grab_target.totalHitstun = 20
-	if player.is_on_ground:
+	if "is_on_ground" in player and player.is_on_ground:
 		if not endFast and landingLag!=0: #landinglag
 			if landingLag == -1:
 				player.state = 7

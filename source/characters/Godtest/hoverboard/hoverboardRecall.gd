@@ -10,7 +10,7 @@ func _init():
 			"group":1,
 			"damage":9,
 			"start":1,
-			"end":999,
+			"end":80,
 			"kb":70,
 			"kbscaling":0.7,
 			"angle":60,

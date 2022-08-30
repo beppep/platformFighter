@@ -24,11 +24,16 @@ var ownerObject
 
 var recallAttack = load("res://source/characters/Godtest/hoverboard/hoverboardRecall.gd")
 
+
+onready var anim_sprite = $AnimatedSprite #basically just declared in _ready func
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	attacks = {
 		"recall": load("res://source/characters/Godtest/hoverboard/hoverboardRecall.gd"),
 		"dthrow": load("res://source/characters/Godtest/hoverboard/boardDthrow.gd"),
+		"fthrow": load("res://source/characters/Godtest/hoverboard/boardFthrow.gd"),
+		"uthrow": load("res://source/characters/Godtest/hoverboard/boardUthrow.gd"),
 	}
 
 func onHit(name, target, shielded=false):
@@ -52,7 +57,7 @@ func inputAction():
 	if state == 0:
 		for other in $"/root/Node2D/Players".get_children(): # this is stupid just have a ref
 			if other.name == "Godtest":
-				if other._velocity.y>0 and get_node("catcher").overlaps_body(other):
+				if other._velocity.y>=0 and get_node("catcher").overlaps_body(other):
 					attachTo(other)
 
 func attachTo(other):
@@ -99,6 +104,8 @@ func hitCollision():
 		opponent.nextFrameHitPause = max(opponent.nextFrameHitPause, hitpauseFormula(kb))
 		
 func hitEffect():
+	if state==1 and hitPause==0:
+		currentAttack.endAttack()
 
 	if HitActors:
 		wasHit = true
@@ -127,7 +134,7 @@ func hitEffect():
 			blast.z_index = -2
 			get_node("/root/Node2D/fx").add_child(blast)
 		
-		# make opponent own the ball
+		# remove thier bans
 		for player in get_node("/root/Node2D/Players").get_children()+get_node("/root/Node2D/Articles").get_children(): #remove opponents bans
 			var replacementList = []
 			for i in player.bannedHitboxes:

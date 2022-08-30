@@ -39,10 +39,9 @@ func onHit(name, target, shielded=false):
 	target.state = 5
 	target.stateTimer = 0
 	
-	var player = get_parent()
 	interrupted = true
 	endAttack()
 	
-	player.attackWith(throw)
+	player.attackWith("throw")
 	player.stateTimer = -1
 	player.grab_target = target

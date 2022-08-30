@@ -53,7 +53,6 @@ func update():
 		endFrame = fastEndFrame
 
 func onHit(name, target, shielded=false):
-	var player = get_parent()
 	if name=="0":
 		player._velocity.x*=0.4
 		if not player.is_on_ground:

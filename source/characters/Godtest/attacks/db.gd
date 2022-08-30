@@ -17,6 +17,9 @@ func update():
 	player._velocity *= 0.5
 	if player.stateTimer==0:
 		player.anim_sprite.play("float")
+		if player.boardObject.state == 1:
+			player.boardObject.currentAttack.interrupted = true
+			player.boardObject.currentAttack.endAttack()
 		player.boardObject.attackWith("recall")
 	if player.hasHoverboard:
 		interrupted = true

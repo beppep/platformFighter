@@ -13,6 +13,7 @@ var boardObject = false
 func _ready() -> void:
 	attacks = {
 		"grab": load("res://source/characters/Godtest/attacks/grab.gd"),
+		"throw": load("res://source/characters/Godtest/attacks/throw.gd"),
 		"jab": load("res://source/characters/Godtest/attacks/jab.gd"),
 		"ftilt": load("res://source/characters/Godtest/attacks/ftilt.gd"),
 		"dtilt": load("res://source/characters/Godtest/attacks/dtilt.gd"),
@@ -26,7 +27,9 @@ func _ready() -> void:
 		"ub": load("res://source/characters/Godtest/attacks/upb.gd"),
 		"fb": load("res://source/characters/Godtest/attacks/sideb.gd"),
 		"db": load("res://source/characters/Godtest/attacks/db.gd"),
-		"dthrow": load("res://source/characters/Godtest/attacks/dthrow.gd")
+		"dthrow": load("res://source/characters/Godtest/attacks/dthrow.gd"),
+		"fthrow": load("res://source/characters/Godtest/attacks/fthrow.gd"),
+		"uthrow": load("res://source/characters/Godtest/attacks/uthrow.gd"),
 	}
 
 	#var sun = sunScene.instance()
@@ -96,23 +99,38 @@ func special():
 	flip()
 	if not is_on_ground:
 		if direction.y<0:
-			attackWith("ub")
+			if hasHoverboard:
+				attackWith("uthrow")
+			else:
+				attackWith("ub")
 		elif direction.y>0:
 			if hasHoverboard:
 				attackWith("dthrow")
 			else:
 				attackWith("db")
 		elif direction.x != 0:
-			attackWith("fb")
+			if hasHoverboard:
+				attackWith("fthrow")
+			else:
+				attackWith("fb")
 		else:
 			attackWith("nb")
 	else:
 		if direction.y<0:
-			attackWith("ub")
+			if hasHoverboard:
+				attackWith("uthrow")
+			else:
+				attackWith("ub")
 		elif direction.y>0:
-			attackWith("db")
+			if hasHoverboard:
+				attackWith("fthrow")
+			else:
+				attackWith("db")
 		elif direction.x != 0:
-			attackWith("fb")
+			if hasHoverboard:
+				attackWith("fthrow")
+			else:
+				attackWith("fb")
 		else:
 			attackWith("nb")
 	

@@ -27,8 +27,7 @@ func _init():
 		},
 	]
 
-func update(player):
-	autoAttack(player)
+func update():
 	if player.stateTimer==1:
 		player.anim_sprite.play("throw")
 		player.cant_hitfall=true
