@@ -16,32 +16,29 @@ func _init():
 			"name":"0",
 			"group":1,
 			"damage":1,
-			"start":4,
-			"end":6,
+			"start":11,
+			"end":14,
 			"kb":0,
 			"kbscaling":0,
 			"angle":90,
 			"shapes":[
-				[32,20,44,5]
+				[32,20,114,5]
 			]
 		},
 	]
 
-func update(player):
-	autoAttack(player)
+func update():
 	if player.stateTimer==0:
-		player.anim_player.stop(true) #resets animation (noot
-		player.anim_player.play("grab")
+		player.anim_sprite.play("grab")
+
 
 func onHit(name, target, shielded=false):
 	target.state = 5
 	target.stateTimer = 0
 	
-	var player = get_parent()
 	interrupted = true
-	endAttack(player)
-	player.can_walljump = false
-	player.state = 1
-	player.stateTimer = 0
+	endAttack()
+	
+	player.attackWith("throw")
+	player.stateTimer = -1
 	player.grab_target = target
-	set_script(throw)

@@ -11,10 +11,9 @@ var uiScene = load("res://source/ui.tscn")
 var froatScene = load("res://source/characters/Froat/Froat2.tscn")
 var godtestScene = load("res://source/characters/Godtest/Godtest.tscn")
 var NoxhScene = load("res://source/characters/Noxh/Noxh.tscn")
-#var svampScene = load("res://source/characters/Svampkoloni/Svampkoloni.tscn")
+var svampScene = load("res://source/characters/Svampkoloni/Svampkoloni.tscn")
 var monkScene = load("res://source/characters/Monk/Monk.tscn")
 var chosenCharacters = []
-var stockCounts = []
 
 #onready var audioPlayer: AudioStreamPlayer = get_node("AudioStreamPlayer") 
 
@@ -22,10 +21,8 @@ var stockCounts = []
 func _ready() -> void:
 	var playerNum = 2
 	
-	chosenCharacters = [NoxhScene,godtestScene,]
+	chosenCharacters = [NoxhScene,svampScene,]
 	#chosenCharacters = [froatScene,froatScene,]
-
-	stockCounts = [4,4]
 	
 	for i in range(0,playerNum):
 		var uiThing = uiScene.instance()
@@ -60,22 +57,3 @@ func _physics_process(delta: float) -> void:
 		
 	for player in players:
 		get_node("uiElements/ui"+str(player.player_id)+"/Label").text = str(player.percentage)+"%"
-	
-	var representedPlayers = []
-	for player in players:
-		if not player.player_id in representedPlayers:
-			representedPlayers.append(player.player_id)
-	for i in range(0,2):
-		if not i in representedPlayers:
-			stockCounts[i]-=1
-			if stockCounts[i]>=0:
-				get_node("uiElements/ui"+str(i)).get_node(str(stockCounts[i]+1)).queue_free()
-				if stockCounts[i]>0:
-					var new = chosenCharacters[i].instance()
-					$Players.add_child(new)
-					new.player_id = i
-					new.team = i
-					new._ready2()
-					new.position = Vector2(0,-500)
-					new.intangibleFrames = 100
-					new.intangible = true

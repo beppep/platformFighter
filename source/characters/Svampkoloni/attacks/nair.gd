@@ -46,8 +46,7 @@ func _init() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func update(player):
-	autoAttack(player)
+func update():
 	if player.stateTimer==0:
 		player.anim_player.stop(true) #resets animation
 		player.anim_player.play("nair")

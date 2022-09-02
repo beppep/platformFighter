@@ -16,26 +16,21 @@ func _init() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func update(player):
+func update():
 	player._velocity *= 0.5
 	
-	autoAttack(player)
 	if player.stateTimer==0:
-		player.anim_player.stop(true) #resets animation
-		player.anim_player.play("transform")
+		player.anim_sprite.play("db")
+		if len(player.shroomList)>0:
+			player.shroomList[-1].anim_sprite.play("grow")
 	if player.stateTimer==40:
+		if len(player.shroomList)>0:
+			var pos = player.shroomList[-1].position
+			player.shroomList.pop_back().queue_free()
+			
+			
+			if player.is_on_ground:
+				player.createShroom(player.position, player.transform.x.x, false)
 		
-		var svamp = shroom.instance()
-		svamp.position = player.position + Vector2(0,10)
-		svamp.team = player.team
-		svamp.player_id = player.player_id
-		if player.is_on_ground:
-			svamp._velocity = Vector2(0,1)
-		else:
-			svamp._velocity = Vector2(0*player.transform.x.x,-100)
-		svamp.is_on_ground = player.is_on_ground
-		$"/root/Node2D/Articles".add_child(svamp)
-		svamp.modulate = player.sprite_color
-		
-		player.queue_free()
+			player.position = pos
 

@@ -52,8 +52,7 @@ func _init() -> void:
 		},
 	]
 
-func update(player):
-	autoAttack(player)
+func update():
 	if player.stateTimer==0:
 		player.anim_player.stop(true) #resets animation (noot
 		player.anim_player.play("utilt")

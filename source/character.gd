@@ -46,6 +46,7 @@ enum states {
 	landinglag,
 	lying,
 }
+var stocks = 4
 var state = states.actionable
 var attacks = {}
 var currentAttack = "error"
@@ -105,7 +106,6 @@ func _ready2():
 	if team==1:
 		sprite_color=Color(0.8,0.8,1.3)
 		anim_sprite.modulate=sprite_color
-	$Label.text = str(percentage)+"%"
 
 
 func onHit(name, target, shielded=false):
@@ -117,6 +117,8 @@ func onHit(name, target, shielded=false):
 func regain_resources(): # i.e. while grounded
 	pass
 
+func characterInputAction():
+	pass
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
@@ -141,6 +143,7 @@ func inputAction():
 	if hitPause:
 		return
 	
+	characterInputAction()
 	
 	# movement
 	if not (state==4 and stateTimer<20):
@@ -277,7 +280,6 @@ func inputAction():
 						if collision.normal==Vector2(0,-1) and prev_vel.length() < 1600: # missed tech situation
 							is_on_ground = true
 							percentage += 1
-							$Label.text = str(percentage)+"%"
 							_velocity = Vector2.ZERO
 							state = 7
 							stateTimer = 10
@@ -461,7 +463,7 @@ func double_jump():
 	get_node("/root/Node2D/fx").add_child(ring)
 func wallJump():
 	_velocity.y = -wallJumps
-	wallJumps-=300
+	wallJumps-=100
 	if wallJumps<0:
 		wallJumps = 0
 	if position.x>0:
@@ -606,7 +608,6 @@ func hitEffect():
 				percentage += data["damage"]
 				
 				$"/root/Node2D/Camera2D".screenShake = int(kb/20)
-				$Label.text = str(percentage)+"%"
 				$"/root/Node2D/AudioStreamPlayerLow".playSound($"/root/Node2D/AudioStreamPlayerLow".punch, 0.5+100/kb)
 				$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".rocks, 0.5+100/kb)
 				blast = explosion.instance()
@@ -714,14 +715,31 @@ func hitEffect():
 				anim_sprite.play()
 
 func die(angle):
+	make_blastline(angle)
+	respawn()
+	
+func make_blastline(angle):
 	var blast = blastline.instance()
 	blast.rotation_degrees = angle
 	blast.position = position +- Vector2(0,128*8).rotated(deg2rad(angle))
 	blast.scale = Vector2(8, 8)
 	blast.z_index = -2
 	get_node("/root/Node2D/fx").add_child(blast)
-	queue_free()
 
+func respawn():
+	if stocks>0:
+		var new = $"/root/Node2D".chosenCharacters[player_id].instance()
+		$"/root/Node2D/Players".add_child(new)
+		new.player_id = player_id
+		new.team = team
+		new._ready2()
+		new.position = Vector2(0,-500)
+		new.intangibleFrames = 100
+		new.intangible = true
+		new.stocks = stocks-1
+		
+	queue_free()
+	
 func hitpauseFormula(kb):
 	return kb*0.06+2
 func hitstunFormula(kb):

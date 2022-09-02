@@ -39,8 +39,7 @@ func _init() -> void:
 		},
 	]
 
-func update(player):
-	autoAttack(player)
+func update():
 	if player.stateTimer==0:
 		player.cant_hitfall = true
 		player.anim_player.stop(true) #resets animation

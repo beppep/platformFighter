@@ -8,52 +8,37 @@ var grabbedWall = false
 
 # Called when the node enters the scene tree for the first time.
 func _init() -> void:
-	endFrame = 26
-	fastEndFrame = 19
+	endFrame = 31
+	fastEndFrame = 22
 	hitboxes = [
 		{
 			"name":"0",
 			"group":1,
-			"damage":1,
-			"start":4,
-			"end":5,
-			"kb":20,
-			"kbscaling":0.1,
-			"angle":90,
+			"damage":9,
+			"start":8,
+			"end":12,
+			"kb":90,
+			"kbscaling":0.9,
+			"angle":99,
 			"shapes":[
-				[38,38,0,-37]
+				[20,52,30,-55]
 			]
 		},
 		{
 			"name":"1",
-			"group":2,
-			"damage":1,
-			"start":6,
-			"end":7,
-			"kb":20,
-			"kbscaling":0.1,
-			"angle":90,
-			"shapes":[
-				[40,40,0,-37]
-			]
-		},
-		{
-			"name":"2",
-			"group":3,
-			"damage":4,
+			"group":1,
+			"damage":9,
 			"start":8,
-			"end":10,
+			"end":11,
 			"kb":100,
 			"kbscaling":1,
-			"angle":90,
+			"angle":99,
 			"shapes":[
-				[42,42,0,-37]
+				[25,32,46,-26]
 			]
 		},
 	]
 
-func update(player):
-	autoAttack(player)
+func update():
 	if player.stateTimer==0:
-		player.anim_player.stop(true) #resets animation (noot
-		player.anim_player.play("utilt")
+		player.anim_sprite.play("utilt")

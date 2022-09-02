@@ -8,41 +8,28 @@ extends "res://source/characters/Attack.gd"
 
 # Called when the node enters the scene tree for the first time.
 func _init() -> void:
-	endFrame = 36
-	fastEndFrame = 26
+	endFrame = 42
+	fastEndFrame = 32
 	hitboxes = [
 		{
 			"name":"0",
 			"group":1,
 			"damage":14,
-			"start":7,
-			"end":10,
-			"kb":150,
-			"kbscaling":3,
-			"angle":140,
+			"start":11,
+			"end":14,
+			"kb":70,
+			"kbscaling":1.2,
+			"angle":150,
 			"shapes":[
-				[7,17,-68,-10]
-			]
-		},
-		{
-			"name":"1",
-			"group":1,
-			"damage":9,
-			"start":7,
-			"end":17,
-			"kb":100,
-			"kbscaling":2,
-			"angle":130,
-			"shapes":[
-				[27,15,-48,-10]
+				[34,44,-60,10]
 			]
 		},
 	]
 
-func update(player):
-	autoAttack(player)
+func update():
 	if player.stateTimer==0:
-		player.anim_player.stop(true) #resets animation (noot
-		player.anim_player.play("bair")
+		player.anim_sprite.play("bair")
 	if player.is_on_ground:
 		interrupted = true
+		if not endFast:
+			landingLag = 11

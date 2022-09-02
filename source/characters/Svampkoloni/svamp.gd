@@ -10,8 +10,8 @@ var _velocity = Vector2.ZERO
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	transform.x.x = 1.5
-	transform.y.y = 1.5
+	transform.x.x = 2
+	transform.y.y = 2
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -21,8 +21,8 @@ func _process(delta: float) -> void:
 	if timer == 6:
 		transform.x.x = 1
 		transform.y.y = 1
-	if timer == 300:
+	if timer == 600:
 		transform.x.x = 0.5
 		transform.y.y = 0.5
-	if timer == 600:
+	if timer == 1200:
 		queue_free()

@@ -14,70 +14,74 @@ func _init() -> void:
 		{
 			"name":"0",
 			"group":1,
-			"damage":3,
+			"damage":4,
 			"start":7,
 			"end":9,
-			"kb":50,
+			"kb":70,
 			"kbscaling":0.1,
-			"angle":-90,
+			"angle":170,
+			"autolinkX":1,
+			#"autolinkY":1,
 			"shapes":[
-				[28,28,0,40]
+				[20,20,50,50]
 			]
 		},
 		{
 			"name":"1",
-			"group":2,
-			"damage":3,
-			"start":11,
-			"end":13,
-			"kb":50,
+			"group":1,
+			"damage":4,
+			"start":7,
+			"end":9,
+			"kb":80,
 			"kbscaling":0.1,
-			"angle":-90,
+			"angle":20,
+			"autolinkX":1,
+			#"autolinkY":1,
 			"shapes":[
-				[28,28,0,40]
+				[20,20,-40,60]
 			]
 		},
 		{
 			"name":"2",
-			"group":3,
-			"damage":3,
-			"start":15,
-			"end":17,
-			"kb":50,
-			"kbscaling":0.1,
-			"angle":-90,
+			"group":2,
+			"damage":6,
+			"start":19,
+			"end":20,
+			"kb":60,
+			"kbscaling":1,
+			"angle":-30,
 			"shapes":[
-				[28,28,0,40]
+				[12,20,55,50]
 			]
 		},
 		{
 			"name":"3",
-			"group":4,
-			"damage":3,
+			"group":2,
+			"damage":6,
 			"start":19,
-			"end":21,
-			"kb":50,
+			"end":20,
+			"kb":60,
 			"kbscaling":1,
-			"angle":-90,
+			"angle":-150,
 			"shapes":[
-				[28,28,0,40]
+				[12,20,-45,60]
 			]
 		},
 	]
 
-func update(player):
-	autoAttack(player)
+func update():
 	if player.stateTimer==0:
 		player.cant_hitfall = true
-		player.anim_player.stop(true) #resets animation (noot
-		player.anim_player.play("dair")
+		player.anim_sprite.play("dair")
 	if player.is_on_floor():
 		interrupted = true
+		if not endFast:
+			landingLag = 9
+
 
 
 func onHit(name, target, shielded=false):
-	if name!="3":
-		get_parent()._velocity.y*=0.5
-	if name=="3" and not shielded:
-		get_parent().cant_hitfall = false
-		endFast = true
+	player._velocity.y=-500
+	if (name=="2" or name=="3") and not shielded:
+		player.cant_hitfall = false
+	endFast = true

@@ -28,8 +28,12 @@ var state = 0
 var stateTimer = 0
 var totalHitstun = 0
 var grab_target
+var myOwner
+var currentAttack = false
+
 
 onready var anim_player: AnimationPlayer = get_node("AnimationPlayer") #basically just declared in _ready func
+onready var anim_sprite = get_node("AnimatedSprite") #basically just declared in _ready func
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -46,46 +50,12 @@ func inputAction():
 		nextFrameHitPause=0
 	if hitPause:
 		return
-		
-	if is_on_ground:
-		if state==0:
-			if Input.get_action_strength("p1_b") and player_id==0 or Input.get_action_strength("p2_b") and player_id==1:
-				if get_direction() == Vector2.ZERO:
-					state = 1
-					stateTimer = 0
-					$currentAttack.set_script(myAttack)
-				elif get_direction().y > 0:
-					state = 1
-					stateTimer = 0
-					$currentAttack.set_script(myTransform)
-		if state==1:
-			$currentAttack.update(self)
+	
+	if state==1:
+		currentAttack.update()
 	
 	_velocity.y += gravity
-	var collision = move_and_collide(_velocity*1/60)
-	if collision:
-		_velocity = _velocity.slide(collision.normal)
-		position += collision.get_remainder().length()*_velocity.normalized()
-		if collision.normal == Vector2(0,-1) and state==0: #land from seed
-			if not is_on_ground:
-				resetToIdle()
-				is_on_ground = true
-			_velocity = Vector2(0,gravity)
-	else:
-		is_on_ground = false
-
-
-func get_direction():
-	if player_id==0:
-		return Vector2(
-			Input.get_action_strength("p1_right")-Input.get_action_strength("p1_left"),
-			Input.get_action_strength("p1_down")-Input.get_action_strength("p1_up")
-		)
-	else:
-		return Vector2(
-			Input.get_action_strength("p2_right")-Input.get_action_strength("p2_left"),
-			Input.get_action_strength("p2_down")-Input.get_action_strength("p2_up")
-		)
+	move_and_collide(_velocity*1/60)
 
 func CheckHurtBoxes() -> Array:
 	var HitActors = []
@@ -94,7 +64,7 @@ func CheckHurtBoxes() -> Array:
 		var opponent=hitbox.get_parent().get_parent()
 		
 		if opponent.team != self.team:
-			var data = opponent.get_node("currentAttack").hitboxes[int(hitbox["name"])] #invalid get index 169 on base array apparently
+			var data = opponent.currentAttack.hitboxes[int(hitbox["name"])] #invalid get index 169 on base array apparently
 			if not [opponent, data["group"]] in bannedHitboxes:
 				HitActors.append([data,opponent])
 				bannedHitboxes.append([opponent,data["group"]])
@@ -121,33 +91,34 @@ func resetToIdle():
 func hitEffect():
 	
 	if state==1:
-		$currentAttack.endAttack(self)
+		currentAttack.endAttack()
 	if HitActors:
 		wasHit = true
 		var data = HitActors[0][0]
 		var opponent = HitActors[0][1]
 		
 		if state == 1:
-			$currentAttack.interrupted = true
-			$currentAttack.endAttack(self)
+			currentAttack.interrupted = true
+			currentAttack.endAttack()
 		
 		var angle = data["angle"]*PI/180
 		var kb = (data["kb"])
-		kb_vector = Vector2(cos(angle)*opponent.scale.y, -sin(angle))*10*kb
-		totalHitstun = kb*0.3
-		state = 2
-		stateTimer = 0
-		
-		$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".punch, 100/kb)
+		if kb:
+			kb_vector = Vector2(cos(angle)*opponent.scale.y, -sin(angle))*10*kb
+			totalHitstun = kb*0.3
+			state = 2
+			stateTimer = 0
+			
+			$"/root/Node2D/AudioStreamPlayerLow".playSound($"/root/Node2D/AudioStreamPlayerLow".punch, 100/kb)
 
-		opponent.get_node("currentAttack").onHit(data["name"], self, false)
-		#explosiin
-		var blast = explosion.instance()
-		blast.position = self.position
-		blast.scale = Vector2(kb*0.02, kb*0.02)
-		blast.z_index = -2
-		get_node("/root/Node2D/fx").add_child(blast)
-	
+			opponent.currentAttack.onHit(data["name"], self, false)
+			#explosiin
+			var blast = explosion.instance()
+			blast.position = self.position
+			blast.scale = Vector2(kb*0.02, kb*0.02)
+			blast.z_index = -2
+			get_node("/root/Node2D/fx").add_child(blast)
+		
 	
 	if position.y>1000:
 		queue_free()
@@ -164,6 +135,7 @@ func hitEffect():
 		stateTimer+=1
 		if state == 2:
 			if stateTimer >= totalHitstun:
+				myOwner.shroomList.erase(self)
 				queue_free()
 	if hitPause>0:
 		hitPause-=1

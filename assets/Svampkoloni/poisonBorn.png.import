@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/air.png-933d40346f366f5527b2fa2b8b2ae259.stex"
+path="res://.import/poisonBorn.png-6bb824c72960e94b1393c242c95e6272.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Svampkoloni/air.png"
-dest_files=[ "res://.import/air.png-933d40346f366f5527b2fa2b8b2ae259.stex" ]
+source_file="res://assets/Svampkoloni/poisonBorn.png"
+dest_files=[ "res://.import/poisonBorn.png-6bb824c72960e94b1393c242c95e6272.stex" ]
 
 [params]
 

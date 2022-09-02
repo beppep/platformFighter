@@ -64,7 +64,12 @@ func double_jump():
 		
 		$Hoverboard.visible = false
 		hasHoverboard = false
-	
+
+func characterInputAction():
+	if hasHoverboard:
+		groundfriction = 0.93
+	else:
+		groundfriction = 0.85
 	
 func attack():
 	var attackDirection
@@ -134,6 +139,6 @@ func special():
 		else:
 			attackWith("nb")
 	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta: float) -> void:
-#	pass
+func grab():
+	flip() #?
+	attackWith("grab")

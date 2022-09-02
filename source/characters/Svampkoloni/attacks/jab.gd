@@ -21,15 +21,11 @@ func _init() -> void:
 			"kbscaling":0.3,
 			"angle":66,
 			"shapes":[
-				[24,24,28,20]
+				[20,20,44,18]
 			]
 		},
 	]
 
-func update(player):
-	autoAttack(player)
+func update():
 	if player.stateTimer==0:
-		player.anim_player.stop(true) #resets animation (noot
-		player.anim_player.play("jab")
-	#if not player.is_on_ground:
-	#	interrupted = true
+		player.anim_sprite.play("jab")
