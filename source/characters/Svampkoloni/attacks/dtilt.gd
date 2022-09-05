@@ -31,4 +31,5 @@ func update():
 		player.get_node("/root/Node2D/fx").add_child(newSvamp)
 		newSvamp.get_node("Sprite").modulate = player.sprite_color
 	if not player.is_on_ground:
-		interrupted = true
+		pass
+		#interrupted = true

@@ -55,7 +55,7 @@ func inputAction():
 		currentAttack.update()
 	
 	_velocity.y += gravity
-	move_and_collide(_velocity*1/60)
+	move_and_slide(_velocity)
 
 func CheckHurtBoxes() -> Array:
 	var HitActors = []

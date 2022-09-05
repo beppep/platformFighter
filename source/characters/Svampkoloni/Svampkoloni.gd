@@ -5,6 +5,7 @@ var shroomList = []
 
 var shroom = load("res://source/characters/Svampkoloni/shroom.tscn")
 var svampScene = load("res://source/Characters/Svampkoloni/svamp.tscn")
+var spore = load("res://source/characters/Svampkoloni/spore.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -22,8 +23,9 @@ func _ready() -> void:
 		"dair": load("res://source/characters/Svampkoloni/attacks/dair.gd"),
 		"upb": load("res://source/characters/Svampkoloni/attacks/upb.gd"),
 		"fb": load("res://source/characters/Svampkoloni/attacks/fb.gd"),
-		"db": load("res://source/characters/Svampkoloni/attacks/transform.gd"),
+		"db": load("res://source/characters/Svampkoloni/attacks/db.gd"),
 		"fsmash": load("res://source/characters/Svampkoloni/attacks/fsmash.gd"),
+		"dsmash": load("res://source/characters/Svampkoloni/attacks/transform.gd"),
 		"reborn": load("res://source/characters/Svampkoloni/attacks/reborn.gd"),
 	}
 
@@ -45,6 +47,19 @@ func createShroom(pos, facing, bornAnim = true):
 	svamp.myOwner = self
 	shroomList.append(svamp)
 
+func createSpore(vel):
+	
+	var svamp = spore.instance()
+	svamp.position = position
+	svamp.team = team
+	svamp.transform.x.x = transform.x.x
+	svamp._velocity = vel + _velocity
+	get_node("/root/Node2D/Articles").add_child(svamp)
+	svamp.attackWith("sporeAttack")
+	svamp.modulate = sprite_color
+	svamp.anim_sprite.play("spore")
+	svamp.myOwner = self
+
 
 func attack():
 	var attackDirection
@@ -60,6 +75,8 @@ func attack():
 			attackWith("dair")
 		elif attackDirection.x < 0:
 			attackWith("bair")
+		elif attackDirection.x > 0:
+			attackWith("jab")
 		else:
 			attackWith("jab")
 	else:
@@ -86,7 +103,7 @@ func special():
 		if direction.y<0:
 			attackWith("upb")
 		elif direction.y>0:
-			attackWith("db")
+			attackWith("dsmash")
 		elif direction.x != 0:
 			attackWith("fsmash")
 		else:
@@ -118,7 +135,7 @@ func die(angle):
 				state = 7
 				return
 	if len(shroomList) > 0:
-		var pos = shroomList[-1].position
+		var pos = shroomList[-1].position + Vector2(0,-20)
 		shroomList.pop_back().queue_free()
 		
 		position = pos

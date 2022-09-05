@@ -14,5 +14,5 @@ func _init() -> void:
 	]
 
 func update():
-	if player.stateTimer<2:
+	if player.stateTimer==1:
 		player.anim_sprite.play("reborn")

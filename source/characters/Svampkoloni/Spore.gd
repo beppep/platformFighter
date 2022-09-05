@@ -48,7 +48,6 @@ func inputAction():
 	var collision = move_and_collide(_velocity*1/60)
 	if collision and collision.normal == Vector2(0,-1):
 		myOwner.createShroom(position+Vector2(0,-30), transform.x.x)
-		print("bye dude")
 		queue_free()
 	
 	if position.y>750:

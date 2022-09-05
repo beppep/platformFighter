@@ -307,7 +307,7 @@ func inputAction():
 	
 func get_buttons():
 	if player_id==0:
-		if 0:
+		if 1:
 			rng.randomize() #test
 			return [(rng.randf()<0.1 or position.y>300 and rng.randf()<0.9),(rng.randf()<0.3),(rng.randf()<0.1 or position.y>300 and rng.randf()<0.99),(rng.randf()<0.1),(rng.randf()<0.1)] #test
 		
@@ -316,7 +316,7 @@ func get_buttons():
 		return [Input.get_action_strength("p2_jump"),Input.get_action_strength("p2_a"),Input.get_action_strength("p2_b"),Input.get_action_strength("p2_shield"),Input.get_action_strength("p2_z")]
 func get_direction():
 	if player_id==0:
-		if 0:
+		if 1:
 			var my_random_number = rng.randf_range(0.0, 2*PI) #test
 			if position.y>200 or abs(position.x) > 300:
 				if position.x >0:
@@ -384,7 +384,7 @@ func calculate_move_velocity(): #basically do movement input stuff
 			_velocity.y *= yfriction
 	if state==2:
 		if _velocity.y<fallspeed:
-			_velocity.y += gravity*0.6
+			_velocity.y += (gravity*0.6 + 70*0.6)/2
 		if _velocity.y>0:
 			_velocity.y *= yfriction
 	else:

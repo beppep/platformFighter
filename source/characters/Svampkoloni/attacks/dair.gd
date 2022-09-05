@@ -17,13 +17,13 @@ func _init() -> void:
 			"damage":4,
 			"start":7,
 			"end":9,
-			"kb":70,
+			"kb":80,
 			"kbscaling":0.1,
 			"angle":170,
 			"autolinkX":1,
 			#"autolinkY":1,
 			"shapes":[
-				[20,20,50,50]
+				[12,20,54,50]
 			]
 		},
 		{
@@ -38,7 +38,7 @@ func _init() -> void:
 			"autolinkX":1,
 			#"autolinkY":1,
 			"shapes":[
-				[20,20,-40,60]
+				[12,20,-44,60]
 			]
 		},
 		{
