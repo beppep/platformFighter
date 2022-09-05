@@ -80,8 +80,13 @@ func attack():
 		else:
 			attackWith("jab")
 	else:
-		flip()
-		if attackDirection.y<0:
+		#flip()
+		if attackDirection.x>0:
+			attackWith("ftilt")
+		elif attackDirection.x<0:
+			transform.x.x *= -1
+			attackWith("ftilt")
+		elif attackDirection.y<0:
 			attackWith("utilt")
 		elif attackDirection.y>0:
 			attackWith("dtilt")

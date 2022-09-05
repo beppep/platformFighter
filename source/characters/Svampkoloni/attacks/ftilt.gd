@@ -14,47 +14,47 @@ func _init() -> void:
 		{
 			"name":"0",
 			"group":1,
-			"damage":2,
-			"start":4,
-			"end":6,
-			"kb":20,
+			"damage":7,
+			"start":18,
+			"end":22,
+			"kb":120,
 			"kbscaling":0.1,
-			"angle":90,
+			"angle":80,
 			"shapes":[
-				[30,16,48,-8]
+				[50,18,65,10]
 			]
 		},
 		{
 			"name":"1",
 			"group":2,
-			"damage":6,
-			"start":8,
-			"end":11,
-			"kb":100,
-			"kbscaling":1,
-			"angle":125,
+			"damage":9,
+			"start":24,
+			"end":30,
+			"kb":90,
+			"kbscaling":1.2,
+			"angle":105,
 			"shapes":[
-				[34,20,48,-8]
+				[18,30,118,-20]
+			]
+		},
+		{
+			"name":"2",
+			"group":2,
+			"damage":12,
+			"start":24,
+			"end":30,
+			"kb":60,
+			"kbscaling":1.2,
+			"angle":-105,
+			"shapes":[
+				[18,30,118,32]
 			]
 		},
 	]
 
 func update():
 	if player.stateTimer==0:
-		player.cant_hitfall = true
-		player.anim_player.stop(true) #resets animation (noot
-		player.anim_player.play("ftilt")
-	if player.stateTimer==7:
-		player.cant_hitfall = false
+		player.anim_sprite.play("ftilt")
 
 func onHit(name, target, shielded=false):
-	
-	if name=="0":
-		get_parent()._velocity.x*=0.5
-		get_parent()._velocity.y*=0.5
-		get_parent()._velocity.y-=300
-	if name=="1":
-		pass
-		#get_parent()._velocity.y-=400
-	if name=="1" and not shielded:
-		endFast = true
+	pass
