@@ -56,8 +56,10 @@ func update():
 	if player.stateTimer==0:
 		player.anim_sprite.play("uair")
 	if player.stateTimer==22:
-		#player.createMoldSpore(Vector2(100*player.transform.x.x,-1200))
-		pass
+		for i in 45:
+			randomize()
+			
+			player.createMoldSpore(Vector2(rand_range(-100, 100),rand_range(0,-100)))
 	if player.is_on_ground:
 		interrupted = true
 		if not endFast:

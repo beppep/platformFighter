@@ -67,7 +67,8 @@ func createMoldSpore(vel):
 	svamp.position = position
 	svamp.team = team
 	svamp.transform.x.x = transform.x.x
-	svamp._velocity = vel + _velocity
+	svamp._velocity = vel
+	get_node("/root/Node2D/Articles").add_child(svamp)
 	svamp.attackWith("moldSporeAttack")
 	svamp.modulate = sprite_color
 	svamp.anim_sprite.play("spore") 

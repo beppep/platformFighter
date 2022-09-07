@@ -624,7 +624,8 @@ func hitEffect():
 			blast.scale = Vector2(kb*0.02, kb*0.02)
 			blast.z_index = -2
 			get_node("/root/Node2D/fx").add_child(blast)
-		
+		elif (not state==3):
+			percentage += data["damage"]
 		wallJumps = jumpspeed
 		has_airdodge = 1
 		opponent.currentAttack.onHit(data["name"], self, (state==3))

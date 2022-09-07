@@ -13,9 +13,9 @@ func _init():
 			"name":"0",
 			"group":1,
 			"start":1,
-			"damage":3,
-			"kb":40,
-			"kbscaling":0.2,
+			"damage":2,
+			"kb":0,
+			"kbscaling":0,
 			"angle":80,
 			
 		},
