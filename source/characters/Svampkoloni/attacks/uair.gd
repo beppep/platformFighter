@@ -8,54 +8,57 @@ extends "res://source/characters/Attack.gd"
 
 # Called when the node enters the scene tree for the first time.
 func _init() -> void:
-	endFrame = 26
-	fastEndFrame = 18
+	endFrame = 65
+	fastEndFrame = 52
 	hitboxes = [
 		{
 			"name":"0",
-			"group":0,
+			"group":1,
 			"damage":3,
-			"start":5,
-			"end":8,
-			"kb":20,
-			"kbscaling":0.1,
-			"angle":85,
+			"start":13,
+			"end":15,
+			"kb":40,
+			"kbscaling":0.3,
+			"angle":90,
 			"shapes":[
-				[20,40,20,-60]
+				[40,45,-7,-50]
 			]
 		},
 		{
 			"name":"1",
-			"group":1,
-			"damage":8,
-			"start":10,
-			"end":12,
-			"kb":50,
-			"kbscaling":1,
-			"angle":-60,
+			"group":2,
+			"damage":3,
+			"start":16,
+			"end":18,
+			"kb":40,
+			"kbscaling":0.3,
+			"angle":90,
 			"shapes":[
-				[24,44,20,-60]
+				[40,45,-7,-50]
 			]
 		},
+		{
+			"name":"2",
+			"group":3,
+			"damage":10,
+			"start":19,
+			"end":21,
+			"kb":70,
+			"kbscaling":1.3,
+			"angle":90,
+			"shapes":[
+				[40,45,-7,-50]
+			]
+		}
 	]
 
 func update():
 	if player.stateTimer==0:
-		player.cant_hitfall = true
-		player.anim_player.stop(true) #resets animation
-		player.anim_player.play("uair")
-	if player.stateTimer==9:
-		player.cant_hitfall = false
-	#if player.is_on_floor():
-	#	interrupted = true
-
-
-
-func onHit(name, target, shielded=false):
-	if name=="0":
-		get_parent()._velocity.y=-100
-	if name=="1":
+		player.anim_sprite.play("uair")
+	if player.stateTimer==22:
+		#player.createMoldSpore(Vector2(100*player.transform.x.x,-1200))
 		pass
-		get_parent()._velocity.y=-1400
-	if name=="1" and not shielded:
-		endFast = true
+	if player.is_on_ground:
+		interrupted = true
+		if not endFast:
+			landingLag = 20

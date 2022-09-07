@@ -6,6 +6,7 @@ var shroomList = []
 var shroom = load("res://source/characters/Svampkoloni/shroom.tscn")
 var svampScene = load("res://source/Characters/Svampkoloni/svamp.tscn")
 var spore = load("res://source/characters/Svampkoloni/spore.tscn")
+var moldSpore = load("res://source/characters/Svampkoloni/moldSpore.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -60,6 +61,17 @@ func createSpore(vel):
 	svamp.anim_sprite.play("spore")
 	svamp.myOwner = self
 
+func createMoldSpore(vel):
+	
+	var svamp = moldSpore.instance()
+	svamp.position = position
+	svamp.team = team
+	svamp.transform.x.x = transform.x.x
+	svamp._velocity = vel + _velocity
+	svamp.attackWith("moldSporeAttack")
+	svamp.modulate = sprite_color
+	svamp.anim_sprite.play("spore") 
+	svamp.myOwner = self
 
 func attack():
 	var attackDirection
@@ -70,7 +82,7 @@ func attack():
 	attackDirection.x*=self.transform.x.x
 	if not is_on_ground:
 		if attackDirection.y<0:
-			attackWith("utilt")
+			attackWith("uair")
 		elif attackDirection.y>0:
 			attackWith("dair")
 		elif attackDirection.x < 0:
