@@ -52,7 +52,7 @@ func inputAction():
 		currentAttack.update()
 	
 	_velocity.y += gravity
-	move_and_collide(_velocity*1/60)
+	_velocity = move_and_slide(_velocity)
 	
 	if stateTimer == lifetime:
 		anim_sprite.play("die")

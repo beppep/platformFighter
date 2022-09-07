@@ -13,7 +13,7 @@ func update():
 	
 	
 	if player.stateTimer==0:
-		player.anim_sprite.play("db")
+		player.anim_sprite.play("dsmash")
 		if len(player.shroomList)>0:
 			player.shroomList[-1].anim_sprite.play("grow")
 	if player.stateTimer==10:

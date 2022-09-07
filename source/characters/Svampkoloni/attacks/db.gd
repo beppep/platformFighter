@@ -16,9 +16,9 @@ func update():
 		if len(player.shroomList)>0:
 			player.shroomList[-1].anim_sprite.play("grow")
 			
-	if player.stateTimer<20:
+	if player.stateTimer<24:
 		player._velocity *= 0.5
-	if player.stateTimer==20:
+	if player.stateTimer==24:
 		player.createSpore(Vector2(0*player.transform.x.x,0))
 			
 		if len(player.shroomList)>0:
@@ -28,5 +28,5 @@ func update():
 			player.position = pos
 			player.anim_sprite.play("dsmash")
 		else:
-			player._velocity.y = -600
+			player.die(0)
 

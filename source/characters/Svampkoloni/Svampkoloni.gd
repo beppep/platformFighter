@@ -76,7 +76,7 @@ func attack():
 		elif attackDirection.x < 0:
 			attackWith("bair")
 		elif attackDirection.x > 0:
-			attackWith("jab")
+			attackWith("ftilt")
 		else:
 			attackWith("jab")
 	else:
