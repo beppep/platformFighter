@@ -20,6 +20,7 @@ func _ready() -> void:
 		"dtilt": load("res://source/characters/Svampkoloni/attacks/dtilt.gd"),
 		"uair": load("res://source/characters/Svampkoloni/attacks/uair.gd"),
 		"bair": load("res://source/characters/Svampkoloni/attacks/bair.gd"),
+		"fair": load("res://source/characters/Svampkoloni/attacks/fair.gd"),
 		"nair": load("res://source/characters/Svampkoloni/attacks/nair.gd"),
 		"dair": load("res://source/characters/Svampkoloni/attacks/dair.gd"),
 		"upb": load("res://source/characters/Svampkoloni/attacks/upb.gd"),
@@ -89,7 +90,7 @@ func attack():
 		elif attackDirection.x < 0:
 			attackWith("bair")
 		elif attackDirection.x > 0:
-			attackWith("jab")
+			attackWith("fair")
 		else:
 			attackWith("jab")
 	else:
