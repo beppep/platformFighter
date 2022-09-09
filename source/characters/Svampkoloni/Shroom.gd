@@ -54,6 +54,7 @@ func inputAction():
 	if state==1:
 		currentAttack.update()
 	
+	_velocity.x *= 0.98
 	_velocity.y += gravity
 	_velocity = move_and_slide(_velocity)
 
@@ -102,9 +103,12 @@ func hitEffect():
 			currentAttack.endAttack()
 		
 		var angle = data["angle"]*PI/180
-		var kb = (data["kb"])
+		var kb = (data["kb"] + data["kbscaling"]*myOwner.percentage)
+		myOwner.percentage += data["damage"]
 		if kb:
-			kb_vector = Vector2(cos(angle)*opponent.scale.y, -sin(angle))*10*kb
+			kb_vector = Vector2(cos(angle)*opponent.transform.x.x, -sin(angle))*10*kb
+			if true:
+				kb_vector = Vector2(cos(angle)*opponent.transform.x.x, -sin(angle))*1*kb
 			totalHitstun = kb*0.3
 			state = 2
 			stateTimer = 0
@@ -122,12 +126,16 @@ func hitEffect():
 	
 	if position.y>1000:
 		queue_free()
+		myOwner.shroomList.erase(self)
 	#if position.y<-750:
-	#	queue_free()
+		#queue_free()
+		#myOwner.shroomList.erase(self)queue_free()
 	if position.x>1500:
 		queue_free()
+		myOwner.shroomList.erase(self)
 	if position.x<-1500:
 		queue_free()
+		myOwner.shroomList.erase(self)
 	
 	
 	#progress states
@@ -135,8 +143,9 @@ func hitEffect():
 		stateTimer+=1
 		if state == 2:
 			if stateTimer >= totalHitstun:
-				myOwner.shroomList.erase(self)
-				queue_free()
+				state = 0
+				stateTimer = 0
+				
 	if hitPause>0:
 		hitPause-=1
 		if hitPause<=0:

@@ -12,6 +12,19 @@ func _init() -> void:
 	
 	endFrame = 46
 	hitboxes = [
+		{
+			"name":"0",
+			"group":1,
+			"damage":7,
+			"start":23,
+			"end":26,
+			"kb":100,
+			"kbscaling":1.5,
+			"angle":90,
+			"shapes":[
+				[30,40,200,0]
+			]
+		},
 	]
 
 

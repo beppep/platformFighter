@@ -1,9 +1,5 @@
 extends Attack
 
-# Declare member variables here. Examples:
-# var a: int = 2
-# var b: String = "text"
-var tpTarget = false
 
 # Called when the node enters the scene tree for the first time.
 
@@ -42,20 +38,25 @@ func _init() -> void:
 func update():
 	if player.stateTimer==0:
 		player.anim_sprite.play("fsmash")
-	if player.stateTimer>53 and (not tpTarget or not is_instance_valid(tpTarget)):
-		interrupted = true
-	if player.stateTimer==40 and tpTarget:
+	if player.stateTimer==40 and player.grab_target:
 		player.anim_sprite.play("fsmash2")
-	if player.stateTimer==52 and tpTarget and is_instance_valid(tpTarget):
-		player.position = tpTarget.position + tpTarget._velocity*0.15 + Vector2(0,100)
-		player.transform.x.x *= -1
-	if player.stateTimer>50 and player.stateTimer<55 and tpTarget and is_instance_valid(tpTarget):
+	if player.stateTimer==52:
+		if player.grab_target and is_instance_valid(player.grab_target) and player.grab_target.position:
+			var target_pos = player.grab_target.position + player.grab_target._velocity*0.15 + Vector2(0,100)
+			if not(target_pos.x > 1500 or target_pos.x < -1500 or target_pos.y < -750):
+				player.position = target_pos
+				player.transform.x.x *= -1
+			else:
+				interrupted=true
+		else:
+			interrupted=true
+	if player.stateTimer>50 and player.stateTimer<55 and player.grab_target and is_instance_valid(player.grab_target):
 		player._velocity = Vector2(400*player.transform.x.x, -1000)
 		
 		
 func onHit(name, target, shielded=false):
 	if name=="0" and not shielded:
-		tpTarget = target
+		player.grab_target = target
 
 	if not shielded:
 		endFast = true

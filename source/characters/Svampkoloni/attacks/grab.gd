@@ -22,7 +22,7 @@ func _init():
 			"kbscaling":0,
 			"angle":90,
 			"shapes":[
-				[32,20,114,5]
+				[52,20,94,5]
 			]
 		},
 	]

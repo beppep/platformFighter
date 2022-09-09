@@ -252,7 +252,7 @@ func inputAction():
 				$"/root/Node2D/AudioStreamPlayerLow".playSound($"/root/Node2D/AudioStreamPlayer".waveland)
 		else:
 			move_and_slide(_velocity)
-	elif state==2:
+	elif state==states.hitstun:
 		z_index=0
 		var collision = move_and_collide(_velocity*1/60)
 		if collision:
@@ -364,7 +364,7 @@ func calculate_move_velocity(): #basically do movement input stuff
 	
 	# MOVE X
 	if is_on_ground:
-		if state == 0:
+		if state == states.actionable:
 			_velocity.x += direction.x * groundspeed
 			if direction.x:
 				anim_sprite.play("run")
@@ -415,7 +415,7 @@ func calculate_move_velocity(): #basically do movement input stuff
 	
 	if buttons[0]: #jumping
 		var jumped = false
-		if released_jump == true and (state == 0 or state == 1 and stateTimer<=2):
+		if released_jump == true and (state == 0 or state == 1 and stateTimer<=2 and false):
 			if is_on_ground:
 				_velocity.y = -jumpspeed*0.6
 				fullhop_timer = 5 #time that jump must be held for fullhop
@@ -551,7 +551,6 @@ func dodge():
 
 func CheckHurtBoxes() -> Array:
 	var HitActors = []
-	#print($HurtBox.get_overlapping_areas())
 	for hitbox in $HurtBox.get_overlapping_areas():
 		var opponent=hitbox.get_parent().get_parent()
 		
@@ -561,9 +560,8 @@ func CheckHurtBoxes() -> Array:
 				HitActors.append([data,opponent])
 				bannedHitboxes.append([opponent,data["group"]])
 			else:
-				pass#print("banned")
+				pass
 		
-	#print(HitActors)
 	return HitActors
 
 func hitCollision():			
@@ -624,7 +622,8 @@ func hitEffect():
 			blast.scale = Vector2(kb*0.02, kb*0.02)
 			blast.z_index = -2
 			get_node("/root/Node2D/fx").add_child(blast)
-		
+		elif (not state==3):
+			percentage += data["damage"]
 		wallJumps = jumpspeed
 		has_airdodge = 1
 		opponent.currentAttack.onHit(data["name"], self, (state==3))
@@ -670,7 +669,6 @@ func hitEffect():
 			intangible = true
 			anim_sprite.modulate = sprite_color+Color(0.5,0.5,0.5,0)
 	if intangibleFrames == 1:
-		#print(intangibleFrames)
 		intangible = false
 		anim_sprite.modulate = sprite_color
 	#progress states
@@ -728,7 +726,7 @@ func make_blastline(angle):
 	get_node("/root/Node2D/fx").add_child(blast)
 
 func respawn():
-	if stocks>0:
+	if stocks>1:
 		var new = $"/root/Node2D".chosenCharacters[player_id].instance()
 		$"/root/Node2D/Players".add_child(new)
 		new.player_id = player_id
@@ -738,6 +736,7 @@ func respawn():
 		new.intangibleFrames = 100
 		new.intangible = true
 		new.stocks = stocks-1
+	get_node("/root/Node2D/uiElements/ui"+str(player_id)).get_node(str(stocks)).queue_free()
 		
 	queue_free()
 	

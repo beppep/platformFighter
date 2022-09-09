@@ -19,13 +19,14 @@ func update():
 		player._velocity *= 0.9
 		player._velocity.y -= 100
 		
-	if player.stateTimer==22:
+	if player.stateTimer==29:
 		player._velocity.y = 1000
+		pass
 		
-	if player.stateTimer==21:
-		player.createSpore(Vector2(100*player.transform.x.x,-1200))
+	if player.stateTimer==28:
+		player.createSpore(Vector2(200*player.transform.x.x,-1200))
 		
 	if player.is_on_ground:
 		interrupted = true
 		if not endFast:
-			landingLag = 19
+			landingLag = 25

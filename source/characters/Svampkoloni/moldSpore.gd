@@ -1,14 +1,14 @@
 extends KinematicBody2D
 
-class_name Spore
+class_name moldSpore
 
 var explosion = load("res://source/fx/explosion.tscn")
 
 
 
-export var gravity = 30.0
-export var fallspeed = 500
-export var airfriction = 0.99
+export var gravity = 1
+export var fallspeed = 100
+export var airfriction = 0.999
 var _velocity = Vector2(400,-400)
 var bannedHitboxes = []
 var HitActors = []
@@ -18,7 +18,7 @@ var kb_vector = Vector2(0,0)
 var team = 0
 var currentAttack
 var myOwner
-
+var timer = 1
 var hi_im_a_spore
 
 onready var anim_sprite = $AnimatedSprite #basically just declared in _ready func
@@ -33,7 +33,6 @@ func onHit(name, target, shielded=false):
 	#spored
 	
 func inputAction():	
-	
 	if(nextFrameHitPause):
 		hitPause=nextFrameHitPause
 		nextFrameHitPause=0
@@ -44,15 +43,9 @@ func inputAction():
 	if _velocity.y<fallspeed:
 		_velocity.y += gravity
 	_velocity.x *= airfriction
+	_velocity.y *= airfriction
 	
 	var collision = move_and_collide(_velocity*1/60)
-	if collision:
-		if collision.normal == Vector2(0,-1):
-			myOwner.createShroom(position+Vector2(0,-30), transform.x.x)
-			queue_free()
-		else:
-			queue_free() #slide
-	
 	
 	if position.y>750:
 		queue_free()
@@ -62,6 +55,11 @@ func inputAction():
 		queue_free()
 	if position.x<-1500:
 		queue_free()
+	randomize()
+	if(rand_range(0, 1)<float(timer)/1000):
+		queue_free()
+		pass
+	timer+=1
 
 
 func hitCollision():			

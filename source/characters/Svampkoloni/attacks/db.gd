@@ -19,7 +19,10 @@ func update():
 	if player.stateTimer<24:
 		player._velocity *= 0.5
 	if player.stateTimer==24:
-		player.createSpore(Vector2(0*player.transform.x.x,0))
+		player.createSpore(Vector2(0*player.transform.x.x,-20))
+		randomize()
+		for i in 45:
+			player.createMoldSpore(Vector2(rand_range(-100, 100),rand_range(100,-100)))
 			
 		if len(player.shroomList)>0:
 			var pos = player.shroomList[-1].position + Vector2(0,-20)

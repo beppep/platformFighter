@@ -8,24 +8,28 @@ extends "res://source/characters/Attack.gd"
 
 # Called when the node enters the scene tree for the first time.
 func _init() -> void:
-	endFrame = 18
-	fastEndFrame = 12
+	endFrame = 37
+	fastEndFrame = 25
 	hitboxes = [
 		{
 			"name":"0",
 			"group":1,
-			"damage":3,
-			"start":3,
-			"end":6,
-			"kb":60,
-			"kbscaling":0.2,
-			"angle":66,
+			"damage":7,
+			"start":10,
+			"end":15,
+			"kb":70,
+			"kbscaling":0.6,
+			"angle":65,
 			"shapes":[
-				[20,20,44,18]
+				[40,44,50,25]
 			]
 		},
 	]
 
 func update():
 	if player.stateTimer==0:
-		player.anim_sprite.play("jab")
+		player.anim_sprite.play("fair")
+	if player.is_on_ground:
+		interrupted = true
+		if not endFast:
+			landingLag = 9

@@ -78,8 +78,8 @@ func _init() -> void:
 			"start":17,
 			"end":20,
 			"kb":83,
-			"kbscaling":0.1,
-			"angle":80,
+			"kbscaling":0.2, #0.1 is nice
+			"angle":77, # 80 is op
 			"shapes":[
 				[33,37,0,-27]
 			]

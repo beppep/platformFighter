@@ -6,6 +6,7 @@ var shroomList = []
 var shroom = load("res://source/characters/Svampkoloni/shroom.tscn")
 var svampScene = load("res://source/Characters/Svampkoloni/svamp.tscn")
 var spore = load("res://source/characters/Svampkoloni/spore.tscn")
+var moldSpore = load("res://source/characters/Svampkoloni/moldSpore.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -19,6 +20,7 @@ func _ready() -> void:
 		"dtilt": load("res://source/characters/Svampkoloni/attacks/dtilt.gd"),
 		"uair": load("res://source/characters/Svampkoloni/attacks/uair.gd"),
 		"bair": load("res://source/characters/Svampkoloni/attacks/bair.gd"),
+		"fair": load("res://source/characters/Svampkoloni/attacks/fair.gd"),
 		"nair": load("res://source/characters/Svampkoloni/attacks/nair.gd"),
 		"dair": load("res://source/characters/Svampkoloni/attacks/dair.gd"),
 		"upb": load("res://source/characters/Svampkoloni/attacks/upb.gd"),
@@ -34,18 +36,20 @@ func characterInputAction():
 		die(-1)
 	
 func createShroom(pos, facing, bornAnim = true):
-	
-	var svamp = shroom.instance()
-	svamp.position = pos
-	svamp.team = team
-	svamp.transform.x.x = facing
-	svamp._velocity = Vector2(0,0)
-	get_node("/root/Node2D/Articles").add_child(svamp)
-	svamp.modulate = sprite_color
-	if bornAnim:
-		svamp.anim_sprite.play("born")
-	svamp.myOwner = self
-	shroomList.append(svamp)
+	if len(shroomList)>2:
+		pass
+	else:
+		var svamp = shroom.instance()
+		svamp.position = pos
+		svamp.team = team
+		svamp.transform.x.x = facing
+		svamp._velocity = Vector2(0,0)
+		get_node("/root/Node2D/Articles").add_child(svamp)
+		svamp.modulate = sprite_color
+		if bornAnim:
+			svamp.anim_sprite.play("born")
+		svamp.myOwner = self
+		shroomList.append(svamp)
 
 func createSpore(vel):
 	
@@ -60,6 +64,18 @@ func createSpore(vel):
 	svamp.anim_sprite.play("spore")
 	svamp.myOwner = self
 
+func createMoldSpore(vel):
+	
+	var svamp = moldSpore.instance()
+	svamp.position = position
+	svamp.team = team
+	svamp.transform.x.x = transform.x.x
+	svamp._velocity = vel
+	get_node("/root/Node2D/Articles").add_child(svamp)
+	svamp.attackWith("moldSporeAttack")
+	svamp.modulate = sprite_color
+	svamp.anim_sprite.play("spore") 
+	svamp.myOwner = self
 
 func attack():
 	var attackDirection
@@ -70,15 +86,15 @@ func attack():
 	attackDirection.x*=self.transform.x.x
 	if not is_on_ground:
 		if attackDirection.y<0:
-			attackWith("utilt")
+			attackWith("uair")
 		elif attackDirection.y>0:
 			attackWith("dair")
 		elif attackDirection.x < 0:
 			attackWith("bair")
 		elif attackDirection.x > 0:
-			attackWith("ftilt")
+			attackWith("nair") # jag tänker att det är ganska nice
 		else:
-			attackWith("jab")
+			attackWith("fair") # kunna drifta fram och göra nairs?
 	else:
 		#flip()
 		if attackDirection.x>0:
@@ -95,7 +111,7 @@ func attack():
 	
 func special():
 	flip()
-	if not is_on_floor():
+	if not is_on_ground:
 		if direction.y<0:
 			attackWith("upb")
 		elif direction.y>0:
@@ -144,10 +160,14 @@ func die(angle):
 		shroomList.pop_back().queue_free()
 		
 		position = pos
+		_velocity = Vector2.ZERO#?
 		isdead = false
 		visible = true
 		intangible = false
 		attackWith("reborn")
+		for other in get_node("/root/Node2D/Players").get_children():
+			if other.grab_target!=false and other.grab_target == self:
+				other.grab_target = false
 	else:
 		make_blastline(angle)
 		respawn()

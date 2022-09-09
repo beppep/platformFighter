@@ -78,7 +78,7 @@ func update():
 	if player.is_on_floor():
 		interrupted = true
 		if not endFast:
-			landingLag = 11
+			landingLag = 15
 
 
 func onHit(name, target, shielded=false):
