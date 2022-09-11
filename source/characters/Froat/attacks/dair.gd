@@ -20,7 +20,7 @@ func _init() -> void:
 			"kb":90,
 			"kbscaling":0.1,
 			"angle":90,
-			"autolinkX":0.9,
+			"autolinkX":1,
 			"shapes":[
 				[24,27,3,80]
 			]
@@ -33,7 +33,7 @@ func _init() -> void:
 			"end":21,
 			"kb":100,
 			"kbscaling":0.1,
-			"angle":80,
+			"angle":70,
 			"shapes":[
 				[24,27,3,80]
 			]
@@ -57,4 +57,4 @@ func onHit(name, target, shielded=false):
 	player._velocity.y=-900#-400*int(name)
 	if name=="1" and not shielded:
 		player.cant_hitfall = false
-		endFast = true
+	endFast = true

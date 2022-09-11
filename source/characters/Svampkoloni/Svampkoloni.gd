@@ -92,9 +92,9 @@ func attack():
 		elif attackDirection.x < 0:
 			attackWith("bair")
 		elif attackDirection.x > 0:
-			attackWith("nair") # jag tänker att det är ganska nice
+			attackWith("fair") # jag tänker att det är ganska nice
 		else:
-			attackWith("fair") # kunna drifta fram och göra nairs?
+			attackWith("nair") # kunna drifta fram och göra nairs?
 	else:
 		#flip()
 		if attackDirection.x>0:
@@ -166,8 +166,8 @@ func die(angle):
 		intangible = false
 		attackWith("reborn")
 		for other in get_node("/root/Node2D/Players").get_children():
-			if other.grab_target!=false and other.grab_target == self:
-				other.grab_target = false
+			if other.grab_target!=null and other.grab_target == self:
+				other.grab_target = null
 	else:
 		make_blastline(angle)
 		respawn()

@@ -58,7 +58,7 @@ func update():
 	if 10< player.stateTimer and  player.stateTimer<22:
 		if player._velocity.y > 0:
 			player._velocity.y *= 0.8
-			player._velocity.y -= 50
+			player._velocity.y -= 60
 	if player.stateTimer==22:
 		randomize()
 		for i in 45:

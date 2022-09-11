@@ -68,7 +68,7 @@ var intangible = false
 var intangibleFrames = 0
 var is_on_ground = false
 var dontShield = true
-var grab_target
+var grab_target = null
 var dodge_direction
 var fullhop_timer = 0
 var has_airdodge = 1
@@ -76,7 +76,7 @@ var wallJumps = jumpspeed*0.9
 var can_shield_float = false
 var can_getupattack = false
 var jablocked = 0
-var dummyOpponent = 0
+var dummyOpponent = 1
 
 #func process:...::
 #	match state:
@@ -140,7 +140,7 @@ func inputAction():
 			anim_sprite.stop()
 		nextFrameHitPause=0
 		if direction.y>0 and not cant_hitfall: #hitfalling
-			_velocity.y = gravity*20
+			_velocity.y = fallspeed*2
 	if hitPause:
 		return
 	
@@ -385,7 +385,7 @@ func calculate_move_velocity(): #basically do movement input stuff
 			_velocity.y *= yfriction
 	if state==2:
 		if _velocity.y<fallspeed:
-			_velocity.y += (gravity*0.6 + 70*0.6)/2
+			_velocity.y += gravity*0.2 + 45  #(gravity*0.6 + 70*0.6)/2
 		if _velocity.y>0:
 			_velocity.y *= yfriction
 	else:
@@ -492,7 +492,7 @@ func special():
 func grab():
 	pass
 func attackWith(script):
-	grab_target = false
+	grab_target = null
 	#can_walljump = false
 	cant_hitfall = false
 	state = 1

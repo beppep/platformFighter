@@ -20,9 +20,9 @@ func _init() -> void:
 			"end":10,
 			"kb":50,
 			"kbscaling":0.2,
-			"angle":85,
-			"autolinkX":0.5,
-			"autolinkY":0.5,
+			"angle":95,
+			"autolinkX":0.9,
+			"autolinkY":0.9,
 			"shapes":[
 				[34,44,40,10]
 			]
@@ -44,13 +44,12 @@ func _init() -> void:
 
 func update():
 	if player.stateTimer==0:
-		player._velocity.y -= 50
 		player.anim_sprite.play("nb")
 	if player.stateTimer < 6:
 		player.reverse()
 	if player.stateTimer<48:
 		player._velocity.x *= 0.9
-		player._velocity.y *= 0.85
-		player._velocity.y -= 50
+		player._velocity.y *= 0.9
+		player._velocity.y -= 60
 	if player.stateTimer==26 and not (player.buttons[2] and player.direction == Vector2.ZERO):
 		interrupted = true

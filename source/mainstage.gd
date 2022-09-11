@@ -21,7 +21,7 @@ var chosenCharacters = []
 func _ready() -> void:
 	var playerNum = 2
 	
-	chosenCharacters = [NoxhScene,svampScene,]
+	chosenCharacters = [svampScene,NoxhScene,]
 	#chosenCharacters = [froatScene,froatScene,]
 	
 	for i in range(0,playerNum):

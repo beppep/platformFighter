@@ -75,7 +75,7 @@ func update():
 	if player.stateTimer==0:
 		player.cant_hitfall = true
 		player.anim_sprite.play("dair")
-	if player.is_on_floor():
+	if player.is_on_ground:
 		interrupted = true
 		if not endFast:
 			landingLag = 15

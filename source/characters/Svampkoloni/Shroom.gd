@@ -108,7 +108,7 @@ func hitEffect():
 		if kb:
 			kb_vector = Vector2(cos(angle)*opponent.transform.x.x, -sin(angle))*10*kb
 			if true:
-				kb_vector = Vector2(cos(angle)*opponent.transform.x.x, -sin(angle))*1*kb
+				kb_vector = Vector2(cos(angle)*opponent.transform.x.x, -sin(angle))*2*kb
 			totalHitstun = kb*0.3
 			state = 2
 			stateTimer = 0

@@ -17,12 +17,12 @@ func _init():
 			"group":1,
 			"damage":13,
 			"start":9,
-			"end":11,
-			"kb":77,
-			"kbscaling":2.2,
+			"end":12,
+			"kb":57,
+			"kbscaling":1.5,
 			"angle":-80,
 			"shapes":[
-				[10,20,50,10]
+				[20,20,60,10]
 			]
 		},
 		{
@@ -30,12 +30,12 @@ func _init():
 			"group":1,
 			"damage":7,
 			"start":9,
-			"end":16,
-			"kb":85,
+			"end":20,
+			"kb":45,
 			"kbscaling":0.5,
 			"angle":100,
 			"shapes":[
-				[35,35,-10,0]
+				[40,40,-5,0]
 			]
 		},
 	]
