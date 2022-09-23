@@ -21,7 +21,7 @@ func _init():
 			"autolinkX":1,
 			"autolinkY":1,
 			"shapes":[
-				[32,20,114,5]
+				[32,30,104,-45]
 			]
 		},
 	]
@@ -29,10 +29,14 @@ func _init():
 func update():
 	if player.stateTimer==0:
 		pass
-		#player.anim_sprite.play("throw")
+		player.anim_sprite.play("throw2")
+	if player.stateTimer>12:
+		player._velocity.y *= 0.9
+		player._velocity.y -= 50
 	if player.stateTimer<12:
-		player.grab_target.position = player.position+Vector2(110*player.transform.x.x,0)
+		player.grab_target.position = player.position+Vector2(100*player.transform.x.x,-50)
 		player.grab_target._velocity = player._velocity
+		
 
 func onHit(name, target, shielded=false):
 	pass

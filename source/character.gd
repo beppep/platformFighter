@@ -555,7 +555,7 @@ func CheckHurtBoxes() -> Array:
 		var opponent=hitbox.get_parent().get_parent()
 		
 		if opponent.team != team and intangible == false:
-			var data = opponent.currentAttack.hitboxes[int(hitbox["name"])] #invalid get index 169 on base array apparently #also 1
+			var data = opponent.currentAttack.hitboxes[int(hitbox["name"])] #invalid get index 169 on base array apparently #also 1, 6, 0 etc
 			if not [opponent, data["group"]] in bannedHitboxes:
 				HitActors.append([data,opponent])
 				bannedHitboxes.append([opponent,data["group"]])
@@ -634,9 +634,9 @@ func hitEffect():
 		die(0)
 	if position.y<-750 and state == 2:
 		die(180)
-	if position.x>1500:
+	if position.x>1250:
 		die(270)
-	if position.x<-1500:
+	if position.x<-1250:
 		die(90)
 	
 	if hitPause==0:

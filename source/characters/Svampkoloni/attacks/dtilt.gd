@@ -25,11 +25,9 @@ func _init() -> void:
 func update():
 	if player.stateTimer==0:
 		player.anim_sprite.play("dtilt")
-	if player.stateTimer==4:
-		var newSvamp = player.svampScene.instance()
-		newSvamp.position = player.position + Vector2(player.transform.x.x*90,40)
-		player.get_node("/root/Node2D/fx").add_child(newSvamp)
-		newSvamp.get_node("Sprite").modulate = player.sprite_color
+		player._velocity.x = 0
+	if player.stateTimer==6:
+		player.createSvamp(player.position + Vector2(player.transform.x.x*90,40))
 	if not player.is_on_ground:
 		pass
 		#interrupted = true

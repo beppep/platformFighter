@@ -13,7 +13,9 @@ func _ready() -> void:
 	isdead = false
 	attacks = {
 		"grab": load("res://source/characters/Svampkoloni/attacks/grab.gd"),
+		"zair": load("res://source/characters/Svampkoloni/attacks/zair.gd"),
 		"throw": load("res://source/characters/Svampkoloni/attacks/throw.gd"),
+		"throw2": load("res://source/characters/Svampkoloni/attacks/throw2.gd"),
 		"jab": load("res://source/characters/Svampkoloni/attacks/jab.gd"),
 		"utilt": load("res://source/characters/Svampkoloni/attacks/utilt.gd"),
 		"ftilt": load("res://source/characters/Svampkoloni/attacks/ftilt.gd"),
@@ -35,6 +37,13 @@ func characterInputAction():
 	if isdead:
 		die(-1)
 	
+func createSvamp(pos):
+	var newSvamp = svampScene.instance()
+	newSvamp.position = pos
+	newSvamp.transform.x.x = int(pos.x>0)*2-1 #random number -1 or 1
+	get_node("/root/Node2D/fx").add_child(newSvamp)
+	newSvamp.get_node("Sprite").modulate = sprite_color
+
 func createShroom(pos, facing, bornAnim = true):
 	if len(shroomList)>2:
 		pass
@@ -133,16 +142,15 @@ func special():
 
 func grab():
 	flip() #?
-	attackWith("grab")
+	if not is_on_ground:
+		attackWith("zair")
+	else:
+		attackWith("grab")
 
 func dodge():
 	.dodge()
+	createSvamp(position + Vector2(transform.x.x*0,40))
 	
-	var newSvamp = svampScene.instance()
-	newSvamp.position = position + Vector2(transform.x.x*0,40)
-	get_node("/root/Node2D/fx").add_child(newSvamp)
-	newSvamp.get_node("Sprite").modulate = sprite_color
-
 func die(angle):
 	if isdead and not angle == -1: # otherwise you respawn twice on the same frame
 		return

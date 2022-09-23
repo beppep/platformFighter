@@ -20,7 +20,7 @@ func update():
 		player._velocity.y -= 100
 		
 	if player.stateTimer==29:
-		player._velocity.y = 1000
+		#player._velocity.y = 1000
 		pass
 		
 	if player.stateTimer==28:

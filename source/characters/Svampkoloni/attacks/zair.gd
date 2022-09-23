@@ -3,12 +3,9 @@ extends "res://source/characters/Attack.gd"
 
 var throw = load("res://source/characters/Godtest/attacks/throw.gd")
 
-# Declare member variables here. Examples:
-# var a: int = 2
-# var b: String = "text"
 
+# den är lite grotesk. kanske ska vara lite kortare.
 
-# Called when the node enters the scene tree for the first time.
 func _init():
 	endFrame = 37
 	hitboxes = [
@@ -22,15 +19,17 @@ func _init():
 			"kbscaling":0,
 			"angle":90,
 			"shapes":[
-				[52,20,94,5]
+				[32,30,104,-45]
 			]
 		},
 	]
 
 func update():
 	if player.stateTimer==0:
-		player.anim_sprite.play("grab")
-		player._velocity = Vector2.ZERO
+		player.anim_sprite.play("zair")
+	if player.stateTimer<30:
+		player._velocity *= 0.9
+		#player._velocity.y -= 50
 
 func onHit(name, target, shielded=false):
 	target.state = 5
@@ -39,6 +38,6 @@ func onHit(name, target, shielded=false):
 	interrupted = true
 	endAttack()
 	
-	player.attackWith("throw")
+	player.attackWith("throw2")
 	player.stateTimer = -1
 	player.grab_target = target

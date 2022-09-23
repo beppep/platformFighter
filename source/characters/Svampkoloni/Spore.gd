@@ -51,6 +51,7 @@ func inputAction():
 			myOwner.createShroom(position+Vector2(0,-30), transform.x.x)
 			queue_free()
 		else:
+			myOwner.createSvamp(position+Vector2(0,-30))
 			queue_free() #slide
 	
 	

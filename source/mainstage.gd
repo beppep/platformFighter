@@ -15,13 +15,16 @@ var svampScene = load("res://source/characters/Svampkoloni/Svampkoloni.tscn")
 var monkScene = load("res://source/characters/Monk/Monk.tscn")
 var chosenCharacters = []
 
-#onready var audioPlayer: AudioStreamPlayer = get_node("AudioStreamPlayer") 
 
-# Called when the node enters the scene tree for the first time.
+var blastzoneX = 1250
+var blastzoneUp = 750
+var blastzoneDown = -750
+
+
 func _ready() -> void:
 	var playerNum = 2
 	
-	chosenCharacters = [svampScene,NoxhScene,]
+	chosenCharacters = [svampScene,froatScene,]
 	#chosenCharacters = [froatScene,froatScene,]
 	
 	for i in range(0,playerNum):

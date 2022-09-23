@@ -37,7 +37,7 @@ func endAttack():
 func autoEndAttack():
 	for box in player.get_node("HitBoxes").get_children(): #remove hitboxes
 		if(not box.is_queued_for_deletion()):
-			box.queue_free()
+			box.queue_free() # too slow pls fix!!
 	for other in player.get_node("/root/Node2D/Players").get_children()+player.get_node("/root/Node2D/Articles").get_children(): #remove opponents bans
 		if not other == player:
 			var replacementList = []
