@@ -17,6 +17,7 @@ var nextFrameHitPause = 0
 var kb_vector = Vector2(0,0)
 var wasHit = false
 var team = 0
+var state = 1
 var currentAttack
 
 # Called when the node enters the scene tree for the first time.
@@ -40,7 +41,8 @@ func inputAction():
 		_velocity.y += gravity
 	var collision = move_and_collide(_velocity*1/60)
 	if collision:
-		_velocity = _velocity.bounce(collision.normal)
+		_velocity = (_velocity.bounce(collision.normal)*3 + _velocity)*0.25
+		position += collision.remainder.bounce(collision.normal)
 	
 	currentAttack.update()
 	
@@ -48,9 +50,9 @@ func inputAction():
 		queue_free()
 	if position.y<-750:
 		queue_free()
-	if position.x>1500:
+	if position.x>1250:
 		queue_free()
-	if position.x<-1500:
+	if position.x<-1250:
 		queue_free()
 
 func CheckHurtBoxes() -> Array:

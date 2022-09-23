@@ -26,7 +26,7 @@ func update():
 		for i in 45:
 			player.createMoldSpore(Vector2(rand_range(-100, 100),rand_range(100,-100)))
 			
-		if len(player.shroomList)>0:
+		if tp_target:
 			var pos = tp_target.position + Vector2(0,-20)
 			player.shroomList.erase(tp_target)
 			tp_target.queue_free()

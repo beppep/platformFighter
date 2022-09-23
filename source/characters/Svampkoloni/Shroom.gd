@@ -80,8 +80,8 @@ func hitCollision():
 		var data = HitActors[0][0]
 		var opponent = HitActors[0][1]
 		var kb = data["kb"]
-		nextFrameHitPause += kb*0.1 #+= for trades and stuff?
-		opponent.nextFrameHitPause += kb*0.1
+		nextFrameHitPause =  max(nextFrameHitPause, CharacterSelectionManager.hitpauseFormula(kb))
+		opponent.nextFrameHitPause = max(opponent.nextFrameHitPause, CharacterSelectionManager.hitpauseFormula(kb))
 
 func resetToIdle():
 	state=0

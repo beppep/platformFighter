@@ -76,7 +76,7 @@ var wallJumps = jumpspeed*0.9
 var can_shield_float = false
 var can_getupattack = false
 var jablocked = 0
-var dummyOpponent = 1
+var dummyOpponent = 0
 
 #func process:...::
 #	match state:
@@ -272,6 +272,8 @@ func inputAction():
 							if buttons[0]:
 								wallJump()
 								released_jump = false
+							else:
+								_velocity = Vector2(0,-100)
 							state=0
 							stateTimer=0
 							dontShield = true
@@ -571,7 +573,7 @@ func hitCollision():
 		var data = HitActors[0][0]
 		var opponent = HitActors[0][1]
 		var kb = data["kb"] + data["kbscaling"]*percentage
-		nextFrameHitPause = max(nextFrameHitPause, hitpauseFormula(kb)) #+= for trades and stuff?
+		nextFrameHitPause = max(nextFrameHitPause, hitpauseFormula(kb))
 		opponent.nextFrameHitPause = max(opponent.nextFrameHitPause, hitpauseFormula(kb))
 		
 func hitEffect():
@@ -726,6 +728,7 @@ func make_blastline(angle):
 	get_node("/root/Node2D/fx").add_child(blast)
 
 func respawn():
+	get_node("/root/Node2D/uiElements/ui"+str(player_id)).get_node(str(stocks)).queue_free()
 	if stocks>1:
 		var new = $"/root/Node2D".chosenCharacters[player_id].instance()
 		$"/root/Node2D/Players".add_child(new)
@@ -736,9 +739,10 @@ func respawn():
 		new.intangibleFrames = 100
 		new.intangible = true
 		new.stocks = stocks-1
-	get_node("/root/Node2D/uiElements/ui"+str(player_id)).get_node(str(stocks)).queue_free()
-		
+	else:
+		get_tree().change_scene("res://source/characterSelect.tscn")
 	queue_free()
+		
 	
 func hitpauseFormula(kb):
 	return kb*0.06+2

@@ -50,4 +50,3 @@ func onHit(name, target, shielded=false):
 		endFast = true
 		if player.percentage>0:
 			player.percentage-=1
-			player.get_node("Label").text = str(player.percentage)+"%"

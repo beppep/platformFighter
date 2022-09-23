@@ -24,7 +24,7 @@ var blastzoneDown = -750
 func _ready() -> void:
 	var playerNum = 2
 	
-	chosenCharacters = [svampScene,froatScene,]
+	chosenCharacters = CharacterSelectionManager.chosenCharacters
 	#chosenCharacters = [froatScene,froatScene,]
 	
 	for i in range(0,playerNum):
