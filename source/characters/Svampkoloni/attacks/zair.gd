@@ -19,7 +19,20 @@ func _init():
 			"kbscaling":0,
 			"angle":90,
 			"shapes":[
-				[32,30,104,-45]
+				[32,30,105,-25]
+			]
+		},
+		{
+			"name":"1",
+			"group":1,
+			"damage":1,
+			"start":10,
+			"end":14,
+			"kb":0,
+			"kbscaling":0,
+			"angle":90,
+			"shapes":[
+				[32,20,75,-5]
 			]
 		},
 	]

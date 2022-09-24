@@ -21,6 +21,7 @@ func _ready() -> void:
 		"fair": load("res://source/characters/Godtest/attacks/ftilt.gd"),
 		"bair": load("res://source/characters/Godtest/attacks/bair.gd"),
 		"nair": load("res://source/characters/Godtest/attacks/nair.gd"),
+		"nair2": load("res://source/characters/Godtest/attacks/nair2.gd"),
 		"dair": load("res://source/characters/Godtest/attacks/dair.gd"),
 		"uair": load("res://source/characters/Godtest/attacks/uair.gd"),
 		"nb": load("res://source/characters/Godtest/attacks/uair2.gd"),
@@ -88,7 +89,7 @@ func attack():
 		elif attackDirection.x<0:
 			attackWith("bair")
 		else:
-			attackWith("nair")
+			attackWith("nair2")
 	else:
 		flip()
 		if attackDirection.y<0:

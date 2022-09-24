@@ -26,7 +26,7 @@ func _init() -> void:
 			"damage":5,
 			"start":54,
 			"end":62,
-			"kb":100,
+			"kb":60,
 			"kbscaling":0.3,
 			"angle":70,
 			"shapes":[
@@ -51,7 +51,7 @@ func update():
 		else:
 			interrupted=true
 	if player.stateTimer>50 and player.stateTimer<55 and player.grab_target and is_instance_valid(player.grab_target):
-		player._velocity = Vector2(400*player.transform.x.x, -1000)
+		player._velocity = Vector2(400*player.transform.x.x, -1100)
 		
 		
 func onHit(name, target, shielded=false):

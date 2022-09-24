@@ -25,7 +25,7 @@ func _ready() -> void:
 	var playerNum = 2
 	
 	chosenCharacters = CharacterSelectionManager.chosenCharacters
-	#chosenCharacters = [froatScene,froatScene,]
+	chosenCharacters = [froatScene,godtestScene,]
 	
 	for i in range(0,playerNum):
 		var uiThing = uiScene.instance()

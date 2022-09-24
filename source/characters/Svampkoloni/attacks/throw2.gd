@@ -21,7 +21,7 @@ func _init():
 			"autolinkX":1,
 			"autolinkY":1,
 			"shapes":[
-				[32,30,104,-45]
+				[32,30,104,-25]
 			]
 		},
 	]
@@ -34,7 +34,7 @@ func update():
 		player._velocity.y *= 0.9
 		player._velocity.y -= 50
 	if player.stateTimer<12:
-		player.grab_target.position = player.position+Vector2(100*player.transform.x.x,-50)
+		player.grab_target.position = player.position+Vector2(100*player.transform.x.x,-30)
 		player.grab_target._velocity = player._velocity
 		
 

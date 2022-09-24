@@ -76,7 +76,7 @@ var wallJumps = jumpspeed*0.9
 var can_shield_float = false
 var can_getupattack = false
 var jablocked = 0
-var dummyOpponent = 0
+var dummyOpponent = 1
 
 #func process:...::
 #	match state:
@@ -557,6 +557,7 @@ func CheckHurtBoxes() -> Array:
 		var opponent=hitbox.get_parent().get_parent()
 		
 		if opponent.team != team and intangible == false:
+			#print(opponent.currentAttack,opponent.currentAttack.hitboxes,int(hitbox["name"]))
 			var data = opponent.currentAttack.hitboxes[int(hitbox["name"])] #invalid get index 169 on base array apparently #also 1, 6, 0 etc
 			if not [opponent, data["group"]] in bannedHitboxes:
 				HitActors.append([data,opponent])
@@ -584,13 +585,13 @@ func hitEffect():
 		var data = HitActors[0][0]
 		var opponent = HitActors[0][1]
 		
-		if state == 1:
-			currentAttack.interrupted = true
-			currentAttack.endAttack()
 		var angle = data["angle"]*PI/180
 		var kb = (data["kb"] + data["kbscaling"]*percentage)
 		if kb>0:
 			var blast
+			if state == 1:
+				currentAttack.interrupted = true
+				currentAttack.endAttack()
 			if state==7 and jablocked < 4:
 				jablocked +=1
 			else:
@@ -709,7 +710,8 @@ func hitEffect():
 					is_on_ground = true
 				else:
 					_velocity = kb_vector
-					is_on_ground = false
+					if kb_vector.y<0:
+						is_on_ground = false
 				kb_vector = Vector2.ZERO
 				autolink_vector = Vector2.ZERO
 			else:

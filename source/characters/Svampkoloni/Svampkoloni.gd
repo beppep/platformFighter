@@ -46,7 +46,7 @@ func createSvamp(pos):
 
 func createShroom(pos, facing, bornAnim = true):
 	if len(shroomList)>2:
-		pass
+		createSvamp(pos+Vector2(0,32))
 	else:
 		var svamp = shroom.instance()
 		svamp.position = pos

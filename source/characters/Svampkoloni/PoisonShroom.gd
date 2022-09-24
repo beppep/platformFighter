@@ -24,7 +24,7 @@ var grab_target
 var myOwner
 var currentAttack = false
 
-export var lifetime = 600
+var lifetime = 1200
 
 
 onready var anim_player = get_node("AnimationPlayer") #basically just declared in _ready func

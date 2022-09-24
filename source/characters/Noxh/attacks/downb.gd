@@ -24,7 +24,7 @@ func update():
 	if player.stateTimer==0:
 		player.anim_sprite.play("downb")
 	if player.stateTimer < 6:
-		player.reverse()
+		player.flip()
 	if player.stateTimer==10:
 		player._velocity.y*=0.6#1
 		player._velocity.y-=1400#900

@@ -45,7 +45,7 @@ func inputAction():
 	_velocity.x *= airfriction
 	_velocity.y *= airfriction
 	
-	var collision = move_and_collide(_velocity*1/60)
+	_velocity = move_and_slide(_velocity)
 	
 	if position.y>750:
 		queue_free()

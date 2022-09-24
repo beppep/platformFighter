@@ -8,8 +8,8 @@ extends Attack
 
 # Called when the node enters the scene tree for the first time.
 func _init() -> void:
-	endFrame = 50
-	fastEndFrame = 40
+	endFrame = 45
+	fastEndFrame = 35
 	hitboxes = [
 		{
 			"name":"0",

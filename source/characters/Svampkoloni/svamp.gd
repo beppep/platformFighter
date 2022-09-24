@@ -21,8 +21,8 @@ func _process(delta: float) -> void:
 	if timer == 6:
 		transform.x.x = 1
 		transform.y.y = 1
-	if timer == 600:
+	if timer == 1200:
 		transform.x.x = 0.5
 		transform.y.y = 0.5
-	if timer == 1200:
+	if timer == 2400:
 		queue_free()

@@ -37,6 +37,9 @@ func update():
 		
 	if player.stateTimer==12:
 		player.createSpore(Vector2(1000*player.transform.x.x,-100))
+		randomize()
+		for i in 15:
+			player.createMoldSpore(Vector2(rand_range(-100, 100)+player._velocity.x*-0.5,rand_range(0,-100)))
 
 	if player.is_on_ground and false:
 		interrupted = true
