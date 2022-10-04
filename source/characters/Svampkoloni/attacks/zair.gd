@@ -45,8 +45,7 @@ func update():
 		#player._velocity.y -= 50
 
 func onHit(name, target, shielded=false):
-	target.state = 5
-	target.stateTimer = 0
+	target.getGrabbed()
 	
 	interrupted = true
 	endAttack()

@@ -81,7 +81,8 @@ func update():
 
 
 func onHit(name, target, shielded=false):
-	player._velocity.y=-500
+	player._velocity.y=-400
 	if (name=="2" or name=="3") and not shielded:
 		player.cant_hitfall = false
-	endFast = true
+	if not shielded:
+		endFast = true

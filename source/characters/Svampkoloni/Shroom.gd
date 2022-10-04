@@ -53,6 +53,7 @@ func inputAction():
 	
 	if state==1:
 		currentAttack.update()
+		currentAttack.manageHitboxes()
 	
 	_velocity.x *= 0.98
 	_velocity.y += gravity
@@ -125,17 +126,17 @@ func hitEffect():
 		
 	
 	if position.y>1000:
-		queue_free()
 		myOwner.shroomList.erase(self)
+		queue_free()
 	#if position.y<-750:
 		#queue_free()
 		#myOwner.shroomList.erase(self)queue_free()
 	if position.x>1500:
-		queue_free()
 		myOwner.shroomList.erase(self)
+		queue_free()
 	if position.x<-1500:
-		queue_free()
 		myOwner.shroomList.erase(self)
+		queue_free()
 	
 	
 	#progress states

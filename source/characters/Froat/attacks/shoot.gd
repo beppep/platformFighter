@@ -4,7 +4,6 @@ extends Attack
 # Declare member variables here. Examples:
 # var a: int = 2
 # var b: String = "text"
-var rockScene = load("res://source/characters/Froat/rock.tscn")
 
 
 # Called when the node enters the scene tree for the first time.
@@ -27,7 +26,7 @@ func update():
 		player.reverse()
 	if player.stateTimer==24:
 		
-		var rock = rockScene.instance()
+		var rock = player.rockScene.instance()
 		rock.position = player.position + Vector2(10,0)*player.transform.x.x
 		rock.team = -1# player.team
 		player.bannedHitboxes.append([rock,1])

@@ -28,6 +28,7 @@ func _ready() -> void:
 		"upb": load("res://source/characters/Svampkoloni/attacks/upb.gd"),
 		"fb": load("res://source/characters/Svampkoloni/attacks/fb.gd"),
 		"db": load("res://source/characters/Svampkoloni/attacks/db.gd"),
+		"nb": load("res://source/characters/Svampkoloni/attacks/nb.gd"),
 		"fsmash": load("res://source/characters/Svampkoloni/attacks/fsmash.gd"),
 		"dsmash": load("res://source/characters/Svampkoloni/attacks/transform.gd"),
 		"reborn": load("res://source/characters/Svampkoloni/attacks/reborn.gd"),
@@ -128,7 +129,7 @@ func special():
 		elif direction.x != 0:
 			attackWith("fb")
 		else:
-			state = 0
+			attackWith("nb")
 	else:
 		if direction.y<0:
 			attackWith("upb")
@@ -137,7 +138,7 @@ func special():
 		elif direction.x != 0:
 			attackWith("fsmash")
 		else:
-			state = 0
+			attackWith("nb")
 	
 
 func grab():

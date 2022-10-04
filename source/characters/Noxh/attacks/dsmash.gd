@@ -17,9 +17,10 @@ func _init() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func update():
+	player._velocity.y *= 0.8
 	if player.stateTimer==0:
 		player.anim_sprite.play("dsmash")
-	if player.stateTimer==20:
+	if player.stateTimer==12:
 		
 		var bullet = bulletScene.instance()
 		bullet.position = player.position + Vector2(10,0)*player.transform.x.x

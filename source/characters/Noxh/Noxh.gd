@@ -1,7 +1,7 @@
 extends Character
 
 
-var bulletScene = load("res://source/characters/Noxh/Bullet.tscn")
+var bulletScene = preload("res://source/characters/Noxh/Bullet.tscn")
 
 
 # Called when the node enters the scene tree for the first time.

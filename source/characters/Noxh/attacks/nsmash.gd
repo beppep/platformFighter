@@ -53,5 +53,6 @@ func _init() -> void:
 	]
 
 func update():
+	player._velocity.y *= 0.8
 	if player.stateTimer==0:
 		player.anim_sprite.play("nsmash")

@@ -1,6 +1,9 @@
 extends Character
 
 
+var rockScene = preload("res://source/characters/Froat/rock.tscn")
+var footScene = preload("res://source/characters/Froat/foot.tscn")
+
 
 var B_charge = true
 

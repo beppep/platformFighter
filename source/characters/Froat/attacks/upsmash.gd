@@ -30,6 +30,7 @@ func _init() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func update():
+	player._velocity.y *= 0.8
 	if player.stateTimer==0:
 		player.anim_sprite.play("upsmash")
 		player.get_node("/root/Node2D/AudioStreamPlayer").playSound(player.get_node("/root/Node2D/AudioStreamPlayer").groat2)

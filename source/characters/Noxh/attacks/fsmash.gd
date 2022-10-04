@@ -36,6 +36,9 @@ func _init() -> void:
 	]
 
 func update():
+	if player.stateTimer<50:
+		player._velocity.y *= 0.8
+	
 	if player.stateTimer==0:
 		player.anim_sprite.play("fsmash")
 	if player.stateTimer==40 and player.grab_target:

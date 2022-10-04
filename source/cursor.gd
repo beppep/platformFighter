@@ -36,7 +36,7 @@ func _process(delta):
 # If a selection is made send it to the Signleton CharacterSelectionManager.gd to store that value
 	if(Input.is_action_just_pressed("p1_a")):
 		if(CharacterSelectionManager.chosenCharacters[0]==null):
-			CharacterSelectionManager.chosenCharacters[0] = CharacterSelectionManager.selectableCharacters[characters[currentSelected].name]
+			CharacterSelectionManager.pickCharacter(0,characters[currentSelected].name)
 			texture = selectedTexture
 		else:
 			if(CharacterSelectionManager.chosenCharacters[0]!=null and CharacterSelectionManager.chosenCharacters[1]!=null):

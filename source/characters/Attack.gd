@@ -86,7 +86,7 @@ func createHitBox(hitboxData):
 	player.get_node("HitBoxes").add_child(hitbox)
 	hitbox.set_collision_layer(4)
 	hitbox.set_collision_mask(0)
-	hitbox.set_name(hitboxData["name"])
+	hitbox.name = hitboxData["name"]
 	for i in hitboxData["shapes"]:
 		var _bs = RectangleShape2D.new()
 		_bs.extents.x = i[0]

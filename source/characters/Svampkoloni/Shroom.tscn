@@ -1,21 +1,17 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://source/characters/Svampkoloni/Shroom.gd" type="Script" id=1]
 [ext_resource path="res://assets/Svampkoloni/shroom.png" type="Texture" id=2]
 [ext_resource path="res://assets/Svampkoloni/bornShroom.png" type="Texture" id=3]
 [ext_resource path="res://assets/Svampkoloni/semi.png" type="Texture" id=4]
+[ext_resource path="res://assets/Svampkoloni/poisonAttack.png" type="Texture" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 23.0636, 32.4148 )
 
-[sub_resource type="AtlasTexture" id=10]
+[sub_resource type="AtlasTexture" id=2]
 flags = 4
 atlas = ExtResource( 4 )
-region = Rect2( 0, 0, 256, 256 )
-
-[sub_resource type="AtlasTexture" id=11]
-flags = 4
-atlas = ExtResource( 2 )
 region = Rect2( 0, 0, 256, 256 )
 
 [sub_resource type="AtlasTexture" id=3]
@@ -25,38 +21,68 @@ region = Rect2( 0, 0, 256, 256 )
 
 [sub_resource type="AtlasTexture" id=4]
 flags = 4
-atlas = ExtResource( 3 )
+atlas = ExtResource( 5 )
 region = Rect2( 0, 0, 256, 256 )
 
 [sub_resource type="AtlasTexture" id=5]
 flags = 4
-atlas = ExtResource( 3 )
+atlas = ExtResource( 5 )
 region = Rect2( 256, 0, 256, 256 )
 
 [sub_resource type="AtlasTexture" id=6]
 flags = 4
+atlas = ExtResource( 5 )
+region = Rect2( 512, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=7]
+flags = 4
+atlas = ExtResource( 5 )
+region = Rect2( 768, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=8]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=9]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=10]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 256, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=11]
+flags = 4
 atlas = ExtResource( 3 )
 region = Rect2( 512, 0, 256, 256 )
 
-[sub_resource type="SpriteFrames" id=7]
+[sub_resource type="SpriteFrames" id=12]
 animations = [ {
-"frames": [ SubResource( 10 ), SubResource( 11 ), SubResource( 10 ) ],
+"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 2 ) ],
 "loop": false,
 "name": "grow",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 3 ) ],
+"frames": [ SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ) ],
+"loop": false,
+"name": "attack",
+"speed": 15.0
+}, {
+"frames": [ SubResource( 8 ) ],
 "loop": false,
 "name": "standing",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 4 ), SubResource( 5 ), SubResource( 6 ) ],
+"frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 11 ) ],
 "loop": false,
 "name": "born",
 "speed": 5.0
 } ]
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=13]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimatedSprite:position")
@@ -71,7 +97,7 @@ tracks/0/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 28.9914, 22.2739 ), Vector2( -44.9013, -36.0624 ), Vector2( 41.3658, 7.07108 ), Vector2( -35.7089, -17.6777 ), Vector2( 12.7279, 21.5668 ), Vector2( -24.0416, -18.7383 ), Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="RectangleShape2D" id=9]
+[sub_resource type="RectangleShape2D" id=14]
 extents = Vector2( 29.9501, 32.6702 )
 
 [node name="Shroom" type="KinematicBody2D"]
@@ -83,17 +109,17 @@ script = ExtResource( 1 )
 shape = SubResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-frames = SubResource( 7 )
+frames = SubResource( 12 )
 animation = "standing"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/shake = SubResource( 8 )
+anims/shake = SubResource( 13 )
 
 [node name="HurtBox" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
-shape = SubResource( 9 )
+shape = SubResource( 14 )
 
 [node name="HitBoxes" type="Node2D" parent="."]

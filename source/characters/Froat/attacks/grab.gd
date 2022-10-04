@@ -35,8 +35,7 @@ func update():
 		
 
 func onHit(name, target, shielded=false):
-	target.state = 5 #they are dolls and cant tech or stuff
-	target.stateTimer = 0
+	target.getGrabbed()
 	
 	interrupted = true
 	endAttack()

@@ -45,11 +45,12 @@ enum states {
 	grabbed,
 	landinglag,
 	lying,
+	wallHogging,
 }
 var stocks = 4
 var state = states.actionable
 var attacks = {}
-var currentAttack = "error"
+var currentAttack = false
 var stateTimer = 0
 var totalHitstun = 0
 var totalLandingLag = 0
@@ -63,7 +64,6 @@ var shieldHealth = shieldHealthMax
 var shieldStun = 0
 var kb_vector = Vector2(0,0) # to be applied after hitpause
 var autolink_vector = Vector2(0,0) # to apply autolink after hitpause
-var autolink_player
 var intangible = false
 var intangibleFrames = 0
 var is_on_ground = false
@@ -112,7 +112,7 @@ func _ready2():
 func onHit(name, target, shielded=false):
 	pass
 	#double_jumps = 1
-	wallJumps = jumpspeed
+	wallJumps = jumpspeed/2
 	#has_airdodge = 1
 
 func regain_resources(): # i.e. while grounded
@@ -140,7 +140,7 @@ func inputAction():
 			anim_sprite.stop()
 		nextFrameHitPause=0
 		if direction.y>0 and not cant_hitfall: #hitfalling
-			_velocity.y = fallspeed*2
+			_velocity.y = fallspeed*1
 	if hitPause:
 		return
 	
@@ -152,6 +152,13 @@ func inputAction():
 	# options
 	if not buttons[3]:
 		dontShield = false
+	if state == states.wallHogging:
+		print(states.wallHogging)
+		_velocity = Vector2(0,50)
+		if not buttons[0]:
+			endWallJump()
+		if buttons[3]:
+			pass
 	if state==0:
 		if buttons[3] and not dontShield:
 			shield()
@@ -269,7 +276,7 @@ func inputAction():
 							is_on_ground = true
 							tech()
 						else:
-							if buttons[0]:
+							if buttons[0] and canWallJump(position.x):
 								wallJump()
 								released_jump = false
 							else:
@@ -352,7 +359,7 @@ func get_c_direction():
 func calculate_move_velocity(): #basically do movement input stuff
 	if is_on_ground:
 		double_jumps = 1
-		wallJumps = jumpspeed
+		wallJumps = jumpspeed / 2
 		has_airdodge = 1
 		regain_resources()
 	else:
@@ -417,30 +424,32 @@ func calculate_move_velocity(): #basically do movement input stuff
 	
 	if buttons[0]: #jumping
 		var jumped = false
+		# check ways to jump
 		if released_jump == true and (state == 0 or state == 1 and stateTimer<=2 and false):
 			if is_on_ground:
 				_velocity.y = -jumpspeed*0.6
 				fullhop_timer = 5 #time that jump must be held for fullhop
 				anim_sprite.play("jump")
 				jumped = true
-			elif released_jump == true and is_on_wall() and wallJumps:
+			elif released_jump == true and is_on_wall() and wallJumps>0 and canWallJump(position.x):
 				wallJump()
 				jumped = true
 			elif released_jump == true and double_jumps>0:
 				double_jump()
 				jumped = true
-		if state == 1 and can_walljump and is_on_wall() and wallJumps>0:
+		if state == 1 and can_walljump and is_on_wall() and wallJumps>0 and canWallJump(position.x):
+			currentAttack.interrupted = true
+			currentAttack.endAttack()
 			wallJump()
 			jumped = true
+		# important things to do when jumping
 		if jumped:
 			is_on_ground = false
 			released_jump = false
-			if state==1: #jump interrupt attack buffer thing
-				print("cancel atack")
+			if currentAttack and false: #jump interrupt attack buffer thing
+				#print("cancel atack")
 				currentAttack.interrupted = true
 				currentAttack.endAttack()
-				state=0
-				stateTimer=0
 	elif released_jump == false:
 		released_jump = true
 		
@@ -464,16 +473,38 @@ func double_jump():
 	ring.position = self.position + Vector2(0,50)
 	ring.z_index = -2
 	get_node("/root/Node2D/fx").add_child(ring)
+func canWallJump(r):
+	if r>0:
+		return not $"/root/Node2D".rightHog
+	else:
+		return not $"/root/Node2D".leftHog
 func wallJump():
+	state = states.wallHogging
+	stateTimer = 0
+	_velocity = Vector2(0,10)
+	anim_sprite.play("wallhog")
+	if position.x>0:
+		transform.x.x = -1
+		$"/root/Node2D".rightHog = true
+		$"/root/Node2D".rightHogger = self
+	else:
+		transform.x.x = 1
+		$"/root/Node2D".leftHog = true
+		$"/root/Node2D".leftHogger = self
+func endWallJump():
+	state = states.actionable
+	stateTimer = 0
 	_velocity.y = -wallJumps
-	wallJumps-=100
+	wallJumps-=50
 	if wallJumps<0:
 		wallJumps = 0
 	if position.x>0:
+		#$"/root/Node2D".rightHog = false
 		_velocity.x = 700
 	else:
+		#$"/root/Node2D".leftHog = false
 		_velocity.x = -700
-	anim_sprite.play("double_jump")
+	anim_sprite.play("jump")
 
 func resetToIdle():
 	state=0
@@ -558,7 +589,7 @@ func CheckHurtBoxes() -> Array:
 		
 		if opponent.team != team and intangible == false:
 			#print(opponent.currentAttack,opponent.currentAttack.hitboxes,int(hitbox["name"]))
-			var data = opponent.currentAttack.hitboxes[int(hitbox["name"])] #invalid get index 169 on base array apparently #also 1, 6, 0 etc
+			var data = opponent.currentAttack.hitboxes[int(hitbox.name)] #invalid get index 169 on base array apparently #also 1, 6, 0, 738 etc
 			if not [opponent, data["group"]] in bannedHitboxes:
 				HitActors.append([data,opponent])
 				bannedHitboxes.append([opponent,data["group"]])
@@ -576,7 +607,14 @@ func hitCollision():
 		var kb = data["kb"] + data["kbscaling"]*percentage
 		nextFrameHitPause = max(nextFrameHitPause, hitpauseFormula(kb))
 		opponent.nextFrameHitPause = max(opponent.nextFrameHitPause, hitpauseFormula(kb))
-		
+
+func getGrabbed():
+	if currentAttack:
+		currentAttack.interrupted = true
+		currentAttack.endAttack()
+	state = 5 #you are doll and cant tech or stuff
+	stateTimer = 0
+
 func hitEffect():
 	if state==1 and hitPause==0:
 		currentAttack.endAttack()
@@ -592,7 +630,14 @@ func hitEffect():
 			if state == 1:
 				currentAttack.interrupted = true
 				currentAttack.endAttack()
-			if state==7 and jablocked < 4:
+			if state == states.wallHogging:
+				if position.x>0:
+					pass
+					#$"/root/Node2D".rightHog = false
+				else:
+					pass
+					#$"/root/Node2D".leftHog = false
+			if state==states.lying and jablocked < 3:
 				jablocked +=1
 			else:
 				jablocked = 0
@@ -600,10 +645,9 @@ func hitEffect():
 				kb_vector = Vector2(0,-1)*2*pow(kb,0.9) + Vector2(cos(angle)*opponent.transform.x.x, -sin(angle))*2.7 *pow(kb,1.2) # not += imo
 				autolink_vector = Vector2.ZERO
 				if "autolinkX" in data and data["autolinkX"]>0:
-					autolink_vector.x = data["autolinkX"]
+					autolink_vector.x = data["autolinkX"]*opponent._velocity.x
 				if "autolinkY" in data and data["autolinkY"]>0:
-					autolink_vector.y = data["autolinkY"]
-				autolink_player = opponent
+					autolink_vector.y = data["autolinkY"]*opponent._velocity.y
 				totalHitstun = hitstunFormula(kb)
 				state = 2
 				stateTimer = 0
@@ -695,11 +739,7 @@ func hitEffect():
 				# DI
 				var new_angle = kb_vector.angle() + sin(kb_vector.angle_to(direction))*0.1 #.1 to .2
 				kb_vector = Vector2(cos(new_angle), sin(new_angle))*kb_vector.length()
-				if autolink_player:
-					if autolink_vector.x!=0 and autolink_player:
-						kb_vector.x += autolink_player._velocity.x*autolink_vector.x
-					if autolink_vector.y!=0 and autolink_player:
-						kb_vector.y += autolink_player._velocity.y*autolink_vector.y
+				kb_vector = kb_vector + autolink_vector
 				if jablocked>0 and kb_vector.length()<500:
 					_velocity = Vector2.ZERO
 					state = 7

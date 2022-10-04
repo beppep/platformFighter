@@ -43,33 +43,33 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="froat" type="TextureRect" parent="GridContainer" groups=[
+[node name="random" type="TextureRect" parent="GridContainer" groups=[
 "Characters",
 ]]
 margin_right = 256.0
+margin_bottom = 256.0
+texture = ExtResource( 6 )
+
+[node name="froat" type="TextureRect" parent="GridContainer" groups=[
+"Characters",
+]]
+margin_left = 260.0
+margin_right = 516.0
 margin_bottom = 256.0
 texture = ExtResource( 1 )
 
 [node name="noxh" type="TextureRect" parent="GridContainer" groups=[
 "Characters",
 ]]
-margin_left = 260.0
-margin_right = 516.0
+margin_left = 520.0
+margin_right = 776.0
 margin_bottom = 256.0
 texture = ExtResource( 2 )
 
 [node name="svamp" type="TextureRect" parent="GridContainer" groups=[
 "Characters",
 ]]
-margin_left = 520.0
-margin_right = 776.0
-margin_bottom = 256.0
-texture = ExtResource( 3 )
-
-[node name="random" type="TextureRect" parent="GridContainer" groups=[
-"Characters",
-]]
 margin_left = 780.0
 margin_right = 1036.0
 margin_bottom = 256.0
-texture = ExtResource( 6 )
+texture = ExtResource( 3 )

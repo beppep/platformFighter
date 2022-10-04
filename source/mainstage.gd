@@ -19,13 +19,17 @@ var chosenCharacters = []
 var blastzoneX = 1250
 var blastzoneUp = 750
 var blastzoneDown = -750
+var rightHog = false
+var rightHogger = null
+var leftHog = false
+var leftHogger = null
 
 
 func _ready() -> void:
 	var playerNum = 2
 	
 	chosenCharacters = CharacterSelectionManager.chosenCharacters
-	chosenCharacters = [froatScene,godtestScene,]
+	#chosenCharacters = [froatScene,godtestScene,]
 	
 	for i in range(0,playerNum):
 		var uiThing = uiScene.instance()
@@ -60,3 +64,9 @@ func _physics_process(delta: float) -> void:
 		
 	for player in players:
 		get_node("uiElements/ui"+str(player.player_id)+"/Label").text = str(player.percentage)+"%"
+	if rightHog:
+		if not (rightHogger and is_instance_valid(rightHogger) and rightHogger.state == rightHogger.states.wallHogging):
+			rightHog = false
+	if leftHog:
+		if not (leftHogger and is_instance_valid(leftHogger) and leftHogger.state == leftHogger.states.wallHogging):
+			leftHog = false

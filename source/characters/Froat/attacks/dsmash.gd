@@ -40,11 +40,9 @@ func _init() -> void:
 	]
 
 func update():
-	print(endFast, player.stateTimer)
+	player._velocity.y *= 0.8
 	if player.stateTimer==0:
 		player.anim_sprite.play("dsmash")
-	if not player.is_on_ground:
-		interrupted = true
 
 func onHit(name, target, shielded=false):
 	if not shielded:
