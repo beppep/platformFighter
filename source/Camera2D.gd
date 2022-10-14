@@ -24,7 +24,7 @@ func _process(delta: float) -> void:
 		pos += Vector2((rng.randf()-0.5),(rng.randf()-0.5))*screenShake*20  #test
 		screenShake -= 1
 	set_offset( pos*0.1 + get_offset()*0.9 )
-	$"/root/Node2D/CanvasLayer".offset = -pos/10
+	$"/root/Node2D/stage/CanvasLayer".offset = -pos/10
 	if len(players)<2:
 		return
 	var zoom = max(abs(players[0].position.x-players[1].position.x), 1.5*abs(players[0].position.y-players[1].position.y))
@@ -33,4 +33,4 @@ func _process(delta: float) -> void:
 	if zoom>get_zoom():
 		set_zoom( zoom )
 	else:
-		set_zoom( zoom*0.01 + get_zoom()*0.99 )
+		set_zoom( zoom*0.02 + get_zoom()*0.98 )

@@ -20,6 +20,7 @@ func _ready() -> void:
 		"bair": load("res://source/characters/Noxh/attacks/bair.gd"),
 		"nair": load("res://source/characters/Noxh/attacks/nair.gd"),
 		"fair": load("res://source/characters/Noxh/attacks/fair.gd"),
+		"fair2": load("res://source/characters/Noxh/attacks/fair2.gd"),
 		"dair": load("res://source/characters/Noxh/attacks/dair.gd"),
 		"ub": load("res://source/characters/Noxh/attacks/upb.gd"),
 		"fb": load("res://source/characters/Noxh/attacks/fb.gd"),
@@ -50,11 +51,11 @@ func attack():
 		elif attackDirection.y>0:
 			attackWith("dair")
 		elif attackDirection.x>0:
-			attackWith("fair")
+			attackWith("fair2")
 		elif attackDirection.x<0:
 			attackWith("bair")
 		else:
-			attackWith("nair")
+			attackWith("fair")
 	else:
 		#flip()
 		if attackDirection.y<0:

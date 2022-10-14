@@ -137,10 +137,20 @@ __meta__ = {
 "_edit_vertical_guides_": [  ]
 }
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+limit_left = -1500
+limit_top = -750
+limit_right = 1500
+limit_bottom = 1000
+script = ExtResource( 5 )
+
+[node name="stage" type="Node2D" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="stage"]
 layer = -100
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+[node name="TextureRect" type="TextureRect" parent="stage/CanvasLayer"]
 margin_right = 290.0
 margin_bottom = 289.0
 grow_horizontal = 2
@@ -152,39 +162,31 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Camera2D" type="Camera2D" parent="."]
-current = true
-limit_left = -1500
-limit_top = -750
-limit_right = 1500
-limit_bottom = 1000
-script = ExtResource( 5 )
-
-[node name="ground" type="StaticBody2D" parent="."]
+[node name="ground" type="StaticBody2D" parent="stage"]
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ground"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="stage/ground"]
 position = Vector2( 0, 700 )
 scale = Vector2( 34, 41 )
 shape = SubResource( 1 )
 
-[node name="platforms" type="StaticBody2D" parent="."]
+[node name="platforms" type="StaticBody2D" parent="stage"]
 collision_layer = 16
 collision_mask = 0
 
-[node name="platform" type="CollisionShape2D" parent="platforms"]
+[node name="platform" type="CollisionShape2D" parent="stage/platforms"]
 position = Vector2( 224, 144 )
 scale = Vector2( 11, 1.6 )
 shape = SubResource( 1 )
 one_way_collision = true
 
-[node name="platform2" type="CollisionShape2D" parent="platforms"]
+[node name="platform2" type="CollisionShape2D" parent="stage/platforms"]
 position = Vector2( 0, 16 )
 scale = Vector2( 11, 1.6 )
 shape = SubResource( 1 )
 one_way_collision = true
 
-[node name="TileMap" type="TileMap" parent="."]
+[node name="TileMap" type="TileMap" parent="stage"]
 tile_set = SubResource( 6 )
 cell_size = Vector2( 32, 32 )
 collision_layer = 0

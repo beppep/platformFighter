@@ -31,11 +31,11 @@ func _init() -> void:
 			"name":"1",
 			"group":2,
 			"damage":7,
-			"start":28,
-			"end":30,
-			"kb":100,
-			"kbscaling":1,
-			"angle":-70,
+			"start":30,
+			"end":32,
+			"kb":70,
+			"kbscaling":0.7,
+			"angle":-73,
 			"shapes":[
 				[24,40,38,10]
 			]
@@ -51,5 +51,11 @@ func update():
 		player._velocity.x *= 0.9
 		player._velocity.y *= 0.9
 		player._velocity.y -= 60
-	if player.stateTimer==26 and not (player.buttons[2] and player.direction == Vector2.ZERO):
-		interrupted = true
+	if player.stateTimer==20 and endFast:
+		hitboxes[1]["start"] = 24
+		hitboxes[1]["end"] = 26
+	if player.stateTimer==26 and not endFast or player.stateTimer==20 and endFast:
+		if (player.buttons[2] and player.direction == Vector2.ZERO):
+			player.anim_sprite.play("nb2")
+		else:
+			interrupted = true

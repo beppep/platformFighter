@@ -10,7 +10,7 @@ var bulletScene = load("res://source/characters/Noxh/Bullet.tscn")
 # Called when the node enters the scene tree for the first time.
 func _init() -> void:
 	
-	endFrame = 40
+	endFrame = 55
 	hitboxes = [
 	]
 

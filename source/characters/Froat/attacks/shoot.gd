@@ -28,9 +28,9 @@ func update():
 		
 		var rock = player.rockScene.instance()
 		rock.position = player.position + Vector2(10,0)*player.transform.x.x
-		rock.team = -1# player.team
+		rock.team = player.team
 		player.bannedHitboxes.append([rock,1])
-		#rock.transform.x.x = player.transform.x.x
+		rock.transform.x.x = player.transform.x.x
 		rock._velocity = Vector2(300*player.transform.x.x,-600) + player._velocity
 		player.get_node("/root/Node2D/Articles").add_child(rock)
 		

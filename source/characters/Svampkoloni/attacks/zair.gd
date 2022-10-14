@@ -45,7 +45,7 @@ func update():
 		#player._velocity.y -= 50
 
 func onHit(name, target, shielded=false):
-	target.getGrabbed()
+	target.getGrabbed() # nonexistent function in target montain etc...
 	
 	interrupted = true
 	endAttack()

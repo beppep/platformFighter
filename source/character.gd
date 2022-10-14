@@ -75,6 +75,7 @@ var has_airdodge = 1
 var wallJumps = jumpspeed*0.9
 var can_shield_float = false
 var can_getupattack = false
+var walljump_facing = 1
 var jablocked = 0
 var dummyOpponent = 1
 
@@ -394,7 +395,8 @@ func calculate_move_velocity(): #basically do movement input stuff
 			_velocity.y *= yfriction
 	if state==2:
 		if _velocity.y<fallspeed:
-			_velocity.y += gravity*0.2 + 45  #(gravity*0.6 + 70*0.6)/2
+			var personalGravityPart = 0.3
+			_velocity.y += gravity*personalGravityPart + 55*(1-personalGravityPart)  #(gravity*0.6 + 70*0.6)/2
 		if _velocity.y>0:
 			_velocity.y *= yfriction
 	else:
@@ -425,13 +427,13 @@ func calculate_move_velocity(): #basically do movement input stuff
 	if buttons[0]: #jumping
 		var jumped = false
 		# check ways to jump
-		if released_jump == true and (state == 0 or state == 1 and stateTimer<=2 and false):
+		if (state == 0 or state == 1 and stateTimer<=2 and false):
 			if is_on_ground:
 				_velocity.y = -jumpspeed*0.6
 				fullhop_timer = 5 #time that jump must be held for fullhop
 				anim_sprite.play("jump")
 				jumped = true
-			elif released_jump == true and is_on_wall() and wallJumps>0 and canWallJump(position.x):
+			elif is_on_wall() and wallJumps>0 and canWallJump(position.x):
 				wallJump()
 				jumped = true
 			elif released_jump == true and double_jumps>0:
@@ -484,11 +486,11 @@ func wallJump():
 	_velocity = Vector2(0,10)
 	anim_sprite.play("wallhog")
 	if position.x>0:
-		transform.x.x = -1
+		transform.x.x = -1 * walljump_facing
 		$"/root/Node2D".rightHog = true
 		$"/root/Node2D".rightHogger = self
 	else:
-		transform.x.x = 1
+		transform.x.x = 1 * walljump_facing
 		$"/root/Node2D".leftHog = true
 		$"/root/Node2D".leftHogger = self
 func endWallJump():
@@ -500,10 +502,10 @@ func endWallJump():
 		wallJumps = 0
 	if position.x>0:
 		#$"/root/Node2D".rightHog = false
-		_velocity.x = 700
+		_velocity.x = 500
 	else:
 		#$"/root/Node2D".leftHog = false
-		_velocity.x = -700
+		_velocity.x = -500
 	anim_sprite.play("jump")
 
 func resetToIdle():
@@ -605,8 +607,9 @@ func hitCollision():
 		var data = HitActors[0][0]
 		var opponent = HitActors[0][1]
 		var kb = data["kb"] + data["kbscaling"]*percentage
-		nextFrameHitPause = max(nextFrameHitPause, hitpauseFormula(kb))
-		opponent.nextFrameHitPause = max(opponent.nextFrameHitPause, hitpauseFormula(kb))
+		if kb>0:
+			nextFrameHitPause = max(nextFrameHitPause, hitpauseFormula(kb))
+			opponent.nextFrameHitPause = max(opponent.nextFrameHitPause, hitpauseFormula(kb))
 
 func getGrabbed():
 	if currentAttack:
@@ -642,7 +645,7 @@ func hitEffect():
 			else:
 				jablocked = 0
 			if (not state==3):# or data["unshieldable"]:
-				kb_vector = Vector2(0,-1)*2*pow(kb,0.9) + Vector2(cos(angle)*opponent.transform.x.x, -sin(angle))*2.7 *pow(kb,1.2) # not += imo
+				kb_vector = Vector2(0,-1)*(gravity/30)*pow(kb,0.9) + Vector2(cos(angle)*opponent.transform.x.x, -sin(angle))*2.7 *pow(kb,1.2) # not += imo
 				autolink_vector = Vector2.ZERO
 				if "autolinkX" in data and data["autolinkX"]>0:
 					autolink_vector.x = data["autolinkX"]*opponent._velocity.x

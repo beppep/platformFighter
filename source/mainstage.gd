@@ -5,6 +5,9 @@ extends Node2D
 # var a: int = 2
 # var b: String = "text"
 var uiScene = load("res://source/ui.tscn")
+
+# archaic? 
+
 #var puncherScene = load("res://source/characters/Puncher/Puncher.tscn")
 #var ninjaScene = load("res://source/characters/Ninja/Ninja.tscn")
 #var lizardScene = load("res://source/characters/Lizard/Lizard.tscn")
@@ -16,9 +19,11 @@ var monkScene = load("res://source/characters/Monk/Monk.tscn")
 var chosenCharacters = []
 
 
-var blastzoneX = 1250
+var blastzoneX = 1250 # should be stage specifics
 var blastzoneUp = 750
 var blastzoneDown = -750
+
+
 var rightHog = false
 var rightHogger = null
 var leftHog = false

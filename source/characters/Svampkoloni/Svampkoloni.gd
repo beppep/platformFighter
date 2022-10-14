@@ -11,6 +11,7 @@ var moldSpore = load("res://source/characters/Svampkoloni/moldSpore.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	isdead = false
+	walljump_facing = -1
 	attacks = {
 		"grab": load("res://source/characters/Svampkoloni/attacks/grab.gd"),
 		"zair": load("res://source/characters/Svampkoloni/attacks/zair.gd"),

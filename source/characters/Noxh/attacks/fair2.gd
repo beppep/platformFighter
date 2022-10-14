@@ -1,12 +1,15 @@
 extends Attack
-#class_name Fair
+class_name Dair
 
+# Declare member variables here. Examples:
+# var a: int = 2
+# var b: String = "text"
 
 
 # Called when the node enters the scene tree for the first time.
 func _init() -> void:
-	endFrame = 35
-	fastEndFrame = 26
+	endFrame = 40
+	fastEndFrame = 30
 	hitboxes = [
 		{
 			"name":"0",
@@ -16,11 +19,11 @@ func _init() -> void:
 			"end":7,
 			"kb":35,
 			"kbscaling":0.1,
-			"angle":-100,
-			"autolinkX":0.9,
+			"angle":45,
+			"autolinkX":0.5,
 			"autolinkY":0.9,
 			"shapes":[
-				[28,28,0,40]
+				[28,28,40,0]
 			]
 		},
 		{
@@ -31,11 +34,11 @@ func _init() -> void:
 			"end":10,
 			"kb":35,
 			"kbscaling":0.1,
-			"angle":-70,
-			"autolinkX":0.9,
+			"angle":45,
+			"autolinkX":0.5,
 			"autolinkY":0.9,
 			"shapes":[
-				[28,28,0,40]
+				[28,28,40,0]
 			]
 		},
 		{
@@ -46,11 +49,11 @@ func _init() -> void:
 			"end":13,
 			"kb":35,
 			"kbscaling":0.1,
-			"angle":-100,
-			"autolinkX":0.9,
+			"angle":45,
+			"autolinkX":0.5,
 			"autolinkY":0.9,
 			"shapes":[
-				[28,28,0,40]
+				[28,28,40,0]
 			]
 		},
 		{
@@ -59,11 +62,11 @@ func _init() -> void:
 			"damage":3,
 			"start":15,
 			"end":18,
-			"kb":40,
+			"kb":55,
 			"kbscaling":0.5,
-			"angle":-70,
+			"angle":50,
 			"shapes":[
-				[28,28,0,40]
+				[28,28,40,0]
 			]
 		},
 	]
@@ -71,7 +74,21 @@ func _init() -> void:
 func update():
 	if player.stateTimer==0:
 		player.cant_hitfall = true
-		player.anim_sprite.play("dair")
+		player.anim_sprite.play("fair2")
+		
+		#player._velocity.y*=0.5
+		#player._velocity.y-=170
+		#player._velocity.x*=0.5
+		#player._velocity.x+=170*player.transform.x.x
+		
+		
+	if player.stateTimer<30 and true:
+		player._velocity.y*=0.92
+		player._velocity.y-=40
+		player._velocity.x*=0.92
+		player._velocity.x+=40*player.transform.x.x
+		
+		
 	if player.is_on_ground:
 		interrupted = true
 		if not endFast:
@@ -80,7 +97,8 @@ func update():
 
 func onHit(name, target, shielded=false):
 	player._velocity.y*=0.5
+	player._velocity.y-=170
+	player._velocity.x*=0.5
+	player._velocity.x+=170*player.transform.x.x
 	if not shielded:
 		endFast = true
-	if name=="3" and not shielded:
-		player.cant_hitfall = false

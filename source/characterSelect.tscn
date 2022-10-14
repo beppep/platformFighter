@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://assets/Froat/idle.png" type="Texture" id=1]
 [ext_resource path="res://assets/Noxh/idle.png" type="Texture" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://assets/cloud.png" type="Texture" id=8]
 [ext_resource path="res://source/cursor2.gd" type="Script" id=9]
 [ext_resource path="res://source/characterSelect.gd" type="Script" id=10]
+[ext_resource path="res://assets/Godtest/idle2.png" type="Texture" id=11]
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
@@ -73,3 +74,11 @@ margin_left = 780.0
 margin_right = 1036.0
 margin_bottom = 256.0
 texture = ExtResource( 3 )
+
+[node name="shark" type="TextureRect" parent="GridContainer" groups=[
+"Characters",
+]]
+margin_top = 260.0
+margin_right = 256.0
+margin_bottom = 516.0
+texture = ExtResource( 11 )

@@ -61,7 +61,7 @@ func CheckHurtBoxes() -> Array:
 	for hitbox in $HurtBox.get_overlapping_areas():
 		var opponent=hitbox.get_parent().get_parent()
 		
-		if opponent.team != self.team:
+		if opponent.team != self.team or opponent != self:
 			var data = opponent.currentAttack.hitboxes[int(hitbox["name"])] #invalid get index 169 on base array apparently
 			if not [opponent, data["group"]] in bannedHitboxes:
 				HitActors.append([data,opponent])
@@ -117,7 +117,7 @@ func hitEffect():
 				if i[0] != self:
 					replacementList.append(i)
 			player.bannedHitboxes = replacementList
-		opponent.bannedHitboxes.append([self,1])
+		team = opponent.team #opponent.bannedHitboxes.append([self,1])
 		
 		
 	#progress states

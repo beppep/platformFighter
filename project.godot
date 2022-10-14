@@ -22,7 +22,7 @@ _global_script_classes=[ {
 "base": "Attack",
 "class": "Dair",
 "language": "GDScript",
-"path": "res://source/characters/Noxh/attacks/dair.gd"
+"path": "res://source/characters/Noxh/attacks/fair2.gd"
 }, {
 "base": "Attack",
 "class": "DownB",

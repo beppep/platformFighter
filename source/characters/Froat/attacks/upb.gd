@@ -54,12 +54,9 @@ func update():
 		player.anim_sprite.play("upb2")
 		hitboxes[0]["kbscaling"] = (chargeTime)*0.02 + 1.0 #1.5 to 2.1     -   charge time between 10 and 40
 		hitboxes[0]["kb"] = chargeTime*0.5 + 100 # 105 to 120
-		endFrame = 120 + chargeTime
+		endFrame = 90 + chargeTime
 	if player.stateTimer>40 and player.stateTimer<42 + chargeTime*0.5:
 		player._velocity = Vector2(150*player.direction.x,-1000)#-chargeTime*20
-	if player.stateTimer==50 + int(chargeTime*0.5):
-		pass
-		#player.can_walljump = true
 	
 	if player.is_on_ground and player.stateTimer>51:
 		interrupted = true #remove hitboxes? idk

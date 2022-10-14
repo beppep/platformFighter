@@ -1,14 +1,14 @@
 extends Node
 
 
-var charNum = 3
+var charNum = 4
 var chosenCharacters = [null, null]
 
 var selectableCharacters = {
 	"froat" : preload("res://source/characters/Froat/Froat2.tscn"),
-	#"godtest" : preload("res://source/characters/Godtest/Godtest.tscn"),
 	"noxh" : preload("res://source/characters/Noxh/Noxh.tscn"),
 	"svamp" : preload("res://source/characters/Svampkoloni/Svampkoloni.tscn"),
+	"shark" : preload("res://source/characters/Godtest/Godtest.tscn"),
 	"random" : preload("res://source/characters/Svampkoloni/Svampkoloni.tscn"),
 }
 
