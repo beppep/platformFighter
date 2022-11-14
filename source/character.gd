@@ -684,9 +684,9 @@ func hitEffect():
 		die(0)
 	if position.y<-750 and state == 2:
 		die(180)
-	if position.x>1250:
+	if position.x>1000:
 		die(270)
-	if position.x<-1250:
+	if position.x<-1000:
 		die(90)
 	
 	if hitPause==0:

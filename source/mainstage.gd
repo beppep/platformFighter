@@ -19,7 +19,7 @@ var monkScene = load("res://source/characters/Monk/Monk.tscn")
 var chosenCharacters = []
 
 
-var blastzoneX = 1250 # should be stage specifics
+var blastzoneX = 1000 # should be stage specifics
 var blastzoneUp = 750
 var blastzoneDown = -750
 
