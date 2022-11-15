@@ -20,7 +20,7 @@ var chosenCharacters = []
 
 
 var blastzoneX = 1000 # should be stage specifics
-var blastzoneUp = 750
+var blastzoneUp = 500
 var blastzoneDown = -750
 
 

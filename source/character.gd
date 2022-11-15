@@ -20,6 +20,7 @@ var sparks2 = load("res://source/fx/sparks2.tscn")
 export (float) var gravity = 80.0 #per second squared
 export (float) var airspeed = 20.0
 export (float) var groundspeed = 100.0
+export (float) var maxspeed = 1000.0
 export (float) var jumpspeed = 1000.0
 export (float) var fallspeed = 1000.0
 export (float) var groundfriction = 0.8
@@ -381,10 +382,12 @@ func calculate_move_velocity(): #basically do movement input stuff
 			else:
 				anim_sprite.play("standing")
 	else:
-		if state == 2:
-			_velocity.x += direction.x * airspeed * 0.2
-		else:
+		if state != 2:
 			_velocity.x += direction.x * airspeed
+	if _velocity.x > maxspeed:
+		_velocity.x = maxspeed
+	if _velocity.x < -maxspeed:
+		_velocity.x = -maxspeed
 
 	#friction
 	if is_on_ground:
@@ -395,7 +398,7 @@ func calculate_move_velocity(): #basically do movement input stuff
 			_velocity.y *= yfriction
 	if state==2:
 		if _velocity.y<fallspeed:
-			var personalGravityPart = 0.3
+			var personalGravityPart = 0.3 # lerped with 55
 			_velocity.y += gravity*personalGravityPart + 55*(1-personalGravityPart)  #(gravity*0.6 + 70*0.6)/2
 		if _velocity.y>0:
 			_velocity.y *= yfriction
@@ -427,8 +430,8 @@ func calculate_move_velocity(): #basically do movement input stuff
 	if buttons[0]: #jumping
 		var jumped = false
 		# check ways to jump
-		if (state == 0 or state == 1 and stateTimer<=2 and false):
-			if is_on_ground:
+		if (state == 0 or (state == 1 and stateTimer<=2 and false)):
+			if is_on_ground and released_jump == true:
 				_velocity.y = -jumpspeed*0.6
 				fullhop_timer = 5 #time that jump must be held for fullhop
 				anim_sprite.play("jump")
