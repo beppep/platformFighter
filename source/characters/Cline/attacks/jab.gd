@@ -1,5 +1,6 @@
 extends Attack
 
+
 # Declare member variables here. Examples:
 # var a: int = 2
 # var b: String = "text"
@@ -7,28 +8,27 @@ extends Attack
 
 # Called when the node enters the scene tree for the first time.
 func _init() -> void:
-	endFrame = 29
-	fastEndFrame = 19
+	endFrame = 20
+	fastEndFrame = 15
 	hitboxes = [
 		{
 			"name":"0",
 			"group":1,
-			"damage":8,
+			"damage":5,
 			"start":5,
-			"end":7,
-			"kb":70,
+			"end":8,
+			"kb":50,
 			"kbscaling":0.8,
-			"angle":57,
+			"angle":60,
 			"shapes":[
-				[41,32,44,34]
+				[27,17,33,0]
 			]
 		},
 	]
 
 func update():
 	if player.stateTimer==0:
-		player.anim_sprite.play("fair")
-	if player.is_on_ground:
-		interrupted = true #remove hitboxes? idk
-		if not endFast:
-			landingLag = 10
+		player.anim_sprite.play("jab")
+	if not player.is_on_ground:
+		pass
+		#interrupted = true

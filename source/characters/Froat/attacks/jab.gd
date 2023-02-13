@@ -1,5 +1,4 @@
 extends Attack
-class_name Jab
 
 # Declare member variables here. Examples:
 # var a: int = 2

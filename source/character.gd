@@ -78,7 +78,7 @@ var can_shield_float = false
 var can_getupattack = false
 var walljump_facing = 1
 var jablocked = 0
-var dummyOpponent = 1
+var dummyOpponent = 0
 
 #func process:...::
 #	match state:
@@ -383,7 +383,10 @@ func calculate_move_velocity(): #basically do movement input stuff
 				anim_sprite.play("standing")
 	else:
 		if state != 2:
-			_velocity.x += direction.x * airspeed
+			if direction.x > 0.1:
+				_velocity.x += airspeed
+			if direction.x < -0.1:
+				_velocity.x -= airspeed
 	if _velocity.x > maxspeed:
 		_velocity.x = maxspeed
 	if _velocity.x < -maxspeed:
@@ -505,10 +508,10 @@ func endWallJump():
 		wallJumps = 0
 	if position.x>0:
 		#$"/root/Node2D".rightHog = false
-		_velocity.x = 500
+		_velocity.x = 400
 	else:
 		#$"/root/Node2D".leftHog = false
-		_velocity.x = -500
+		_velocity.x = -400
 	anim_sprite.play("jump")
 
 func resetToIdle():

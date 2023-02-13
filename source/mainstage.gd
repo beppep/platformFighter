@@ -16,6 +16,7 @@ var godtestScene = load("res://source/characters/Godtest/Godtest.tscn")
 var NoxhScene = load("res://source/characters/Noxh/Noxh.tscn")
 var svampScene = load("res://source/characters/Svampkoloni/Svampkoloni.tscn")
 var monkScene = load("res://source/characters/Monk/Monk.tscn")
+var clineScene = load("res://source/characters/Cline/Cline.tscn")
 var chosenCharacters = []
 
 
