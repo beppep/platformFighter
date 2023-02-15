@@ -47,6 +47,7 @@ enum states {
 	landinglag,
 	lying,
 	wallHogging,
+	jumpsquat,
 }
 var stocks = 4
 var state = states.actionable
@@ -71,7 +72,6 @@ var is_on_ground = false
 var dontShield = true
 var grab_target = null
 var dodge_direction
-var fullhop_timer = 0
 var has_airdodge = 1
 var wallJumps = jumpspeed*0.9
 var can_shield_float = false
@@ -134,7 +134,7 @@ func inputAction():
 	# hitpause
 	if(nextFrameHitPause):
 		hitPause=nextFrameHitPause
-		if state==2:
+		if state==states.hitstun:
 			anim_sprite.play("hurt")
 			anim_player.stop(true)
 			anim_player.play("shake")
@@ -149,7 +149,7 @@ func inputAction():
 	characterInputAction()
 	
 	# movement
-	if not (state==4 and stateTimer<20):
+	if not (state==states.dodge and stateTimer<20):
 		calculate_move_velocity()
 	# options
 	if not buttons[3]:
@@ -161,7 +161,7 @@ func inputAction():
 			endWallJump()
 		if buttons[3]:
 			pass
-	if state==0:
+	if state==states.actionable:
 		if buttons[3] and not dontShield:
 			shield()
 		elif buttons[4]:
@@ -171,7 +171,7 @@ func inputAction():
 				attack()
 			elif buttons[2]:
 				special()
-	if state==3 and shieldStun < 1:
+	if state==states.shield and shieldStun < 1:
 		if not is_on_ground:
 			_velocity*=0.95
 			_velocity.y-=50
@@ -194,7 +194,10 @@ func inputAction():
 				totalLandingLag = 0
 				anim_sprite.play("stunned")
 		elif is_on_ground:
-			if direction.y>0.8 or direction.x!=0 and not (buttons[1] or buttons[2]):
+			if buttons[0]:
+				$Shield.visible = false
+				jump()
+			elif direction.y>0.8 or direction.x!=0 and not (buttons[1] or buttons[2]):
 				dodge()
 			elif direction.y<-0.8: #shield drop
 				#set_collision_mask_bit(4,0)
@@ -202,19 +205,21 @@ func inputAction():
 				#dontShield=true
 				#is_on_ground = false
 				pass
-	if state==1:
+	if state==states.attacking:
 		currentAttack.manageHitboxes()
 		currentAttack.update()
-	if state == 4:
+	if state == states.dodge:
 		# roll cancel wavedash
 		if stateTimer < 3:
 			if buttons[0]:
 				if is_on_ground and not direction.y<0:
 					intangible = false
 					anim_sprite.modulate = sprite_color
-					resetToIdle()
+					state = states.landinglag
+					stateTimer = 0
+					totalLandingLag = 10
 					_velocity = direction.normalized()*1000
-					dontShield = true
+					#dontShield = true
 					released_jump = false
 					$"/root/Node2D/AudioStreamPlayerLow".playSound($"/root/Node2D/AudioStreamPlayer".waveland)
 		elif stateTimer==4:
@@ -227,17 +232,29 @@ func inputAction():
 			intangible = false
 		if stateTimer>30:
 			resetToIdle()
-	if state==7:
+	if state==states.lying:
 		if stateTimer>40:
 			if can_getupattack and buttons[1]:
 				attackWith("getupa")
 			elif (direction!=Vector2.ZERO or buttons[3] or buttons[1]):
 				tech()
 			jablocked = 0
+	if state==states.landinglag:
+		anim_sprite.play("land")
+	if state==states.jumpsquat:
+		anim_sprite.play("land")
+		if stateTimer==5:
+			if buttons[0]:
+				_velocity = Vector2(direction.x*maxspeed, -jumpspeed)
+				released_jump = false
+			else:
+				_velocity = Vector2(direction.x*maxspeed, -jumpspeed*0.6)
+			state = states.actionable
+			anim_sprite.play("jump")
 			
 	# MOVE
 	
-	if state==4 and stateTimer<8:
+	if state==states.dodge and stateTimer<8:
 		z_index=0
 		if not is_on_ground:
 			#waveland
@@ -253,11 +270,13 @@ func inputAction():
 				#print("waveland")
 				anim_sprite.modulate = sprite_color
 				intangible = false
-				dontShield = true
+				#dontShield = true
 				#if collision.normal==Vector2.UP:
 				is_on_ground = true
 				_velocity = _velocity.slide(collision.normal)
-				resetToIdle()
+				state = states.landinglag
+				stateTimer = 0
+				totalLandingLag = 10
 				$"/root/Node2D/AudioStreamPlayerLow".playSound($"/root/Node2D/AudioStreamPlayer".waveland)
 		else:
 			move_and_slide(_velocity)
@@ -312,7 +331,7 @@ func inputAction():
 		z_index=1
 		_velocity = move_and_slide(_velocity, Vector2.UP)
 		is_on_ground = is_on_floor()
-	if state==5:
+	if state==states.grabbed:
 		$Shield.visible = false
 		z_index=0
 		anim_sprite.play("roll")
@@ -418,59 +437,37 @@ func calculate_move_velocity(): #basically do movement input stuff
 	else:
 		set_collision_mask_bit(4,1)
 	
-	if fullhop_timer>0:
-		fullhop_timer-=1
-		
-	if fullhop_timer == 1: # full hop
-		if buttons[0]:
-			#position.y += _velocity.y*(1/60)
-			_velocity.y*=2
-		else:
-			position.y -= _velocity.y*(1/60)
-			_velocity.y*=0.6
-	
-	
 	if buttons[0]: #jumping
-		var jumped = false
 		# check ways to jump
 		if (state == 0 or (state == 1 and stateTimer<=2 and false)):
 			if is_on_ground and released_jump == true:
-				_velocity.y = -jumpspeed*0.6
-				fullhop_timer = 5 #time that jump must be held for fullhop
-				anim_sprite.play("jump")
-				jumped = true
+				jump()
 			elif is_on_wall() and wallJumps>0 and canWallJump(position.x):
 				wallJump()
-				jumped = true
 			elif released_jump == true and double_jumps>0:
 				double_jump()
-				jumped = true
 		if state == 1 and can_walljump and is_on_wall() and wallJumps>0 and canWallJump(position.x):
 			currentAttack.interrupted = true
 			currentAttack.endAttack()
 			wallJump()
-			jumped = true
-		# important things to do when jumping
-		if jumped:
-			is_on_ground = false
-			released_jump = false
-			if currentAttack and false: #jump interrupt attack buffer thing
-				#print("cancel atack")
-				currentAttack.interrupted = true
-				currentAttack.endAttack()
 	elif released_jump == false:
 		released_jump = true
 		
 
 func flip():
-	if (direction.x>0 or c_direction.x>0) and transform.x.x == -1 or (direction.x<0 or c_direction.x<0) and transform.x.x == 1:
+	if (direction.x>0 and c_direction.x==0 or c_direction.x>0) and transform.x.x == -1 or (direction.x<0 and c_direction.x==0 or c_direction.x<0) and transform.x.x == 1:
 		transform.x.x *= -1
 func reverse():
 	if direction.x>0 and transform.x.x == -1 or direction.x<0 and transform.x.x == 1:
 		transform.x.x *= -1
 		_velocity.x *= -1
-
+func jump():
+	anim_sprite.play("jump")
+	released_jump = false
+	state = states.jumpsquat
+	stateTimer = 0
 func double_jump():
+	released_jump = false
 	_velocity.y = -jumpspeed * 0.9
 	if direction.x * _velocity.x < 0:
 		_velocity.x = direction.x * jumpspeed*0.1
@@ -487,6 +484,7 @@ func canWallJump(r):
 	else:
 		return not $"/root/Node2D".leftHog
 func wallJump():
+	released_jump = false
 	state = states.wallHogging
 	stateTimer = 0
 	_velocity = Vector2(0,10)
@@ -555,7 +553,7 @@ func shieldEnd():
 	$Shield.visible = false
 	state = 6
 	stateTimer = 0
-	totalLandingLag = 8
+	totalLandingLag = 10
 	anim_sprite.play("land")
 	
 
@@ -796,6 +794,6 @@ func respawn():
 		
 	
 func hitpauseFormula(kb):
-	return kb*0.06+2
+	return kb*0.1+3
 func hitstunFormula(kb):
 	return pow(kb,0.9)*0.4 + 10

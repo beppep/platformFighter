@@ -21,7 +21,7 @@ func _init() -> void:
 			"kbscaling":0.8,
 			"angle":60,
 			"shapes":[
-				[27,17,33,0]
+				[33,33,55,5]
 			]
 		},
 	]
@@ -31,4 +31,4 @@ func update():
 		player.anim_sprite.play("jab")
 	if not player.is_on_ground:
 		pass
-		#interrupted = true
+		interrupted = true

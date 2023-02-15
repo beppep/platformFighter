@@ -43,6 +43,21 @@ func _init() -> void:
 		},
 		{
 			"name":"2",
+			"group":1,
+			"damage":7,
+			"start":15,
+			"end":17,
+			"kb":20,
+			"kbscaling":0.1,
+			"angle":88,
+			"autolinkX":0.9,
+			"autolinkY":0.5,
+			"shapes":[
+				[44,44,30,0]
+			]
+		},
+		{
+			"name":"3",
 			"group":2,
 			"damage":9,
 			"start":20,
@@ -59,9 +74,7 @@ func _init() -> void:
 func update():
 	if player.stateTimer==0:
 		player.cant_hitfall = true
-	if player.stateTimer==0:
-		player._velocity.y=0
-		#player.cant_hitfall = true
+		player._velocity.y = 0
 		player.anim_sprite.play("upb")
 	if player.stateTimer<5:
 		player.reverse()
@@ -74,14 +87,7 @@ func update():
 		player._velocity.y = 1000
 	
 	
-	if player.is_on_ground and player.stateTimer>31:
+	if player.is_on_ground and player.stateTimer>21:
 		interrupted = true #remove hitboxes? idk
 		if not endFast:
 			landingLag = 20
-
-func onHit(name, target, shielded=false):
-	target.position = (target.position*0.9+player.position*0.1)
-	if not shielded:
-		endFast = true
-	if name=="3" and not shielded:
-		player.cant_hitfall = false

@@ -48,8 +48,7 @@ func double_jump():
 		.double_jump()
 	elif double_jumps == 2:
 		#jump
-		_velocity.y = -jumpspeed*0.6
-		fullhop_timer = 5 #time that jump must be held for fullhop
+		_velocity.y = -jumpspeed
 		anim_sprite.play("jump")
 		double_jumps = 1
 		
