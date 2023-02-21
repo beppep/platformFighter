@@ -29,7 +29,7 @@ func update():
 		player._velocity.y-=1400#900
 		player._velocity.x-=player.transform.x.x*300 #200
 		
-		var bullet = player.bulletScene.instance()
+		var bullet = player.baulletScene.instance()
 		bullet.position = player.position + Vector2(10,0)*player.transform.x.x
 		bullet.team = player.team
 		bullet.transform.x.x = player.transform.x.x

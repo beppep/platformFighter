@@ -17,12 +17,12 @@ func _init():
 			"group":1,
 			"damage":1,
 			"start":5,
-			"end":8,
+			"end":9,
 			"kb":0,
 			"kbscaling":0,
 			"angle":90,
 			"shapes":[
-				[28,14,48,0]
+				[28,24,48,0]
 			],
 			#"unshieldable":true
 		},

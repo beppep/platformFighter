@@ -32,7 +32,7 @@ func update():
 		player.cant_hitfall = true
 	if player.stateTimer==1:
 		player._velocity*=0.5 #WHY?
-		player.anim_sprite.play("throw")
+		player.anim_sprite.play("uair")
 	if player.stateTimer<7:
 		player.grab_target.position = player.position+Vector2(50,0)*cos(player.stateTimer*0.5)*player.transform.x.x+Vector2(0,-50)*sin(player.stateTimer*0.5)
 		player.grab_target._velocity = player._velocity
