@@ -30,6 +30,7 @@ func _init():
 func update():
 	if player.stateTimer==0:
 		player.cant_hitfall = true
+		player._velocity *= 0.5
 	if player.stateTimer==1:
 		player.anim_sprite.play("uair")
 	if player.stateTimer<7:
