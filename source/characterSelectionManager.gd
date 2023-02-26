@@ -10,7 +10,7 @@ var selectableCharacters = {
 	"cline" : preload("res://source/characters/Cline/Cline.tscn"),
 	"svamp" : preload("res://source/characters/Svampkoloni/Svampkoloni.tscn"),
 	"shark" : preload("res://source/characters/Godtest/Godtest.tscn"),
-	"random" : preload("res://source/characters/Svampkoloni/Svampkoloni.tscn"),
+	#"random" : preload("res://source/characters/Svampkoloni/Svampkoloni.tscn"),
 }
 
 func pickCharacter(index, name):

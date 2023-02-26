@@ -4,9 +4,9 @@ extends Character
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	can_getupattack = true
+	can_getupattack = false
 	attacks = {
-		"getupa": load("res://source/characters/Cline/attacks/getupattack.gd"),
+		#"getupa": load("res://source/characters/Cline/attacks/getupattack.gd"),
 		"grab": load("res://source/characters/Cline/attacks/grab.gd"),
 		"throw": load("res://source/characters/Cline/attacks/throw.gd"),
 		"zair": load("res://source/characters/Cline/attacks/airthrow.gd"),
@@ -74,7 +74,7 @@ func special():
 		if direction.y<0:
 			attackWith("ub")
 		elif direction.y>0:
-			attackWith("db")
+			attackWith("dair")
 		elif direction.x != 0:
 			attackWith("fb")
 		else:

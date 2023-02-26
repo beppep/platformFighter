@@ -16,7 +16,7 @@ func _init():
 			"damage":10,
 			"start":8,
 			"end":9,
-			"kb":100,
+			"kb":60,
 			"kbscaling":1.5,
 			"angle":120,
 			"autolinkX":1,

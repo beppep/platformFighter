@@ -17,13 +17,13 @@ func _init() -> void:
 			"name":"0",
 			"group":0,
 			"damage":8,
-			"start":7,
-			"end":10,
-			"kb":64,
+			"start":8,
+			"end":11,
+			"kb":65,
 			"kbscaling":1.5,
-			"angle":90,
+			"angle":80,
 			"shapes":[
-				[30,40,30,-40]
+				[35,35,-45,-35]
 			]
 		},
 		{
@@ -32,11 +32,11 @@ func _init() -> void:
 			"damage":8,
 			"start":10,
 			"end":13,
-			"kb":65,
+			"kb":64,
 			"kbscaling":1.5,
-			"angle":80,
+			"angle":90,
 			"shapes":[
-				[30,40,-30,-40]
+				[35,35,30,-30]
 			]
 		},
 	]

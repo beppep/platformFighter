@@ -423,11 +423,12 @@ func calculate_move_velocity(): #basically do movement input stuff
 			var personalGravityPart = 0.3 # lerped with 55
 			_velocity.y += gravity*personalGravityPart + 55*(1-personalGravityPart)  #(gravity*0.6 + 70*0.6)/2
 		if _velocity.y>0:
-			_velocity.y *= yfriction
+			pass
+			#_velocity.y *= yfriction
 	else:
-		if _velocity.y>0 and direction.y>0:
-			_velocity.y += direction.y * gravity
 		if _velocity.y<fallspeed:
+			_velocity.y += gravity
+		if 0<_velocity.y and _velocity.y<fallspeed*1.7 and direction.y>0.1:
 			_velocity.y += gravity
 	
 	

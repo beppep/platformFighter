@@ -11,8 +11,8 @@ func _init() -> void:
 			"name":"0",
 			"group":1,
 			"damage":14,
-			"start":22,
-			"end":25,
+			"start":17,
+			"end":20,
 			"kb":150,
 			"kbscaling":2.0,
 			"angle":40,
@@ -41,9 +41,9 @@ func update():
 	
 	if player.stateTimer==0:
 		player.anim_sprite.play("fsmash")
-	if player.stateTimer==40 and player.grab_target:
+	if player.stateTimer==38 and player.grab_target:
 		player.anim_sprite.play("fsmash2")
-	if player.stateTimer==52:
+	if player.stateTimer==50:
 		if player.grab_target and is_instance_valid(player.grab_target) and player.grab_target.position:
 			var target_pos = player.grab_target.position + player.grab_target._velocity*0.15 + Vector2(0,100)
 			if not(abs(target_pos.x) > player.get_node("/root/Node2D").blastzoneX or target_pos.y > player.get_node("/root/Node2D").blastzoneUp):
@@ -53,7 +53,7 @@ func update():
 				interrupted=true
 		else:
 			interrupted=true
-	if player.stateTimer>50 and player.stateTimer<55 and player.grab_target and is_instance_valid(player.grab_target):
+	if player.stateTimer>49 and player.stateTimer<53 and player.grab_target and is_instance_valid(player.grab_target):
 		player._velocity = Vector2(400*player.transform.x.x, -1100)
 		
 		

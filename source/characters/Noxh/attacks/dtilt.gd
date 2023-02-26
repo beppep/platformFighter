@@ -17,8 +17,8 @@ func _init() -> void:
 			"damage":7,
 			"start":6,
 			"end":11,
-			"kb":90,
-			"kbscaling":0.7,
+			"kb":70,
+			"kbscaling":1.7,
 			"angle":73,
 			"shapes":[
 				[28,22,43,22]

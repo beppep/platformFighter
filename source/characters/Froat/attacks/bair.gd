@@ -59,4 +59,4 @@ func update():
 	if player.is_on_ground:
 		interrupted = true #remove hitboxes? idk
 		if not endFast:
-			landingLag = 10
+			landingLag = 15

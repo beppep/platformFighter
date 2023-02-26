@@ -28,7 +28,7 @@ func _init() -> void:
 
 func onEnd():
 	if endFast:
-		player.transform.x.x *= -1
+		pass#player.transform.x.x *= -1
 
 func onHit(name, target, shielded=false):
 	if name=="0":
