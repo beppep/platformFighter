@@ -17,7 +17,7 @@ func _init():
 			"start":7,
 			"end":8,
 			"kb":50,
-			"kbscaling":1,
+			"kbscaling":0.5,
 			"angle":-120,
 			"autolinkX":1,
 			"autolinkY":1,
@@ -32,7 +32,7 @@ func update():
 		player.cant_hitfall = true
 		player._velocity *= 0.5
 	if player.stateTimer==1:
-		player.anim_sprite.play("uair")
+		player.anim_sprite.play("roll")
 	if player.stateTimer<7:
 		player.grab_target.position = player.position+Vector2(50,0)*cos(player.stateTimer*0.5)*player.transform.x.x+Vector2(0,-50)*sin(player.stateTimer*0.5)
 		player.grab_target._velocity = player._velocity

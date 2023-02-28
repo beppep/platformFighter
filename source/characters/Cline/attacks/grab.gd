@@ -33,6 +33,8 @@ func update():
 		player.anim_sprite.play("grab")
 		
 		player.cant_hitfall=true
+	if player.stateTimer<10 and player._velocity.y>0:
+		player._velocity.y*=0.9
 
 func onHit(name, target, shielded=false):
 	target.getGrabbed()

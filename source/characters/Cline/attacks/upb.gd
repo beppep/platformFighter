@@ -79,6 +79,8 @@ func update():
 	if player.stateTimer<5:
 		player.reverse()
 	if 5<player.stateTimer and player.stateTimer<15:
+		if player._velocity.x*player.transform.x.x<0:
+			player._velocity.x = 0
 		player._velocity.x *= 0.9
 		player._velocity.y = -1600
 	

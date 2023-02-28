@@ -1,4 +1,4 @@
-[gd_scene load_steps=83 format=2]
+[gd_scene load_steps=85 format=2]
 
 [ext_resource path="res://assets/shield.png" type="Texture" id=1]
 [ext_resource path="res://assets/Cline/idle.png" type="Texture" id=2]
@@ -162,6 +162,16 @@ region = Rect2( 768, 0, 256, 256 )
 flags = 4
 atlas = ExtResource( 2 )
 region = Rect2( 0, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=69]
+flags = 4
+atlas = ExtResource( 12 )
+region = Rect2( 0, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=70]
+flags = 4
+atlas = ExtResource( 9 )
+region = Rect2( 768, 0, 256, 256 )
 
 [sub_resource type="AtlasTexture" id=31]
 flags = 4
@@ -385,10 +395,10 @@ animations = [ {
 "name": "utilt",
 "speed": 20.0
 }, {
-"frames": [ SubResource( 30 ) ],
-"loop": false,
+"frames": [ SubResource( 30 ), SubResource( 69 ), SubResource( 70 ), SubResource( 69 ) ],
+"loop": true,
 "name": "run",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [ SubResource( 31 ), SubResource( 31 ), SubResource( 32 ), SubResource( 33 ) ],
 "loop": false,
@@ -460,9 +470,7 @@ shape = SubResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 62 )
-animation = "bair"
-frame = 3
-playing = true
+animation = "standing"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/shake = SubResource( 63 )

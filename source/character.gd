@@ -73,7 +73,7 @@ var dontShield = true
 var grab_target = null
 var dodge_direction
 var has_airdodge = 1
-var wallJumps = jumpspeed*0.9
+var wallJumps = jumpspeed / 2
 var can_shield_float = false
 var can_getupattack = false
 var walljump_facing = 1
@@ -266,18 +266,21 @@ func inputAction():
 				collision = move_and_collide(Vector2(0,100))
 				if not collision:
 					move_and_collide(Vector2(0,-50))
-			if collision and collision.normal==Vector2.UP: #waveland on walls?
-				#print("waveland")
-				anim_sprite.modulate = sprite_color
-				intangible = false
-				#dontShield = true
-				#if collision.normal==Vector2.UP:
-				is_on_ground = true
-				_velocity = _velocity.slide(collision.normal)
-				state = states.landinglag
-				stateTimer = 0
-				totalLandingLag = 10
-				$"/root/Node2D/AudioStreamPlayerLow".playSound($"/root/Node2D/AudioStreamPlayer".waveland)
+			if collision:
+				if collision.normal==Vector2.UP: #waveland on walls?
+					#print("waveland")
+					anim_sprite.modulate = sprite_color
+					intangible = false
+					#dontShield = true
+					#if collision.normal==Vector2.UP:
+					is_on_ground = true
+					_velocity = _velocity.slide(collision.normal)
+					state = states.landinglag
+					stateTimer = 0
+					totalLandingLag = 10
+					$"/root/Node2D/AudioStreamPlayerLow".playSound($"/root/Node2D/AudioStreamPlayer".waveland)
+				else:
+					position += collision.get_remainder().slide(collision.normal)
 		else:
 			move_and_slide(_velocity)
 	elif state==states.hitstun:
@@ -395,21 +398,20 @@ func calculate_move_velocity(): #basically do movement input stuff
 	# MOVE X
 	if is_on_ground:
 		if state == states.actionable:
-			_velocity.x += direction.x * groundspeed
+			if direction.x > 0.1 and _velocity.x < maxspeed:
+				_velocity.x += direction.x * groundspeed
+			if direction.x < -0.1 and _velocity.x > -maxspeed:
+				_velocity.x += direction.x * groundspeed
 			if direction.x:
 				anim_sprite.play("run")
 			else:
 				anim_sprite.play("standing")
 	else:
 		if state != 2:
-			if direction.x > 0.1:
+			if direction.x > 0.1 and _velocity.x < maxspeed:
 				_velocity.x += airspeed
-			if direction.x < -0.1:
+			if direction.x < -0.1 and _velocity.x > -maxspeed:
 				_velocity.x -= airspeed
-	if _velocity.x > maxspeed:
-		_velocity.x = maxspeed
-	if _velocity.x < -maxspeed:
-		_velocity.x = -maxspeed
 
 	#friction
 	if is_on_ground:
