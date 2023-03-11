@@ -12,25 +12,34 @@ func _init() -> void:
 	
 	endFrame = 55
 	hitboxes = [
+		{
+			"name":"0",
+			"group":1,
+			"damage":13,
+			"start":38,
+			"end":41,
+			"kb":70,
+			"kbscaling":1.9,
+			"angle":80,
+			"shapes":[
+				[44,28,0,20]
+			]
+		},
 	]
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func update():
-	player._velocity.y *= 0.8
 	if player.stateTimer==0:
+		player._velocity = Vector2(0,0)
 		player.anim_sprite.play("dsmash")
-	if player.stateTimer==12:
+	if 12<player.stateTimer and player.stateTimer<32:
+		player.intangible = true
+		player.move_and_collide(Vector2(player.direction.x*10,0))
+		if not player.move_and_collide(Vector2(0,50)):
+			player.move_and_collide(Vector2(0,-50))
+			player.position.x -= player.direction.x*10
+	if player.stateTimer==32:
+		player.intangible = false
 		
-		var bullet = bulletScene.instance()
-		bullet.position = player.position + Vector2(10,0)*player.transform.x.x
-		bullet.team = player.team
-		#player.bannedHitboxes.append([bullet,1])
-		bullet.transform.x.x = player.transform.x.x
-		bullet._velocity = Vector2(1000*player.transform.x.x,0)
-		player.get_node("/root/Node2D/Articles").add_child(bullet)
-		bullet.sleepDart = true
-		bullet.attackWith("bulletAttack")
-		bullet.anim_sprite.play("arrow")
-
 

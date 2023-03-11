@@ -74,7 +74,7 @@ func special():
 		if direction.y<0:
 			attackWith("ub")
 		elif direction.y>0:
-			attackWith("dair")
+			attackWith("db")
 		elif direction.x != 0:
 			attackWith("fb")
 		else:

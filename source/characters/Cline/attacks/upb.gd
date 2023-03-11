@@ -32,7 +32,7 @@ func _init() -> void:
 			"damage":7,
 			"start":10,
 			"end":14,
-			"kb":30,
+			"kb":35,
 			"kbscaling":0.1,
 			"angle":88,
 			"autolinkX":0.9,
@@ -63,7 +63,7 @@ func _init() -> void:
 			"start":20,
 			"end":27,
 			"kb":83,
-			"kbscaling":0.7,
+			"kbscaling":1,
 			"angle":-87, 
 			"shapes":[
 				[48,28,30,0]

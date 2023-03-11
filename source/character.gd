@@ -251,6 +251,7 @@ func inputAction():
 				_velocity = Vector2(direction.x*maxspeed, -jumpspeed*0.6)
 			state = states.actionable
 			anim_sprite.play("jump")
+			anim_sprite.play("doublejump")
 			
 	# MOVE
 	
@@ -590,6 +591,7 @@ func dodge():
 		dodge_direction = Vector2(0,0)
 		_velocity = Vector2(0,0)
 		anim_sprite.play("stunned")
+		anim_sprite.play("spotdodge")
 
 func CheckHurtBoxes() -> Array:
 	var HitActors = []
@@ -653,11 +655,6 @@ func hitEffect():
 				jablocked = 0
 			if (not state==3):# or data["unshieldable"]:
 				kb_vector = Vector2(0,-1)*(gravity/30)*pow(kb,0.9) + Vector2(cos(angle)*opponent.transform.x.x, -sin(angle))*2.7 *pow(kb,1.2) # not += imo
-				autolink_vector = Vector2.ZERO
-				if "autolinkX" in data and data["autolinkX"]>0:
-					autolink_vector.x = data["autolinkX"]*opponent._velocity.x
-				if "autolinkY" in data and data["autolinkY"]>0:
-					autolink_vector.y = data["autolinkY"]*opponent._velocity.y
 				totalHitstun = hitstunFormula(kb)
 				state = 2
 				stateTimer = 0
@@ -685,7 +682,12 @@ func hitEffect():
 		has_airdodge = 1
 		opponent.currentAttack.onHit(data["name"], self, (state==3))
 		opponent.onHit(data["name"], self, (state==3))
-	
+		if (not state==3):# or data["unshieldable"]:
+			autolink_vector = Vector2.ZERO
+			if "autolinkX" in data and data["autolinkX"]>0:
+				autolink_vector.x = data["autolinkX"]*opponent._velocity.x
+			if "autolinkY" in data and data["autolinkY"]>0:
+				autolink_vector.y = data["autolinkY"]*opponent._velocity.y
 	
 	if position.y>750:
 		die(0)
@@ -745,6 +747,8 @@ func hitEffect():
 		if hitPause<=0:
 			hitPause=0
 			if state==2:
+				anim_player.stop(true)
+				anim_player.play("idle")
 				anim_sprite.play("stunned")
 				# DI
 				var new_angle = kb_vector.angle() + sin(kb_vector.angle_to(direction))*0.1 #.1 to .2

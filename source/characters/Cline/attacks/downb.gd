@@ -1,4 +1,5 @@
-extends Attack
+extends "res://source/characters/Attack.gd"
+
 
 # Declare member variables here. Examples:
 # var a: int = 2
@@ -6,41 +7,48 @@ extends Attack
 
 
 # Called when the node enters the scene tree for the first time.
-func _init():
-	
-	endFrame = 22
+
+func _init() -> void:
+	endFrame = 26
+	fastEndFrame = 9
 	hitboxes = [
+		{
+			"name":"0",
+			"group":1,
+			"damage":2,
+			"start":4,
+			"end":5,
+			"kb":30,
+			"kbscaling":0.1,
+			"angle":-90,
+			"autolinkX":0.9,
+			"shapes":[
+				[40,8,0,24]
+			]
+		},
+		{
+			"name":"1",
+			"group":2,
+			"damage":1,
+			"start":6,
+			"end":7,
+			"kb":50,
+			"kbscaling":0.1,
+			"angle":90,
+			"autolinkX":0.9,
+			"shapes":[
+				[40,8,0,32]
+			]
+		},
 	]
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func update():
-	if player.stateTimer < 10:
-		pass
-		#player._velocity.x*=0.95
-		#player._velocity.y*=0.7
-		#player._velocity.y-=40
+	if player.stateTimer<10:
+		player._velocity.y = 0
 	if player.stateTimer==0:
-		player.anim_sprite.play("downb")
-	if player.stateTimer < 6:
-		player.flip()
-	if player.stateTimer==10:
-		player._velocity.y*=0.6#1
-		player._velocity.y-=1400#900
-		player._velocity.x-=player.transform.x.x*300 #200
-		
-		var bullet = player.baulletScene.instance()
-		bullet.position = player.position + Vector2(10,0)*player.transform.x.x
-		bullet.team = player.team
-		bullet.transform.x.x = player.transform.x.x
-		bullet._velocity = Vector2(1000*player.transform.x.x,2000)
-		player.get_node("/root/Node2D/Articles").add_child(bullet)
-		bullet.attackWith("bulletAttack")
-		bullet.anim_sprite.play("down")
-		
-	if player.is_on_ground:
+		player.anim_sprite.play("dtilt")
+	if player.buttons[2] and player.stateTimer == 7:# and player.B_charge>0:
+		#player.B_charge-=1
 		interrupted = true
-		if not endFast:
-			landingLag = 6
-
-
+		player.state=1
+		player.stateTimer=-1
