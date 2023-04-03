@@ -76,9 +76,10 @@ var has_airdodge = 1
 var wallJumps = jumpspeed / 2
 var can_shield_float = false
 var can_getupattack = false
+var ghosted = false
 var walljump_facing = 1
 var jablocked = 0
-var dummyOpponent = -1
+var dummyOpponent = 1
 
 #func process:...::
 #	match state:
@@ -746,8 +747,12 @@ func hitEffect():
 		stateTimer += 1
 		if state == 2:
 			if stateTimer >= totalHitstun:
-				resetToIdle()
-				jablocked = 0				
+				if ghosted:
+					ghosted = false
+					getGhosted()
+				else:
+					resetToIdle()
+					jablocked = 0				
 		if state == 6:
 			if stateTimer >= totalLandingLag:
 				resetToIdle()
@@ -810,8 +815,33 @@ func respawn():
 		get_tree().change_scene("res://source/characterSelect.tscn")
 	queue_free()
 		
+
+func getGhosted():
+	
+	$Ghost.visible = false
+	#var angle = 90*PI/180 # den e 90
+	
+	var kb = (90 + 0.6*percentage)
+	kb_vector = Vector2(0,-1)*(gravity/30)*pow(kb,0.9) + Vector2(0, -1)*2.7 *pow(kb,1.2) # not += imo
+	totalHitstun = hitstunFormula(kb)
+	state = 2
+	stateTimer = 0
+	wallJumps = jumpspeed
+	has_airdodge = 1
+	nextFrameHitPause = max(nextFrameHitPause, hitpauseFormula(kb))
+	$"/root/Node2D/Camera2D".screenShake = int(kb/20)
+	$"/root/Node2D/AudioStreamPlayerLow".playSound($"/root/Node2D/AudioStreamPlayerLow".punch, 0.5+100/kb)
+	$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".rocks, 0.5+100/kb)
+	var blast = explosion.instance()
+	percentage += 8
+	
+	blast.position = self.position
+	blast.scale = Vector2(kb*0.02, kb*0.02)
+	blast.z_index = -2
+	get_node("/root/Node2D/fx").add_child(blast)
+	
 	
 func hitpauseFormula(kb):
 	return kb*0.1+3
 func hitstunFormula(kb):
-	return pow(kb,0.9)*0.4 + 10
+	return pow(kb,0.9)*0.4 + 10 # less?

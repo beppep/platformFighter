@@ -1,6 +1,6 @@
 extends Character
 
-
+var ghostScene = preload("res://source/characters/Cline/Ghost.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -21,7 +21,7 @@ func _ready() -> void:
 		"fair2": load("res://source/characters/Cline/attacks/fair2.gd"),
 		"dair": load("res://source/characters/Cline/attacks/dair.gd"),
 		"ub": load("res://source/characters/Cline/attacks/upb.gd"),
-		"fb": load("res://source/characters/Cline/attacks/fb.gd"),
+		"fb": load("res://source/characters/Cline/attacks/fb2.gd"),
 		"nb": load("res://source/characters/Cline/attacks/nb.gd"),
 		"db": load("res://source/characters/Cline/attacks/downb.gd"),
 		"nsmash": load("res://source/characters/Cline/attacks/nsmash.gd"),
@@ -74,20 +74,20 @@ func special():
 		if direction.y<0:
 			attackWith("ub")
 		elif direction.y>0:
-			attackWith("db")
+			attackWith("fb")
 		elif direction.x != 0:
 			attackWith("fb")
 		else:
-			attackWith("nb")
+			attackWith("fb")
 	else:
 		if direction.y<0:
 			attackWith("ub")
 		elif direction.y>0:
 			attackWith("dsmash")
 		elif direction.x != 0:
-			attackWith("ftilt")
+			attackWith("fb")
 		else:
-			attackWith("jab")
+			attackWith("fb")
 	
 func grab():
 	flip() #?

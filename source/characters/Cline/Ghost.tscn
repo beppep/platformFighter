@@ -1,0 +1,78 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://assets/Noxh/bulletup.png" type="Texture" id=1]
+[ext_resource path="res://source/characters/Cline/Ghost.gd" type="Script" id=2]
+[ext_resource path="res://assets/cloud.png" type="Texture" id=3]
+[ext_resource path="res://assets/Noxh/arow.png" type="Texture" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 5.83286, 6.00777 )
+
+[sub_resource type="AtlasTexture" id=3]
+flags = 4
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 500, 500 )
+
+[sub_resource type="AtlasTexture" id=2]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=8]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 512, 512 )
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ SubResource( 3 ) ],
+"loop": true,
+"name": "arrow",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 2 ) ],
+"loop": true,
+"name": "up",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 8 ) ],
+"loop": true,
+"name": "down",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 3.27913, 10.0123 )
+
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 9.16997, 9.6786 )
+
+[node name="Ghost" type="KinematicBody2D"]
+collision_layer = 0
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( -10, 10 )
+scale = Vector2( 0.2, 0.2 )
+frames = SubResource( 5 )
+animation = "down"
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+scale = Vector2( 3, 1 )
+shape = SubResource( 6 )
+
+[node name="HitBoxes" type="Node2D" parent="."]
+
+[node name="0" type="Area2D" parent="HitBoxes"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBoxes/0"]
+shape = SubResource( 7 )
