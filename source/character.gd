@@ -78,7 +78,7 @@ var can_shield_float = false
 var can_getupattack = false
 var walljump_facing = 1
 var jablocked = 0
-var dummyOpponent = 0
+var dummyOpponent = -1
 
 #func process:...::
 #	match state:
@@ -141,7 +141,7 @@ func inputAction():
 		else:
 			anim_sprite.stop()
 		nextFrameHitPause=0
-		if direction.y>0 and not cant_hitfall: #hitfalling
+		if direction.y>0.9 and not cant_hitfall: #hitfalling
 			_velocity.y = fallspeed*1
 	if hitPause:
 		return
@@ -215,6 +215,7 @@ func inputAction():
 				if is_on_ground and not direction.y<0:
 					intangible = false
 					anim_sprite.modulate = sprite_color
+					is_on_ground = true
 					state = states.landinglag
 					stateTimer = 0
 					totalLandingLag = 10
@@ -245,10 +246,10 @@ func inputAction():
 		anim_sprite.play("land")
 		if stateTimer==5:
 			if buttons[0]:
-				_velocity = Vector2(direction.x*maxspeed, -jumpspeed)
+				_velocity.y = -jumpspeed
 				released_jump = false
 			else:
-				_velocity = Vector2(direction.x*maxspeed, -jumpspeed*0.6)
+				_velocity.y = -jumpspeed*0.6
 			state = states.actionable
 			anim_sprite.play("jump")
 			anim_sprite.play("doublejump")
@@ -341,25 +342,26 @@ func inputAction():
 		anim_sprite.play("roll")
 	
 func get_buttons():
-	if player_id==0:
-		if dummyOpponent:
-			rng.randomize() #test
-			return [(rng.randf()<0.1 or position.y>300 and rng.randf()<0.9),(rng.randf()<0.3),(rng.randf()<0.1 or position.y>300 and rng.randf()<0.99),(rng.randf()<0.1),(rng.randf()<0.1)] #test
+	if dummyOpponent==player_id:
+		rng.randomize() #test
+		return [(rng.randf()<0.1 or position.y>300 and rng.randf()<0.9),(rng.randf()<0.3),(rng.randf()<0.1 or position.y>300 and rng.randf()<0.99),(rng.randf()<0.1),(rng.randf()<0.1)] #test
 		
+	if player_id==0:
 		return [Input.get_action_strength("p1_jump"),Input.get_action_strength("p1_a"),Input.get_action_strength("p1_b"),Input.get_action_strength("p1_shield"),Input.get_action_strength("p1_z")]
 	else:
 		return [Input.get_action_strength("p2_jump"),Input.get_action_strength("p2_a"),Input.get_action_strength("p2_b"),Input.get_action_strength("p2_shield"),Input.get_action_strength("p2_z")]
 func get_direction():
-	if player_id==0:
-		if dummyOpponent:
-			var my_random_number = rng.randf_range(0.0, 2*PI) #test
-			if position.y>200 or abs(position.x) > 300:
-				if position.x >0:
-					return Vector2(-0.7,-0.7)*rng.randf() #test
-				else:
-					return Vector2(0.7,-0.7)*rng.randf() #test
+	if dummyOpponent==player_id:
+		var my_random_number = rng.randf_range(0.0, 2*PI) #test
+		if position.y>200 or abs(position.x) > 300:
+			if position.x >0:
+				return Vector2(-0.7,-0.7)*rng.randf() #test
 			else:
-				return Vector2(sin(my_random_number),cos(my_random_number))*max(0,rng.randf()-0.5) #test
+				return Vector2(0.7,-0.7)*rng.randf() #test
+		else:
+			return Vector2(sin(my_random_number),cos(my_random_number))*max(0,rng.randf()-0.5) #test
+		
+	if player_id==0:
 		return Vector2(
 			Input.get_action_strength("p1_right")-Input.get_action_strength("p1_left"),
 			Input.get_action_strength("p1_down")-Input.get_action_strength("p1_up") #is_on_floor updated by moveandslide
@@ -415,10 +417,12 @@ func calculate_move_velocity(): #basically do movement input stuff
 				_velocity.x -= airspeed
 
 	#friction
-	if is_on_ground:
+	if is_on_ground and not state==states.jumpsquat:
 		_velocity *= groundfriction
 	else:
-		if not state==2:
+		if state==2:
+			_velocity.x *= 0.98
+		else:
 			_velocity.x *= airfriction
 			_velocity.y *= yfriction
 	if state==2:
@@ -431,12 +435,12 @@ func calculate_move_velocity(): #basically do movement input stuff
 	else:
 		if _velocity.y<fallspeed:
 			_velocity.y += gravity
-		if 0<_velocity.y and _velocity.y<fallspeed*1.7 and direction.y>0.1:
+		if 0<_velocity.y and _velocity.y<fallspeed*1.5+100 and direction.y>0.9:
 			_velocity.y += gravity
 	
 	
 	# MOVE Y
-	if direction.y > 0.9 and (state == states.actionable or not is_on_ground) and not state == states.dodge:
+	if direction.y > 0.9 and ((state == states.actionable and not buttons[1]) or not is_on_ground) and not state == states.dodge:#
 		set_collision_mask_bit(4,0)
 	else:
 		set_collision_mask_bit(4,1)
@@ -619,6 +623,12 @@ func hitCollision():
 		if kb>0:
 			nextFrameHitPause = max(nextFrameHitPause, hitpauseFormula(kb))
 			opponent.nextFrameHitPause = max(opponent.nextFrameHitPause, hitpauseFormula(kb))
+		if "extrahitpause" in data and state!=states.shield:
+			nextFrameHitPause += data["extrahitpause"]
+			opponent.nextFrameHitPause += data["extrahitpause"]
+		if "electric" in data:
+			nextFrameHitPause += data["electric"]
+				
 
 func getGrabbed():
 	if currentAttack:
@@ -628,7 +638,7 @@ func getGrabbed():
 	stateTimer = 0
 
 func hitEffect():
-	if state==1 and hitPause==0:
+	if state==1:# and hitPause==0:# ?????
 		currentAttack.endAttack()
 	if HitActors:
 		
@@ -651,6 +661,7 @@ func hitEffect():
 					#$"/root/Node2D".leftHog = false
 			if state==states.lying and jablocked < 3:
 				jablocked +=1
+				anim_player.play("shake") # ???
 			else:
 				jablocked = 0
 			if (not state==3):# or data["unshieldable"]:
@@ -691,11 +702,11 @@ func hitEffect():
 	
 	if position.y>750:
 		die(0)
-	if position.y<-750 and state == 2:
+	if position.y<-600 and state == 2:
 		die(180)
-	if position.x>1000:
+	if position.x>1200:
 		die(270)
-	if position.x<-1000:
+	if position.x<-1200:
 		die(90)
 	
 	if hitPause==0:

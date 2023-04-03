@@ -17,14 +17,14 @@ func _init():
 			"group":1,
 			"damage":1,
 			"start":6,
-			"end":10,
+			"end":11,
 			"kb":0,
 			"kbscaling":0,
 			"angle":90,
 			"shapes":[
 				[32,20,44,10]
 			],
-			#"unshieldable":true
+			"extrahitpause":4,
 		},
 	]
 
@@ -40,7 +40,7 @@ func onHit(name, target, shielded=false):
 	target.getGrabbed()
 	
 	interrupted = true
-	endAttack()
+	endAttack(false)
 	
 	if player.is_on_ground:
 		player.attackWith("throw")

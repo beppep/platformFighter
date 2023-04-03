@@ -26,8 +26,8 @@ func update():
 	if player.stateTimer < 6:
 		player.flip()
 	if player.stateTimer==10:
-		player._velocity.y*=0.6#1
-		player._velocity.y-=1400#900
+		player._velocity.y*=0.2#1
+		player._velocity.y-=1100#900
 		player._velocity.x-=player.transform.x.x*300 #200
 		
 		var bullet = player.bulletScene.instance()

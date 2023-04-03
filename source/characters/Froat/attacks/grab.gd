@@ -24,7 +24,7 @@ func _init():
 			"shapes":[
 				[28,24,48,0]
 			],
-			#"unshieldable":true
+			"extrahitpause":4,
 		},
 	]
 

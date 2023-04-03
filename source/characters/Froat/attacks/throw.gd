@@ -17,7 +17,7 @@ func _init():
 			"start":8,
 			"end":9,
 			"kb":100,
-			"kbscaling":0.5,
+			"kbscaling":1.1,
 			"angle":80,
 			"autolinkX":1,
 			"autolinkY":1,

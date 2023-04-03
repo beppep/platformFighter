@@ -21,6 +21,19 @@ func _init() -> void:
 				[44,28,0,66]
 			]
 		},
+		{
+			"name":"0",
+			"group":1,
+			"damage":13,
+			"start":15,
+			"end":17,
+			"kb":70,
+			"kbscaling":0.5,
+			"angle":-80,
+			"shapes":[
+				[44,28,0,66]
+			]
+		},
 	]
 
 func update():

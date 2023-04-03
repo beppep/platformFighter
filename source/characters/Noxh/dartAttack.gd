@@ -13,10 +13,11 @@ func _init():
 			"name":"0",
 			"group":1,
 			"start":1,
-			"damage":4,
+			"damage":5,
 			"kb":30,
-			"kbscaling":0.4,
-			"angle":80,
+			"kbscaling":0.7,
+			"angle":90,
+			"extrahitpause":30,
 		},
 	]
 

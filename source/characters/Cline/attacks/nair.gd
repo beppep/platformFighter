@@ -4,8 +4,8 @@ extends Attack
 
 # Called when the node enters the scene tree for the first time.
 func _init() -> void:
-	endFrame = 54
-	fastEndFrame = 41
+	endFrame = 48
+	fastEndFrame = 38
 	hitboxes = [
 		{
 			"name":"0",
@@ -13,12 +13,13 @@ func _init() -> void:
 			"damage":15,
 			"start":15,
 			"end":19,
-			"kb":80,
-			"kbscaling":1.8,
+			"kb":70,
+			"kbscaling":1.7,
 			"angle":30,
 			"shapes":[
 				[40,20,40,20]
-			]
+			],
+			"electric":8,
 		},
 	]
 

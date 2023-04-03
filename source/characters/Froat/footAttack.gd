@@ -46,7 +46,7 @@ func onHit(name, target, shielded=false):
 	if not shielded:
 		player.ownerPlayer.currentAttack.endFast = true
 
-func autoEndAttack():
+func autoEndAttack(resetAnims = true):
 	for box in player.get_node("HitBoxes").get_children(): #remove hitboxes
 		if(not box.is_queued_for_deletion()):
 			box.queue_free()

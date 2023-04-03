@@ -12,7 +12,7 @@ func _init() -> void:
 			"group":1,
 			"damage":6,
 			"start":7,
-			"end":10,
+			"end":15,
 			"kb":50,
 			"kbscaling":1,
 			"angle":122,

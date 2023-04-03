@@ -85,9 +85,9 @@ func special():
 		elif direction.y>0:
 			attackWith("dsmash")
 		elif direction.x != 0:
-			attackWith("fsmash")
+			attackWith("ftilt")
 		else:
-			attackWith("nsmash")
+			attackWith("jab")
 	
 func grab():
 	flip() #?

@@ -45,7 +45,9 @@ func update():
 		player.anim_sprite.play("sideb")
 		wasGrounded = false
 	if player.stateTimer==10:
-		player._velocity = Vector2(800*player.transform.x.x, -600)
+		player._velocity = Vector2(600*player.transform.x.x, -600)
+	if player.stateTimer>10 and player.stateTimer<20:
+		player._velocity.x = 600*player.transform.x.x
 	if player.stateTimer==36:
 		player.can_walljump = true
 		if not endFast:

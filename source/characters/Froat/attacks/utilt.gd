@@ -8,8 +8,8 @@ extends "res://source/characters/Attack.gd"
 
 # Called when the node enters the scene tree for the first time.
 func _init() -> void:
-	endFrame = 23
-	fastEndFrame = 17
+	endFrame = 34
+	fastEndFrame = 24
 	hitboxes = [
 		{
 			"name":"0",
@@ -29,5 +29,5 @@ func _init() -> void:
 func update():
 	if player.stateTimer==0:
 		player.anim_sprite.play("utilt")
-	if not player.is_on_floor():
+	if not player.is_on_ground:
 		interrupted = true

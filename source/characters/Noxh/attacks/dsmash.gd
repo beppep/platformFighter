@@ -30,7 +30,7 @@ func update():
 		bullet._velocity = Vector2(1000*player.transform.x.x,0)
 		player.get_node("/root/Node2D/Articles").add_child(bullet)
 		bullet.sleepDart = true
-		bullet.attackWith("bulletAttack")
+		bullet.attackWith("dartAttack")
 		bullet.anim_sprite.play("arrow")
 
 
