@@ -8,16 +8,29 @@ extends Attack
 
 # Called when the node enters the scene tree for the first time.
 func _init() -> void:
-	endFrame = 60
-	fastEndFrame = 44
+	endFrame = 40
+	fastEndFrame = 34
 	hitboxes = [
+		{
+			"name":"0",
+			"group":1,
+			"damage":4,
+			"start":9,
+			"end":20,
+			"kb":30,
+			"kbscaling":0.5,
+			"angle":45,
+			"shapes":[
+				[32,12,34,20]
+			],
+		}
 	]
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func update():
 	if player.stateTimer == 0:
-		player.anim_sprite.play("jab")
+		player.anim_sprite.play("fb")
 
 	if player.stateTimer==10:
 		

@@ -79,7 +79,7 @@ var can_getupattack = false
 var ghosted = false
 var walljump_facing = 1
 var jablocked = 0
-var dummyOpponent = 1
+var dummyOpponent = -1
 
 #func process:...::
 #	match state:

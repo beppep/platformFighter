@@ -62,8 +62,8 @@ func _init() -> void:
 			"damage":9,
 			"start":20,
 			"end":27,
-			"kb":83,
-			"kbscaling":1,
+			"kb":70,
+			"kbscaling":1.1,
 			"angle":-87, 
 			"shapes":[
 				[48,28,30,0]
@@ -78,6 +78,7 @@ func update():
 		player.anim_sprite.play("upb")
 	if player.stateTimer<5:
 		player.reverse()
+		player._velocity.x *= 0.9
 	if 5<player.stateTimer and player.stateTimer<15:
 		if player._velocity.x*player.transform.x.x<0:
 			player._velocity.x = 0

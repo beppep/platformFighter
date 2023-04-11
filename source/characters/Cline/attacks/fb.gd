@@ -66,7 +66,7 @@ func onHit(name, target, shielded=false):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func update():
 	if player.stateTimer == 0:
-		player.anim_sprite.play("fb")
+		player.anim_sprite.play("fb2")
 
 	if player._velocity.y > 200:
 		player._velocity.y *= 0.9
