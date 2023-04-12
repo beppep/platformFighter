@@ -30,17 +30,16 @@ func _init():
 
 func update():
 	if player.stateTimer==0:
-		player.cant_hitfall = true
 		player.anim_sprite.play("grab")
-		
+		player.cant_hitfall = true
 
 func onHit(name, target, shielded=false):
-	target.getGrabbed()
-	
-	interrupted = true
-	endAttack()
-	
-	player.attackWith("throw")
-	player.cant_hitfall = true
-	player.stateTimer = -1
-	player.grab_target = target
+	if target.getGrabbed():
+		
+		interrupted = true
+		endAttack(false)
+		
+		player.attackWith("throw")
+		player.cant_hitfall = true
+		player.stateTimer = -1
+		player.grab_target = target

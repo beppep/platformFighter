@@ -140,6 +140,8 @@ func hitEffect():
 		hitPause-=1
 		if hitPause<=0:
 			hitPause=0
-
+func getGrabbed():
+	return false
+	
 func hitpauseFormula(kb):
 	return kb*0.06+2

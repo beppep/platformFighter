@@ -31,21 +31,21 @@ func _init():
 func update():
 	if player.stateTimer==0:
 		player.anim_sprite.play("grab")
-		
 		player.cant_hitfall=true
+		
 	if player.stateTimer<10 and player._velocity.y>0:
 		player._velocity.y*=0.9
 
 func onHit(name, target, shielded=false):
-	target.getGrabbed()
-	
-	interrupted = true
-	endAttack(false)
-	
-	if player.is_on_ground:
-		player.attackWith("throw")
-	else:
-		player.attackWith("zair")
-	player.cant_hitfall = true
-	player.stateTimer = -1
-	player.grab_target = target
+	if target.getGrabbed():
+		
+		interrupted = true
+		endAttack(false)
+		
+		if player.is_on_ground:
+			player.attackWith("throw")
+		else:
+			player.attackWith("zair")
+		player.cant_hitfall = true
+		player.stateTimer = -1
+		player.grab_target = target

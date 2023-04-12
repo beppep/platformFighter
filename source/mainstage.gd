@@ -20,9 +20,9 @@ var clineScene = load("res://source/characters/Cline/Cline.tscn")
 var chosenCharacters = []
 
 
-var blastzoneX = 1000 # should be stage specifics
-var blastzoneUp = 500
-var blastzoneDown = -750
+var blastzoneX = 1200 # should be stage specifics
+var blastzoneUp = -600
+var blastzoneDown = 750
 
 
 var rightHog = false

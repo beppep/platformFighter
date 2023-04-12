@@ -32,7 +32,8 @@ var sprite_color = Color(1,1,1)
 var _velocity = Vector2(0,-100) #pixels per second
 var direction = Vector2.ZERO
 var c_direction = Vector2.ZERO
-var buttons = [0,0,0,0]
+var buttons = [0,0,0,0,0]
+var buffers = [99,99,99,99,99]
 var released_jump = false
 var double_jumps = 1
 var can_walljump = true
@@ -79,7 +80,7 @@ var can_getupattack = false
 var ghosted = false
 var walljump_facing = 1
 var jablocked = 0
-var dummyOpponent = -1
+var dummyOpponent = 0
 
 #func process:...::
 #	match state:
@@ -128,7 +129,13 @@ func characterInputAction():
 #	pass
 func inputAction():
 	# input 
+	
 	buttons = get_buttons()
+	for i in range(len(buttons)):
+		if buttons[i]:
+			buffers[i] = 0
+		else:
+			buffers[i] += 1
 	direction = get_direction()
 	c_direction = get_c_direction()
 	
@@ -165,13 +172,12 @@ func inputAction():
 	if state==states.actionable:
 		if buttons[3] and not dontShield:
 			shield()
-		elif buttons[4]:
+		elif buttons[4] or buffers[4]<5:
 			grab()
-		else:
-			if buttons[1] or c_direction!=Vector2(0,0):
-				attack()
-			elif buttons[2]:
-				special()
+		elif buttons[1] or buffers[1]<5 or c_direction!=Vector2(0,0):
+			attack()
+		elif buttons[2] or buffers[2]<5:
+			special()
 	if state==states.shield and shieldStun < 1:
 		if not is_on_ground:
 			_velocity*=0.95
@@ -637,6 +643,7 @@ func getGrabbed():
 		currentAttack.endAttack()
 	state = 5 #you are doll and cant tech or stuff
 	stateTimer = 0
+	return true
 
 func hitEffect():
 	if state==1:# and hitPause==0:# ?????
@@ -701,13 +708,13 @@ func hitEffect():
 			if "autolinkY" in data and data["autolinkY"]>0:
 				autolink_vector.y = data["autolinkY"]*opponent._velocity.y
 	
-	if position.y>750:
+	if position.y>$"/root/Node2D".blastzoneDown:
 		die(0)
-	if position.y<-600 and state == 2:
+	if position.y<$"/root/Node2D".blastzoneUp and state == 2:
 		die(180)
-	if position.x>1200:
+	if position.x>$"/root/Node2D".blastzoneX:
 		die(270)
-	if position.x<-1200:
+	if position.x<-$"/root/Node2D".blastzoneX:
 		die(90)
 	
 	if hitPause==0:
@@ -807,7 +814,7 @@ func respawn():
 		new.player_id = player_id
 		new.team = team
 		new._ready2()
-		new.position = Vector2(0,-500)
+		new.position = Vector2(0,$"/root/Node2D".blastzoneUp)
 		new.intangibleFrames = 100
 		new.intangible = true
 		new.stocks = stocks-1
