@@ -16,7 +16,7 @@ func _init() -> void:
 func update():
 	player._velocity *= 0.5
 	if player.stateTimer==0:
-		player.anim_sprite.play("float")
+		player.anim_sprite.play("jab")
 		if player.boardObject.state == 1:
 			player.boardObject.currentAttack.interrupted = true
 			player.boardObject.currentAttack.endAttack()

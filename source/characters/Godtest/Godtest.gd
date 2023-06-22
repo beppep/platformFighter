@@ -24,17 +24,16 @@ func _ready() -> void:
 		"nair2": load("res://source/characters/Godtest/attacks/nair2.gd"),
 		"dair": load("res://source/characters/Godtest/attacks/dair.gd"),
 		"uair": load("res://source/characters/Godtest/attacks/uair.gd"),
-		"nb": load("res://source/characters/Godtest/attacks/uair2.gd"),
+		"nb": load("res://source/characters/Godtest/attacks/uair.gd"),
 		"ub": load("res://source/characters/Godtest/attacks/upb.gd"),
 		"fb": load("res://source/characters/Godtest/attacks/sideb.gd"),
 		"db": load("res://source/characters/Godtest/attacks/db.gd"),
+		"attach": load("res://source/characters/Godtest/attacks/attach.gd"),
 		"dthrow": load("res://source/characters/Godtest/attacks/dthrow.gd"),
 		"fthrow": load("res://source/characters/Godtest/attacks/fthrow.gd"),
 		"uthrow": load("res://source/characters/Godtest/attacks/uthrow.gd"),
 	}
 
-	#var sun = sunScene.instance()
-	#get_node("/root/Node2D/Articles").add_child(sun)
 
 func regain_resources():
 	B_charge = 8
@@ -64,12 +63,15 @@ func double_jump():
 		
 		$Hoverboard.visible = false
 		hasHoverboard = false
+		released_jump = false
 
 func characterInputAction():
 	if hasHoverboard:
 		groundfriction = 0.93
+		groundspeed = 90
 	else:
 		groundfriction = 0.85
+		groundspeed = 70
 	
 func attack():
 	var attackDirection

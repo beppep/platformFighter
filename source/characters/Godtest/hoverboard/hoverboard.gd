@@ -66,10 +66,10 @@ func attachTo(other):
 	other.boardObject = false
 	other.get_node("Hoverboard").visible = true
 	other.double_jumps = 2
-	other.groundspeed = 90
 	if other.state == 1:
 		other.currentAttack.interrupted = true
-	#other.state = 0
+		other.currentAttack.endAttack()
+	other.attackWith("attach")
 	queue_free()
 
 func attackWith(script):

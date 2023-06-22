@@ -1,4 +1,5 @@
-extends Attack
+extends "res://source/characters/Attack.gd"
+
 
 # Declare member variables here. Examples:
 # var a: int = 2
@@ -8,54 +9,48 @@ extends Attack
 # Called when the node enters the scene tree for the first time.
 
 func _init() -> void:
-	can_grabcancel=false
-	endFrame = 58
-	fastEndFrame = 38 # for second hit
+	endFrame = 30
+	fastEndFrame = 15
 	hitboxes = [
 		{
 			"name":"0",
 			"group":1,
-			"damage":6,
-			"start":8,
-			"end":10,
-			"kb":60,
-			"kbscaling":0.1,
-			"angle":95,
-			"autolinkX":0.9,
-			"autolinkY":0.9,
+			"damage":2,
+			"start":4,
+			"end":5,
+			"kb":30,
+			"kbscaling":0.3,
+			"angle":-90,
 			"shapes":[
-				[34,44,40,10]
-			]
+				[30,40,0,0]
+			],
+			"electric":4,
 		},
 		{
 			"name":"1",
 			"group":2,
-			"damage":7,
-			"start":30,
-			"end":32,
-			"kb":70,
-			"kbscaling":0.7,
-			"angle":-73,
+			"damage":1,
+			"start":6,
+			"end":7,
+			"kb":50,
+			"kbscaling":0.3,
+			"angle":50,
 			"shapes":[
-				[24,40,38,10]
-			]
+				[30,40,0,0]
+			],
+			"electric":4,
 		},
 	]
 
 func update():
+	if player.stateTimer<fastEndFrame:
+		player._velocity.y = 0
 	if player.stateTimer==0:
+		player.anim_sprite.play("jump")
 		player.anim_sprite.play("nb")
-	if player.stateTimer < 6:
-		player.reverse()
-	if player.stateTimer<48:
-		player._velocity.x *= 0.9
-		player._velocity.y *= 0.9
-		player._velocity.y -= 60
-	if player.stateTimer==20 and endFast:
-		hitboxes[1]["start"] = 24
-		hitboxes[1]["end"] = 26
-	if player.stateTimer==26 and not endFast or player.stateTimer==20 and endFast:
-		if (player.buttons[2] and player.direction == Vector2.ZERO):
-			player.anim_sprite.play("nb2")
-		else:
-			interrupted = true
+	if player.buttons[2] and player.direction == Vector2.ZERO and player.stateTimer == 13 and player.B_charge>0:
+		player.B_charge-=1
+		interrupted = true
+		endAttack(false)
+		player.attackWith("nb")
+		player.stateTimer = -1

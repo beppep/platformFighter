@@ -22,12 +22,12 @@ func _init() -> void:
 			]
 		},
 		{
-			"name":"0",
+			"name":"1",
 			"group":1,
 			"damage":13,
 			"start":15,
 			"end":17,
-			"kb":70,
+			"kb":40,
 			"kbscaling":0.5,
 			"angle":-80,
 			"shapes":[

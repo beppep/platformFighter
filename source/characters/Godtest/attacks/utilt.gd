@@ -1,15 +1,9 @@
 extends "res://source/characters/Attack.gd"
 
 
-# Declare member variables here. Examples:
-# var a: int = 2
-# var b: String = "text"
-
-
-# Called when the node enters the scene tree for the first time.
 func _init() -> void:
-	endFrame = 28
-	fastEndFrame = 20
+	endFrame = 30
+	fastEndFrame = 23
 	hitboxes = [
 		{
 			"name":"0",
@@ -19,10 +13,11 @@ func _init() -> void:
 			"end":8,
 			"kb":40,
 			"kbscaling":0.1,
-			"angle":90,
-			"autolink":1,
+			"angle":99,
+			"autolinkX":1,
+			"autolinkY":1,
 			"shapes":[
-				[25,25,0,-23]
+				[40,30,0,-33]
 			]
 		},
 		{
@@ -33,9 +28,9 @@ func _init() -> void:
 			"end":16,
 			"kb":100,
 			"kbscaling":1,
-			"angle":88,
+			"angle":60,
 			"shapes":[
-				[32,32,0,-23]
+				[42,32,0,-33]
 			]
 		},
 	]

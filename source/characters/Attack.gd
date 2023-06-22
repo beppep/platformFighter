@@ -31,14 +31,16 @@ func manageHitboxes():
 				i.queue_free()
 
 func endAttack(resetAnims = true):
-	if player.stateTimer == endFrame or (player.stateTimer == fastEndFrame and endFast) or interrupted:
+	if player.stateTimer >= endFrame or (player.stateTimer >= fastEndFrame and endFast) or interrupted:
 		autoEndAttack(resetAnims)
 
 func autoEndAttack(resetAnims = false):
+	for hitboxData in hitboxes:
+		hitboxData["shouldNotExistAnymore"] = true # fix for hitboxes last frame shit
 	for box in player.get_node("HitBoxes").get_children(): #remove hitboxes
 		if(not box.is_queued_for_deletion()):
-			box.queue_free() # too slow pls fix!!
-			#box.inactivate??
+			box.queue_free() # too slow pls fix!! did it ^
+		#box.inactivate??: #^^^^
 	for other in player.get_node("/root/Node2D/Players").get_children()+player.get_node("/root/Node2D/Articles").get_children(): #remove opponents bans
 		if not other == player:
 			var replacementList = []

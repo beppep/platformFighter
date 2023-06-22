@@ -9,7 +9,7 @@ extends Attack
 # Called when the node enters the scene tree for the first time.
 func _init() -> void:
 	
-	endFrame = 40
+	endFrame = 55
 	hitboxes = [
 	]
 
@@ -20,7 +20,10 @@ func update():
 	player._velocity.y*=0.9
 	player._velocity.y-=50
 	if player.stateTimer==0:
-		player.anim_sprite.play("shoot")
+		if player.is_on_ground:
+			player.anim_sprite.play("shoot")
+		else:
+			player.anim_sprite.play("shoot")
 		player.get_node("/root/Node2D/AudioStreamPlayer").playSound(player.get_node("/root/Node2D/AudioStreamPlayer").spew)
 	if player.stateTimer < 6:
 		player.reverse()
@@ -34,9 +37,5 @@ func update():
 		rock._velocity = Vector2(300*player.transform.x.x,-600) + player._velocity
 		player.get_node("/root/Node2D/Articles").add_child(rock)
 		
-	if player.is_on_ground:
-		interrupted = true
-		if not endFast:
-			landingLag = 16
 
 

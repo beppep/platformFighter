@@ -30,6 +30,8 @@ func update():
 		hitboxes[0]["angle"] = 180+rad2deg(player._velocity.angle())
 	
 	if targetPos.distance_to(player.position)<50:
+		interrupted = true
+		endAttack()
 		player.attachTo(player.ownerObject)
 
 		

@@ -1,6 +1,7 @@
 extends Character
 
 var ghostScene = preload("res://source/characters/Cline/Ghost.tscn")
+var B_charge = 10
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -23,7 +24,8 @@ func _ready() -> void:
 		"ub": load("res://source/characters/Cline/attacks/upb.gd"),
 		"fb": load("res://source/characters/Cline/attacks/fb2.gd"),
 		"nb": load("res://source/characters/Cline/attacks/nb.gd"),
-		"db": load("res://source/characters/Cline/attacks/downb.gd"),
+		"db": load("res://source/characters/Cline/attacks/db.gd"),
+		"db2": load("res://source/characters/Cline/attacks/db2.gd"),
 		"nsmash": load("res://source/characters/Cline/attacks/nsmash.gd"),
 		"dsmash": load("res://source/characters/Cline/attacks/dsmash.gd"),
 		"usmash": load("res://source/characters/Cline/attacks/usmash.gd"),
@@ -34,7 +36,7 @@ func _ready() -> void:
 	#get_node("/root/Node2D/Articles").add_child(sun)
 
 func regain_resources():
-	pass
+	B_charge = 10
 
 func attack():
 	var attackDirection
@@ -74,11 +76,13 @@ func special():
 		if direction.y<0:
 			attackWith("ub")
 		elif direction.y>0:
-			attackWith("fb")
+			attackWith("db")
 		elif direction.x != 0:
 			attackWith("fb")
 		else:
-			attackWith("fb")
+			if B_charge>0:
+				B_charge-=1
+				attackWith("nb")
 	else:
 		if direction.y<0:
 			attackWith("ub")
@@ -87,7 +91,9 @@ func special():
 		elif direction.x != 0:
 			attackWith("fb")
 		else:
-			attackWith("fb")
+			if B_charge>0:
+				B_charge-=1
+				attackWith("nb")
 	
 func grab():
 	flip() #?

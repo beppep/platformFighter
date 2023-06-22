@@ -17,13 +17,13 @@ func _init() -> void:
 			"damage":2,
 			"start":5,
 			"end":7,
-			"kb":35,
+			"kb":30,
 			"kbscaling":0.1,
-			"angle":45,
-			"autolinkX":0.5,
-			"autolinkY":0.9,
+			"angle":10,
+			"autolinkX":0.8,
+			"autolinkY":0.1,
 			"shapes":[
-				[28,28,40,0]
+				[32,28,28,0]
 			]
 		},
 		{
@@ -32,13 +32,13 @@ func _init() -> void:
 			"damage":2,
 			"start":8,
 			"end":10,
-			"kb":35,
+			"kb":30,
 			"kbscaling":0.1,
-			"angle":45,
-			"autolinkX":0.5,
-			"autolinkY":0.9,
+			"angle":10,
+			"autolinkX":0.8,
+			"autolinkY":0.5,
 			"shapes":[
-				[28,28,40,0]
+				[32,28,28,0]
 			]
 		},
 		{
@@ -47,13 +47,13 @@ func _init() -> void:
 			"damage":2,
 			"start":11,
 			"end":13,
-			"kb":35,
+			"kb":30,
 			"kbscaling":0.1,
-			"angle":45,
-			"autolinkX":0.5,
+			"angle":10,
+			"autolinkX":0.8,
 			"autolinkY":0.9,
 			"shapes":[
-				[28,28,40,0]
+				[32,28,28,0]
 			]
 		},
 		{
@@ -66,7 +66,7 @@ func _init() -> void:
 			"kbscaling":1.5,
 			"angle":50,
 			"shapes":[
-				[28,28,40,0]
+				[32,28,28,0]
 			]
 		},
 	]

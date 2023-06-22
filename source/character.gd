@@ -1,9 +1,6 @@
 extends KinematicBody2D
 class_name Character
 
-#tech timing
-#finite downb froat
-#side b bakåt i luften
 #respawn time
 var rng = RandomNumberGenerator.new()
 
@@ -74,12 +71,14 @@ var dontShield = true
 var grab_target = null
 var dodge_direction
 var has_airdodge = 1
-var wallJumps = jumpspeed / 2
+var wallJumps = jumpspeed
+var wallHogFallSpeed = 50
 var can_shield_float = false
 var can_getupattack = false
 var ghosted = false
 var walljump_facing = 1
 var jablocked = 0
+var noFriction = false
 var dummyOpponent = 0
 
 #func process:...::
@@ -116,7 +115,7 @@ func _ready2():
 func onHit(name, target, shielded=false):
 	pass
 	#double_jumps = 1
-	wallJumps = jumpspeed/2
+	wallJumps = jumpspeed
 	#has_airdodge = 1
 
 func regain_resources(): # i.e. while grounded
@@ -164,7 +163,7 @@ func inputAction():
 		dontShield = false
 	if state == states.wallHogging:
 		print(states.wallHogging)
-		_velocity = Vector2(0,50)
+		_velocity = Vector2(0,wallHogFallSpeed)
 		if not buttons[0]:
 			endWallJump()
 		if buttons[3]:
@@ -179,21 +178,19 @@ func inputAction():
 		elif buttons[2] or buffers[2]<5:
 			special()
 	if state==states.shield and shieldStun < 1:
-		if not is_on_ground:
+		if can_shield_float: # shield float
 			_velocity*=0.95
 			_velocity.y-=50
+			if direction.y<0:
+				_velocity.y-=30
+				shieldHealth-=1
 		if buttons[4]: # shield grab
 			shieldEnd()
 			grab()
 		elif not buttons[3]: # drop shield
 			shieldEnd()
-		elif not is_on_ground: # shield float
-			if can_shield_float:
-				if buttons[0]:
-					_velocity.y-=30
-					shieldHealth-=1
-					released_jump = false
-			else:
+		elif not is_on_ground: 
+			if not can_shield_float:
 				shieldEnd()
 				state = 2
 				stateTimer = 0
@@ -241,22 +238,28 @@ func inputAction():
 		if stateTimer>30:
 			resetToIdle()
 	if state==states.lying:
-		if stateTimer>40:
-			if can_getupattack and buttons[1]:
-				attackWith("getupa")
-			elif (direction!=Vector2.ZERO or buttons[3] or buttons[1]):
-				tech()
-			jablocked = 0
+		if is_on_ground:
+			if stateTimer>40:
+				if can_getupattack and (buttons[1] or buttons[2]):
+					attackWith("getupa")
+				elif (direction!=Vector2.ZERO or 1 in buttons):
+					tech()
+				jablocked = 0
+		else:
+			state = states.hitstun
 	if state==states.landinglag:
 		anim_sprite.play("land")
 	if state==states.jumpsquat:
 		anim_sprite.play("land")
 		if stateTimer==5:
 			if buttons[0]:
+				#fullhop
 				_velocity.y = -jumpspeed
 				released_jump = false
 			else:
-				_velocity.y = -jumpspeed*0.6
+				#shorthop
+				_velocity.y = -jumpspeed*0.5
+			is_on_ground = false
 			state = states.actionable
 			anim_sprite.play("jump")
 			anim_sprite.play("doublejump")
@@ -323,9 +326,10 @@ func inputAction():
 						if collision.normal==Vector2(0,-1) and prev_vel.length() < 1600: # missed tech situation
 							is_on_ground = true
 							percentage += 1
-							_velocity = Vector2.ZERO
+							_velocity.y = 0
 							state = 7
 							stateTimer = 10
+							totalHitstun = totalHitstun - stateTimer + 10
 							anim_sprite.play("lying")
 							anim_player.stop(true)
 							anim_player.play("shake")
@@ -351,7 +355,7 @@ func inputAction():
 func get_buttons():
 	if dummyOpponent==player_id:
 		rng.randomize() #test
-		return [(rng.randf()<0.1 or position.y>300 and rng.randf()<0.9),(rng.randf()<0.3),(rng.randf()<0.1 or position.y>300 and rng.randf()<0.99),(rng.randf()<0.1),(rng.randf()<0.1)] #test
+		return [(rng.randf()<0.1 or position.y>300 and rng.randf()<0.9),(rng.randf()<0.2),(rng.randf()<0.1 or position.y>300 and rng.randf()<0.99),(rng.randf()<0.1),(rng.randf()<0.05)] #test
 		
 	if player_id==0:
 		return [Input.get_action_strength("p1_jump"),Input.get_action_strength("p1_a"),Input.get_action_strength("p1_b"),Input.get_action_strength("p1_shield"),Input.get_action_strength("p1_z")]
@@ -366,7 +370,7 @@ func get_direction():
 			else:
 				return Vector2(0.7,-0.7)*rng.randf() #test
 		else:
-			return Vector2(sin(my_random_number),cos(my_random_number))*max(0,rng.randf()-0.5) #test
+			return Vector2(sin(my_random_number),cos(my_random_number))*int(rng.randf()<0.5) #test
 		
 	if player_id==0:
 		return Vector2(
@@ -393,25 +397,29 @@ func get_c_direction():
 func calculate_move_velocity(): #basically do movement input stuff
 	if is_on_ground:
 		double_jumps = 1
-		wallJumps = jumpspeed / 2
+		wallJumps = jumpspeed
 		has_airdodge = 1
 		regain_resources()
 	else:
-		if state==6 or state==7:
+		if state==6:
 			resetToIdle()
 			
 	
 	# FLIP
 	if state==0 and is_on_ground and not direction.y>0:
 		flip()
+	if state==states.jumpsquat and not direction.y>0:
+		flip(false)
 	
 	# MOVE X
 	if is_on_ground:
 		if state == states.actionable:
 			if direction.x > 0.1 and _velocity.x < maxspeed:
 				_velocity.x += direction.x * groundspeed
+				#_velocity.x = direction.x * maxspeed
 			if direction.x < -0.1 and _velocity.x > -maxspeed:
 				_velocity.x += direction.x * groundspeed
+				#_velocity.x = direction.x * maxspeed
 			if direction.x:
 				anim_sprite.play("run")
 			else:
@@ -424,8 +432,11 @@ func calculate_move_velocity(): #basically do movement input stuff
 				_velocity.x -= airspeed
 
 	#friction
-	if is_on_ground and not state==states.jumpsquat:
-		_velocity *= groundfriction
+	if is_on_ground:
+		if state==states.jumpsquat or noFriction:# or state==states.landinglag:
+			_velocity *= 0.99
+		else:
+			_velocity *= groundfriction
 	else:
 		if state==2:
 			_velocity.x *= 0.98
@@ -465,12 +476,13 @@ func calculate_move_velocity(): #basically do movement input stuff
 			currentAttack.interrupted = true
 			currentAttack.endAttack()
 			wallJump()
+			
 	elif released_jump == false:
 		released_jump = true
 		
 
-func flip():
-	if (direction.x>0 and c_direction.x==0 or c_direction.x>0) and transform.x.x == -1 or (direction.x<0 and c_direction.x==0 or c_direction.x<0) and transform.x.x == 1:
+func flip(c_flip = true):
+	if (direction.x>0 and c_direction.x==0 or c_direction.x>0 and c_flip) and transform.x.x == -1 or (direction.x<0 and c_direction.x==0 or c_direction.x<0 and c_flip) and transform.x.x == 1:
 		transform.x.x *= -1
 func reverse():
 	if direction.x>0 and transform.x.x == -1 or direction.x<0 and transform.x.x == 1:
@@ -608,11 +620,10 @@ func CheckHurtBoxes() -> Array:
 	var HitActors = []
 	for hitbox in $HurtBox.get_overlapping_areas():
 		var opponent=hitbox.get_parent().get_parent()
-		
 		if opponent.team != team and intangible == false:
 			#print(opponent.currentAttack,opponent.currentAttack.hitboxes,int(hitbox["name"]))
 			var data = opponent.currentAttack.hitboxes[int(hitbox.name)] #invalid get index 169 on base array apparently #also 1, 6, 0, 738 etc
-			if not [opponent, data["group"]] in bannedHitboxes:
+			if (not [opponent, data["group"]] in bannedHitboxes) and (not "shouldNotExistAnymore" in data):
 				HitActors.append([data,opponent])
 				bannedHitboxes.append([opponent,data["group"]])
 			else:
@@ -778,7 +789,7 @@ func hitEffect():
 				kb_vector = Vector2(cos(new_angle), sin(new_angle))*kb_vector.length()
 				kb_vector = kb_vector + autolink_vector
 				if jablocked>0 and kb_vector.length()<500:
-					_velocity = Vector2.ZERO
+					_velocity.y = 0
 					state = 7
 					stateTimer = 0
 					anim_sprite.play("lying")

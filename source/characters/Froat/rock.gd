@@ -92,7 +92,7 @@ func hitEffect():
 		#team = opponent.team
 		
 		var angle = data["angle"]*PI/180
-		var kb = (data["kb"])
+		var kb = (data["kb"] + data["kbscaling"]*20)
 		if kb:
 			kb_vector = Vector2(0,-1)*2*pow(kb,0.9) + Vector2(cos(angle)*opponent.transform.x.x, -sin(angle))*2.7 *pow(kb,1.2)
 			if "autolinkX" in data and data["autolinkX"]>0:
@@ -117,14 +117,16 @@ func hitEffect():
 				if i[0] != self:
 					replacementList.append(i)
 			player.bannedHitboxes = replacementList
-		team = opponent.team #opponent.bannedHitboxes.append([self,1])
+		team = opponent.team
+		opponent.bannedHitboxes.append([self,1])
 		
 		
 	#progress states
 	if hitPause==0:
 		pass
 	if hitPause>0:
-		hitPause-=1
+		hitPause = 0
+		#hitPause-=1
 		if hitPause<=0:
 			hitPause=0
 			if wasHit:

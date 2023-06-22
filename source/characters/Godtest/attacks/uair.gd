@@ -1,62 +1,43 @@
 extends "res://source/characters/Attack.gd"
 
 
-# Declare member variables here. Examples:
-# var a: int = 2
-# var b: String = "text"
-
-
-# Called when the node enters the scene tree for the first time.
 func _init() -> void:
-	endFrame = 26
-	fastEndFrame = 18
+	endFrame = 28
+	fastEndFrame = 22
 	hitboxes = [
 		{
 			"name":"0",
-			"group":0,
-			"damage":3,
+			"group":1,
+			"damage":4,
 			"start":5,
 			"end":8,
-			"kb":30,
+			"kb":40,
 			"kbscaling":0.1,
-			"angle":90,
-			"autolinkX":1,
+			"angle":99,
+			"autolinkX":0.9,
+			"autolinkY":0.5,
 			"shapes":[
-				[20,40,20,-60]
+				[40,30,0,-33]
 			]
 		},
 		{
 			"name":"1",
-			"group":1,
-			"damage":8,
-			"start":10,
-			"end":12,
-			"kb":50,
+			"group":2,
+			"damage":4,
+			"start":13,
+			"end":16,
+			"kb":100,
 			"kbscaling":1,
-			"angle":-80,
+			"angle":60,
 			"shapes":[
-				[24,44,20,-60]
+				[42,32,0,-33]
 			]
 		},
 	]
 
 func update():
 	if player.stateTimer==0:
-		player.cant_hitfall = true
 		player.anim_sprite.play("uair")
-	if player.stateTimer==9:
-		player.cant_hitfall = false
 	if player.is_on_ground:
-		interrupted = true #remove hitboxes? idk
 		if not endFast:
 			landingLag = 10
-
-
-
-func onHit(name, target, shielded=false):
-	if name=="0":
-		player._velocity.y=-200
-	if name=="1":
-		player._velocity.y=-1400
-	if name=="1" and not shielded:
-		endFast = true

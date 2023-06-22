@@ -28,8 +28,7 @@ func _ready() -> void:
 		"fb": load("res://source/characters/Froat/attacks/ramm.gd"),
 		"ub": load("res://source/characters/Froat/attacks/upb.gd"),
 		"db": load("res://source/characters/Froat/attacks/downb.gd"),
-		"nsmash": load("res://source/characters/Froat/attacks/nsmash.gd"),
-		"usmash": load("res://source/characters/Froat/attacks/upsmash.gd"),
+		"usmash": load("res://source/characters/Froat/attacks/nsmash.gd"),
 		"dsmash": load("res://source/characters/Froat/attacks/dsmash.gd"),
 		"fsmash": load("res://source/characters/Froat/attacks/ramm.gd"),
 	}
@@ -90,7 +89,7 @@ func special():
 		elif direction.y>0:
 			attackWith("dsmash")
 		elif direction.x==0:
-			attackWith("nsmash")
+			attackWith("nb")
 		else:
 			attackWith("fsmash")
 

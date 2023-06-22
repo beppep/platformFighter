@@ -46,7 +46,7 @@ func update():
 	if player.stateTimer==50:
 		if player.grab_target and is_instance_valid(player.grab_target) and player.grab_target.position:
 			var target_pos = player.grab_target.position + player.grab_target._velocity*0.15 + Vector2(0,100)
-			if not(abs(target_pos.x) > player.get_node("/root/Node2D").blastzoneX or target_pos.y > player.get_node("/root/Node2D").blastzoneUp):
+			if not(abs(target_pos.x) > player.get_node("/root/Node2D").blastzoneX-100):
 				player.position = target_pos
 				player.transform.x.x *= -1
 			else:

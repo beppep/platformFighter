@@ -28,7 +28,8 @@ func attackWith(scriptName):
 func onHit(name, target, shielded=false):
 	if sleepDart and not shielded:
 		target.state = 2
-		target.totalHitstun = 30+target.percentage/2
+		if "percentage" in target:
+			target.totalHitstun = 30+target.percentage/2
 		target.stateTimer = 0
 	
 func inputAction():	
