@@ -13,9 +13,9 @@ func _init() -> void:
 			"end":8,
 			"kb":40,
 			"kbscaling":0.1,
-			"angle":99,
+			"angle":135,
 			"autolinkX":0.9,
-			"autolinkY":0.5,
+			"autolinkY":0.9,
 			"shapes":[
 				[40,30,0,-33]
 			]
@@ -39,5 +39,6 @@ func update():
 	if player.stateTimer==0:
 		player.anim_sprite.play("uair")
 	if player.is_on_ground:
+		interrupted = true
 		if not endFast:
 			landingLag = 10

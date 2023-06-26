@@ -1,13 +1,7 @@
 extends "res://source/characters/Attack.gd"
 
 
-# Declare member variables here. Examples:
-# var a: int = 2
-# var b: String = "text"
 
-
-
-# Called when the node enters the scene tree for the first time.
 func _init() -> void:
 	endFrame = 70
 	fastEndFrame = 28
@@ -15,33 +9,31 @@ func _init() -> void:
 		{
 			"name":"0",
 			"group":1,
-			"damage":14,
-			"start":25,
-			"end":28,
+			"damage":4,
+			"start":6,
+			"end":20,
 			"kb":100,
-			"kbscaling":0.5,#2.5?
-			"angle":90,
+			"kbscaling":0.2,
+			"angle":50,
 			"shapes":[
-				[50,50,0,0]
+				[40,40,20,-10]
 			]
 		},
 	]
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func update():
 	if player.stateTimer==0:
 		player.anim_sprite.play("upb")
-	if player.stateTimer<25:
+	if player.stateTimer<5:
+		player.reverse()
 		player._velocity = Vector2.ZERO
-	elif player.stateTimer==25:
-		player.position += player.direction*250
-		player._velocity = Vector2(0,-1000)
-	elif player.stateTimer>25:
-		player._velocity *=0.9
-		player.can_walljump = true
-	if player.is_on_ground and player.stateTimer>28:
+	elif player.stateTimer>=5 and player.stateTimer<=10:
+		player._velocity.x = player.transform.x.x*500
+		if player.stateTimer == 5:
+			player._velocity.y = -1000
+	if player.is_on_ground and player.stateTimer>20:
 		interrupted = true #remove hitboxes? idk
 		if not endFast:
-			landingLag = 28
+			landingLag = 25
 

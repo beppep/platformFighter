@@ -785,7 +785,7 @@ func hitEffect():
 				anim_player.play("idle")
 				anim_sprite.play("stunned")
 				# DI
-				var new_angle = kb_vector.angle() + sin(kb_vector.angle_to(direction))*0.1 #.1 to .2
+				var new_angle = kb_vector.angle() + sin(kb_vector.angle_to(direction))*0.2 #.1 to .2
 				kb_vector = Vector2(cos(new_angle), sin(new_angle))*kb_vector.length()
 				kb_vector = kb_vector + autolink_vector
 				if jablocked>0 and kb_vector.length()<500:

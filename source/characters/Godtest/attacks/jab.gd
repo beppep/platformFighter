@@ -21,7 +21,7 @@ func _init() -> void:
 			"kbscaling":0.6,
 			"angle":40,
 			"shapes":[
-				[24,18,66,-10]
+				[35,18,55,-10]
 			]
 		},
 	]

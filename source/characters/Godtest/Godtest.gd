@@ -18,10 +18,9 @@ func _ready() -> void:
 		"ftilt": load("res://source/characters/Godtest/attacks/ftilt.gd"),
 		"dtilt": load("res://source/characters/Godtest/attacks/dtilt.gd"),
 		"utilt": load("res://source/characters/Godtest/attacks/utilt.gd"),
-		"fair": load("res://source/characters/Godtest/attacks/ftilt.gd"),
+		"fair": load("res://source/characters/Godtest/attacks/fair.gd"),
 		"bair": load("res://source/characters/Godtest/attacks/bair.gd"),
-		"nair": load("res://source/characters/Godtest/attacks/nair.gd"),
-		"nair2": load("res://source/characters/Godtest/attacks/nair2.gd"),
+		"nair": load("res://source/characters/Godtest/attacks/jab.gd"),
 		"dair": load("res://source/characters/Godtest/attacks/dair.gd"),
 		"uair": load("res://source/characters/Godtest/attacks/uair.gd"),
 		"nb": load("res://source/characters/Godtest/attacks/uair.gd"),
@@ -69,9 +68,13 @@ func characterInputAction():
 	if hasHoverboard:
 		groundfriction = 0.93
 		groundspeed = 90
+		can_shield_float = true
+		maxspeed = 1000
 	else:
 		groundfriction = 0.85
 		groundspeed = 70
+		can_shield_float = false
+		maxspeed = 500
 	
 func attack():
 	var attackDirection
@@ -90,14 +93,14 @@ func attack():
 		elif attackDirection.x<0:
 			attackWith("bair")
 		else:
-			attackWith("nair2")
+			attackWith("nair")
 	else:
 		flip()
 		if attackDirection.y<0:
 			attackWith("utilt")
 		elif attackDirection.y>0:
 			attackWith("dtilt")
-		elif attackDirection.x>0:
+		elif attackDirection.x!=0:
 			attackWith("ftilt")
 		else:
 			attackWith("jab")
