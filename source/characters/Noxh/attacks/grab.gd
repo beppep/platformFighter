@@ -16,13 +16,13 @@ func _init():
 			"name":"0",
 			"group":1,
 			"damage":1,
-			"start":4,
-			"end":6,
+			"start":8,
+			"end":11,
 			"kb":0,
 			"kbscaling":0,
 			"angle":90,
 			"shapes":[
-				[32,20,44,5]
+				[24,16,44,5]
 			],
 			"extrahitpause":4,
 		},

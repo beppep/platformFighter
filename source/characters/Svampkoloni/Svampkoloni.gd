@@ -162,7 +162,7 @@ func die(angle):
 				isdead = true
 				visible = false
 				position = i.position
-				intangible = true
+				intangibleFrames = 1 #?!?
 				state = 7
 				return
 	if len(shroomList) > 0:
@@ -173,7 +173,7 @@ func die(angle):
 		_velocity = Vector2.ZERO#?
 		isdead = false
 		visible = true
-		intangible = false
+		intangibleFrames = 0
 		attackWith("reborn")
 		for other in get_node("/root/Node2D/Players").get_children():
 			if other.grab_target!=null and other.grab_target == self:

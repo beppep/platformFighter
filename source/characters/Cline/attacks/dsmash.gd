@@ -19,7 +19,7 @@ func _init() -> void:
 			"damage":13,
 			"start":36,
 			"end":41,
-			"kb":70,
+			"kb":110,
 			"kbscaling":1.9,
 			"angle":80,
 			"shapes":[
@@ -35,12 +35,12 @@ func update():
 		player._velocity = Vector2(0,0)
 		player.anim_sprite.play("dsmash")
 	if 12<player.stateTimer and player.stateTimer<32:
-		player.intangible = true
+		player.intangibleFrames = 3
 		player.move_and_collide(Vector2(player.direction.x*10,0))
 		if not player.move_and_collide(Vector2(0,50)):
 			player.move_and_collide(Vector2(0,-50))
 			player.position.x -= player.direction.x*10
 	if player.stateTimer==35:
-		player.intangible = false
+		pass # stop being intangible
 		
 

@@ -4,19 +4,58 @@ extends "res://source/characters/Attack.gd"
 
 func _init() -> void:
 	endFrame = 70
-	fastEndFrame = 28
+	fastEndFrame = 45
 	hitboxes = [
 		{
 			"name":"0",
 			"group":1,
-			"damage":4,
+			"damage":5,
 			"start":6,
-			"end":20,
-			"kb":100,
-			"kbscaling":0.2,
+			"end":12,
+			"kb":80,
+			"kbscaling":0.1,
 			"angle":50,
 			"shapes":[
-				[40,40,20,-10]
+				[30,30,20,-10]
+			]
+		},
+		{
+			"name":"1",
+			"group":2,
+			"damage":5,
+			"start":13,
+			"end":22,
+			"kb":70,
+			"kbscaling":0.1,
+			"angle":30,
+			"shapes":[
+				[30,30,20,0]
+			]
+		},
+		{
+			"name":"2",
+			"group":3,
+			"damage":5,
+			"start":23,
+			"end":30,
+			"kb":70,
+			"kbscaling":0.1,
+			"angle":0,
+			"shapes":[
+				[30,30,20,10]
+			]
+		},
+		{
+			"name":"3",
+			"group":4,
+			"damage":5,
+			"start":31,
+			"end":38,
+			"kb":100,
+			"kbscaling":0.5,
+			"angle":-30,
+			"shapes":[
+				[30,30,20,10]
 			]
 		},
 	]

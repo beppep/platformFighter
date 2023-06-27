@@ -2,10 +2,10 @@ extends Character
 
 
 
-
+var helloImShark = true
 
 var boardScene = load("res://source/characters/Godtest/hoverboard/hoverboard.tscn")
-var B_charge = 8
+var B_charge = 1
 var hasHoverboard = true
 var boardObject = false
 
@@ -20,7 +20,7 @@ func _ready() -> void:
 		"utilt": load("res://source/characters/Godtest/attacks/utilt.gd"),
 		"fair": load("res://source/characters/Godtest/attacks/fair.gd"),
 		"bair": load("res://source/characters/Godtest/attacks/bair.gd"),
-		"nair": load("res://source/characters/Godtest/attacks/jab.gd"),
+		"nair": load("res://source/characters/Godtest/attacks/nair.gd"),
 		"dair": load("res://source/characters/Godtest/attacks/dair.gd"),
 		"uair": load("res://source/characters/Godtest/attacks/uair.gd"),
 		"nb": load("res://source/characters/Godtest/attacks/uair.gd"),
@@ -35,7 +35,7 @@ func _ready() -> void:
 
 
 func regain_resources():
-	B_charge = 8
+	B_charge = 1
 	if hasHoverboard:
 		double_jumps = 2
 	else:
@@ -66,11 +66,17 @@ func double_jump():
 
 func characterInputAction():
 	if hasHoverboard:
+		if state==0:
+			flip()
+		$BoardCollisionShape2D.disabled=false
+		$CollisionShape2D.disabled=true
 		groundfriction = 0.93
 		groundspeed = 90
 		can_shield_float = true
 		maxspeed = 1000
 	else:
+		$BoardCollisionShape2D.disabled=true
+		$CollisionShape2D.disabled=false
 		groundfriction = 0.85
 		groundspeed = 70
 		can_shield_float = false
@@ -147,3 +153,15 @@ func special():
 func grab():
 	flip() #?
 	attackWith("grab")
+
+
+func uniqueRespawn(new):
+	new.position = Vector2(-300, $"/root/Node2D".blastzoneUp)
+	new._velocity = Vector2(1000, 0)
+	new.intangibleFrames = 100
+	new.B_charge = 1
+	if hasHoverboard == false:
+		new.hasHoverboard = false
+		new.boardObject = self.boardObject
+		boardObject.ownerObject = new
+		new.get_node("Hoverboard").visible = false

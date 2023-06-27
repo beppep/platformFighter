@@ -42,11 +42,11 @@ func _init() -> void:
 func update():
 	if player.stateTimer==1:
 		player.anim_sprite.modulate = player.sprite_color+Color(0.5,0.5,0.5,0)
-		player.intangible = true
+		player.intangibleFrames = 30
 		player.anim_sprite.play("getupattack")
 	if player.stateTimer==30:
 		player.anim_sprite.modulate = player.sprite_color
-		player.intangible = false
+		player.intangibleFrames = 0
 	if not player.is_on_ground:
 		pass
 		#interrupted = true

@@ -10,19 +10,19 @@ extends "res://source/characters/Attack.gd"
 # Called when the node enters the scene tree for the first time.
 func _init():
 	can_grabcancel = false
-	endFrame = 40
+	endFrame = 44
 	hitboxes = [
 		{
 			"name":"0",
 			"group":1,
 			"damage":1,
-			"start":6,
+			"start":8,
 			"end":11,
 			"kb":0,
 			"kbscaling":0,
 			"angle":90,
 			"shapes":[
-				[32,20,44,10]
+				[24,18,44,10]
 			],
 			"extrahitpause":4,
 		},

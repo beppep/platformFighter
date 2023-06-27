@@ -56,7 +56,7 @@ func inputAction():
 		
 	if state == 0:
 		for other in $"/root/Node2D/Players".get_children(): # this is stupid just have a ref
-			if other.name == "Godtest": # or @Godtest@24 or whatever
+			if "helloImShark" in other:
 				if other._velocity.y>=0 and get_node("catcher").overlaps_body(other):
 					print("aatjaj")
 					attachTo(other)
@@ -67,6 +67,8 @@ func attachTo(other):
 	other.boardObject = false
 	other.get_node("Hoverboard").visible = true
 	other.double_jumps = 2
+	#print(self.is_on_floor())
+	#other.is_on_ground = self.is_on_floor()
 	if other.state == 1:
 		other.currentAttack.interrupted = true
 		other.currentAttack.endAttack()

@@ -17,7 +17,7 @@ var selectableCharacters = {
 
 func pickCharacter(index, name):
 	if name=="random":
-		#randomize()
+		randomize()
 		chosenCharacters[index] = selectableCharacters[selectableCharacters.keys()[randi() % legalCharNum]]
 	else:
 		chosenCharacters[index] = selectableCharacters[name]

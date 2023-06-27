@@ -94,3 +94,8 @@ func special():
 func grab():
 	flip() #?
 	attackWith("grab")
+
+func uniqueRespawn(new):
+	new.position = Vector2(0, $"/root/Node2D".blastzoneUp+200)
+	new.intangibleFrames = 100
+	new.attackWith("nsmash")

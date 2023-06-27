@@ -19,27 +19,53 @@ func _init() -> void:
 		{
 			"name":"0",
 			"group":1,
-			"damage":10,
+			"damage":8,
 			"start":5,
-			"end":8,
-			"kb":100,
-			"kbscaling":2,
-			"angle":59,
+			"end":7,
+			"kb":60,
+			"kbscaling":1.2,
+			"angle":60,
 			"shapes":[
-				[30,20,20,10]
+				[44,33,0,-44]
 			]
 		},
 		{
 			"name":"1",
 			"group":1,
 			"damage":8,
-			"start":9,
-			"end":19,
-			"kb":80,
-			"kbscaling":1,
-			"angle":59,
+			"start":7,
+			"end":11,
+			"kb":60,
+			"kbscaling":1.2,
+			"angle":70,
 			"shapes":[
-				[40,30,15,15]
+				[33,44,44,0]
+			]
+		},
+		{
+			"name":"2",
+			"group":1,
+			"damage":8,
+			"start":11,
+			"end":14,
+			"kb":60,
+			"kbscaling":1.2,
+			"angle":60,
+			"shapes":[
+				[44,33,0,44]
+			]
+		},
+		{
+			"name":"3",
+			"group":1,
+			"damage":10,
+			"start":16,
+			"end":19,
+			"kb":70,
+			"kbscaling":1.5,
+			"angle":60,
+			"shapes":[
+				[20,30,-40,-5]
 			]
 		},
 	]

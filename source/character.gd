@@ -64,7 +64,6 @@ var shieldHealth = shieldHealthMax
 var shieldStun = 0
 var kb_vector = Vector2(0,0) # to be applied after hitpause
 var autolink_vector = Vector2(0,0) # to apply autolink after hitpause
-var intangible = false
 var intangibleFrames = 0
 var is_on_ground = false
 var dontShield = true
@@ -217,7 +216,7 @@ func inputAction():
 		if stateTimer < 3:
 			if buttons[0]:
 				if is_on_ground and not direction.y<0:
-					intangible = false
+					intangibleFrames = 0
 					anim_sprite.modulate = sprite_color
 					is_on_ground = true
 					state = states.landinglag
@@ -234,7 +233,6 @@ func inputAction():
 			_velocity=Vector2.ZERO
 		if stateTimer == 20:
 			anim_sprite.modulate = sprite_color
-			intangible = false
 		if stateTimer>30:
 			resetToIdle()
 	if state==states.lying:
@@ -282,7 +280,7 @@ func inputAction():
 				if collision.normal==Vector2.UP: #waveland on walls?
 					#print("waveland")
 					anim_sprite.modulate = sprite_color
-					intangible = false
+					intangibleFrames = 0
 					#dontShield = true
 					#if collision.normal==Vector2.UP:
 					is_on_ground = true
@@ -591,7 +589,7 @@ func airdodge():
 	stateTimer = 0
 	$Shield.visible = false
 	anim_sprite.modulate = sprite_color+Color(0.5,0.5,0.5,0)
-	intangible = true
+	intangibleFrames = 20
 	#released_jump = false
 	var airdodge_direction = direction.normalized()
 	_velocity = airdodge_direction*1000
@@ -605,7 +603,7 @@ func dodge():
 	stateTimer = 0
 	$Shield.visible = false
 	anim_sprite.modulate = sprite_color+Color(0.5,0.5,0.5,0)
-	intangible = true
+	intangibleFrames = 20
 	if direction.x!=0:
 		dodge_direction = Vector2(direction.x,0).normalized()
 		_velocity = dodge_direction*1000
@@ -620,15 +618,14 @@ func CheckHurtBoxes() -> Array:
 	var HitActors = []
 	for hitbox in $HurtBox.get_overlapping_areas():
 		var opponent=hitbox.get_parent().get_parent()
-		if opponent.team != team and intangible == false:
+		if opponent.team != team and intangibleFrames == 0:
 			#print(opponent.currentAttack,opponent.currentAttack.hitboxes,int(hitbox["name"]))
-			var data = opponent.currentAttack.hitboxes[int(hitbox.name)] #invalid get index 169 on base array apparently #also 1, 6, 0, 738 etc
-			if (not [opponent, data["group"]] in bannedHitboxes) and (not "shouldNotExistAnymore" in data):
-				HitActors.append([data,opponent])
-				bannedHitboxes.append([opponent,data["group"]])
-			else:
-				pass
-		
+			if opponent.currentAttack!=null and len(opponent.currentAttack.hitboxes)-1>=int(hitbox.name): # for when the attacker is doing something else already this frame.
+				var data = opponent.currentAttack.hitboxes[int(hitbox.name)]
+				if (not [opponent, data["group"]] in bannedHitboxes) and (not "shouldNotExistAnymore" in data):
+					HitActors.append([data,opponent])
+					bannedHitboxes.append([opponent,data["group"]])
+			
 	return HitActors
 
 func hitCollision():			
@@ -754,12 +751,11 @@ func hitEffect():
 		
 	if intangibleFrames>0:
 		intangibleFrames -= 1
-		if intangibleFrames>1:
-			intangible = true
+		if intangibleFrames>0:
 			anim_sprite.modulate = sprite_color+Color(0.5,0.5,0.5,0)
-	if intangibleFrames == 1:
-		intangible = false
-		anim_sprite.modulate = sprite_color
+		if intangibleFrames <= 0:
+			intangibleFrames = 0
+			anim_sprite.modulate = sprite_color
 	#progress states
 	if hitPause == 0:
 		stateTimer += 1
@@ -825,13 +821,15 @@ func respawn():
 		new.player_id = player_id
 		new.team = team
 		new._ready2()
-		new.position = Vector2(0,$"/root/Node2D".blastzoneUp)
-		new.intangibleFrames = 100
-		new.intangible = true
+		uniqueRespawn(new)
 		new.stocks = stocks-1
 	else:
 		get_tree().change_scene("res://source/characterSelect.tscn")
 	queue_free()
+
+func uniqueRespawn(new):
+	new.position = Vector2(0,$"/root/Node2D".blastzoneUp)
+	new.intangibleFrames = 100
 		
 
 func getGhosted():

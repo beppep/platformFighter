@@ -31,7 +31,7 @@ func update():
 	
 	player.set_collision_mask_bit(0,0)
 	
-	if targetPos.distance_to(player.position)<50:
+	if targetPos.distance_to(player.position)<30:
 		interrupted = true
 		endAttack()
 		player.attachTo(player.ownerObject)
