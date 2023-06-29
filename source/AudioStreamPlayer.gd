@@ -9,6 +9,7 @@ var rng = RandomNumberGenerator.new()
 
 
 var punch = load("res://assets/sounds/punch.wav")
+var hit = load("res://assets/sounds/meleepunch.wav")
 var shieldHit = load("res://assets/sounds/shieldHit.wav")
 var waveland = load("res://assets/sounds/whoosh3.wav")
 var shine = load("res://assets/sounds/shine.wav")

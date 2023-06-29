@@ -29,7 +29,7 @@ func update():
 		player.reverse()
 	if player.stateTimer==24:
 		
-		var rock = player.rockScene.instance()
+		var rock = player.rockScene.instantiate()
 		rock.position = player.position + Vector2(10,0)*player.transform.x.x
 		rock.team = player.team
 		player.bannedHitboxes.append([rock,1])

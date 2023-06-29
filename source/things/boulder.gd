@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends CharacterBody2D
 
 
 
@@ -7,7 +7,7 @@ var explosion = load("res://source/fx/explosion.tscn")
 # Declare member variables here. Examples:
 # var a: int = 2
 # var b: String = "text"
-export var gravity = 5.0
+@export var gravity = 5.0
 var _velocity = Vector2(50,0)
 
 var bannedHitboxes = []
@@ -33,7 +33,9 @@ func inputAction():
 		return
 		
 	_velocity.y += gravity
-	_velocity = move_and_slide(_velocity)
+	set_velocity(_velocity)
+	move_and_slide()
+	_velocity = velocity
 	_velocity.x*=0.99
 	_velocity.y*=0.98
 		
@@ -106,7 +108,7 @@ func hitEffect():
 
 			opponent.get_node("currentAttack").onHit(data["name"], self, false)
 			#explosiin
-			var blast = explosion.instance()
+			var blast = explosion.instantiate()
 			blast.position = self.position
 			blast.scale = Vector2(kb*0.02, kb*0.02)
 			blast.z_index = -3

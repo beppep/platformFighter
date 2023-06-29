@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends CharacterBody2D
 
 
 
@@ -7,7 +7,7 @@ var explosion = load("res://source/fx/explosion.tscn")
 # Declare member variables here. Examples:
 # var a: int = 2
 # var b: String = "text"
-export var speed = 1
+@export var speed = 1
 var bannedHitboxes = []
 var HitActors = []
 var hitPause = 0
@@ -19,7 +19,7 @@ var stateTimer = 0
 var team = 0
 var timeAngle = 0
 
-onready var anim_player: AnimationPlayer = get_node("AnimationPlayer") #basically just declared in _ready func
+@onready var anim_player: AnimationPlayer = get_node("AnimationPlayer") #basically just declared in _ready func
 
 
 # Called when the node enters the scene tree for the first time.

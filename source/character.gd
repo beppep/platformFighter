@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends CharacterBody2D
 class_name Character
 
 #respawn time
@@ -14,17 +14,17 @@ var sparks2 = load("res://source/fx/sparks2.tscn")
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-export (float) var gravity = 80.0 #per second squared
-export (float) var airspeed = 20.0
-export (float) var groundspeed = 100.0
-export (float) var maxspeed = 1000.0
-export (float) var jumpspeed = 1000.0
-export (float) var fallspeed = 1000.0
-export (float) var groundfriction = 0.8
-export (float) var airfriction = 0.98
-export (float) var yfriction = 0.95
-export (int) var player_id = 0
-export (int) var team = 0
+@export var gravity : float = 80.0 #per second squared
+@export var airspeed : float = 20.0
+@export var groundspeed : float = 100.0
+@export var maxspeed : float = 1000.0
+@export var jumpspeed : float = 1000.0
+@export var fallspeed : float = 1000.0
+@export var groundfriction : float = 0.8
+@export var airfriction : float = 0.98
+@export var yfriction : float = 0.95
+@export var player_id : int = 0
+@export var team : int = 0
 var sprite_color = Color(1,1,1)
 var _velocity = Vector2(0,-100) #pixels per second
 var direction = Vector2.ZERO
@@ -78,7 +78,7 @@ var ghosted = false
 var walljump_facing = 1
 var jablocked = 0
 var noFriction = false
-var dummyOpponent = 0
+var dummyOpponent = 0 # -1
 
 #func process:...::
 #	match state:
@@ -94,8 +94,8 @@ var dummyOpponent = 0
 
 # Monk elemental conditions
 
-onready var anim_player: AnimationPlayer = get_node("AnimationPlayer") #basically just declared in _ready func
-onready var anim_sprite = $AnimatedSprite #basically just declared in _ready func
+@onready var anim_player: AnimationPlayer = get_node("AnimationPlayer") #basically just declared in _ready func
+@onready var anim_sprite = $AnimatedSprite2D #basically just declared in _ready func
 
 """
 If updating both an animation and a separate property at once (for example, a platformer may update the sprite's h_flip/v_flip properties when a character turns while starting a 'turning' animation), it's important to keep in mind that play() isn't applied instantly. Instead, it's applied the next time the AnimationPlayer is processed. This may end up being on the next frame, causing a 'glitch' frame, where the property change was applied but the animation was not. If this turns out to be a problem, after calling play(), you can call advance(0) to update the animation immediately.
@@ -145,7 +145,7 @@ func inputAction():
 			anim_player.stop(true)
 			anim_player.play("shake")
 		else:
-			anim_sprite.stop()
+			anim_sprite.pause()
 		nextFrameHitPause=0
 		if direction.y>0.9 and not cant_hitfall: #hitfalling
 			_velocity.y = fallspeed*1
@@ -277,36 +277,37 @@ func inputAction():
 				if not collision:
 					move_and_collide(Vector2(0,-50))
 			if collision:
-				if collision.normal==Vector2.UP: #waveland on walls?
+				if collision.get_normal()==Vector2.UP: #waveland on walls?
 					#print("waveland")
 					anim_sprite.modulate = sprite_color
 					intangibleFrames = 0
 					#dontShield = true
 					#if collision.normal==Vector2.UP:
 					is_on_ground = true
-					_velocity = _velocity.slide(collision.normal)
+					_velocity = _velocity.slide(collision.get_normal())
 					state = states.landinglag
 					stateTimer = 0
 					totalLandingLag = 10
 					$"/root/Node2D/AudioStreamPlayerLow".playSound($"/root/Node2D/AudioStreamPlayer".waveland)
 				else:
-					position += collision.get_remainder().slide(collision.normal)
+					position += collision.get_remainder().slide(collision.get_normal())
 		else:
-			move_and_slide(_velocity)
+			set_velocity(_velocity)
+			move_and_slide()
 	elif state==states.hitstun:
 		z_index=0
 		var collision = move_and_collide(_velocity*1/60)
 		if collision:
 			var prev_vel = _velocity
-			var bounce_vel = _velocity.bounce(collision.normal)
-			if prev_vel.length() > 600 or (collision.normal!=Vector2(0,-1) and buttons[3]):
+			var bounce_vel = _velocity.bounce(collision.get_normal())
+			if prev_vel.length() > 600 or (collision.get_normal()!=Vector2(0,-1) and buttons[3]):
 				_velocity = bounce_vel
 				
 				#explosiin
 				var spark
 				if not is_on_ground:
 					if buttons[3]: # teching correctly
-						if collision.normal==Vector2(0,-1):
+						if collision.get_normal()==Vector2(0,-1):
 							is_on_ground = true
 							tech()
 						else:
@@ -318,10 +319,10 @@ func inputAction():
 							state=0
 							stateTimer=0
 							dontShield = true
-						spark = sparks2.instance()
+						spark = sparks2.instantiate()
 						$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".tech)
 					else:
-						if collision.normal==Vector2(0,-1) and prev_vel.length() < 1600: # missed tech situation
+						if collision.get_normal()==Vector2(0,-1) and prev_vel.length() < 1600: # missed tech situation
 							is_on_ground = true
 							percentage += 1
 							_velocity.y = 0
@@ -331,19 +332,22 @@ func inputAction():
 							anim_sprite.play("lying")
 							anim_player.stop(true)
 							anim_player.play("shake")
-						spark = sparks.instance()
+						spark = sparks.instantiate()
 					spark.position = self.position
 					spark.scale = Vector2(2, 2)
 					get_node("/root/Node2D/fx").add_child(spark)
 			else:
-				_velocity = _velocity.slide(collision.normal)
+				_velocity = _velocity.slide(collision.get_normal())
 				position += collision.get_remainder().length()*_velocity.normalized()
 				is_on_ground = true
 		else:
 			is_on_ground=false
 	else:
 		z_index=1
-		_velocity = move_and_slide(_velocity, Vector2.UP)
+		set_velocity(_velocity)
+		set_up_direction(Vector2.UP)
+		move_and_slide()
+		_velocity = velocity
 		is_on_ground = is_on_floor()
 	if state==states.grabbed:
 		$Shield.visible = false
@@ -457,9 +461,9 @@ func calculate_move_velocity(): #basically do movement input stuff
 	
 	# MOVE Y
 	if direction.y > 0.9 and ((state == states.actionable and not buttons[1]) or not is_on_ground) and not state == states.dodge:#
-		set_collision_mask_bit(4,0)
+		set_collision_mask_value(5,0)
 	else:
-		set_collision_mask_bit(4,1)
+		set_collision_mask_value(5,1)
 	
 	if buttons[0]: #jumping
 		# check ways to jump
@@ -499,7 +503,7 @@ func double_jump():
 	anim_sprite.play("double_jump")
 	double_jumps -= 1
 	#effect
-	var ring = jump_ring.instance()
+	var ring = jump_ring.instantiate()
 	ring.position = self.position + Vector2(0,50)
 	ring.z_index = -2
 	get_node("/root/Node2D/fx").add_child(ring)
@@ -584,7 +588,7 @@ func shieldEnd():
 
 func airdodge():
 	is_on_ground = false
-	set_collision_mask_bit(4,1)
+	set_collision_mask_value(4,1)
 	state = 4
 	stateTimer = 0
 	$Shield.visible = false
@@ -616,24 +620,35 @@ func dodge():
 
 func CheckHurtBoxes() -> Array:
 	var HitActors = []
+	var toBeBannedHitboxes = []
 	for hitbox in $HurtBox.get_overlapping_areas():
 		var opponent=hitbox.get_parent().get_parent()
 		if opponent.team != team and intangibleFrames == 0:
 			#print(opponent.currentAttack,opponent.currentAttack.hitboxes,int(hitbox["name"]))
-			if opponent.currentAttack!=null and len(opponent.currentAttack.hitboxes)-1>=int(hitbox.name): # for when the attacker is doing something else already this frame.
-				var data = opponent.currentAttack.hitboxes[int(hitbox.name)]
+			if opponent.currentAttack!=null and len(opponent.currentAttack.hitboxes)-1>=int(str(hitbox.name)): # for when the attacker is doing something else already this frame.
+				var data = opponent.currentAttack.hitboxes[int(str(hitbox.name))]
 				if (not [opponent, data["group"]] in bannedHitboxes) and (not "shouldNotExistAnymore" in data):
 					HitActors.append([data,opponent])
-					bannedHitboxes.append([opponent,data["group"]])
-			
-	return HitActors
+					toBeBannedHitboxes.append([opponent,data["group"]])
+	bannedHitboxes = bannedHitboxes + toBeBannedHitboxes
+	if len(HitActors)>0:
+		var highestPrioIndex = 0
+		for i in range(len(HitActors)):
+			print(int(str(HitActors[i][0]["name"])), int(str(HitActors[highestPrioIndex][0]["name"])))
+			if int(str(HitActors[i][0]["name"])) < int(str(HitActors[highestPrioIndex][0]["name"])):
+				highestPrioIndex = i
+		return HitActors[highestPrioIndex]
+	else:
+		return HitActors
+	
+	#return HitActors
 
 func hitCollision():			
 	# hitting
 	HitActors = CheckHurtBoxes()
 	if HitActors:
-		var data = HitActors[0][0]
-		var opponent = HitActors[0][1]
+		var data = HitActors[0]
+		var opponent = HitActors[1]
 		var kb = data["kb"] + data["kbscaling"]*percentage
 		if kb>0:
 			nextFrameHitPause = max(nextFrameHitPause, hitpauseFormula(kb))
@@ -649,7 +664,7 @@ func getGrabbed():
 	if currentAttack:
 		currentAttack.interrupted = true
 		currentAttack.endAttack()
-	state = 5 #you are doll and cant tech or stuff
+	state = states.grabbed #you are doll and cant tech or stuff
 	stateTimer = 0
 	return true
 
@@ -658,8 +673,8 @@ func hitEffect():
 		currentAttack.endAttack()
 	if HitActors:
 		
-		var data = HitActors[0][0]
-		var opponent = HitActors[0][1]
+		var data = HitActors[0]
+		var opponent = HitActors[1]
 		
 		var angle = data["angle"]*PI/180
 		var kb = (data["kb"] + data["kbscaling"]*percentage)
@@ -689,15 +704,15 @@ func hitEffect():
 				
 				$"/root/Node2D/Camera2D".screenShake = int(kb/20)
 				$"/root/Node2D/AudioStreamPlayerLow".playSound($"/root/Node2D/AudioStreamPlayerLow".punch, 0.5+100/kb)
-				$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".rocks, 0.5+100/kb)
-				blast = explosion.instance()
+				$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".hit, 0.5+100/kb)
+				blast = explosion.instantiate()
 			else:
 				_velocity.x += data["kb"]*cos(angle)*opponent.transform.x.x
 				shieldHealth -= data["damage"]*3
 				shieldStun = data["damage"]*0+1
 				$Shield.modulate=Color(0.7,0.7,0.7)
 				$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".shieldHit, 0.5+100/kb)
-				blast = explosion2.instance()
+				blast = explosion2.instantiate()
 			#explosiin
 			blast.position = self.position
 			blast.scale = Vector2(kb*0.02, kb*0.02)
@@ -806,9 +821,9 @@ func die(angle):
 	respawn()
 	
 func make_blastline(angle):
-	var blast = blastline.instance()
+	var blast = blastline.instantiate()
 	blast.rotation_degrees = angle
-	blast.position = position +- Vector2(0,128*8).rotated(deg2rad(angle))
+	blast.position = position +- Vector2(0,128*8).rotated(deg_to_rad(angle))
 	blast.scale = Vector2(8, 8)
 	blast.z_index = -2
 	get_node("/root/Node2D/fx").add_child(blast)
@@ -816,7 +831,7 @@ func make_blastline(angle):
 func respawn():
 	get_node("/root/Node2D/uiElements/ui"+str(player_id)).get_node(str(stocks)).queue_free()
 	if stocks>1:
-		var new = $"/root/Node2D".chosenCharacters[player_id].instance()
+		var new = $"/root/Node2D".chosenCharacters[player_id].instantiate()
 		$"/root/Node2D/Players".add_child(new)
 		new.player_id = player_id
 		new.team = team
@@ -824,7 +839,7 @@ func respawn():
 		uniqueRespawn(new)
 		new.stocks = stocks-1
 	else:
-		get_tree().change_scene("res://source/characterSelect.tscn")
+		get_tree().change_scene_to_file("res://source/characterSelect.tscn")
 	queue_free()
 
 func uniqueRespawn(new):
@@ -847,8 +862,8 @@ func getGhosted():
 	nextFrameHitPause = max(nextFrameHitPause, hitpauseFormula(kb))
 	$"/root/Node2D/Camera2D".screenShake = int(kb/20)
 	$"/root/Node2D/AudioStreamPlayerLow".playSound($"/root/Node2D/AudioStreamPlayerLow".punch, 0.5+100/kb)
-	$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".rocks, 0.5+100/kb)
-	var blast = explosion.instance()
+	$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".hit, 0.5+300/kb)
+	var blast = explosion.instantiate()
 	percentage += 8
 	
 	blast.position = self.position

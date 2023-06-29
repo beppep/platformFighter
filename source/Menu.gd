@@ -12,7 +12,7 @@ func _ready() -> void:
 
 
 func _on_startButton_pressed() -> void:
-	get_tree().change_scene("res://source/mainstage.tscn")
+	get_tree().change_scene_to_file("res://source/mainstage.tscn")
 
 
 func _on_quitButton_pressed() -> void:

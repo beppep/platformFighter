@@ -24,7 +24,7 @@ func update():
 	if player.stateTimer==15:
 		#player.audioStreamPlayer.playSound(player.audioStreamPlayer.rocks)
 		
-		var foot = player.footScene.instance()
+		var foot = player.footScene.instantiate()
 		foot.position = Vector2(player.position.x+player.transform.x.x*10, player.position.y+200)
 		foot.team = player.team
 		foot.scale.x = player.scale.y
@@ -34,7 +34,7 @@ func update():
 		
 		
 		"""
-		var foot2 = footScene.instance()
+		var foot2 = footScene.instantiate()
 		foot2.position = Vector2(player.position.x+player.transform.x.x*100, -750)
 		foot2.transform.y.y = -1
 		foot2._velocity.y *= -1

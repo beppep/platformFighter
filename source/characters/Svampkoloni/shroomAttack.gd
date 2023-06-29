@@ -33,11 +33,11 @@ func update():
 	if player.stateTimer==8:
 		randomize()
 		for i in 15:
-			var svamp = player.myOwner.moldSpore.instance()
+			var svamp = player.myOwner.moldSpore.instantiate()
 			svamp.position = player.position
 			svamp.team = player.team
 			svamp.transform.x.x = player.transform.x.x
-			svamp._velocity = Vector2(rand_range(-100, 100),rand_range(0,-200))
+			svamp._velocity = Vector2(randf_range(-100, 100),randf_range(0,-200))
 			player.get_node("/root/Node2D/Articles").add_child(svamp)
 			svamp.attackWith("moldSporeAttack")
 			svamp.modulate = player.myOwner.sprite_color

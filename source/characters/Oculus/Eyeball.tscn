@@ -1,12 +1,12 @@
 [gd_scene load_steps=20 format=2]
 
-[ext_resource path="res://assets/Oculus/nspecial_die_strip2.png" type="Texture" id=1]
-[ext_resource path="res://assets/Oculus/nspecial_activate_strip2.png" type="Texture" id=2]
-[ext_resource path="res://assets/Oculus/nspecial_proj_strip8.png" type="Texture" id=3]
+[ext_resource path="res://assets/Oculus/nspecial_die_strip2.png" type="Texture2D" id=1]
+[ext_resource path="res://assets/Oculus/nspecial_activate_strip2.png" type="Texture2D" id=2]
+[ext_resource path="res://assets/Oculus/nspecial_proj_strip8.png" type="Texture2D" id=3]
 [ext_resource path="res://source/characters/Oculus/Eyeball.gd" type="Script" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 8.492, 9.01177 )
+size = Vector2( 8.492, 9.01177 )
 
 [sub_resource type="AtlasTexture" id=2]
 flags = 4
@@ -87,16 +87,16 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=15]
-extents = Vector2( 3.5779, 10.7225 )
+size = Vector2( 3.5779, 10.7225 )
 
-[node name="Ghost" type="KinematicBody2D"]
+[node name="Ghost" type="CharacterBody2D"]
 collision_layer = 0
 script = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 frames = SubResource( 14 )
 animation = "activate"
 

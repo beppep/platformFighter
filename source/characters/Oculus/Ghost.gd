@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends CharacterBody2D
 
 
 
@@ -6,7 +6,7 @@ var explosion = load("res://source/fx/explosion.tscn")
 
 
 
-export var gravity = 0.0
+@export var gravity = 0.0
 var _velocity = Vector2(400,-400)
 var bannedHitboxes = []
 var HitActors = []
@@ -18,7 +18,7 @@ var currentAttack
 
 var sleepDart = false
 
-onready var anim_sprite = $AnimatedSprite #basically just declared in _ready func
+@onready var anim_sprite = $AnimatedSprite2D #basically just declared in _ready func
 
 # Called when the node enters the scene tree for the first time.
 func attackWith(scriptName):

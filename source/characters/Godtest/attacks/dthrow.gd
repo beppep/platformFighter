@@ -29,7 +29,7 @@ func update():
 		player._velocity.y-=80
 	if player.stateTimer==18:
 		
-		var board = boardScene.instance()
+		var board = boardScene.instantiate()
 		board.transform.x.x = player.transform.x.x
 		board.position = player.position+Vector2(0,40)
 		board._velocity = Vector2(20*player.transform.x.x,1000) + player._velocity

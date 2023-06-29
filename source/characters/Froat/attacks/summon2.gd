@@ -42,7 +42,7 @@ func update(player):
 		player._velocity.y -= 0
 	if player.stateTimer==19:
 		
-		var boulder = boulderScene.instance()
+		var boulder = boulderScene.instantiate()
 		boulder.position = (player.position)
 		boulder._velocity = (player._velocity*0+Vector2(0,-20))
 		boulder.team = player.team

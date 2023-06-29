@@ -66,14 +66,14 @@ func update(player):
 	if player.stateTimer<20:
 		player._velocity = Vector2(0,0)
 	if player.stateTimer==10:
-		var goateye = eye.instance()
+		var goateye = eye.instantiate()
 		#goateye
 		goateye.position = player.position
 		goateye.scale = Vector2(2, 2)
 		get_node("/root/Node2D/fx").add_child(goateye)
 		goateye.z_index = 2
 		"""
-		var platform = plat.instance()
+		var platform = plat.instantiate()
 		platform.position = player.position+Vector2(0,50)
 		$"/root/Node2D/ground/".add_child(platform)
 		"""

@@ -62,7 +62,7 @@ func update():
 	if player.stateTimer==22:
 		randomize()
 		for i in 45:
-			player.createMoldSpore(Vector2(rand_range(-100, 100)+player._velocity.x*0.2,rand_range(0,-100)))
+			player.createMoldSpore(Vector2(randf_range(-100, 100)+player._velocity.x*0.2,randf_range(0,-100)))
 	if player.is_on_ground:
 		interrupted = true
 		if not endFast:

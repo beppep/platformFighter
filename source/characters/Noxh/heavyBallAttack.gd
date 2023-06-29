@@ -16,7 +16,7 @@ func _init():
 
 
 func update():
-	hitboxes[0]["angle"] = rad2deg(-player._velocity.angle())
+	hitboxes[0]["angle"] = rad_to_deg(-player._velocity.angle())
 
 func onHit(name, target, shielded=false):
 	if shielded:

@@ -29,8 +29,8 @@ func _process(delta: float) -> void:
 		return
 	var zoom = max(abs(players[0].position.x-players[1].position.x), 1.5*abs(players[0].position.y-players[1].position.y))
 	zoom = zoom*0.001 + 0.5
-	zoom = Vector2(zoom,zoom)
-	if zoom>get_zoom():
+	zoom = Vector2(1/zoom,1/zoom)
+	if zoom<get_zoom():
 		set_zoom( zoom )
 	else:
 		set_zoom( zoom*0.02 + get_zoom()*0.98 )

@@ -23,7 +23,7 @@ func manageHitboxes():
 	for hitboxData in hitboxes:
 		if hitboxData["start"] == player.stateTimer:
 			createHitBox(hitboxData)
-			#print("ffh")
+			print("ffh")
 		#print("h2")
 		if hitboxData["end"] == player.stateTimer:
 			var i = player.get_node("HitBoxes/"+hitboxData["name"])
@@ -95,8 +95,8 @@ func createHitBox(hitboxData):
 	hitbox.name = hitboxData["name"]
 	for i in hitboxData["shapes"]:
 		var _bs = RectangleShape2D.new()
-		_bs.extents.x = i[0]
-		_bs.extents.y = i[1]
+		_bs.size.x = i[0]*2
+		_bs.size.y = i[1]*2
 		
 		var _sp = CollisionShape2D.new()
 		_sp.shape = _bs

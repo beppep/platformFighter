@@ -1,13 +1,13 @@
 [gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://source/characters/Svampkoloni/Shroom.gd" type="Script" id=1]
-[ext_resource path="res://assets/Svampkoloni/shroom.png" type="Texture" id=2]
-[ext_resource path="res://assets/Svampkoloni/bornShroom.png" type="Texture" id=3]
-[ext_resource path="res://assets/Svampkoloni/semi.png" type="Texture" id=4]
-[ext_resource path="res://assets/Svampkoloni/poisonAttack.png" type="Texture" id=5]
+[ext_resource path="res://assets/Svampkoloni/shroom.png" type="Texture2D" id=2]
+[ext_resource path="res://assets/Svampkoloni/bornShroom.png" type="Texture2D" id=3]
+[ext_resource path="res://assets/Svampkoloni/semi.png" type="Texture2D" id=4]
+[ext_resource path="res://assets/Svampkoloni/poisonAttack.png" type="Texture2D" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 23.0636, 32.4148 )
+size = Vector2( 23.0636, 32.4148 )
 
 [sub_resource type="AtlasTexture" id=2]
 flags = 4
@@ -85,22 +85,22 @@ animations = [ {
 [sub_resource type="Animation" id=13]
 step = 0.0166667
 tracks/0/type = "value"
-tracks/0/path = NodePath("AnimatedSprite:position")
+tracks/0/path = NodePath("AnimatedSprite2D:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.0333333, 0.05, 0.0833333, 0.116667, 0.15, 0.183333, 0.233333 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PackedFloat32Array( 0, 0.0333333, 0.05, 0.0833333, 0.116667, 0.15, 0.183333, 0.233333 ),
+"transitions": PackedFloat32Array( 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( 0, 0 ), Vector2( 28.9914, 22.2739 ), Vector2( -44.9013, -36.0624 ), Vector2( 41.3658, 7.07108 ), Vector2( -35.7089, -17.6777 ), Vector2( 12.7279, 21.5668 ), Vector2( -24.0416, -18.7383 ), Vector2( 0, 0 ) ]
 }
 
 [sub_resource type="RectangleShape2D" id=14]
-extents = Vector2( 29.9501, 32.6702 )
+size = Vector2( 29.9501, 32.6702 )
 
-[node name="Shroom" type="KinematicBody2D"]
+[node name="Shroom" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 17
 script = ExtResource( 1 )
@@ -108,7 +108,7 @@ script = ExtResource( 1 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 frames = SubResource( 12 )
 animation = "standing"
 

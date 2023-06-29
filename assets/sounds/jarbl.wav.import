@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/jarbl.wav-4f16bfad81a48f1450803fcb302e8a94.sample"
+type="AudioStreamWAV"
+uid="uid://cjsobrwrgvymi"
+path="res://.godot/imported/jarbl.wav-4f16bfad81a48f1450803fcb302e8a94.sample"
 
 [deps]
 
 source_file="res://assets/sounds/jarbl.wav"
-dest_files=[ "res://.import/jarbl.wav-4f16bfad81a48f1450803fcb302e8a94.sample" ]
+dest_files=["res://.godot/imported/jarbl.wav-4f16bfad81a48f1450803fcb302e8a94.sample"]
 
 [params]
 
@@ -17,5 +18,7 @@ force/max_rate=false
 force/max_rate_hz=44100
 edit/trim=false
 edit/normalize=false
-edit/loop=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
 compress/mode=0

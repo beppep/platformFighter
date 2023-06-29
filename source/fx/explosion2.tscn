@@ -1,8 +1,8 @@
 [gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://source/fx/explosion.gd" type="Script" id=1]
-[ext_resource path="res://assets/fx/exp2.png" type="Texture" id=2]
-[ext_resource path="res://assets/fx/exp.png" type="Texture" id=3]
+[ext_resource path="res://assets/fx/exp2.png" type="Texture2D" id=2]
+[ext_resource path="res://assets/fx/exp.png" type="Texture2D" id=3]
 
 [sub_resource type="AtlasTexture" id=1]
 flags = 4
@@ -92,7 +92,7 @@ animations = [ {
 "speed": 60.0
 } ]
 
-[node name="Explosion" type="AnimatedSprite"]
+[node name="Explosion" type="AnimatedSprite2D"]
 frames = SubResource( 17 )
 animation = "boom"
 script = ExtResource( 1 )

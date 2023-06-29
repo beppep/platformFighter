@@ -24,7 +24,7 @@ func update():
 		player.createSpore(Vector2(0*player.transform.x.x,-50))
 		randomize()
 		for i in 45:
-			player.createMoldSpore(Vector2(rand_range(-100, 100),rand_range(200,-100)))
+			player.createMoldSpore(Vector2(randf_range(-100, 100),randf_range(200,-100)))
 			
 		if tp_target:
 			var pos = tp_target.position + Vector2(0,-20)

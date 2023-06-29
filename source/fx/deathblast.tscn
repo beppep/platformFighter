@@ -1,7 +1,7 @@
 [gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://source/fx/deathblast.gd" type="Script" id=1]
-[ext_resource path="res://assets/fx/blastline.png" type="Texture" id=2]
+[ext_resource path="res://assets/fx/blastline.png" type="Texture2D" id=2]
 
 [sub_resource type="AtlasTexture" id=18]
 flags = 4
@@ -91,7 +91,7 @@ animations = [ {
 "speed": 30.0
 } ]
 
-[node name="Deathblast" type="AnimatedSprite"]
+[node name="Deathblast" type="AnimatedSprite2D"]
 frames = SubResource( 17 )
 animation = "boom"
 script = ExtResource( 1 )

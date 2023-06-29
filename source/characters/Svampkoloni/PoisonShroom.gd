@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends CharacterBody2D
 
 
 
@@ -8,7 +8,7 @@ var explosion = load("res://source/fx/explosion.tscn")
 var myAttack = load("res://source/characters/Svampkoloni/poisonAttack.gd")
 
 
-export var gravity = 50.0
+@export var gravity = 50.0
 var _velocity = Vector2.ZERO
 var bannedHitboxes = []
 var HitActors = []
@@ -27,8 +27,8 @@ var currentAttack = false
 var lifetime = 1200
 
 
-onready var anim_player = get_node("AnimationPlayer") #basically just declared in _ready func
-onready var anim_sprite = get_node("AnimatedSprite")
+@onready var anim_player = get_node("AnimationPlayer") #basically just declared in _ready func
+@onready var anim_sprite = get_node("AnimatedSprite2D")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -52,7 +52,9 @@ func inputAction():
 		currentAttack.update()
 	
 	_velocity.y += gravity
-	_velocity = move_and_slide(_velocity)
+	set_velocity(_velocity)
+	move_and_slide()
+	_velocity = velocity
 	
 	if stateTimer == lifetime:
 		anim_sprite.play("die")
@@ -110,7 +112,7 @@ func hitEffect():
 
 			opponent.currentAttack.onHit(data["name"], self, false)
 			#explosiin
-			var blast = explosion.instance()
+			var blast = explosion.instantiate()
 			blast.position = self.position
 			blast.scale = Vector2(kb*0.02, kb*0.02)
 			blast.z_index = -2

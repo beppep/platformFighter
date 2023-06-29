@@ -40,17 +40,17 @@ func characterInputAction():
 		die(-1)
 	
 func createSvamp(pos):
-	var newSvamp = svampScene.instance()
+	var newSvamp = svampScene.instantiate()
 	newSvamp.position = pos
 	newSvamp.transform.x.x = int(pos.x>0)*2-1 #random number -1 or 1
 	get_node("/root/Node2D/fx").add_child(newSvamp)
-	newSvamp.get_node("Sprite").modulate = sprite_color
+	newSvamp.get_node("Sprite2D").modulate = sprite_color
 
 func createShroom(pos, facing, bornAnim = true):
 	if len(shroomList)>2:
 		createSvamp(pos+Vector2(0,32))
 	else:
-		var svamp = shroom.instance()
+		var svamp = shroom.instantiate()
 		svamp.position = pos
 		svamp.team = team
 		svamp.transform.x.x = facing
@@ -64,7 +64,7 @@ func createShroom(pos, facing, bornAnim = true):
 
 func createSpore(vel):
 	
-	var svamp = spore.instance()
+	var svamp = spore.instantiate()
 	svamp.position = position
 	svamp.team = team
 	svamp.transform.x.x = transform.x.x
@@ -77,7 +77,7 @@ func createSpore(vel):
 
 func createMoldSpore(vel):
 	
-	var svamp = moldSpore.instance()
+	var svamp = moldSpore.instantiate()
 	svamp.position = position
 	svamp.team = team
 	svamp.transform.x.x = transform.x.x
@@ -150,7 +150,7 @@ func grab():
 		attackWith("grab")
 
 func dodge():
-	.dodge()
+	super.dodge()
 	createSvamp(position + Vector2(transform.x.x*0,40))
 	
 func die(angle):

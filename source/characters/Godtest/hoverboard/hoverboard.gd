@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends CharacterBody2D
 
 
 
@@ -25,7 +25,7 @@ var ownerObject
 var recallAttack = load("res://source/characters/Godtest/hoverboard/hoverboardRecall.gd")
 
 
-onready var anim_sprite = $AnimatedSprite #basically just declared in _ready func
+@onready var anim_sprite = $AnimatedSprite2D #basically just declared in _ready func
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -48,7 +48,9 @@ func inputAction():
 		return
 		
 	_velocity *= 0.95
-	move_and_slide(_velocity, Vector2.UP)
+	set_velocity(_velocity)
+	set_up_direction(Vector2.UP)
+	move_and_slide()
 	
 	if state == 1:
 		currentAttack.manageHitboxes()
@@ -88,7 +90,7 @@ func CheckHurtBoxes() -> Array:
 		var opponent=hitbox.get_parent().get_parent()
 		
 		if opponent.team != team:
-			var data = opponent.currentAttack.hitboxes[int(hitbox["name"])] #invalid get index 169 on base array apparently
+			var data = opponent.currentAttack.hitboxes[int(str(hitbox["name"]))] #invalid get index 169 on base array apparently
 			if not [opponent, data["group"]] in bannedHitboxes:
 				HitActors.append([data,opponent])
 				bannedHitboxes.append([opponent,data["group"]])
@@ -132,7 +134,7 @@ func hitEffect():
 
 			opponent.currentAttack.onHit(data["name"], self, false)
 			#explosiin
-			var blast = explosion.instance()
+			var blast = explosion.instantiate()
 			blast.position = self.position
 			blast.scale = Vector2(kb*0.02, kb*0.02)
 			blast.z_index = -2

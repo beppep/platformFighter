@@ -40,7 +40,7 @@ func update():
 		player.grab_target._velocity = player._velocity
 		
 	if player.stateTimer == 15:
-		var bullet = player.bulletScene.instance()
+		var bullet = player.bulletScene.instantiate()
 		bullet.position = player.position + Vector2(0,-20)
 		bullet.team = player.team
 		bullet.transform.x.x = player.transform.x.x

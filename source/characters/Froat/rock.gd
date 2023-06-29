@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends CharacterBody2D
 
 
 
@@ -7,8 +7,8 @@ var explosion = load("res://source/fx/explosion.tscn")
 # Declare member variables here. Examples:
 # var a: int = 2
 # var b: String = "text"
-export var gravity = 40.0
-export var fallspeed = 1000
+@export var gravity = 40.0
+@export var fallspeed = 1000
 var _velocity = Vector2(400,400)
 var bannedHitboxes = []
 var HitActors = []
@@ -26,7 +26,7 @@ func _ready() -> void:
 	currentAttack = load("res://source/characters/Froat/rockAttack.gd").new()
 	currentAttack.player = self
 
-func onHit(name, target, shielded=false):
+func onHit(_name, target, shielded=false):
 	pass
 	
 func inputAction():	
@@ -41,8 +41,8 @@ func inputAction():
 		_velocity.y += gravity
 	var collision = move_and_collide(_velocity*1/60)
 	if collision:
-		_velocity = (_velocity.bounce(collision.normal)*3 + _velocity)*0.25
-		position += collision.remainder.bounce(collision.normal)
+		_velocity = (_velocity.bounce(collision.get_normal())*3 + _velocity)*0.25 # what?
+		position += collision.get_remainder().bounce(collision.get_normal())
 	
 	currentAttack.update()
 	
@@ -62,7 +62,7 @@ func CheckHurtBoxes() -> Array:
 		var opponent=hitbox.get_parent().get_parent()
 		
 		if (opponent.team != self.team or opponent != self) and not opponent.name=="rock":
-			var data = opponent.currentAttack.hitboxes[int(hitbox["name"])] #invalid get index 169 on base array apparently
+			var data = opponent.currentAttack.hitboxes[int(str(hitbox["name"]))] #invalid get index 169 on base array apparently
 			if not [opponent, data["group"]] in bannedHitboxes:
 				HitActors.append([data,opponent])
 				bannedHitboxes.append([opponent,data["group"]])
@@ -104,7 +104,7 @@ func hitEffect():
 
 			opponent.currentAttack.onHit(data["name"], self, false)
 			#explosiin
-			var blast = explosion.instance()
+			var blast = explosion.instantiate()
 			blast.position = self.position
 			blast.scale = Vector2(kb*0.02, kb*0.02)
 			blast.z_index = -2

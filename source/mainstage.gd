@@ -38,7 +38,7 @@ func _ready() -> void:
 	#chosenCharacters = [froatScene,godtestScene,]
 	
 	for i in range(0,playerNum):
-		var uiThing = uiScene.instance()
+		var uiThing = uiScene.instantiate()
 		uiThing.anchor_left = i*1.0/playerNum
 		uiThing.anchor_right = (i+1)*1.0/playerNum
 		uiThing.set_name("ui"+str(i))
@@ -47,7 +47,7 @@ func _ready() -> void:
 	
 	var new
 	for i in range(0,playerNum):
-		new = chosenCharacters[i].instance()
+		new = chosenCharacters[i].instantiate()
 		$Players.add_child(new)
 		new.player_id = i
 		new.team = i

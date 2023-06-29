@@ -3,9 +3,9 @@
 [ext_resource path="res://source/characters/Froat/footAttack.gd" type="Script" id=1]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 75, 49.0149 )
+size = Vector2( 75, 49.0149 )
 
-[node name="KinematicBody2D" type="KinematicBody2D"]
+[node name="CharacterBody2D" type="CharacterBody2D"]
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
 

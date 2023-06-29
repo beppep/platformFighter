@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/rocks.wav-68f60d7515f504ebd9e4ac3b1caaff73.sample"
+type="AudioStreamWAV"
+uid="uid://dp11dh4rsg803"
+path="res://.godot/imported/rocks.wav-68f60d7515f504ebd9e4ac3b1caaff73.sample"
 
 [deps]
 
 source_file="res://assets/sounds/froat/rocks.wav"
-dest_files=[ "res://.import/rocks.wav-68f60d7515f504ebd9e4ac3b1caaff73.sample" ]
+dest_files=["res://.godot/imported/rocks.wav-68f60d7515f504ebd9e4ac3b1caaff73.sample"]
 
 [params]
 
@@ -17,5 +18,7 @@ force/max_rate=false
 force/max_rate_hz=44100
 edit/trim=false
 edit/normalize=false
-edit/loop=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
 compress/mode=0

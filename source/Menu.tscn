@@ -15,27 +15,27 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -26.5
-margin_top = -34.0
-margin_right = 26.5
-margin_bottom = 34.0
+offset_left = -26.5
+offset_top = -34.0
+offset_right = 26.5
+offset_bottom = 34.0
 
 [node name="startButton" type="Button" parent="VBoxContainer"]
-margin_right = 53.0
-margin_bottom = 20.0
-focus_neighbour_top = NodePath("../quitButton")
+offset_right = 53.0
+offset_bottom = 20.0
+focus_neighbor_top = NodePath("../quitButton")
 text = "start"
 
 [node name="optionsButton" type="Button" parent="VBoxContainer"]
-margin_top = 24.0
-margin_right = 53.0
-margin_bottom = 44.0
+offset_top = 24.0
+offset_right = 53.0
+offset_bottom = 44.0
 text = "option"
 
 [node name="quitButton" type="Button" parent="VBoxContainer"]
-margin_top = 48.0
-margin_right = 53.0
-margin_bottom = 68.0
+offset_top = 48.0
+offset_right = 53.0
+offset_bottom = 68.0
 text = "quite"
 
 [connection signal="pressed" from="VBoxContainer/startButton" to="." method="_on_startButton_pressed"]

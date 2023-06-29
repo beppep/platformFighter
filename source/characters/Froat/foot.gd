@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends CharacterBody2D
 
 
 
@@ -24,8 +24,8 @@ var totalHitstun
 var currentAttack
 # Called when the node enters the scene tree for the first time.
 
-onready var anim_sprite = $AnimatedSprite #basically just declared in _ready func
-onready var anim_player: AnimationPlayer = get_node("AnimationPlayer") #basically just declared in _ready func
+@onready var anim_sprite = $AnimatedSprite2D #basically just declared in _ready func
+@onready var anim_player: AnimationPlayer = get_node("AnimationPlayer") #basically just declared in _ready func
 
 
 func _ready() -> void:
@@ -58,7 +58,8 @@ func inputAction():
 		
 		
 	
-	move_and_slide(_velocity)
+	set_velocity(_velocity)
+	move_and_slide()
 	currentAttack.update()
 	
 	if state == 2:
@@ -82,7 +83,7 @@ func CheckHurtBoxes() -> Array:
 		var opponent=hitbox.get_parent().get_parent()
 		
 		if opponent.team != team and intangible == false:
-			var data = opponent.currentAttack.hitboxes[int(hitbox["name"])] #invalid get index 169 on base array apparently #also 1
+			var data = opponent.currentAttack.hitboxes[int(str(hitbox["name"]))] #invalid get index 169 on base array apparently #also 1
 			if not [opponent, data["group"]] in bannedHitboxes:
 				HitActors.append([data,opponent])
 				bannedHitboxes.append([opponent,data["group"]])
@@ -118,7 +119,7 @@ func hitEffect():
 			var blast
 			$"/root/Node2D/Camera2D".screenShake = int(kb/20)
 			$"/root/Node2D/AudioStreamPlayerLow".playSound($"/root/Node2D/AudioStreamPlayerLow".punch, 0.5+100/kb)
-			blast = explosion.instance()
+			blast = explosion.instantiate()
 			#explosiin
 			blast.position = self.position
 			blast.scale = Vector2(kb*0.02, kb*0.02)

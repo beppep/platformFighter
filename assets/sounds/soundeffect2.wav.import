@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/soundeffect2.wav-0e6653db871b91005c6e93daa1f62c28.sample"
+type="AudioStreamWAV"
+uid="uid://tj42df03pbg0"
+path="res://.godot/imported/soundeffect2.wav-0e6653db871b91005c6e93daa1f62c28.sample"
 
 [deps]
 
 source_file="res://assets/sounds/soundeffect2.wav"
-dest_files=[ "res://.import/soundeffect2.wav-0e6653db871b91005c6e93daa1f62c28.sample" ]
+dest_files=["res://.godot/imported/soundeffect2.wav-0e6653db871b91005c6e93daa1f62c28.sample"]
 
 [params]
 
@@ -17,5 +18,7 @@ force/max_rate=false
 force/max_rate_hz=44100
 edit/trim=false
 edit/normalize=false
-edit/loop=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
 compress/mode=0

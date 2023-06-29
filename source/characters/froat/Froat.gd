@@ -1,4 +1,4 @@
-extends Character
+extends "res://source/character.gd"
 
 
 var rockScene = preload("res://source/characters/Froat/rock.tscn")

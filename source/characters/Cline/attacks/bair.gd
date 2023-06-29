@@ -41,7 +41,7 @@ func update():
 	if player.stateTimer==13:
 		if player.buttons[1] or player.c_direction.x*player.transform.x.x<0:
 			player.stateTimer -= 1
-			player.anim_sprite.stop()
+			player.anim_sprite.pause()
 		else:
 			player.anim_sprite.play()
 	if player.is_on_ground:

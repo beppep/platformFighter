@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends CharacterBody2D
 
 
 
@@ -12,7 +12,7 @@ var myTransform = load("res://source/characters/Svampkoloni/shroomTransform.gd")
 # Declare member variables here. Examples:
 # var a: int = 2
 # var b: String = "text"
-export var gravity = 50.0
+@export var gravity = 50.0
 var _velocity = Vector2.ZERO
 #var bounces = 1
 var bannedHitboxes = []
@@ -32,8 +32,8 @@ var myOwner
 var currentAttack = false
 
 
-onready var anim_player: AnimationPlayer = get_node("AnimationPlayer") #basically just declared in _ready func
-onready var anim_sprite = get_node("AnimatedSprite") #basically just declared in _ready func
+@onready var anim_player: AnimationPlayer = get_node("AnimationPlayer") #basically just declared in _ready func
+@onready var anim_sprite = get_node("AnimatedSprite2D") #basically just declared in _ready func
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -57,7 +57,9 @@ func inputAction():
 	
 	_velocity.x *= 0.98
 	_velocity.y += gravity
-	_velocity = move_and_slide(_velocity)
+	set_velocity(_velocity)
+	move_and_slide()
+	_velocity = velocity
 
 func CheckHurtBoxes() -> Array:
 	var HitActors = []
@@ -118,7 +120,7 @@ func hitEffect():
 
 			opponent.currentAttack.onHit(data["name"], self, false)
 			#explosiin
-			var blast = explosion.instance()
+			var blast = explosion.instantiate()
 			blast.position = self.position
 			blast.scale = Vector2(kb*0.02, kb*0.02)
 			blast.z_index = -2

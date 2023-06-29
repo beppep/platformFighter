@@ -26,7 +26,7 @@ func update():
 		player.get_node("Hoverboard").visible = false
 	if player.stateTimer==18:
 		
-		var board = boardScene.instance()
+		var board = boardScene.instantiate()
 		board.transform.x.x = player.transform.x.x
 		board.position = player.position+Vector2(0,20)
 		board._velocity = Vector2(1300*player.transform.x.x,-20) + player._velocity

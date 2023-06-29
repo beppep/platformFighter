@@ -13,7 +13,7 @@ func update():
 		
 	if player.stateTimer==10:
 		
-		var ball = player.eyeballScene.instance()
+		var ball = player.eyeballScene.instantiate()
 		ball.position = player.position + Vector2(0*player.transform.x.x,-20)
 		ball.team = player.team
 		ball.player = player

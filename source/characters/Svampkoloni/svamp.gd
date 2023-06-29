@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends CharacterBody2D
 
 
 # Declare member variables here. Examples:
@@ -16,7 +16,9 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	_velocity.y += gravity
-	_velocity = move_and_slide(_velocity)
+	set_velocity(_velocity)
+	move_and_slide()
+	_velocity = velocity
 	timer+=1
 	if timer == 6:
 		transform.x.x = 1

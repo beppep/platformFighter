@@ -1,0 +1,15 @@
+res://default_env.tres
+res://source/characterSelect.tscn
+res://source/mainstage.tscn
+res://source/characters/Noxh/Noxh.tscn
+res://source/characters/Cline/Cline.tscn
+res://source/ui.tscn
+res://source/characters/Godtest/Godtest.tscn
+res://source/AudioStreamPlayer.gd
+res://source/character.gd
+res://source/characters/Godtest/attacks/upb.gd
+res://source/characters/Froat/rock.gd
+res://source/characters/Froat/foot.tscn
+res://source/Camera2D.gd
+res://source/characters/Godtest/hoverboard/hoverboardRecall.gd
+res://source/characters/Attack.gd

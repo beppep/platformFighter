@@ -1,31 +1,31 @@
 [gd_scene load_steps=119 format=2]
 
-[ext_resource path="res://assets/Svampkoloni/idle.png" type="Texture" id=1]
+[ext_resource path="res://assets/Svampkoloni/idle.png" type="Texture2D" id=1]
 [ext_resource path="res://source/characters/Svampkoloni/Svampkoloni.gd" type="Script" id=2]
-[ext_resource path="res://assets/shield.png" type="Texture" id=3]
-[ext_resource path="res://assets/Svampkoloni/jab.png" type="Texture" id=4]
-[ext_resource path="res://assets/Svampkoloni/jump.png" type="Texture" id=5]
-[ext_resource path="res://assets/Svampkoloni/dair.png" type="Texture" id=6]
-[ext_resource path="res://assets/Svampkoloni/dtilt.png" type="Texture" id=7]
-[ext_resource path="res://assets/Svampkoloni/grab.png" type="Texture" id=8]
-[ext_resource path="res://assets/Svampkoloni/semi.png" type="Texture" id=9]
-[ext_resource path="res://assets/Svampkoloni/roll.png" type="Texture" id=10]
-[ext_resource path="res://assets/Svampkoloni/utilt.png" type="Texture" id=11]
-[ext_resource path="res://assets/Svampkoloni/bair.png" type="Texture" id=12]
-[ext_resource path="res://assets/Svampkoloni/bornShroom.png" type="Texture" id=13]
-[ext_resource path="res://assets/Svampkoloni/upb.png" type="Texture" id=14]
-[ext_resource path="res://assets/Svampkoloni/fb.png" type="Texture" id=15]
-[ext_resource path="res://assets/Svampkoloni/ftilt.png" type="Texture" id=16]
-[ext_resource path="res://assets/Svampkoloni/upair.png" type="Texture" id=17]
-[ext_resource path="res://assets/Svampkoloni/fair.png" type="Texture" id=18]
-[ext_resource path="res://assets/Svampkoloni/db.png" type="Texture" id=19]
-[ext_resource path="res://assets/Svampkoloni/nair.png" type="Texture" id=20]
-[ext_resource path="res://assets/Svampkoloni/lying.png" type="Texture" id=21]
-[ext_resource path="res://assets/Svampkoloni/zair.png" type="Texture" id=22]
-[ext_resource path="res://assets/Svampkoloni/wallhog.png" type="Texture" id=23]
+[ext_resource path="res://assets/shield.png" type="Texture2D" id=3]
+[ext_resource path="res://assets/Svampkoloni/jab.png" type="Texture2D" id=4]
+[ext_resource path="res://assets/Svampkoloni/jump.png" type="Texture2D" id=5]
+[ext_resource path="res://assets/Svampkoloni/dair.png" type="Texture2D" id=6]
+[ext_resource path="res://assets/Svampkoloni/dtilt.png" type="Texture2D" id=7]
+[ext_resource path="res://assets/Svampkoloni/grab.png" type="Texture2D" id=8]
+[ext_resource path="res://assets/Svampkoloni/semi.png" type="Texture2D" id=9]
+[ext_resource path="res://assets/Svampkoloni/roll.png" type="Texture2D" id=10]
+[ext_resource path="res://assets/Svampkoloni/utilt.png" type="Texture2D" id=11]
+[ext_resource path="res://assets/Svampkoloni/bair.png" type="Texture2D" id=12]
+[ext_resource path="res://assets/Svampkoloni/bornShroom.png" type="Texture2D" id=13]
+[ext_resource path="res://assets/Svampkoloni/upb.png" type="Texture2D" id=14]
+[ext_resource path="res://assets/Svampkoloni/fb.png" type="Texture2D" id=15]
+[ext_resource path="res://assets/Svampkoloni/ftilt.png" type="Texture2D" id=16]
+[ext_resource path="res://assets/Svampkoloni/upair.png" type="Texture2D" id=17]
+[ext_resource path="res://assets/Svampkoloni/fair.png" type="Texture2D" id=18]
+[ext_resource path="res://assets/Svampkoloni/db.png" type="Texture2D" id=19]
+[ext_resource path="res://assets/Svampkoloni/nair.png" type="Texture2D" id=20]
+[ext_resource path="res://assets/Svampkoloni/lying.png" type="Texture2D" id=21]
+[ext_resource path="res://assets/Svampkoloni/zair.png" type="Texture2D" id=22]
+[ext_resource path="res://assets/Svampkoloni/wallhog.png" type="Texture2D" id=23]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 27, 43.5 )
+size = Vector2( 27, 43.5 )
 
 [sub_resource type="AtlasTexture" id=2]
 flags = 4
@@ -618,22 +618,22 @@ animations = [ {
 [sub_resource type="Animation" id=94]
 step = 0.0166667
 tracks/0/type = "value"
-tracks/0/path = NodePath("AnimatedSprite:position")
+tracks/0/path = NodePath("AnimatedSprite2D:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.0333333, 0.05, 0.0833333, 0.116667, 0.15, 0.183333, 0.233333 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PackedFloat32Array( 0, 0.0333333, 0.05, 0.0833333, 0.116667, 0.15, 0.183333, 0.233333 ),
+"transitions": PackedFloat32Array( 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( 0, 0 ), Vector2( 28.9914, 22.2739 ), Vector2( -44.9013, -36.0624 ), Vector2( 41.3658, 7.07108 ), Vector2( -35.7089, -17.6777 ), Vector2( 12.7279, 21.5668 ), Vector2( -24.0416, -18.7383 ), Vector2( 0, 0 ) ]
 }
 
 [sub_resource type="RectangleShape2D" id=95]
-extents = Vector2( 35, 43.5 )
+size = Vector2( 35, 43.5 )
 
-[node name="Svampkoloni" type="KinematicBody2D"]
+[node name="Svampkoloni" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 17
 script = ExtResource( 2 )
@@ -648,7 +648,7 @@ airfriction = 0.94
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 frames = SubResource( 93 )
 animation = "wallhog"
 
@@ -665,10 +665,10 @@ shape = SubResource( 95 )
 [node name="HitBoxes" type="Node2D" parent="."]
 
 [node name="Label" type="Label" parent="."]
-margin_left = -50.0
-margin_top = -100.0
-margin_right = 50.0
-margin_bottom = -60.0
+offset_left = -50.0
+offset_top = -100.0
+offset_right = 50.0
+offset_bottom = -60.0
 grow_horizontal = 2
 align = 1
 valign = 1
@@ -676,7 +676,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Shield" type="Sprite" parent="."]
+[node name="Shield" type="Sprite2D" parent="."]
 visible = false
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 3 )

@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends CharacterBody2D
 class_name HitableBody
 
 
@@ -9,7 +9,7 @@ var sparks2 = load("res://source/fx/sparks2.tscn")
 
 
 #export var gravity = 80.0 #per second squared
-export var team = 0
+@export var team = 0
 
 
 var sprite_color = Color(1,1,1)
@@ -31,8 +31,8 @@ var is_on_ground = false
 var grab_target
 
 
-onready var anim_player: AnimationPlayer = get_node("AnimationPlayer") #basically just declared in _ready func
-onready var anim_sprite = $AnimatedSprite #basically just declared in _ready func
+@onready var anim_player: AnimationPlayer = get_node("AnimationPlayer") #basically just declared in _ready func
+@onready var anim_sprite = $AnimatedSprite2D #basically just declared in _ready func
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -116,14 +116,14 @@ func hitEffect():
 				$Label.text = str(percentage)+"%"
 				$"/root/Node2D/AudioStreamPlayerLow".playSound($"/root/Node2D/AudioStreamPlayer".punch, 0.5+100/kb)
 				$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".rocks, 0.5+100/kb)
-				blast = explosion.instance()
+				blast = explosion.instantiate()
 			else:
 				_velocity.x += data["kb"]*cos(angle)*opponent.transform.x.x
 				shieldHealth -= data["damage"]*3
 				shieldStun = data["damage"]*0+1
 				$Shield.modulate=Color(0.7,0.7,0.7)
 				$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".shieldHit, 0.5+100/kb)
-				blast = explosion2.instance()
+				blast = explosion2.instantiate()
 			#explosiin
 			blast.position = self.position
 			blast.scale = Vector2(kb*0.02, kb*0.02)

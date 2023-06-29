@@ -43,7 +43,7 @@ func regain_resources():
 		
 func double_jump():
 	if double_jumps == 1:
-		.double_jump()
+		super.double_jump()
 	elif double_jumps == 2:
 		#jump
 		_velocity.y = -jumpspeed
@@ -51,7 +51,7 @@ func double_jump():
 		double_jumps = 1
 		
 		#create board
-		boardObject = boardScene.instance()
+		boardObject = boardScene.instantiate()
 		boardObject.transform.x.x = self.transform.x.x
 		boardObject.position = self.position+Vector2(0,36)
 		boardObject._velocity = Vector2(0, 200)

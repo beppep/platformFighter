@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends CharacterBody2D
 
 class_name Spore
 
@@ -6,9 +6,9 @@ var explosion = load("res://source/fx/explosion.tscn")
 
 
 
-export var gravity = 30.0
-export var fallspeed = 500
-export var airfriction = 0.99
+@export var gravity = 30.0
+@export var fallspeed = 500
+@export var airfriction = 0.99
 var _velocity = Vector2(400,-400)
 var bannedHitboxes = []
 var HitActors = []
@@ -21,7 +21,7 @@ var myOwner
 
 var hi_im_a_spore
 
-onready var anim_sprite = $AnimatedSprite #basically just declared in _ready func
+@onready var anim_sprite = $AnimatedSprite2D #basically just declared in _ready func
 
 # Called when the node enters the scene tree for the first time.
 func attackWith(scriptName):

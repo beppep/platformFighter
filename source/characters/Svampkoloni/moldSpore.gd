@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends CharacterBody2D
 
 class_name moldSpore
 
@@ -6,9 +6,9 @@ var explosion = load("res://source/fx/explosion.tscn")
 
 
 
-export var gravity = 1
-export var fallspeed = 100
-export var airfriction = 0.999
+@export var gravity = 1
+@export var fallspeed = 100
+@export var airfriction = 0.999
 var _velocity = Vector2(400,-400)
 var bannedHitboxes = []
 var HitActors = []
@@ -21,7 +21,7 @@ var myOwner
 var timer = 1
 var hi_im_a_spore
 
-onready var anim_sprite = $AnimatedSprite #basically just declared in _ready func
+@onready var anim_sprite = $AnimatedSprite2D #basically just declared in _ready func
 
 # Called when the node enters the scene tree for the first time.
 func attackWith(scriptName):
@@ -45,7 +45,9 @@ func inputAction():
 	_velocity.x *= airfriction
 	_velocity.y *= airfriction
 	
-	_velocity = move_and_slide(_velocity)
+	set_velocity(_velocity)
+	move_and_slide()
+	_velocity = velocity
 	
 	if position.y>750:
 		queue_free()
@@ -56,7 +58,7 @@ func inputAction():
 	if position.x<-1500:
 		queue_free()
 	randomize()
-	if(rand_range(0, 1)<float(timer)/1000):
+	if(randf_range(0, 1)<float(timer)/1000):
 		queue_free()
 		pass
 	timer+=1

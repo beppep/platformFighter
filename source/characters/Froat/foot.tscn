@@ -1,44 +1,46 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=9 format=3 uid="uid://b04o84yn8w7qw"]
 
-[ext_resource path="res://assets/Froat/pillar.png" type="Texture" id=1]
-[ext_resource path="res://source/characters/Froat/foot.gd" type="Script" id=2]
-[ext_resource path="res://source/characters/Froat/footAttack.gd" type="Script" id=3]
+[ext_resource type="Texture2D" uid="uid://coiaqktj2o283" path="res://assets/Froat/pillar.png" id="1"]
+[ext_resource type="Script" path="res://source/characters/Froat/foot.gd" id="2"]
+[ext_resource type="Script" path="res://source/characters/Froat/footAttack.gd" id="3"]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 70, 200 )
+[sub_resource type="RectangleShape2D" id="1"]
+size = Vector2(140, 400)
 
-[sub_resource type="AtlasTexture" id=2]
-flags = 4
-atlas = ExtResource( 1 )
-region = Rect2( 0, 0, 512, 1024 )
+[sub_resource type="AtlasTexture" id="2"]
+atlas = ExtResource("1")
+region = Rect2(0, 0, 512, 1024)
 
-[sub_resource type="SpriteFrames" id=3]
-animations = [ {
-"frames": [ SubResource( 2 ) ],
+[sub_resource type="SpriteFrames" id="3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("2")
+}],
 "loop": false,
-"name": "default",
+"name": &"default",
 "speed": 5.0
-} ]
+}]
 
-[sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 68.6182, 9.38026 )
+[sub_resource type="RectangleShape2D" id="4"]
+size = Vector2(140, 20)
 
-[sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 6, 10 )
+[sub_resource type="RectangleShape2D" id="5"]
+size = Vector2(132, 32)
 
-[node name="KinematicBody2D" type="KinematicBody2D"]
+[node name="CharacterBody2D" type="CharacterBody2D"]
 collision_layer = 0
 collision_mask = 0
-script = ExtResource( 2 )
+script = ExtResource("2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 200 )
-shape = SubResource( 1 )
+position = Vector2(0, 200)
+shape = SubResource("1")
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-position = Vector2( 0, 360 )
-scale = Vector2( 0.5, 1 )
-frames = SubResource( 3 )
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 360)
+scale = Vector2(0.5, 1)
+sprite_frames = SubResource("3")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
@@ -47,8 +49,8 @@ collision_layer = 8
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
-position = Vector2( 0, 200 )
-shape = SubResource( 1 )
+position = Vector2(0, 200)
+shape = SubResource("1")
 
 [node name="HitBoxes" type="Node2D" parent="."]
 
@@ -57,18 +59,17 @@ collision_layer = 4
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBoxes/0"]
-position = Vector2( 0, 10 )
-shape = SubResource( 4 )
+position = Vector2(0, 10)
+shape = SubResource("4")
 
 [node name="currentAttack" type="Node" parent="."]
-script = ExtResource( 3 )
+script = ExtResource("3")
 
 [node name="platforms" type="StaticBody2D" parent="."]
 collision_layer = 16
 collision_mask = 0
 
 [node name="platform2" type="CollisionShape2D" parent="platforms"]
-position = Vector2( 0, 16 )
-scale = Vector2( 11, 1.6 )
-shape = SubResource( 5 )
+position = Vector2(0, 16)
+shape = SubResource("5")
 one_way_collision = true

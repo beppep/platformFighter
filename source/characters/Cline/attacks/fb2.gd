@@ -34,7 +34,7 @@ func update():
 
 	if player.stateTimer==10:
 		
-		var ghast = player.ghostScene.instance()
+		var ghast = player.ghostScene.instantiate()
 		ghast.position = player.position + Vector2(10,0)*player.transform.x.x
 		ghast.team = player.team
 		ghast.transform.x.x = player.transform.x.x

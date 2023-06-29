@@ -2,14 +2,18 @@
 
 importer="mp3"
 type="AudioStreamMP3"
-path="res://.import/shine.mp3-fec18ba69c637ad6ee1e91b9ccfd5da4.mp3str"
+uid="uid://bbdorwc61l2r8"
+path="res://.godot/imported/shine.mp3-fec18ba69c637ad6ee1e91b9ccfd5da4.mp3str"
 
 [deps]
 
 source_file="res://assets/sounds/shine.mp3"
-dest_files=[ "res://.import/shine.mp3-fec18ba69c637ad6ee1e91b9ccfd5da4.mp3str" ]
+dest_files=["res://.godot/imported/shine.mp3-fec18ba69c637ad6ee1e91b9ccfd5da4.mp3str"]
 
 [params]
 
 loop=true
 loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

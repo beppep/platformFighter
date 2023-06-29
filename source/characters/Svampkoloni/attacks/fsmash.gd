@@ -34,7 +34,7 @@ func update():
 		player.anim_sprite.play("fsmash")
 	if player.stateTimer==20:
 			
-		var svamp = shroom.instance()
+		var svamp = shroom.instantiate()
 		svamp.position = player.position + Vector2(200*player.transform.x.x, 0)
 		svamp.team = player.team
 		svamp.transform.x.x = player.transform.x.x

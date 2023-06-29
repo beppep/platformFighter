@@ -1,12 +1,12 @@
 [gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://assets/punchersprites/idle.png" type="Texture" id=1]
+[ext_resource path="res://assets/punchersprites/idle.png" type="Texture2D" id=1]
 [ext_resource path="res://source/characters/Puncher/Puncher.gd" type="Script" id=2]
-[ext_resource path="res://assets/punchersprites/longpunch.png" type="Texture" id=3]
-[ext_resource path="res://assets/shield.png" type="Texture" id=4]
+[ext_resource path="res://assets/punchersprites/longpunch.png" type="Texture2D" id=3]
+[ext_resource path="res://assets/shield.png" type="Texture2D" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 4.10274, 4.83219 )
+size = Vector2( 4.10274, 4.83219 )
 
 [sub_resource type="Animation" id=2]
 resource_name = "double_jump"
@@ -18,8 +18,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.333333, 0.583333 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PackedFloat32Array( 0, 0.333333, 0.583333 ),
+"transitions": PackedFloat32Array( 1, 1, 1 ),
 "update": 0,
 "values": [ 0.0, 200.0, 360.0 ]
 }
@@ -34,8 +34,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.166667, 0.333333 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PackedFloat32Array( 0, 0.166667, 0.333333 ),
+"transitions": PackedFloat32Array( 1, 1, 1 ),
 "update": 1,
 "values": [ ExtResource( 1 ), ExtResource( 3 ), ExtResource( 1 ) ]
 }
@@ -50,8 +50,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"times": PackedFloat32Array( 0, 0.05, 0.1, 0.15, 0.2 ),
+"transitions": PackedFloat32Array( 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( 0, 0 ), Vector2( 65.516, -20 ), Vector2( -27.718, 40 ), Vector2( -25.198, -40 ), Vector2( 0, 0 ) ]
 }
@@ -62,8 +62,8 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PackedFloat32Array( 0, 0.1, 0.2 ),
+"transitions": PackedFloat32Array( 1, 1, 1 ),
 "update": 0,
 "values": [ 0.0, -45.0, 0.0 ]
 }
@@ -78,8 +78,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 0,
 "values": [ Vector2( 0, 0 ) ]
 }
@@ -90,8 +90,8 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 0,
 "values": [ 0.0 ]
 }
@@ -102,8 +102,8 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 1,
 "values": [ ExtResource( 1 ) ]
 }
@@ -114,8 +114,8 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 0,
 "values": [ 0.0 ]
 }
@@ -126,8 +126,8 @@ tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 0,
 "values": [ Vector2( 8, 8 ) ]
 }
@@ -142,13 +142,13 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.35, 0.683333 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PackedFloat32Array( 0, 0.35, 0.683333 ),
+"transitions": PackedFloat32Array( 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( 8, 8 ), Vector2( 1e-05, 8 ), Vector2( 8, 8 ) ]
 }
 
-[node name="Puncher" type="KinematicBody2D"]
+[node name="Puncher" type="CharacterBody2D"]
 collision_layer = 2
 script = ExtResource( 2 )
 gravity = 70.0
@@ -158,7 +158,7 @@ jumpspeed = 1300.0
 scale = Vector2( 6, 10 )
 shape = SubResource( 1 )
 
-[node name="sprite" type="Sprite" parent="."]
+[node name="sprite" type="Sprite2D" parent="."]
 scale = Vector2( 8, 8 )
 texture = ExtResource( 1 )
 
@@ -181,19 +181,19 @@ shape = SubResource( 1 )
 
 [node name="currentAttack" type="Node" parent="."]
 
-[node name="Shield" type="Sprite" parent="."]
+[node name="Shield" type="Sprite2D" parent="."]
 visible = false
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 4 )
 
 [node name="Label" type="Label" parent="."]
-margin_left = -50.0
-margin_top = -100.0
-margin_bottom = -80.0
+offset_left = -50.0
+offset_top = -100.0
+offset_bottom = -80.0
 grow_horizontal = 2
-rect_scale = Vector2( 2, 2 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+scale = Vector2( 2, 2 )
+theme_override_colors/font_color = Color( 0, 0, 0, 1 )
+theme_override_colors/font_shadow_color = Color( 0, 0, 0, 1 )
 align = 1
 valign = 1
 __meta__ = {

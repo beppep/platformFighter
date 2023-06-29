@@ -25,11 +25,11 @@ func update():
 	var targetPos = player.ownerObject.position# + Vector2(0,50)
 	player._velocity = (targetPos-player.position).normalized()*2000
 	if player.transform.x.x>0:
-		hitboxes[0]["angle"] = -rad2deg(player._velocity.angle())
+		hitboxes[0]["angle"] = -rad_to_deg(player._velocity.angle())
 	else:
-		hitboxes[0]["angle"] = 180+rad2deg(player._velocity.angle())
+		hitboxes[0]["angle"] = 180+rad_to_deg(player._velocity.angle())
 	
-	player.set_collision_mask_bit(0,0)
+	player.set_collision_mask_value(1,0)
 	
 	if targetPos.distance_to(player.position)<30:
 		interrupted = true
