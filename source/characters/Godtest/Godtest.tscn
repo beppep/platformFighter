@@ -1,4 +1,4 @@
-[gd_scene load_steps=138 format=3 uid="uid://ba4guh0urvhij"]
+[gd_scene load_steps=141 format=3 uid="uid://ba4guh0urvhij"]
 
 [ext_resource type="Texture2D" uid="uid://dvssddwy0205s" path="res://assets/Godtest/jab.png" id="1"]
 [ext_resource type="Script" path="res://source/characters/Godtest/Godtest.gd" id="2"]
@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://bhs037douw2e7" path="res://assets/Godtest/fthrow.png" id="20"]
 [ext_resource type="Texture2D" uid="uid://ddshfy8pwhc8u" path="res://assets/Godtest/spinair.png" id="21"]
 [ext_resource type="Texture2D" uid="uid://caqvjegkqla3x" path="res://assets/Godtest/idle2.png" id="22"]
+[ext_resource type="Texture2D" uid="uid://difn8q0fcosdp" path="res://assets/cloud.png" id="22_6oj8m"]
 [ext_resource type="Texture2D" uid="uid://d4c3468iuet5i" path="res://assets/Godtest/lying.png" id="23"]
 
 [sub_resource type="RectangleShape2D" id="1"]
@@ -459,6 +460,14 @@ region = Rect2(768, 0, 256, 256)
 [sub_resource type="AtlasTexture" id="34"]
 atlas = ExtResource("13")
 region = Rect2(1024, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a434p"]
+atlas = ExtResource("11")
+region = Rect2(1280, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bvsvj"]
+atlas = ExtResource("11")
+region = Rect2(1536, 0, 256, 256)
 
 [sub_resource type="SpriteFrames" id="111"]
 animations = [{
@@ -978,6 +987,17 @@ animations = [{
 "loop": false,
 "name": &"utilt",
 "speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a434p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bvsvj")
+}],
+"loop": true,
+"name": &"wallhog",
+"speed": 5.0
 }]
 
 [sub_resource type="Animation" id="112"]
@@ -1044,7 +1064,7 @@ shape = SubResource("2")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(1.2, 1.2)
 sprite_frames = SubResource("111")
-animation = &"run"
+animation = &"wallhog"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -1088,3 +1108,9 @@ collision_mask = 17
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="snatcher"]
 shape = SubResource("115")
+
+[node name="Ghost" type="Sprite2D" parent="."]
+visible = false
+z_index = -2
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("22_6oj8m")

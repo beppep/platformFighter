@@ -104,3 +104,6 @@ func uniqueRespawn(new):
 	new.position = Vector2(-$"/root/Node2D".blastzoneX, -100)
 	new._velocity = Vector2(2000, -1000)
 	new.intangibleFrames = 100
+	new.state = 2
+	new.stateTimer = 0
+	new.totalHitstun = 30

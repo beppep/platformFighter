@@ -33,11 +33,12 @@ func update():
 		player._velocity = Vector2.ZERO
 
 func onHit(name, target, shielded=false):
-	target.getGrabbed()
-	
-	interrupted = true
-	endAttack()
-	
-	player.attackWith("throw")
-	player.stateTimer = -1
-	player.grab_target = target
+	if target.getGrabbed() and player.state != 2:
+		#target.getGrabbed()
+		
+		interrupted = true
+		endAttack()
+		
+		player.attackWith("throw")
+		player.stateTimer = -1
+		player.grab_target = target

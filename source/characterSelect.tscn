@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bfjmomsmed3wv"]
+[gd_scene load_steps=15 format=3 uid="uid://bfjmomsmed3wv"]
 
 [ext_resource type="Texture2D" uid="uid://d00wrcguy2fss" path="res://assets/Froat/idle.png" id="1"]
 [ext_resource type="Texture2D" uid="uid://byk5mmn1aotf0" path="res://assets/Noxh/idle.png" id="2"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://source/cursor.gd" id="5"]
 [ext_resource type="Texture2D" uid="uid://v63t4d7rrofe" path="res://assets/Godtest/hoverboard.png" id="6"]
 [ext_resource type="Texture2D" uid="uid://qk01niw133bx" path="res://assets/earth.png" id="7"]
+[ext_resource type="Script" path="res://source/cursor3.gd" id="7_ltcnc"]
 [ext_resource type="Texture2D" uid="uid://difn8q0fcosdp" path="res://assets/cloud.png" id="8"]
 [ext_resource type="Script" path="res://source/cursor2.gd" id="9"]
 [ext_resource type="Script" path="res://source/characterSelect.gd" id="10"]
@@ -36,6 +37,14 @@ z_index = 1
 position = Vector2(128, 128)
 texture = ExtResource("4")
 script = ExtResource("9")
+cursorTexture = ExtResource("8")
+selectedTexture = ExtResource("7")
+
+[node name="cursor3" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(128, 128)
+texture = ExtResource("4")
+script = ExtResource("7_ltcnc")
 cursorTexture = ExtResource("8")
 selectedTexture = ExtResource("7")
 

@@ -32,7 +32,7 @@ var leftHogger = null
 
 
 func _ready() -> void:
-	var playerNum = 2
+	var playerNum = CharacterSelectionManager.playerCount
 	
 	chosenCharacters = CharacterSelectionManager.chosenCharacters
 	#chosenCharacters = [froatScene,godtestScene,]
@@ -51,7 +51,7 @@ func _ready() -> void:
 		$Players.add_child(new)
 		new.player_id = i
 		new.team = i
-		new.position = Vector2(-300+600*i, 0)
+		new.position = Vector2(-300+600/(playerNum-1)*i, 0)
 		if i==1:
 			new.transform.x.x = -1
 		new._ready2()

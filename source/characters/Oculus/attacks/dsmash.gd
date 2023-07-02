@@ -35,12 +35,11 @@ func update():
 		player._velocity = Vector2(0,0)
 		player.anim_sprite.play("dsmash")
 	if 12<player.stateTimer and player.stateTimer<32:
-		player.intangible = true
 		player.move_and_collide(Vector2(player.direction.x*10,0))
 		if not player.move_and_collide(Vector2(0,50)):
 			player.move_and_collide(Vector2(0,-50))
 			player.position.x -= player.direction.x*10
 	if player.stateTimer==35:
-		player.intangible = false
+		#player.intangible = false
 		
 

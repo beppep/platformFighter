@@ -36,8 +36,7 @@ func update():
 		player.cant_hitfall=true
 
 func onHit(name, target, shielded=false):
-	if target.getGrabbed():
-		
+	if target.getGrabbed() and player.state != 2:	
 		interrupted = true
 		endAttack(false)
 		

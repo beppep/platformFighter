@@ -57,11 +57,12 @@ func inputAction():
 		currentAttack.update()
 		
 	if state == 0:
-		for other in $"/root/Node2D/Players".get_children(): # this is stupid just have a ref
-			if "helloImShark" in other:
-				if other._velocity.y>=0 and get_node("catcher").overlaps_body(other):
-					print("aatjaj")
-					attachTo(other)
+		#for other in $"/root/Node2D/Players".get_children(): # this is stupid just have a ref
+		#	if "helloImShark" in other:
+		var other = ownerObject
+		if other._velocity.y>=0 and get_node("catcher").overlaps_body(other):
+			print("aatjaj")
+			attachTo(other)
 
 func attachTo(other):
 	other._velocity = Vector2(0,0)

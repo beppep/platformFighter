@@ -8,4 +8,6 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	CharacterSelectionManager.chosenCharacters = [null, null]
+	CharacterSelectionManager.chosenCharacters = []
+	for i in range( CharacterSelectionManager.playerCount):
+		CharacterSelectionManager.chosenCharacters.append(null)

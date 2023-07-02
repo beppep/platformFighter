@@ -1,9 +1,10 @@
 extends Node
 
+var playerCount = 2
 
 var charNum = 6
 var legalCharNum = 3
-var chosenCharacters = [null, null]
+var chosenCharacters = []
 
 var selectableCharacters = {
 	"froat" : preload("res://source/characters/Froat/Froat2.tscn"),
@@ -14,6 +15,11 @@ var selectableCharacters = {
 	"shark" : preload("res://source/characters/Godtest/Godtest.tscn"),
 	#"random" : preload("res://source/characters/Svampkoloni/Svampkoloni.tscn"),
 }
+
+func _ready():
+	pass
+	#for i in range(playerCount):
+	#	chosenCharacters.append(null)
 
 func pickCharacter(index, name):
 	if name=="random":

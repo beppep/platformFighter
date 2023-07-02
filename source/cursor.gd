@@ -39,7 +39,8 @@ func _process(delta):
 			CharacterSelectionManager.pickCharacter(0,characters[currentSelected].name)
 			texture = selectedTexture
 		else:
-			if(CharacterSelectionManager.chosenCharacters[0]!=null and CharacterSelectionManager.chosenCharacters[1]!=null):
+			print(CharacterSelectionManager.chosenCharacters)
+			if not (null in CharacterSelectionManager.chosenCharacters):
 				get_tree().change_scene_to_file("res://source/mainstage.tscn")
 	if(Input.is_action_just_pressed("p1_b")):
 		CharacterSelectionManager.chosenCharacters[0] = null

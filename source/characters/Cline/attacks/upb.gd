@@ -61,7 +61,7 @@ func _init() -> void:
 			"group":2,
 			"damage":9,
 			"start":20,
-			"end":35,#50,
+			"end":45,#50,
 			"kb":50,
 			"kbscaling":1.0,
 			"angle":-87, 
@@ -87,11 +87,12 @@ func update():
 	
 	if 20<player.stateTimer and player.stateTimer<35:
 		player._velocity.x *= 0.9
-		player._velocity.y = 1600
+		player._velocity.y = 1000
 		
 	if (player.stateTimer==35):
+		pass
 		#player._velocity.x *= 0.9
-		player._velocity.y = 0
+		#player._velocity.y = 0
 	
 	
 	if player.is_on_ground and player.stateTimer>21:

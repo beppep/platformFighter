@@ -37,8 +37,7 @@ func update():
 		player._velocity.y*=0.9
 
 func onHit(name, target, shielded=false):
-	if target.getGrabbed():
-		
+	if target.getGrabbed() and player.state != 2:
 		interrupted = true
 		endAttack(false)
 		

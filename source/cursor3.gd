@@ -24,24 +24,24 @@ func _ready():
 
 # This whole _process(delta) function is used to allow scrolling through all the characters
 func _process(delta):
-	if(Input.is_action_just_pressed("p2_right") and CharacterSelectionManager.chosenCharacters[1]==null and currentSelected<CharacterSelectionManager.charNum):
+	if(Input.is_action_just_pressed("p3_right") and CharacterSelectionManager.chosenCharacters[2]==null and currentSelected<CharacterSelectionManager.charNum):
 		currentSelected += 1
 		position.x = 128 + portraitOffset.x*(currentSelected%amountOfColumns)
 		position.y = 128 + portraitOffset.x*int(currentSelected/amountOfColumns)
-	elif(Input.is_action_just_pressed("p2_left") and CharacterSelectionManager.chosenCharacters[1]==null and currentSelected>0):
+	elif(Input.is_action_just_pressed("p3_left") and CharacterSelectionManager.chosenCharacters[2]==null and currentSelected>0):
 		currentSelected -= 1
 		position.x = 128 + portraitOffset.x*(currentSelected%amountOfColumns)
 		position.y = 128 + portraitOffset.x*int(currentSelected/amountOfColumns)
 
 # If a selection is made send it to the Signleton CharacterSelectionManager.gd to store that value
-	if(Input.is_action_just_pressed("p2_a")):
-		if(CharacterSelectionManager.chosenCharacters[1]==null):
-			CharacterSelectionManager.pickCharacter(1,characters[currentSelected].name)
+	if(Input.is_action_just_pressed("p3_a")):
+		if(CharacterSelectionManager.chosenCharacters[2]==null):
+			CharacterSelectionManager.pickCharacter(2,characters[currentSelected].name)
 			texture = selectedTexture
 		else:
 			if not (null in CharacterSelectionManager.chosenCharacters):
 				get_tree().change_scene_to_file("res://source/mainstage.tscn")
-	if(Input.is_action_just_pressed("p2_b")):
-		CharacterSelectionManager.chosenCharacters[1] = null
+	if(Input.is_action_just_pressed("p3_b")):
+		CharacterSelectionManager.chosenCharacters[2] = null
 		texture = cursorTexture
 

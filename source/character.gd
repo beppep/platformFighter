@@ -78,7 +78,7 @@ var ghosted = false
 var walljump_facing = 1
 var jablocked = 0
 var noFriction = false
-var dummyOpponent = 0 # -1
+var dummyOpponent = 0-1 # -1
 
 #func process:...::
 #	match state:
@@ -361,8 +361,11 @@ func get_buttons():
 		
 	if player_id==0:
 		return [Input.get_action_strength("p1_jump"),Input.get_action_strength("p1_a"),Input.get_action_strength("p1_b"),Input.get_action_strength("p1_shield"),Input.get_action_strength("p1_z")]
-	else:
+	elif player_id==1:
 		return [Input.get_action_strength("p2_jump"),Input.get_action_strength("p2_a"),Input.get_action_strength("p2_b"),Input.get_action_strength("p2_shield"),Input.get_action_strength("p2_z")]
+	else:
+		return [Input.get_action_strength("p3_jump"),Input.get_action_strength("p3_a"),Input.get_action_strength("p3_b"),Input.get_action_strength("p3_shield"),Input.get_action_strength("p3_z")]
+				
 func get_direction():
 	if dummyOpponent==player_id:
 		var my_random_number = rng.randf_range(0.0, 2*PI) #test
@@ -379,10 +382,15 @@ func get_direction():
 			Input.get_action_strength("p1_right")-Input.get_action_strength("p1_left"),
 			Input.get_action_strength("p1_down")-Input.get_action_strength("p1_up") #is_on_floor updated by moveandslide
 		)
-	else:
+	elif player_id==1:
 		return Vector2(
 			Input.get_action_strength("p2_right")-Input.get_action_strength("p2_left"),
 			Input.get_action_strength("p2_down")-Input.get_action_strength("p2_up") #is_on_floor updated by moveandslide
+		)
+	else:
+		return Vector2(
+			Input.get_action_strength("p3_right")-Input.get_action_strength("p3_left"),
+			Input.get_action_strength("p3_down")-Input.get_action_strength("p3_up") #is_on_floor updated by moveandslide
 		)
 func get_c_direction():
 	if player_id==0:
@@ -390,10 +398,15 @@ func get_c_direction():
 			Input.get_action_strength("p1_c_right")-Input.get_action_strength("p1_c_left"),
 			Input.get_action_strength("p1_c_down")-Input.get_action_strength("p1_c_up") #is_on_floor updated by moveandslide
 		)
-	else:
+	elif player_id==1:
 		return Vector2(
 			Input.get_action_strength("p2_c_right")-Input.get_action_strength("p2_c_left"),
 			Input.get_action_strength("p2_c_down")-Input.get_action_strength("p2_c_up") #is_on_floor updated by moveandslide
+		)
+	else:
+		return Vector2(
+			Input.get_action_strength("p3_c_right")-Input.get_action_strength("p3_c_left"),
+			Input.get_action_strength("p3_c_down")-Input.get_action_strength("p3_c_up") #is_on_floor updated by moveandslide
 		)
 
 func calculate_move_velocity(): #basically do movement input stuff
@@ -838,7 +851,7 @@ func respawn():
 		new._ready2()
 		uniqueRespawn(new)
 		new.stocks = stocks-1
-	else:
+	elif $"/root/Node2D/Players".get_child_count() < 3:
 		get_tree().change_scene_to_file("res://source/characterSelect.tscn")
 	queue_free()
 
