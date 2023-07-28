@@ -14,36 +14,18 @@ func _init() -> void:
 		{
 			"name":"0",
 			"group":1,
-			"damage":3,
-			"start":4,
-			"end":7,
-			"kb":20,
-			"kbscaling":0.1,
-			"angle":40,
-			"autolinkX":0.9,
-			"autolinkY":0.9,
-			"shapes":[
-				[35,18,55,-10]
-			]
-		},
-		{
-			"name":"1",
-			"group":2,
 			"damage":6,
-			"start":12,
-			"end":15,
+			"start":7,
+			"end":10,
 			"kb":100,
 			"kbscaling":1,
 			"angle":45,
 			"shapes":[
-				[35,18,55,-10]
+				[38,33,55,-30]
 			]
 		},
 	]
 
 func update():
 	if player.stateTimer==0:
-		player.cant_hitfall = true
 		player.anim_sprite.play("ftilt")
-	if player.stateTimer==8:
-		player.cant_hitfall = false

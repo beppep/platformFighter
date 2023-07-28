@@ -17,11 +17,11 @@ func _init() -> void:
 			"damage":2,
 			"start":5,
 			"end":7,
-			"kb":30,
-			"kbscaling":0.1,
-			"angle":10,
-			"autolinkX":0.8,
-			"autolinkY":0.1,
+			"kb":50,
+			"kbscaling":0.5,
+			"angle":-1,
+			"autolinkX":0.9,
+			"autolinkY":0.9,
 			"shapes":[
 				[32,28,28,0]
 			]
@@ -32,11 +32,11 @@ func _init() -> void:
 			"damage":2,
 			"start":8,
 			"end":10,
-			"kb":30,
-			"kbscaling":0.1,
-			"angle":10,
-			"autolinkX":0.8,
-			"autolinkY":0.5,
+			"kb":50,
+			"kbscaling":0.5,
+			"angle":-1,
+			"autolinkX":0.9,
+			"autolinkY":0.9,
 			"shapes":[
 				[32,28,28,0]
 			]
@@ -47,10 +47,10 @@ func _init() -> void:
 			"damage":2,
 			"start":11,
 			"end":13,
-			"kb":30,
-			"kbscaling":0.1,
-			"angle":10,
-			"autolinkX":0.8,
+			"kb":50,
+			"kbscaling":0.5,
+			"angle":-1,
+			"autolinkX":0.9,
 			"autolinkY":0.9,
 			"shapes":[
 				[32,28,28,0]
@@ -73,7 +73,7 @@ func _init() -> void:
 
 func update():
 	if player.stateTimer==0:
-		player.cant_hitfall = true
+		#player.cant_hitfall = true
 		player.anim_sprite.play("fair2")
 		
 		#player._velocity.y*=0.5

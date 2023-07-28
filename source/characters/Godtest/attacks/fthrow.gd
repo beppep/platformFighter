@@ -17,25 +17,30 @@ func _init() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func update():
-	player._velocity.x*=0.95
-	player._velocity.y*=0.9
-	player._velocity.y-=50
 	if player.stateTimer==0:
 		player.anim_sprite.play("fthrow")
 	if player.stateTimer == 2:
 		player.get_node("Hoverboard").visible = false
+	#if player.stateTimer<18:
+	player._velocity.y *= 0.8
+	player._velocity.y -= 30
 	if player.stateTimer==18:
 		
 		var board = boardScene.instantiate()
 		board.transform.x.x = player.transform.x.x
-		board.position = player.position+Vector2(0,20)
-		board._velocity = Vector2(1300*player.transform.x.x,-20) + player._velocity
+		board.position = player.position+Vector2(0,-20)
+		var direction = player.direction
+		if direction==Vector2.ZERO:
+			direction = Vector2(player.transform.x.x,0)
+		board._velocity = direction.normalized()*1000 + player._velocity
 		board.z_index = -2
 		board.team = player.team
 		player.get_node("/root/Node2D/Articles").add_child(board)
 		board.attackWith("fthrow")
 		player.boardObject = board
 		board.ownerObject = player
+		
+		#player._velocity = (Vector2(0,-2) - direction) * 100
 		
 		player.hasHoverboard = false
 		player.double_jumps = 1

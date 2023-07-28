@@ -46,8 +46,12 @@ func inputAction():
 		nextFrameHitPause=0
 	if hitPause:
 		return
-		
-	_velocity *= 0.95
+	
+	#print(_velocity.length())
+	if _velocity.length() > 30:
+		_velocity -= _velocity.normalized()*30
+	else:
+		_velocity = Vector2(0,0)
 	set_velocity(_velocity)
 	set_up_direction(Vector2.UP)
 	move_and_slide()
@@ -65,7 +69,7 @@ func inputAction():
 			attachTo(other)
 
 func attachTo(other):
-	other._velocity = Vector2(0,0)
+	#other._velocity = Vector2(0,0)
 	other.hasHoverboard = true
 	other.boardObject = false
 	other.get_node("Hoverboard").visible = true
@@ -75,7 +79,7 @@ func attachTo(other):
 	if other.state == 1:
 		other.currentAttack.interrupted = true
 		other.currentAttack.endAttack()
-	other.attackWith("attach")
+	#other.attackWith("attach")
 	queue_free()
 
 func attackWith(script):
@@ -138,7 +142,7 @@ func hitEffect():
 			var blast = explosion.instantiate()
 			blast.position = self.position
 			blast.scale = Vector2(kb*0.02, kb*0.02)
-			blast.z_index = -2
+			blast.z_index = -1.5
 			get_node("/root/Node2D/fx").add_child(blast)
 		
 		# remove thier bans

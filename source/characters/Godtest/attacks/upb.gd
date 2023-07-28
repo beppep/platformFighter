@@ -12,9 +12,11 @@ func _init() -> void:
 			"damage":5,
 			"start":6,
 			"end":12,
-			"kb":100,
-			"kbscaling":0.1,
-			"angle":50,
+			"kb":70,
+			"kbscaling":0.4,
+			"angle":-1,
+			"autolinkX":0.9,
+			"autolinkY":1,
 			"shapes":[
 				[30,30,20,-10]
 			]
@@ -71,6 +73,7 @@ func update():
 		player._velocity.x = player.transform.x.x*500
 		if player.stateTimer == 5:
 			player._velocity.y = -1000
+		player.set_velocity(player._velocity)
 	if player.is_on_ground and player.stateTimer>20:
 		interrupted = true #remove hitboxes? idk
 		if not endFast:

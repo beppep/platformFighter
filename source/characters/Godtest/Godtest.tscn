@@ -1,4 +1,4 @@
-[gd_scene load_steps=141 format=3 uid="uid://ba4guh0urvhij"]
+[gd_scene load_steps=143 format=3 uid="uid://ba4guh0urvhij"]
 
 [ext_resource type="Texture2D" uid="uid://dvssddwy0205s" path="res://assets/Godtest/jab.png" id="1"]
 [ext_resource type="Script" path="res://source/characters/Godtest/Godtest.gd" id="2"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://wq3wp70mjkh6" path="res://assets/Godtest/bair.png" id="6"]
 [ext_resource type="Texture2D" uid="uid://fdf6nxu8yspb" path="res://assets/Godtest/dair.png" id="7"]
 [ext_resource type="Texture2D" uid="uid://4n04u713nq0b" path="res://assets/Godtest/fair.png" id="8"]
+[ext_resource type="Texture2D" uid="uid://db3jlwxahokqs" path="res://assets/Godtest/ftilt.png" id="8_r5gdv"]
 [ext_resource type="Texture2D" uid="uid://dbgvjqjus32bc" path="res://assets/Godtest/run.png" id="9"]
 [ext_resource type="Texture2D" uid="uid://0f0iok0yjh4s" path="res://assets/Godtest/grab.png" id="10"]
 [ext_resource type="Texture2D" uid="uid://cnjx4vy6mm1q3" path="res://assets/Godtest/roll.png" id="11"]
@@ -16,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://de6lop04423c8" path="res://assets/Godtest/dtilt.png" id="16"]
 [ext_resource type="Texture2D" uid="uid://dq1g2h1nuwttb" path="res://assets/Godtest/landing.png" id="17"]
 [ext_resource type="Texture2D" uid="uid://v63t4d7rrofe" path="res://assets/Godtest/hoverboard.png" id="18"]
+[ext_resource type="Texture2D" uid="uid://dwiwnadvukhtj" path="res://assets/Godtest/fsmash.png" id="18_wsd8y"]
 [ext_resource type="Texture2D" uid="uid://mw3q74jlodhi" path="res://assets/Godtest/dthrow.png" id="19"]
 [ext_resource type="Texture2D" uid="uid://bhs037douw2e7" path="res://assets/Godtest/fthrow.png" id="20"]
 [ext_resource type="Texture2D" uid="uid://ddshfy8pwhc8u" path="res://assets/Godtest/spinair.png" id="21"]
@@ -177,21 +179,25 @@ region = Rect2(512, 0, 256, 256)
 atlas = ExtResource("20")
 region = Rect2(768, 0, 256, 256)
 
-[sub_resource type="AtlasTexture" id="35"]
-atlas = ExtResource("1")
+[sub_resource type="AtlasTexture" id="AtlasTexture_ur0bq"]
+atlas = ExtResource("8_r5gdv")
 region = Rect2(0, 0, 256, 256)
 
-[sub_resource type="AtlasTexture" id="36"]
-atlas = ExtResource("1")
-region = Rect2(256, 0, 256, 256)
-
-[sub_resource type="AtlasTexture" id="37"]
-atlas = ExtResource("1")
+[sub_resource type="AtlasTexture" id="AtlasTexture_1mtfv"]
+atlas = ExtResource("8_r5gdv")
 region = Rect2(768, 0, 256, 256)
 
-[sub_resource type="AtlasTexture" id="38"]
-atlas = ExtResource("1")
+[sub_resource type="AtlasTexture" id="AtlasTexture_dgkgg"]
+atlas = ExtResource("8_r5gdv")
+region = Rect2(256, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_16724"]
+atlas = ExtResource("8_r5gdv")
 region = Rect2(512, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="9"]
+atlas = ExtResource("22")
+region = Rect2(0, 0, 256, 256)
 
 [sub_resource type="AtlasTexture" id="3"]
 atlas = ExtResource("10")
@@ -224,10 +230,6 @@ region = Rect2(512, 0, 256, 256)
 [sub_resource type="AtlasTexture" id="42"]
 atlas = ExtResource("1")
 region = Rect2(768, 0, 256, 256)
-
-[sub_resource type="AtlasTexture" id="9"]
-atlas = ExtResource("22")
-region = Rect2(0, 0, 256, 256)
 
 [sub_resource type="AtlasTexture" id="54"]
 atlas = ExtResource("17")
@@ -309,21 +311,21 @@ region = Rect2(0, 0, 256, 256)
 atlas = ExtResource("9")
 region = Rect2(256, 0, 256, 256)
 
-[sub_resource type="AtlasTexture" id="55"]
-atlas = ExtResource("17")
-region = Rect2(64, 64, 64, 64)
+[sub_resource type="AtlasTexture" id="AtlasTexture_hnort"]
+atlas = ExtResource("18_wsd8y")
+region = Rect2(0, 0, 256, 256)
 
-[sub_resource type="AtlasTexture" id="56"]
-atlas = ExtResource("17")
-region = Rect2(128, 64, 64, 64)
+[sub_resource type="AtlasTexture" id="AtlasTexture_oibd3"]
+atlas = ExtResource("18_wsd8y")
+region = Rect2(256, 0, 256, 256)
 
-[sub_resource type="AtlasTexture" id="57"]
-atlas = ExtResource("17")
-region = Rect2(64, 128, 64, 64)
+[sub_resource type="AtlasTexture" id="AtlasTexture_wjo7r"]
+atlas = ExtResource("18_wsd8y")
+region = Rect2(512, 0, 256, 256)
 
-[sub_resource type="AtlasTexture" id="58"]
-atlas = ExtResource("17")
-region = Rect2(128, 128, 64, 64)
+[sub_resource type="AtlasTexture" id="AtlasTexture_f76ag"]
+atlas = ExtResource("18_wsd8y")
+region = Rect2(768, 0, 256, 256)
 
 [sub_resource type="AtlasTexture" id="84"]
 atlas = ExtResource("21")
@@ -631,26 +633,29 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("35")
+"texture": SubResource("AtlasTexture_ur0bq")
 }, {
 "duration": 1.0,
-"texture": SubResource("36")
+"texture": SubResource("AtlasTexture_1mtfv")
 }, {
 "duration": 1.0,
-"texture": SubResource("37")
+"texture": SubResource("AtlasTexture_dgkgg")
+}, {
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_16724")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_1mtfv")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_ur0bq")
 }, {
 "duration": 1.0,
-"texture": SubResource("36")
-}, {
-"duration": 1.0,
-"texture": SubResource("38")
-}, {
-"duration": 1.0,
-"texture": SubResource("37")
+"texture": SubResource("9")
 }],
 "loop": false,
 "name": &"ftilt",
-"speed": 15.0
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -806,21 +811,21 @@ animations = [{
 "speed": 6.0
 }, {
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("55")
+"duration": 6.0,
+"texture": SubResource("AtlasTexture_hnort")
+}, {
+"duration": 10.0,
+"texture": SubResource("AtlasTexture_oibd3")
+}, {
+"duration": 16.0,
+"texture": SubResource("AtlasTexture_wjo7r")
 }, {
 "duration": 1.0,
-"texture": SubResource("56")
-}, {
-"duration": 1.0,
-"texture": SubResource("57")
-}, {
-"duration": 1.0,
-"texture": SubResource("58")
+"texture": SubResource("AtlasTexture_f76ag")
 }],
 "loop": false,
 "name": &"sideb",
-"speed": 10.0
+"speed": 60.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -1064,7 +1069,7 @@ shape = SubResource("2")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(1.2, 1.2)
 sprite_frames = SubResource("111")
-animation = &"wallhog"
+animation = &"sideb"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

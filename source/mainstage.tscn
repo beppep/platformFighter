@@ -129,6 +129,7 @@ shape = SubResource("1")
 one_way_collision = true
 
 [node name="TileMap" type="TileMap" parent="stage"]
+z_index = -3
 scale = Vector2(2, 2)
 tile_set = SubResource("TileSet_2g8bh")
 format = 2

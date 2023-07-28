@@ -116,25 +116,28 @@ func special():
 	if not is_on_ground:
 		if direction.y<0:
 			if hasHoverboard:
-				attackWith("uthrow")
+				attackWith("fthrow")
 			else:
 				attackWith("ub")
 		elif direction.y>0:
 			if hasHoverboard:
-				attackWith("dthrow")
+				attackWith("fthrow")
 			else:
 				attackWith("db")
 		elif direction.x != 0:
 			if hasHoverboard:
-				attackWith("fthrow")
+				attackWith("fb")
 			else:
 				attackWith("fb")
 		else:
-			attackWith("nb")
+			if hasHoverboard:
+				attackWith("fthrow")
+			else:
+				attackWith("db")
 	else:
 		if direction.y<0:
 			if hasHoverboard:
-				attackWith("uthrow")
+				attackWith("fthrow")
 			else:
 				attackWith("ub")
 		elif direction.y>0:
@@ -144,11 +147,14 @@ func special():
 				attackWith("db")
 		elif direction.x != 0:
 			if hasHoverboard:
-				attackWith("fthrow")
+				attackWith("fb")
 			else:
 				attackWith("fb")
 		else:
-			attackWith("nb")
+			if hasHoverboard:
+				attackWith("fthrow")
+			else:
+				attackWith("db")
 	
 func grab():
 	flip() #?

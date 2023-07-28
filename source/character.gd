@@ -78,7 +78,7 @@ var ghosted = false
 var walljump_facing = 1
 var jablocked = 0
 var noFriction = false
-var dummyOpponent = 0-1 # -1
+var dummyOpponent = 0 # -1
 
 #func process:...::
 #	match state:
@@ -689,7 +689,10 @@ func hitEffect():
 		var data = HitActors[0]
 		var opponent = HitActors[1]
 		
+		var noAngle = false
 		var angle = data["angle"]*PI/180
+		if data["angle"] == -1:
+			noAngle = true
 		var kb = (data["kb"] + data["kbscaling"]*percentage)
 		if kb>0:
 			var blast
@@ -709,7 +712,10 @@ func hitEffect():
 			else:
 				jablocked = 0
 			if (not state==3):# or data["unshieldable"]:
-				kb_vector = Vector2(0,-1)*(gravity/30)*pow(kb,0.9) + Vector2(cos(angle)*opponent.transform.x.x, -sin(angle))*2.7 *pow(kb,1.2) # not += imo
+				if noAngle:
+					kb_vector = Vector2(0,-1)*(gravity/30)*pow(kb,0.9)
+				else:
+					kb_vector = Vector2(0,-1)*(gravity/30)*pow(kb,0.9) + Vector2(cos(angle)*opponent.transform.x.x, -sin(angle))*2.7 *pow(kb,1.2) # not += imo
 				totalHitstun = hitstunFormula(kb)
 				state = 2
 				stateTimer = 0
@@ -840,6 +846,7 @@ func make_blastline(angle):
 	blast.scale = Vector2(8, 8)
 	blast.z_index = -2
 	get_node("/root/Node2D/fx").add_child(blast)
+	$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".rocks, 0.5)
 
 func respawn():
 	get_node("/root/Node2D/uiElements/ui"+str(player_id)).get_node(str(stocks)).queue_free()

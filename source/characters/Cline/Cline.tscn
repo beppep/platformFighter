@@ -1,4 +1,4 @@
-[gd_scene load_steps=122 format=3 uid="uid://d17ifymh13e3f"]
+[gd_scene load_steps=120 format=3 uid="uid://d17ifymh13e3f"]
 
 [ext_resource type="Texture2D" uid="uid://d4a3eiypvyc14" path="res://assets/shield.png" id="1"]
 [ext_resource type="Texture2D" uid="uid://bn572mofd5w8w" path="res://assets/Cline/idle.png" id="2"]
@@ -372,14 +372,6 @@ region = Rect2(768, 0, 256, 256)
 [sub_resource type="AtlasTexture" id="80"]
 atlas = ExtResource("7")
 region = Rect2(0, 0, 256, 256)
-
-[sub_resource type="AtlasTexture" id="81"]
-atlas = ExtResource("7")
-region = Rect2(256, 0, 256, 256)
-
-[sub_resource type="AtlasTexture" id="82"]
-atlas = ExtResource("7")
-region = Rect2(512, 0, 256, 256)
 
 [sub_resource type="AtlasTexture" id="17"]
 atlas = ExtResource("13")
@@ -880,17 +872,11 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("80")
 }, {
-"duration": 1.0,
-"texture": SubResource("81")
+"duration": 3.0,
+"texture": SubResource("91")
 }, {
 "duration": 1.0,
-"texture": SubResource("81")
-}, {
-"duration": 1.0,
-"texture": SubResource("81")
-}, {
-"duration": 1.0,
-"texture": SubResource("82")
+"texture": SubResource("92")
 }],
 "loop": false,
 "name": &"upb",
@@ -980,7 +966,7 @@ shape = SubResource("RectangleShape2D_hkm8g")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("96")
-animation = &"db2"
+animation = &"upb"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
