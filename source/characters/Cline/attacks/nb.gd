@@ -48,6 +48,8 @@ func update():
 	if player.stateTimer==0:
 		player.anim_sprite.play("jump")
 		player.anim_sprite.play("nb")
+		if player.electric_charge < 10:
+			player.electric_charge += 1
 	if player.buttons[2] and player.direction == Vector2.ZERO and player.stateTimer == 13 and player.B_charge>0:
 		player.B_charge-=1
 		interrupted = true

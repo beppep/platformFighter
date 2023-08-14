@@ -47,12 +47,14 @@ func inputAction():
 	
 	var collision = move_and_collide(_velocity*1/60)
 	if collision:
-		if collision.normal == Vector2(0,-1):
-			myOwner.createShroom(position+Vector2(0,-30), transform.x.x)
+		if collision.get_normal() == Vector2(0,-1):
+			if is_instance_valid(myOwner):
+				myOwner.createShroom(position+Vector2(0,-30), transform.x.x)
 			queue_free()
 		else:
-			print("h")
-			myOwner.createSvamp(position+Vector2(0,-30))
+			#print("h")
+			if is_instance_valid(myOwner):
+				myOwner.createSvamp(position+Vector2(0,-30))
 			queue_free() #slide
 	
 	

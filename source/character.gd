@@ -6,6 +6,7 @@ var rng = RandomNumberGenerator.new()
 
 var explosion = load("res://source/fx/explosion.tscn")
 var explosion2 = load("res://source/fx/explosion2.tscn")
+var electricExplosion = load("res://source/fx/electricity.tscn")
 var blastline = load("res://source/fx/deathblast.tscn")
 var jump_ring = load("res://source/fx/jump_ring.tscn")
 var sparks = load("res://source/fx/sparks.tscn")
@@ -724,7 +725,10 @@ func hitEffect():
 				$"/root/Node2D/Camera2D".screenShake = int(kb/20)
 				$"/root/Node2D/AudioStreamPlayerLow".playSound($"/root/Node2D/AudioStreamPlayerLow".punch, 0.5+100/kb)
 				$"/root/Node2D/AudioStreamPlayer".playSound($"/root/Node2D/AudioStreamPlayer".hit, 0.5+100/kb)
-				blast = explosion.instantiate()
+				if "electric" in data:
+					blast = electricExplosion.instantiate()
+				else:
+					blast = explosion.instantiate()
 			else:
 				_velocity.x += data["kb"]*cos(angle)*opponent.transform.x.x
 				shieldHealth -= data["damage"]*3
@@ -734,7 +738,7 @@ func hitEffect():
 				blast = explosion2.instantiate()
 			#explosiin
 			blast.position = self.position
-			blast.scale = Vector2(kb*0.02, kb*0.02)
+			blast.scale = Vector2(0.1+kb*0.01, 0.1+kb*0.01)
 			blast.z_index = -2
 			get_node("/root/Node2D/fx").add_child(blast)
 		elif (not state==3):
@@ -887,7 +891,7 @@ func getGhosted():
 	percentage += 8
 	
 	blast.position = self.position
-	blast.scale = Vector2(kb*0.02, kb*0.02)
+	blast.scale = Vector2(0.1+kb*0.01, 0.1+kb*0.01)
 	blast.z_index = -2
 	get_node("/root/Node2D/fx").add_child(blast)
 	

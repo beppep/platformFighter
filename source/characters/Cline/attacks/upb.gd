@@ -76,6 +76,7 @@ func update():
 		player.cant_hitfall = true
 		player._velocity.y = 0
 		player.anim_sprite.play("upb")
+		#hitboxes[3]["electric"] = player.electric_charge
 	if player.stateTimer<5:
 		player.reverse()
 		player._velocity.x *= 0.9
@@ -99,3 +100,9 @@ func update():
 		interrupted = true #remove hitboxes? idk
 		if not endFast:
 			landingLag = 20
+
+func onHit(name, target, shielded=false):
+	#if name=="3":
+		#player.electric_charge = 0
+	if not shielded:
+		endFast = true

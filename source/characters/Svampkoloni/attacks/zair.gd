@@ -7,7 +7,7 @@ var throw = load("res://source/characters/Godtest/attacks/throw.gd")
 # den är lite grotesk. kanske ska vara lite kortare.
 
 func _init():
-	endFrame = 37
+	endFrame = 47
 	hitboxes = [
 		{
 			"name":"0",
@@ -20,7 +20,8 @@ func _init():
 			"angle":90,
 			"shapes":[
 				[32,30,105,-25]
-			]
+			],
+			"extrahitpause":4,
 		},
 		{
 			"name":"1",
@@ -33,23 +34,24 @@ func _init():
 			"angle":90,
 			"shapes":[
 				[32,20,75,-5]
-			]
+			],
+			"extrahitpause":4,
 		},
 	]
 
 func update():
 	if player.stateTimer==0:
 		player.anim_sprite.play("zair")
-	if player.stateTimer<30:
+	if player.stateTimer<37:
 		player._velocity *= 0.9
 		#player._velocity.y -= 50
 
 func onHit(name, target, shielded=false):
-	target.getGrabbed() # nonexistent function in target montain etc...
-	
-	interrupted = true
-	endAttack()
-	
-	player.attackWith("throw2")
-	player.stateTimer = -1
-	player.grab_target = target
+	if target.getGrabbed() and player.state != 2:
+		
+		interrupted = true
+		endAttack(false)
+		
+		player.attackWith("throw2")
+		player.stateTimer = -1
+		player.grab_target = target

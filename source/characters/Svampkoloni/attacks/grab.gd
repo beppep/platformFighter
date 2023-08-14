@@ -23,7 +23,8 @@ func _init():
 			"angle":90,
 			"shapes":[
 				[52,20,94,5]
-			]
+			],
+			"extrahitpause":4,
 		},
 	]
 
@@ -37,7 +38,7 @@ func onHit(name, target, shielded=false):
 		#target.getGrabbed()
 		
 		interrupted = true
-		endAttack()
+		endAttack(false)
 		
 		player.attackWith("throw")
 		player.stateTimer = -1

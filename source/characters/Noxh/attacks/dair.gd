@@ -15,10 +15,10 @@ func _init() -> void:
 			"start":5,
 			"end":7,
 			"kb":35,
-			"kbscaling":0.1,
-			"angle":-100,
+			"kbscaling":0.5,
+			"angle":-1,
 			"autolinkX":0.9,
-			"autolinkY":0.9,
+			"autolinkY":1,
 			"shapes":[
 				[28,28,0,40]
 			]
@@ -30,10 +30,10 @@ func _init() -> void:
 			"start":8,
 			"end":10,
 			"kb":35,
-			"kbscaling":0.1,
-			"angle":-70,
+			"kbscaling":0.5,
+			"angle":-1,
 			"autolinkX":0.9,
-			"autolinkY":0.9,
+			"autolinkY":1,
 			"shapes":[
 				[28,28,0,40]
 			]
@@ -45,10 +45,10 @@ func _init() -> void:
 			"start":11,
 			"end":13,
 			"kb":35,
-			"kbscaling":0.1,
-			"angle":-100,
+			"kbscaling":0.5,
+			"angle":-1,
 			"autolinkX":0.9,
-			"autolinkY":0.9,
+			"autolinkY":1,
 			"shapes":[
 				[28,28,0,40]
 			]
@@ -61,7 +61,9 @@ func _init() -> void:
 			"end":18,
 			"kb":30,
 			"kbscaling":0.8,
-			"angle":-70,
+			"angle":-90,
+			#"autolinkX":0.9,
+			#"autolinkY":1,
 			"shapes":[
 				[28,28,0,40]
 			]

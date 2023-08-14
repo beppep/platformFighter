@@ -27,8 +27,8 @@ func _init():
 	]
 
 func update():
-	if player.stateTimer==0:
-		pass
+	if player.stateTimer==1:
+		player.cant_hitfall = true
 		player.anim_sprite.play("throw2")
 	if player.stateTimer>12:
 		player._velocity.y *= 0.9

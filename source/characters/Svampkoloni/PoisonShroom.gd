@@ -62,27 +62,36 @@ func inputAction():
 		queue_free()
 	
 
+
 func CheckHurtBoxes() -> Array:
 	var HitActors = []
-	#print($HurtBox.get_overlapping_areas())
+	var toBeBannedHitboxes = []
 	for hitbox in $HurtBox.get_overlapping_areas():
 		var opponent=hitbox.get_parent().get_parent()
-		
-		if opponent.team != self.team:
-			var data = opponent.currentAttack.hitboxes[int(hitbox["name"])] #invalid get index 169 on base array apparently
-			if not [opponent, data["group"]] in bannedHitboxes:
-				HitActors.append([data,opponent])
-				bannedHitboxes.append([opponent,data["group"]])
-			else:
-				pass#print("banned")
-	return HitActors
+		if opponent.team != team:
+			#print(opponent.currentAttack,opponent.currentAttack.hitboxes,int(hitbox["name"]))
+			if opponent.currentAttack!=null and len(opponent.currentAttack.hitboxes)-1>=int(str(hitbox.name)): # for when the attacker is doing something else already this frame.
+				var data = opponent.currentAttack.hitboxes[int(str(hitbox.name))]
+				if (not [opponent, data["group"]] in bannedHitboxes) and (not "shouldNotExistAnymore" in data):
+					HitActors.append([data,opponent])
+					toBeBannedHitboxes.append([opponent,data["group"]])
+	bannedHitboxes = bannedHitboxes + toBeBannedHitboxes
+	if len(HitActors)>0:
+		var highestPrioIndex = 0
+		for i in range(len(HitActors)):
+			print(int(str(HitActors[i][0]["name"])), int(str(HitActors[highestPrioIndex][0]["name"])))
+			if int(str(HitActors[i][0]["name"])) < int(str(HitActors[highestPrioIndex][0]["name"])):
+				highestPrioIndex = i
+		return HitActors[highestPrioIndex]
+	else:
+		return HitActors
 
 func hitCollision():			
 	# hitting
 	HitActors = CheckHurtBoxes()
 	if HitActors:
-		var data = HitActors[0][0]
-		var opponent = HitActors[0][1]
+		var data = HitActors[0]
+		var opponent = HitActors[1]
 		var kb = data["kb"]
 		nextFrameHitPause += kb*0.1 #+= for trades and stuff?
 		opponent.nextFrameHitPause += kb*0.1
@@ -99,8 +108,8 @@ func hitEffect():
 		currentAttack.endAttack()
 	if HitActors:
 		wasHit = true
-		var data = HitActors[0][0]
-		var opponent = HitActors[0][1]
+		var data = HitActors[0]
+		var opponent = HitActors[1]
 		
 		if state != 1 and stateTimer>12 and stateTimer<lifetime:
 			attackWith(myAttack)

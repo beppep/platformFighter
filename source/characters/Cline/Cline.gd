@@ -2,6 +2,7 @@ extends Character
 
 var ghostScene = preload("res://source/characters/Cline/Ghost.tscn")
 var B_charge = 10
+var electric_charge = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

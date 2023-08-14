@@ -17,11 +17,13 @@ func _init() -> void:
 			"damage":3,
 			"start":10,
 			"end":12,
-			"kb":40,
-			"kbscaling":0.3,
-			"angle":90,
+			"kb":50,
+			"kbscaling":0.5,
+			"angle":-1,
+			"autolinkX":0.9,
+			"autolinkY":1,
 			"shapes":[
-				[40,45,-7,-50]
+				[30,35,-5,-37]
 			]
 		},
 		{
@@ -30,11 +32,13 @@ func _init() -> void:
 			"damage":3,
 			"start":13,
 			"end":15,
-			"kb":40,
-			"kbscaling":0.3,
-			"angle":90,
+			"kb":50,
+			"kbscaling":0.5,
+			"angle":-1,
+			"autolinkX":0.9,
+			"autolinkY":1,
 			"shapes":[
-				[40,45,-7,-50]
+				[30,35,-5,-37]
 			]
 		},
 		{
@@ -47,7 +51,7 @@ func _init() -> void:
 			"kbscaling":1.3,
 			"angle":90,
 			"shapes":[
-				[40,45,-7,-50]
+				[30,35,-5,-37]
 			]
 		}
 	]
@@ -61,7 +65,7 @@ func update():
 			player._velocity.y -= 60
 	if player.stateTimer==22:
 		randomize()
-		for i in 45:
+		for i in 40:
 			player.createMoldSpore(Vector2(randf_range(-100, 100)+player._velocity.x*0.2,randf_range(0,-100)))
 	if player.is_on_ground:
 		interrupted = true

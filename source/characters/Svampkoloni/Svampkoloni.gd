@@ -151,33 +151,40 @@ func grab():
 
 func dodge():
 	super.dodge()
-	createSvamp(position + Vector2(transform.x.x*0,40))
+	createSvamp(position + Vector2(transform.x.x*0,30))
 	
 func die(angle):
-	if isdead and not angle == -1: # otherwise you respawn twice on the same frame
-		return
-	if not len(shroomList) > 0:
-		for i in get_node("/root/Node2D/Articles").get_children():
-			if i.team == team and "hi_im_a_spore" in i:
-				isdead = true
-				visible = false
-				position = i.position
-				intangibleFrames = 1 #?!?
-				state = 7
-				return
-	if len(shroomList) > 0:
-		var pos = shroomList[-1].position + Vector2(0,-20)
-		shroomList.pop_back().queue_free()
-		
-		position = pos
-		_velocity = Vector2.ZERO#?
-		isdead = false
-		visible = true
-		intangibleFrames = 0
-		attackWith("reborn")
-		for other in get_node("/root/Node2D/Players").get_children():
-			if other.grab_target!=null and other.grab_target == self:
-				other.grab_target = null
-	else:
+	var thisIsOpUnfortunately = true
+	if thisIsOpUnfortunately:
+		for i in range(len(shroomList)):
+			shroomList.pop_back().queue_free()
 		make_blastline(angle)
 		respawn()
+	else:
+		if isdead and not angle == -1: # otherwise you respawn twice on the same frame
+			return
+		if not len(shroomList) > 0:
+			for i in get_node("/root/Node2D/Articles").get_children():
+				if i.team == team and "hi_im_a_spore" in i:
+					isdead = true
+					visible = false
+					position = i.position
+					intangibleFrames = 1 #?!?
+					state = 7
+					return
+		if len(shroomList) > 0:
+			var pos = shroomList[-1].position + Vector2(0,-20)
+			shroomList.pop_back().queue_free()
+			
+			position = pos
+			_velocity = Vector2.ZERO#?
+			isdead = false
+			visible = true
+			intangibleFrames = 0
+			attackWith("reborn")
+			for other in get_node("/root/Node2D/Players").get_children():
+				if other.grab_target!=null and other.grab_target == self:
+					other.grab_target = null
+		else:
+			make_blastline(angle)
+			respawn()

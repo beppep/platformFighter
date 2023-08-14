@@ -15,7 +15,7 @@ func _init() -> void:
 			"kbscaling":0.8,
 			"angle":55,
 			"shapes":[
-				[33,33,17,17]
+				[25,25,12,12]
 			]
 		},
 	]
@@ -26,7 +26,7 @@ func update():
 		player.anim_sprite.play("nair")
 	if player.stateTimer==2:
 		player._velocity.y *= 0.5
-		player._velocity.y -= 400
+		player._velocity.y -= 300
 		player._velocity.x += 400*player.transform.x.x
 	if player.stateTimer==7:
 		player._velocity.x *= 0.5

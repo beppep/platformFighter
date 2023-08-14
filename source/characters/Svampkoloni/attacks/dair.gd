@@ -17,9 +17,9 @@ func _init() -> void:
 			"damage":4,
 			"start":7,
 			"end":9,
-			"kb":90,
+			"kb":99,
 			"kbscaling":0.1,
-			"angle":30,
+			"angle":33,
 			"autolinkX":1,
 			#"autolinkY":1,
 			"shapes":[
@@ -32,9 +32,9 @@ func _init() -> void:
 			"damage":4,
 			"start":7,
 			"end":9,
-			"kb":80,
+			"kb":90,
 			"kbscaling":0.1,
-			"angle":170,
+			"angle":167,
 			"autolinkX":1,
 			#"autolinkY":1,
 			"shapes":[
@@ -45,26 +45,26 @@ func _init() -> void:
 			"name":"2",
 			"group":2,
 			"damage":6,
-			"start":19,
-			"end":20,
-			"kb":60,
+			"start":17,
+			"end":22,
+			"kb":66,
 			"kbscaling":1,
 			"angle":-30,
 			"shapes":[
-				[12,20,60,50]
+				[12,20,55,50]
 			]
 		},
 		{
 			"name":"3",
 			"group":2,
 			"damage":6,
-			"start":19,
-			"end":20,
+			"start":17,
+			"end":22,
 			"kb":60,
 			"kbscaling":1,
 			"angle":-150,
 			"shapes":[
-				[12,20,-50,60]
+				[12,20,-45,60]
 			]
 		},
 	]
@@ -81,7 +81,7 @@ func update():
 
 
 func onHit(name, target, shielded=false):
-	player._velocity.y=-400
+	player._velocity.y=-280
 	if (name=="2" or name=="3") and not shielded:
 		player.cant_hitfall = false
 	if not shielded:

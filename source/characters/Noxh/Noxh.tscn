@@ -1136,7 +1136,7 @@ jumpspeed = 1700.0
 fallspeed = 700.0
 groundfriction = 0.85
 airfriction = 0.95
-yfriction = 0.96
+yfriction = 0.94
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("1")

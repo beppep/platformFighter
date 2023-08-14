@@ -22,7 +22,7 @@ func _init() -> void:
 			"kbscaling":1.5,
 			"angle":90,
 			"shapes":[
-				[30,40,200,0]
+				[30,40,120,-10]
 			]
 		},
 	]
@@ -35,7 +35,7 @@ func update():
 	if player.stateTimer==20:
 			
 		var svamp = shroom.instantiate()
-		svamp.position = player.position + Vector2(200*player.transform.x.x, 0)
+		svamp.position = player.position + Vector2(120*player.transform.x.x, -5)
 		svamp.team = player.team
 		svamp.transform.x.x = player.transform.x.x
 		player.get_node("/root/Node2D/Articles").add_child(svamp)

@@ -27,9 +27,8 @@ func _init():
 	]
 
 func update():
-	if player.stateTimer==0:
-		pass
-		#player.anim_sprite.play("throw")
+	if player.stateTimer==1:
+		player.anim_sprite.play("throw")
 	if player.stateTimer<12:
 		player.grab_target.position = player.position+Vector2(110*player.transform.x.x,0)
 		player.grab_target._velocity = player._velocity

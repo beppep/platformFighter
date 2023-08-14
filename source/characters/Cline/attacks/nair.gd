@@ -19,14 +19,23 @@ func _init() -> void:
 			"shapes":[
 				[40,20,40,20]
 			],
-			"electric":8,
+			#"electric":8,
 		},
 	]
 
 func update():
 	if player.stateTimer==0:
 		player.anim_sprite.play("nair")
+		if player.electric_charge > 0:
+			hitboxes[0]["electric"] = player.electric_charge * 2
 	if player.is_on_ground:
 		interrupted = true #remove hitboxes? idk
 		if not endFast:
 			landingLag = 12
+
+func onHit(name, target, shielded=false):
+	if name=="0":
+		player.electric_charge = 0
+	
+	if not shielded:
+		endFast = true

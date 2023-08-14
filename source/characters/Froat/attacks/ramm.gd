@@ -41,9 +41,10 @@ func _init() -> void:
 
 func update():
 	if player.stateTimer==0:
-		player._velocity *= 0.5
 		player.anim_sprite.play("sideb")
 		wasGrounded = false
+	if player.stateTimer<0:
+		player._velocity *= 0.0
 	if player.stateTimer==10:
 		player._velocity = Vector2(600*player.transform.x.x, -600)
 	if player.stateTimer>10 and player.stateTimer<20:

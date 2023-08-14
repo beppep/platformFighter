@@ -17,7 +17,7 @@ func _init() -> void:
 			"kbscaling":0.7,
 			"angle":91,
 			"shapes":[
-				[16,16,88,26]
+				[16,20,70,16]
 			]
 		},
 	]
@@ -27,7 +27,7 @@ func update():
 		player.anim_sprite.play("dtilt")
 		player._velocity.x = 0
 	if player.stateTimer==6:
-		player.createSvamp(player.position + Vector2(player.transform.x.x*90,40))
+		player.createSvamp(player.position + Vector2(player.transform.x.x*70,30))
 	if not player.is_on_ground:
 		pass
 		#interrupted = true

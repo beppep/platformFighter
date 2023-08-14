@@ -109,5 +109,5 @@ func onHit(name, target, shielded=false):
 	target.position = (target.position*0.9+player.position*0.1)
 	if not shielded:
 		endFast = true
-	if name=="3" and not shielded:
+	if name=="4" and not shielded:
 		player.cant_hitfall = false

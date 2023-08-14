@@ -51,7 +51,7 @@ func _init() -> void:
 			"kbscaling":0.5,
 			"angle":-1,
 			"autolinkX":0.9,
-			"autolinkY":0.9,
+			"autolinkY":1,
 			"shapes":[
 				[32,28,28,0]
 			]
@@ -64,7 +64,7 @@ func _init() -> void:
 			"end":18,
 			"kb":60,
 			"kbscaling":1.5,
-			"angle":50,
+			"angle":40,
 			"shapes":[
 				[32,28,28,0]
 			]
@@ -82,11 +82,11 @@ func update():
 		#player._velocity.x+=170*player.transform.x.x
 		
 		
-	if player.stateTimer<30 and true:
-		player._velocity.y*=0.92
-		player._velocity.y-=40
-		player._velocity.x*=0.92
-		player._velocity.x+=40*player.transform.x.x
+	#if player.stateTimer<30 and true:
+		#player._velocity.y*=0.92
+		#player._velocity.y-=40
+		#player._velocity.x*=0.92
+		#player._velocity.x+=40*player.transform.x.x
 		
 		
 	if player.is_on_ground:
