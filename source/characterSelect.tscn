@@ -1,6 +1,6 @@
-[gd_scene load_steps=15 format=3 uid="uid://bfjmomsmed3wv"]
+[gd_scene load_steps=16 format=3 uid="uid://bfjmomsmed3wv"]
 
-[ext_resource type="Texture2D" uid="uid://d00wrcguy2fss" path="res://assets/Froat/idle.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://81cck6uqx5lp" path="res://assets/Goad/idle.png" id="1"]
 [ext_resource type="Texture2D" uid="uid://byk5mmn1aotf0" path="res://assets/Noxh/idle.png" id="2"]
 [ext_resource type="Texture2D" uid="uid://ylleya8f3it4" path="res://assets/Svampkoloni/idle.png" id="3"]
 [ext_resource type="Texture2D" uid="uid://d4a3eiypvyc14" path="res://assets/shield.png" id="4"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://source/cursor3.gd" id="7_ltcnc"]
 [ext_resource type="Texture2D" uid="uid://difn8q0fcosdp" path="res://assets/cloud.png" id="8"]
 [ext_resource type="Script" path="res://source/cursor2.gd" id="9"]
+[ext_resource type="Texture2D" uid="uid://ddp605qmsveeq" path="res://assets/Froat/idle.png" id="9_3h035"]
 [ext_resource type="Script" path="res://source/characterSelect.gd" id="10"]
 [ext_resource type="Texture2D" uid="uid://caqvjegkqla3x" path="res://assets/Godtest/idle2.png" id="11"]
 [ext_resource type="Texture2D" uid="uid://bn572mofd5w8w" path="res://assets/Cline/idle.png" id="12"]
@@ -59,6 +60,10 @@ layout_mode = 2
 texture = ExtResource("6")
 
 [node name="froat" type="TextureRect" parent="GridContainer" groups=["Characters"]]
+layout_mode = 2
+texture = ExtResource("9_3h035")
+
+[node name="goad" type="TextureRect" parent="GridContainer" groups=["Characters"]]
 layout_mode = 2
 texture = ExtResource("1")
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ci5k6tfutb4sh"]
 
-[ext_resource type="Texture2D" uid="uid://d00wrcguy2fss" path="res://assets/Froat/idle.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://ddp605qmsveeq" path="res://assets/Froat/idle.png" id="1_07miy"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -27,7 +27,7 @@ layout_mode = 1
 offset_right = 256.0
 offset_bottom = 256.0
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("1")
+texture = ExtResource("1_07miy")
 
 [node name="2" type="TextureRect" parent="."]
 custom_minimum_size = Vector2(256, 256)
@@ -36,7 +36,7 @@ offset_left = 32.0
 offset_right = 288.0
 offset_bottom = 256.0
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("1")
+texture = ExtResource("1_07miy")
 
 [node name="3" type="TextureRect" parent="."]
 custom_minimum_size = Vector2(256, 256)
@@ -45,7 +45,7 @@ offset_left = 64.0
 offset_right = 320.0
 offset_bottom = 256.0
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("1")
+texture = ExtResource("1_07miy")
 
 [node name="4" type="TextureRect" parent="."]
 custom_minimum_size = Vector2(256, 256)
@@ -54,4 +54,4 @@ offset_left = 96.0
 offset_right = 352.0
 offset_bottom = 256.0
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("1")
+texture = ExtResource("1_07miy")

@@ -8,6 +8,7 @@ var chosenCharacters = []
 
 var selectableCharacters = {
 	"froat" : preload("res://source/characters/Froat/Froat2.tscn"),
+	#"goad" : preload("res://source/characters/Goad/Goad.tscn"),
 	"noxh" : preload("res://source/characters/Noxh/Noxh.tscn"),
 	"cline" : preload("res://source/characters/Cline/Cline.tscn"),
 	"oculus" : preload("res://source/characters/Oculus/Oculus.tscn"),
