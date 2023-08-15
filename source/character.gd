@@ -231,18 +231,16 @@ func inputAction():
 		elif stateTimer==4:
 			if is_on_ground and dodge_direction!=Vector2.ZERO:
 				transform.x.x = -dodge_direction.x
-		if not can_air_dash or is_on_ground:
-			if stateTimer == 8:
-				_velocity=Vector2.ZERO
-			if stateTimer == 20:
-				anim_sprite.modulate = sprite_color
-			if stateTimer>30:
+		if stateTimer == 8:
+			if can_air_dash and not is_on_ground:
+				_velocity*=0.5
 				resetToIdle()
-		else:
-			if stateTimer == 10:
-				anim_sprite.modulate = sprite_color
-			if stateTimer>10:
-				resetToIdle()
+			else:
+				_velocity=Vector2.ZERO				
+		if stateTimer == 20:
+			anim_sprite.modulate = sprite_color
+		if stateTimer>30:
+			resetToIdle()
 	if state==states.lying:
 		if is_on_ground:
 			if stateTimer>40:
@@ -610,20 +608,21 @@ func shieldEnd():
 func airdodge():
 	is_on_ground = false
 	set_collision_mask_value(4,1)
+	$Shield.visible = false
 	state = 4
 	stateTimer = 0
-	$Shield.visible = false
-	anim_sprite.modulate = sprite_color+Color(0.5,0.5,0.5,0)
-	#released_jump = false
 	var airdodge_direction = direction.normalized()
-	if can_air_dash:
-		_velocity = airdodge_direction*600
-		intangibleFrames = 10
-	else:
-		_velocity = airdodge_direction*1000
+	_velocity = airdodge_direction*1000
+	if not can_air_dash:
+		anim_sprite.modulate = sprite_color+Color(0.5,0.5,0.5,0)
 		intangibleFrames = 20
-	dodge_direction=Vector2(0,0)
-	anim_sprite.play("roll")
+		anim_sprite.play("roll")
+		dodge_direction=Vector2(0,0)
+	else:
+		anim_sprite.play("airdash")
+		dodge_direction=airdodge_direction
+		
+	#released_jump = false
 	has_airdodge = 0
 	
 

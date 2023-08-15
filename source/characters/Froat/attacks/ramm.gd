@@ -29,7 +29,7 @@ func _init() -> void:
 			"group":1,
 			"damage":8,
 			"start":21,
-			"end":30,
+			"end":27,
 			"kb":100,
 			"kbscaling":0.9,
 			"angle":35,
@@ -43,7 +43,7 @@ func update():
 	if player.stateTimer==0:
 		player.anim_sprite.play("sideb")
 		wasGrounded = false
-	if player.stateTimer<0:
+	if player.stateTimer<10:
 		player._velocity *= 0.0
 	if player.stateTimer==10:
 		player._velocity = Vector2(600*player.transform.x.x, -600)

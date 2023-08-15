@@ -11,3 +11,16 @@ res://source/characters/Froat/Froat2.tscn
 res://source/characters/Goad/Goad.gd
 res://source/characters/Goad/attacks/dair.gd
 res://source/character.gd
+res://source/characters/Goad/attacks/bash.gd
+res://source/characters/Goad/attacks/utilt.gd
+res://source/characters/Goad/attacks/bair.gd
+res://source/characters/Goad/attacks/jab3.gd
+res://source/characters/Goad/attacks/throw.gd
+res://source/characters/Goad/attacks/ramm.gd
+res://source/characters/Froat/attacks/ramm.gd
+res://source/characters/Goad/attacks/uair.gd
+res://source/characters/Goad/attacks/grab.gd
+res://source/characters/Froat/attacks/grab.gd
+res://source/characters/Goad/attacks/downb.gd
+res://source/characters/Goad/attacks/dtilt.gd
+res://source/characters/Froat/attacks/dtilt.gd

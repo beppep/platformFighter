@@ -16,7 +16,7 @@ func _init():
 			"name":"0",
 			"group":1,
 			"damage":1,
-			"start":9,
+			"start":7,
 			"end":12,
 			"kb":0,
 			"kbscaling":0,

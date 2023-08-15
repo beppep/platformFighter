@@ -14,27 +14,29 @@ func _init() -> void:
 		{
 			"name":"0",
 			"group":1,
-			"damage":12,
+			"damage":4,
 			"start":18,
-			"end":20,
-			"kb":120,
-			"kbscaling":1.3,
-			"angle":30,
+			"end":24,
+			"kb":60,
+			"kbscaling":0.4,
+			"angle":-1,
+			"autolinkX":1,
+			"autolinkY":1,
 			"shapes":[
-				[28,28,30,0]
+				[30,30,40,0]
 			]
 		},
 		{
 			"name":"1",
-			"group":1,
+			"group":2,
 			"damage":8,
-			"start":21,
-			"end":30,
-			"kb":100,
-			"kbscaling":0.9,
-			"angle":35,
+			"start":25,
+			"end":27,
+			"kb":40,
+			"kbscaling":1.0,
+			"angle":10,
 			"shapes":[
-				[20,20,20,0]
+				[40,40,50,0]
 			]
 		},
 	]
@@ -43,7 +45,7 @@ func update():
 	if player.stateTimer==0:
 		player.anim_sprite.play("sideb")
 		wasGrounded = false
-	if player.stateTimer<0:
+	if player.stateTimer<10:
 		player._velocity *= 0.0
 	if player.stateTimer==10:
 		player._velocity = Vector2(600*player.transform.x.x, -600)
@@ -53,11 +55,6 @@ func update():
 		player.can_walljump = true
 		if not endFast:
 			player._velocity.x*=0.8
-	"""
-	if player.stateTimer>20 and player.is_on_wall():
-		player._velocity=Vector2(-800*player.transform.x.x,-1000)
-		#player.transform.x.x *=-1
-	"""
 	if player.stateTimer>12:
 		if player.is_on_ground:
 			wasGrounded = true
@@ -66,8 +63,9 @@ func update():
 
 
 func onHit(name, target, shielded=false):
-	player._velocity.y=-1000
-	player._velocity.x*=0.5
+	if name=="1":
+		player._velocity.y=-1000
+		player._velocity.x*=0.5
 
 	if not shielded:
 		endFast = true

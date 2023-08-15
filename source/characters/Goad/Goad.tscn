@@ -347,13 +347,13 @@ region = Rect2(0, 0, 256, 256)
 atlas = ExtResource("20_utnr1")
 region = Rect2(256, 0, 256, 256)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0dpgg"]
-atlas = ExtResource("20_utnr1")
-region = Rect2(512, 0, 256, 256)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_ceoue"]
 atlas = ExtResource("20_utnr1")
 region = Rect2(768, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0dpgg"]
+atlas = ExtResource("20_utnr1")
+region = Rect2(512, 0, 256, 256)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0gw5y"]
 atlas = ExtResource("21_sn2d4")
@@ -833,11 +833,11 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_p6q81")
 }, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_0dpgg")
-}, {
 "duration": 2.0,
 "texture": SubResource("AtlasTexture_ceoue")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0dpgg")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_p6q81")
@@ -1055,7 +1055,7 @@ shape = SubResource("1")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(1.2, 1.2)
 sprite_frames = SubResource("109")
-animation = &"wallhog"
+animation = &"sideb"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

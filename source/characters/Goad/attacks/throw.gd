@@ -18,7 +18,7 @@ func _init():
 			"end":9,
 			"kb":100,
 			"kbscaling":1.1,
-			"angle":80,
+			"angle":70,
 			"autolinkX":1,
 			"autolinkY":1,
 			"shapes":[

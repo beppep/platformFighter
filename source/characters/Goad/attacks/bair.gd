@@ -20,7 +20,7 @@ func _init() -> void:
 			"end":10,
 			"kb":50,
 			"kbscaling":1.8,
-			"angle":130,
+			"angle":110,
 			"shapes":[
 				[44,24,-70,20]
 			]
@@ -33,7 +33,7 @@ func _init() -> void:
 			"end":15,
 			"kb":50,
 			"kbscaling":0.8,
-			"angle":130,
+			"angle":120,
 			"shapes":[
 				[44,24,-70,20]
 			]
@@ -44,9 +44,9 @@ func _init() -> void:
 			"damage":4,
 			"start":6,
 			"end":10,
-			"kb":30,
-			"kbscaling":0.8,
-			"angle":60,
+			"kb":20,
+			"kbscaling":0.3,
+			"angle":10,
 			"shapes":[
 				[24,24,30,0]
 			]
