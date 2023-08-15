@@ -5,3 +5,9 @@ res://source/mainstage.tscn
 res://source/characters/Noxh/Noxh.tscn
 res://source/characters/Godtest/Godtest.tscn
 res://source/characters/Cline/Cline.tscn
+res://source/characters/Goad/Goad.tscn
+res://source/characterSelectionManager.gd
+res://source/characters/Froat/Froat2.tscn
+res://source/characters/Goad/Goad.gd
+res://source/characters/Goad/attacks/dair.gd
+res://source/character.gd

@@ -74,6 +74,7 @@ var has_airdodge = 1
 var wallJumps = jumpspeed
 var wallHogFallSpeed = 50
 var can_shield_float = false
+var can_air_dash = false
 var can_getupattack = false
 var ghosted = false
 var walljump_facing = 1
@@ -230,12 +231,18 @@ func inputAction():
 		elif stateTimer==4:
 			if is_on_ground and dodge_direction!=Vector2.ZERO:
 				transform.x.x = -dodge_direction.x
-		if stateTimer == 8:
-			_velocity=Vector2.ZERO
-		if stateTimer == 20:
-			anim_sprite.modulate = sprite_color
-		if stateTimer>30:
-			resetToIdle()
+		if not can_air_dash or is_on_ground:
+			if stateTimer == 8:
+				_velocity=Vector2.ZERO
+			if stateTimer == 20:
+				anim_sprite.modulate = sprite_color
+			if stateTimer>30:
+				resetToIdle()
+		else:
+			if stateTimer == 10:
+				anim_sprite.modulate = sprite_color
+			if stateTimer>10:
+				resetToIdle()
 	if state==states.lying:
 		if is_on_ground:
 			if stateTimer>40:
@@ -607,10 +614,14 @@ func airdodge():
 	stateTimer = 0
 	$Shield.visible = false
 	anim_sprite.modulate = sprite_color+Color(0.5,0.5,0.5,0)
-	intangibleFrames = 20
 	#released_jump = false
 	var airdodge_direction = direction.normalized()
-	_velocity = airdodge_direction*1000
+	if can_air_dash:
+		_velocity = airdodge_direction*600
+		intangibleFrames = 10
+	else:
+		_velocity = airdodge_direction*1000
+		intangibleFrames = 20
 	dodge_direction=Vector2(0,0)
 	anim_sprite.play("roll")
 	has_airdodge = 0
