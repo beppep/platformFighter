@@ -1063,7 +1063,7 @@ shape = SubResource("1")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(1.2, 1.2)
 sprite_frames = SubResource("109")
-animation = &"standing"
+animation = &"shoot"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

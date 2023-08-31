@@ -9,7 +9,7 @@ extends Attack
 # Called when the node enters the scene tree for the first time.
 func _init() -> void:
 	
-	endFrame = 55
+	endFrame = 44
 	hitboxes = [
 	]
 
@@ -27,15 +27,9 @@ func update():
 		player.get_node("/root/Node2D/AudioStreamPlayer").playSound(player.get_node("/root/Node2D/AudioStreamPlayer").spew)
 	if player.stateTimer < 6:
 		player.reverse()
-	if player.stateTimer==24:
-		
-		var rock = player.rockScene.instantiate()
-		rock.position = player.position + Vector2(10,0)*player.transform.x.x
-		rock.team = player.team
-		player.bannedHitboxes.append([rock,1])
-		rock.transform.x.x = player.transform.x.x
-		rock._velocity = Vector2(300*player.transform.x.x,-600) + player._velocity
-		player.get_node("/root/Node2D/Articles").add_child(rock)
+	if 5<player.stateTimer and player.stateTimer<30:
+		randomize()
+		player.createMoldSpore(Vector2(randf_range(200, 400)*player.transform.x.x,randf_range(-300,-100)) + player._velocity*0.5)
 		
 
 

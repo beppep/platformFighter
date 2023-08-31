@@ -34,7 +34,7 @@ func _init() -> void:
 			"end":27,
 			"kb":40,
 			"kbscaling":1.0,
-			"angle":10,
+			"angle":20,
 			"shapes":[
 				[40,40,50,0]
 			]
@@ -64,7 +64,7 @@ func update():
 
 func onHit(name, target, shielded=false):
 	if name=="1":
-		player._velocity.y=-1000
+		player._velocity.y=-800
 		player._velocity.x*=0.5
 
 	if not shielded:

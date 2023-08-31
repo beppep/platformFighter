@@ -1,6 +1,7 @@
 extends "res://source/character.gd"
 
 
+var moldSpore = load("res://source/characters/Svampkoloni/moldSpore.tscn")
 
 var B_charge = true
 
@@ -22,7 +23,7 @@ func _ready() -> void:
 		"dair": load("res://source/characters/Goad/attacks/dair.gd"),
 		"bair": load("res://source/characters/Goad/attacks/bair.gd"),
 		"fair": load("res://source/characters/Goad/attacks/fair.gd"),
-		"nb": load("res://source/characters/Goad/attacks/ramm.gd"),
+		"nb": load("res://source/characters/Goad/attacks/lick.gd"),
 		"fb": load("res://source/characters/Goad/attacks/ramm.gd"),
 		"ub": load("res://source/characters/Goad/attacks/upb.gd"),
 		"db": load("res://source/characters/Goad/attacks/downb.gd"),
@@ -73,12 +74,7 @@ func special():
 		elif direction.y>0:
 			attackWith("db")
 		elif direction.x==0:
-			if B_charge:
-				attackWith("nb")
-				B_charge = false
-			else:
-				state = 0
-				stateTimer = 0
+			attackWith("nb")
 		else:
 			attackWith("fb")
 	else:
@@ -94,3 +90,18 @@ func special():
 func grab():
 	flip() #?
 	attackWith("grab")
+
+
+
+func createMoldSpore(vel):
+	
+	var svamp = moldSpore.instantiate()
+	svamp.position = position
+	svamp.team = team
+	svamp.transform.x.x = transform.x.x
+	svamp._velocity = vel
+	get_node("/root/Node2D/Articles").add_child(svamp)
+	svamp.attackWith("moldSporeAttack")
+	svamp.modulate = sprite_color
+	svamp.anim_sprite.play("spore") 
+	svamp.myOwner = self

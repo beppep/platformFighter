@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c8q80iw03t115"
-path="res://.godot/imported/upsmash.png-0265e57e8bb659b215ad976aa9fa61e4.ctex"
+uid="uid://0634hu5eal56"
+path="res://.godot/imported/ftilt2.png-572e58316db7f1c06be0a59531e056a4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Goad/upsmash.png"
-dest_files=["res://.godot/imported/upsmash.png-0265e57e8bb659b215ad976aa9fa61e4.ctex"]
+source_file="res://assets/Goad/ftilt2.png"
+dest_files=["res://.godot/imported/ftilt2.png-572e58316db7f1c06be0a59531e056a4.ctex"]
 
 [params]
 

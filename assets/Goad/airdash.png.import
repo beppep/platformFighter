@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c2n7aclvt18ol"
-path="res://.godot/imported/pillar.png-8f35859d145e5609e1f6d18653454a94.ctex"
+uid="uid://dgu1avgrp5tbj"
+path="res://.godot/imported/airdash.png-17a71abbc610ad95245c892a29aa1eb8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Goad/pillar.png"
-dest_files=["res://.godot/imported/pillar.png-8f35859d145e5609e1f6d18653454a94.ctex"]
+source_file="res://assets/Goad/airdash.png"
+dest_files=["res://.godot/imported/airdash.png-17a71abbc610ad95245c892a29aa1eb8.ctex"]
 
 [params]
 

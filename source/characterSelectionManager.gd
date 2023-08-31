@@ -2,8 +2,8 @@ extends Node
 
 var playerCount = 2
 
-var charNum = 6
-var legalCharNum = 3
+var charNum = 7
+var legalCharNum = 4
 var chosenCharacters = []
 
 var selectableCharacters = {

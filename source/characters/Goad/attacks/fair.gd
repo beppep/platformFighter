@@ -7,18 +7,18 @@ extends Attack
 
 # Called when the node enters the scene tree for the first time.
 func _init() -> void:
-	endFrame = 29
-	fastEndFrame = 19
+	endFrame = 30
+	fastEndFrame = 20
 	hitboxes = [
 		{
 			"name":"0",
 			"group":1,
 			"damage":8,
 			"start":5,
-			"end":7,
-			"kb":70,
-			"kbscaling":1.1,
-			"angle":57,
+			"end":8,
+			"kb":66,
+			"kbscaling":1.3,
+			"angle":60,
 			"shapes":[
 				[41,32,44,34]
 			]

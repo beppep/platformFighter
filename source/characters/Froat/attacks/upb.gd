@@ -38,12 +38,13 @@ func update():
 	if player.stateTimer<5:
 		player.flip()
 	if player.stateTimer<40:
-		player._velocity.y -= 53
-		player._velocity.y *= 0.8
-		if player.stateTimer<10:
-			player._velocity.x *= 0.9
-		else:
-			player._velocity.x *= 0.8
+		player._velocity *= 0
+		#player._velocity.y -= 53
+		#player._velocity.y *= 0.8
+		#if player.stateTimer<10:
+		#	player._velocity.x *= 0.9
+		#else:
+		#	player._velocity.x *= 0.8
 	else:
 		player._velocity.x *= 0.97
 	if player.stateTimer>10 and player.stateTimer<=40:

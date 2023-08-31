@@ -234,7 +234,9 @@ func inputAction():
 		if stateTimer == 8:
 			if can_air_dash and not is_on_ground:
 				_velocity*=0.5
-				resetToIdle()
+				state=0
+				stateTimer=0
+				#anim_sprite.play("airdash")
 			else:
 				_velocity=Vector2.ZERO				
 		if stateTimer == 20:

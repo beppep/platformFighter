@@ -80,9 +80,7 @@ func update():
 			landingLag = 10
 
 func onHit(name, target, shielded=false):
-	if name!="3":
-		#target.totalHitstun+=0 illegal if they dont have attribute totalhitstun!!!
-		#target.kb_vector+=Vector2(0,0)
-		pass
+	if name!="3" and not player.direction.y>0.5:
+		target.position = (target.position*0.9+player.position*0.1)
 	if not shielded:
 		endFast = true
